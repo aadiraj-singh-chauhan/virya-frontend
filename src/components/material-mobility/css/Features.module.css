@@ -1,0 +1,164 @@
+.section {
+  padding: 100px 0;
+  background: var(--color-6);
+}
+
+.inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* ── Left text column ─────────────────────────────────────────────────────── */
+
+.textCol {
+  flex: 0 0 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 74px;
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 381px;
+}
+
+.tabItem {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.tabRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tabTitle {
+  position: relative;
+  display: inline-block;
+  transition:
+    color 0.35s ease,
+    opacity 0.35s ease;
+  font-family: var(--font-primary);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.tabActive {
+  color: var(--color-1);
+}
+.tabDim {
+  opacity: 0.4;
+  color: var(--color-3);
+}
+
+/* Width-lock scramble */
+.textOriginal {
+  visibility: hidden;
+}
+.textDisplay {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+
+.tabDesc {
+  width: 299px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.35s ease,
+    max-height 0.35s ease;
+}
+
+.tabDescVisible {
+  opacity: 0.5;
+  max-height: 120px;
+}
+
+.arrow {
+  color: var(--color-1);
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.arrowVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Image column ─────────────────────────────────────────────────────────── */
+
+.imageCol {
+  flex: 0 0 676px;
+  height: 480px;
+  position: relative;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.labels {
+  position: absolute;
+  left: 37px;
+  top: 296px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.labelItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-5);
+  border-radius: 100px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.labelDot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--color-1);
+  flex-shrink: 0;
+}

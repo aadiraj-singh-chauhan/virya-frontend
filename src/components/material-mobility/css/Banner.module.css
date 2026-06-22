@@ -1,0 +1,128 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  background: var(--color-6);
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  top: calc(var(--header-height) - 20px);
+}
+
+/* ── Decorative background text ───────────────────────────────────────────── */
+
+.textMaterial {
+  position: absolute;
+  left: calc(50% - 656px);
+  top: 48px;
+  font-family: var(--font-primary);
+  font-size: 282px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: uppercase;
+  opacity: 0.1;
+  color: var(--color-3);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.textMobility {
+  position: absolute;
+  left: calc(50% - 591px);
+  top: 459px;
+  font-family: var(--font-primary);
+  font-size: 262px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #e4e3db;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Product images ───────────────────────────────────────────────────────── */
+
+.images {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1512px;
+  top: 28px;
+  height: 601px;
+  z-index: 1;
+}
+
+.imageLeft {
+  position: absolute;
+  left: -152px;
+  top: 0;
+  width: 665px;
+  height: 601px;
+  overflow: hidden;
+}
+
+.imageLeftImg {
+  position: absolute;
+  height: 137.1%;
+  left: 0;
+  top: -13.14%;
+  width: 185.86%;
+  max-width: none;
+}
+
+.imageCenter {
+  position: absolute;
+  left: calc(50% + 19.5px);
+  transform: translateX(-50%);
+  top: 181px;
+  width: 445px;
+  height: 420px;
+  overflow: hidden;
+}
+
+.imageCenterImg {
+  position: absolute;
+  height: 131.27%;
+  left: -15.93%;
+  top: 0;
+  width: 186.02%;
+  max-width: none;
+}
+
+.imageRight {
+  position: absolute;
+  left: 1094px;
+  top: 64px;
+  width: 702px;
+  height: 537px;
+  overflow: hidden;
+}
+
+.imageRightImg {
+  position: absolute;
+  height: 104.1%;
+  left: -19.37%;
+  top: -0.03%;
+  width: 119.37%;
+  max-width: none;
+}
+
+/* ── Subtitle ─────────────────────────────────────────────────────────────── */
+
+.subtitle {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 735px;
+  width: 378px;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  z-index: 2;
+}

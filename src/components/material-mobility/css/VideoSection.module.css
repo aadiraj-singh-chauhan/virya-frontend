@@ -1,0 +1,82 @@
+.section {
+  padding: 100px 0;
+  background: var(--color-6);
+}
+
+/* ── Heading ──────────────────────────────────────────────────────────────── */
+
+.heading {
+  text-align: center;
+  max-width: 856px;
+  margin: 0 auto 60px;
+}
+
+/* ── Feature pills ────────────────────────────────────────────────────────── */
+
+.features {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bullet {
+  width: 6px;
+  height: 6px;
+  background: var(--color-1);
+  flex-shrink: 0;
+}
+
+/* ── Video container ──────────────────────────────────────────────────────── */
+
+.videoWrap {
+  position: relative;
+  width: 1030px;
+  height: 579px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.videoBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.videoFg {
+  position: absolute;
+  height: 108.44%;
+  left: -4.95%;
+  top: -4.25%;
+  width: 109.84%;
+  max-width: none;
+  z-index: 2;
+}
+
+.playBtn {
+  position: absolute;
+  left: 36px;
+  bottom: 36px;
+  z-index: 3;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 0;
+}

@@ -1,0 +1,46 @@
+.section {
+  padding: 100px 0;
+  background: var(--color-6);
+}
+
+.heading {
+  text-align: center;
+  max-width: 1090px;
+  margin: 0 auto 50px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--color-5);
+  padding: 30px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+
+.cardTitle {
+  flex: 1;
+}
+
+.cardDesc {
+  opacity: 0.5;
+}
