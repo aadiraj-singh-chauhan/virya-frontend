@@ -1,0 +1,76 @@
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+.hero {
+  background: var(--color-4);
+  color: var(--color-5);
+  padding: 80px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Sections ──────────────────────────────────────────────────────────────── */
+.section {
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.section.dark {
+  background: var(--color-3);
+  color: var(--color-5);
+  border-bottom-color: #2a2a2a;
+}
+
+.subheading {
+  margin-top: 8px;
+  opacity: 0.5;
+}
+
+/* ── Color swatches ────────────────────────────────────────────────────────── */
+.swatchGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.swatchColor {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+}
+
+/* ── Typography rows ───────────────────────────────────────────────────────── */
+.typeRow {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.typeLabel {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  min-width: 96px;
+  flex-shrink: 0;
+}
+
+/* ── Button rows ───────────────────────────────────────────────────────────── */
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
