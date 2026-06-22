@@ -1,0 +1,54 @@
+.section {
+  position: relative;
+  min-height: 932px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 11px;
+}
+
+/* ── Background image ──────────────────────────────────────────────────────── */
+.bgImage {
+  position: absolute;
+  top: 18.51px;
+  width: 100%;
+  height: 913.986px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ── Gradient overlays ─────────────────────────────────────────────────────── */
+.gradientTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 474px;
+  background: linear-gradient(to bottom, var(--color-6), transparent);
+  pointer-events: none;
+}
+
+.gradientBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 270px;
+  background: linear-gradient(to top, var(--color-6), transparent);
+  pointer-events: none;
+}
+
+/* ── Content ───────────────────────────────────────────────────────────────── */
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1097px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+}

@@ -1,0 +1,37 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.outer {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
+.track {
+  display: flex;
+  gap: 60px;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
+
+/* Width is calculated so exactly 5 logos fill the slider's visible area.
+   The container above is 95vw (max 1730px), so each logo = (container - 4 gaps) / 5. */
+.logo {
+  flex-shrink: 0;
+  width: calc((min(95vw, 1730px) - 4 * 60px) / 5);
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.55;
+  user-select: none;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

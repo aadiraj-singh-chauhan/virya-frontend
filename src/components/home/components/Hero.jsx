@@ -1,0 +1,62 @@
+import Image from 'next/image';
+import Button from '@/components/ui/Button';
+import styles from '../css/Hero.module.css';
+
+export default function Hero() {
+  return (
+    <section className={styles.section} data-header-theme="dark">
+      <Image
+        src="/assets/homepage-banner.webp"
+        alt="Virya homepage banner"
+        fill
+        priority
+        className={styles.banner}
+      />
+
+      <div className={styles.content}>
+        <h1 className={`heading-1 ${styles.heading}`}>
+          Autonomous
+          <br />
+          mobility for
+          <br />
+          smarter
+          <br />
+          operations
+        </h1>
+
+        <div className={styles.bottom}>
+          <div className={styles.scrollHint}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                opacity="0.6"
+                d="M13.5 2.25H10.5C7.60051 2.25 5.25 4.60051 5.25 7.5V16.5C5.25 19.3995 7.60051 21.75 10.5 21.75H13.5C16.3995 21.75 18.75 19.3995 18.75 16.5V7.5C18.75 4.60051 16.3995 2.25 13.5 2.25Z"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                className={styles.scrollWheel}
+                d="M12 10.5V6"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className={styles.scrollText}>See how that looks</span>
+          </div>
+
+          <div className={styles.cta}>
+            <Button href="/solutions/material-mobility" property1="Variant3" size="Button-2">
+              Explore material mobility
+            </Button>
+            <Button href="/solutions/people-mobility" property1="Variant3" size="Button-2">
+              Explore people mobility
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
