@@ -1,0 +1,29 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 34.375 34.375" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="CarBattery" clip-path="url(#clip0_0_12)">
+<g id="Vector">
+</g>
+<path id="Vector_2" d="M21.4531 18.2656H25.75" stroke="var(--stroke-0, #F43D00)" stroke-width="1.5625" stroke-linejoin="round"/>
+<path id="Vector_3" d="M23.6016 16.1094V20.4062" stroke="var(--stroke-0, #F43D00)" stroke-width="1.5625" stroke-linejoin="round"/>
+<path id="Vector_4" d="M9.14844 18.2656H13.4453" stroke="var(--stroke-0, #F43D00)" stroke-width="1.5625" stroke-linejoin="round"/>
+<rect id="Logo Graphic" x="2.86719" y="10.1562" width="28.6458" height="16.1458" stroke="var(--stroke-0, #F43D00)" stroke-width="1.5625"/>
+<g id="Logo Graphic_2">
+<mask id="path-5-outside-1_0_12" maskUnits="userSpaceOnUse" x="5.8125" y="5.45312" width="10" height="6" fill="black">
+<rect fill="white" x="5.8125" y="5.45312" width="10" height="6"/>
+<path d="M7.8125 7.45312H14.0625V10.8185H7.8125V7.45312Z"/>
+</mask>
+<path d="M7.8125 7.45312V5.89062H6.25V7.45312H7.8125ZM14.0625 7.45312H15.625V5.89062H14.0625V7.45312ZM7.8125 7.45312V9.01562H14.0625V7.45312V5.89062H7.8125V7.45312ZM14.0625 7.45312H12.5V10.8185H14.0625H15.625V7.45312H14.0625ZM7.8125 10.8185H9.375V7.45312H7.8125H6.25V10.8185H7.8125Z" fill="var(--stroke-0, #F43D00)" mask="url(#path-5-outside-1_0_12)"/>
+</g>
+<g id="Logo Graphic_3">
+<mask id="path-7-outside-2_0_12" maskUnits="userSpaceOnUse" x="18.3125" y="5.45312" width="10" height="6" fill="black">
+<rect fill="white" x="18.3125" y="5.45312" width="10" height="6"/>
+<path d="M20.3125 7.45312H26.5625V10.8185H20.3125V7.45312Z"/>
+</mask>
+<path d="M20.3125 7.45312V5.89062H18.75V7.45312H20.3125ZM26.5625 7.45312H28.125V5.89062H26.5625V7.45312ZM20.3125 7.45312V9.01562H26.5625V7.45312V5.89062H20.3125V7.45312ZM26.5625 7.45312H25V10.8185H26.5625H28.125V7.45312H26.5625ZM20.3125 10.8185H21.875V7.45312H20.3125H18.75V10.8185H20.3125Z" fill="var(--stroke-0, #F43D00)" mask="url(#path-7-outside-2_0_12)"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_12">
+<rect width="34.375" height="34.375" fill="white"/>
+</clipPath>
+</defs>
+</svg>

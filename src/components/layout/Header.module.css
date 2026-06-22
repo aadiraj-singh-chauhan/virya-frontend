@@ -1,0 +1,203 @@
+/* ── Shell ─────────────────────────────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: var(--strip-height);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.headerHidden {
+  transform: translateY(calc(-100% - var(--strip-height)));
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+/* ── Logo ──────────────────────────────────────────────────────────────────── */
+.logoLink {
+  display: grid; /* stacks both imgs in one cell */
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.logoLight,
+.logoDark {
+  grid-area: 1 / 1;
+  height: 44px;
+  width: auto;
+  transition: opacity 0.25s ease;
+}
+
+/* Default: light logo visible (dark bg on page load) */
+.logoLight {
+  opacity: 1;
+}
+.logoDark {
+  opacity: 0;
+}
+
+/* Over dark background → white logo */
+.header[data-theme="dark"] .logoLight {
+  opacity: 1;
+}
+.header[data-theme="dark"] .logoDark {
+  opacity: 0;
+}
+
+/* Over light background → dark logo */
+.header[data-theme="light"] .logoLight {
+  opacity: 0;
+}
+.header[data-theme="light"] .logoDark {
+  opacity: 1;
+}
+
+/* ── Desktop nav pill ──────────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-radius: 5px;
+  backdrop-filter: blur(15px);
+  transition: background 0.25s ease, color 0.25s ease;
+  /* left padding for nav items, minimal right padding — button sits flush */
+  padding: 6px 6px 6px 24px;
+  color: var(--color-5);
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.navLinkText {
+  position: relative;
+  display: inline-block;
+}
+
+.navLinkOriginal {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.navLinkDisplay {
+  position: absolute;
+  inset: 0;
+}
+
+.chevron {
+  flex-shrink: 0;
+  opacity: 0.75;
+  margin-top: 1px;
+}
+
+/* ── Mobile hamburger ──────────────────────────────────────────────────────── */
+.menuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+/* Nav background and colour follow header theme */
+.header[data-theme="dark"] .nav {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-5);
+}
+.header[data-theme="light"] .nav {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--color-3);
+}
+
+/* Hamburger colour follows header theme */
+.header[data-theme="dark"] .menuBtn {
+  color: var(--color-5);
+}
+.header[data-theme="light"] .menuBtn {
+  color: var(--color-4);
+}
+
+/* ── Mobile nav drawer ─────────────────────────────────────────────────────── */
+.mobileNav {
+  display: none;
+  flex-direction: column;
+  background: var(--color-5);
+  color: var(--color-4);
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+
+.mobileNavOpen {
+  max-height: 560px;
+}
+
+.mobileNavList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobileNavLink {
+  display: block;
+  padding: 18px 32px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: opacity 0.18s ease;
+}
+
+.mobileNavLink:hover {
+  opacity: 0.55;
+}
+
+.mobileCta {
+  padding: 28px 32px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .inner {
+    height: 64px;
+  }
+
+  .logoLight,
+  .logoDark {
+    height: 28px;
+  }
+
+  /* hide desktop nav, show hamburger + drawer */
+  .nav {
+    display: none;
+  }
+
+  .menuBtn {
+    display: flex;
+  }
+
+  .mobileNav {
+    display: flex;
+  }
+}

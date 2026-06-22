@@ -1,0 +1,148 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  color: var(--color-5);
+  background: var(--color-4);
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background: #ff5820;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ── Main content ─────────────────────────────────────────────────────────── */
+
+.main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 20px;
+  padding: 60px 0 100px;
+}
+
+.cta {
+  flex: 0 0 461px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 34px;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+}
+
+.navCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+/* Width-lock scramble pattern */
+.linkText {
+  position: relative;
+  display: inline-block;
+}
+
+.textOriginal {
+  visibility: hidden;
+}
+
+.textDisplay {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+
+/* ── Brand row ────────────────────────────────────────────────────────────── */
+
+.brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 44px;
+}
+
+.brandLeft {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  height: 49px;
+  width: auto;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.socialIcon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* ── Divider ──────────────────────────────────────────────────────────────── */
+
+.divider {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 33px;
+  object-fit: cover;
+}
+
+/* ── Bottom bar ───────────────────────────────────────────────────────────── */
+
+.bottomBar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0 100px;
+}
+
+.copyright {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.policies {
+  display: flex;
+  gap: 48px;
+  font-size: 15px;
+  line-height: 1.2;
+}

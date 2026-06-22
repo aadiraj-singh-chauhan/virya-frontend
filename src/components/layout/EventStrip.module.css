@@ -1,0 +1,22 @@
+.strip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  height: var(--strip-height);
+  background: var(--color-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-5);
+}
+
+.text {
+  white-space: nowrap;
+}
+
+.arrow {
+  flex-shrink: 0;
+}

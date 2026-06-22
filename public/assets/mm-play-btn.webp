@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 33.4298 33.4298" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Play Button Container">
+<foreignObject x="-903.509" y="-903.509" width="1840.45" height="1840.45"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(451.75px);clip-path:url(#bgblur_0_0_4_clip_path);height:100%;width:100%"></div></foreignObject><g id="Play Button" data-figma-bg-blur-radius="903.509">
+<mask id="path-1-inside-1_0_4" fill="white">
+<path d="M0 0H33.4298V33.4298H0V0Z"/>
+</mask>
+<path d="M0 0H33.4298V33.4298H0V0Z" fill="var(--fill-0, black)" fill-opacity="0.1"/>
+<g clip-path="url(#paint0_angular_0_4_clip_path)" data-figma-skip-parse="true" mask="url(#path-1-inside-1_0_4)"><g transform="matrix(0.0142568 -1.01693e-10 1.01697e-10 0.0142568 16.7149 16.7149)"><foreignObject x="-1241.38" y="-1241.38" width="2482.76" height="2482.76"><div xmlns="http://www.w3.org/1999/xhtml" style="background:conic-gradient(from 90deg,rgba(102, 102, 102, 1) 0deg,rgba(255, 63, 0, 1) 360deg);height:100%;width:100%;opacity:1"></div></foreignObject></g></g><path d="M0 0V-0.98323H-0.98323V0H0ZM33.4298 0H34.4131V-0.98323H33.4298V0ZM33.4298 33.4298V34.4131H34.4131V33.4298H33.4298ZM0 33.4298H-0.98323V34.4131H0V33.4298ZM0 0V0.98323H33.4298V0V-0.98323H0V0ZM33.4298 0H32.4466V33.4298H33.4298H34.4131V0H33.4298ZM33.4298 33.4298V32.4466H0V33.4298V34.4131H33.4298V33.4298ZM0 33.4298H0.98323V0H0H-0.98323V33.4298H0Z" data-figma-gradient-fill="{&#34;type&#34;:&#34;GRADIENT_ANGULAR&#34;,&#34;stops&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.40000000596046448,&#34;g&#34;:0.40000000596046448,&#34;b&#34;:0.40000000596046448,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:0.250,&#34;b&#34;:0.0,&#34;a&#34;:1.0},&#34;position&#34;:1.0}],&#34;stopsVar&#34;:[{&#34;color&#34;:{&#34;r&#34;:0.40000000596046448,&#34;g&#34;:0.40000000596046448,&#34;b&#34;:0.40000000596046448,&#34;a&#34;:1.0},&#34;position&#34;:0.0},{&#34;color&#34;:{&#34;r&#34;:1.0,&#34;g&#34;:0.250,&#34;b&#34;:0.0,&#34;a&#34;:1.0},&#34;position&#34;:1.0}],&#34;transform&#34;:{&#34;m00&#34;:28.513669967651367,&#34;m01&#34;:2.0339383866030403e-07,&#34;m02&#34;:2.4580764770507812,&#34;m10&#34;:-2.0338681849807472e-07,&#34;m11&#34;:28.513669967651367,&#34;m12&#34;:2.4580769538879395},&#34;opacity&#34;:1.0,&#34;blendMode&#34;:&#34;NORMAL&#34;,&#34;visible&#34;:true}" mask="url(#path-1-inside-1_0_4)"/>
+</g>
+<path id="Vector 162" d="M12.7812 11.3125V21.6364" stroke="var(--stroke-0, white)" stroke-width="0.98323"/>
+<path id="Vector 163" d="M20.6406 11.3125V21.6364" stroke="var(--stroke-0, white)" stroke-width="0.98323"/>
+</g>
+<defs>
+<clipPath id="bgblur_0_0_4_clip_path" transform="translate(903.509 903.509)"><path d="M0 0H33.4298V33.4298H0V0Z"/>
+</clipPath><clipPath id="paint0_angular_0_4_clip_path"><path d="M0 0V-0.98323H-0.98323V0H0ZM33.4298 0H34.4131V-0.98323H33.4298V0ZM33.4298 33.4298V34.4131H34.4131V33.4298H33.4298ZM0 33.4298H-0.98323V34.4131H0V33.4298ZM0 0V0.98323H33.4298V0V-0.98323H0V0ZM33.4298 0H32.4466V33.4298H33.4298H34.4131V0H33.4298ZM33.4298 33.4298V32.4466H0V33.4298V34.4131H33.4298V33.4298ZM0 33.4298H0.98323V0H0H-0.98323V33.4298H0Z"/></clipPath></defs>
+</svg>
