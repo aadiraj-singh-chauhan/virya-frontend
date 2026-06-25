@@ -1,0 +1,56 @@
+/* ── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  background: var(--color-6);
+  padding: 80px 35px;
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────────── */
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  flex: 0 0 calc((100% - 40px) / 3);
+  height: 168px;
+  background: var(--color-5);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+}
+
+/* ── Card title ───────────────────────────────────────────────────────────── */
+
+.cardTitle {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-3);
+}
+
+/* ── Card description ─────────────────────────────────────────────────────── */
+
+.cardDesc {
+  opacity: 0.5;
+}
