@@ -1,0 +1,111 @@
+.section {
+  position: relative;
+  padding-top: 80px;
+  height: 940px;
+  background: var(--color-6);
+  overflow: hidden;
+}
+
+/* ── Watermark text ───────────────────────────────────────────────────────── */
+
+.bgText {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+  text-align: center;
+}
+
+.bgPeople,
+.bgMobility {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: 13.5vw;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bgPeople {
+  margin-top: 23px;
+  color: var(--color-3);
+  opacity: 0.1;
+}
+
+.bgMobility {
+  margin-top: -0.18em; /* pull tight against "PEOPLE" — matches Figma overlap */
+  color: #e1dcda;
+}
+
+/* ── Vehicle image ────────────────────────────────────────────────────────── */
+
+/* Image sits in front of watermark text, behind gradient + content */
+.imageWrap {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 99.6%;
+  height: 851px;
+  z-index: 2;
+}
+
+.image {
+  object-fit: contain;
+  object-position: center top;
+}
+
+/* ── Bottom gradient fade ─────────────────────────────────────────────────── */
+
+.gradient {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  height: 256px;
+  background: linear-gradient(to bottom, transparent, var(--color-6));
+  z-index: 3;
+}
+
+/* ── Bottom content: bullets + description ────────────────────────────────── */
+
+.content {
+  position: absolute;
+  bottom: 43px;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+}
+
+.bullets {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.bullet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--color-1);
+}
+
+.desc {
+  text-align: center;
+  max-width: 562px;
+  opacity: 0.6;
+}

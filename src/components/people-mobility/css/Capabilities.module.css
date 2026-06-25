@@ -1,0 +1,46 @@
+.section {
+  background: var(--color-6);
+  padding: 100px 0;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+/* ── Feature grid ─────────────────────────────────────────────────────────── */
+
+.grid {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px 50px;
+}
+
+.iconAndTitle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.iconAndTitle :global(.lable-3) {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.icon {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.card :global(.body-1) {
+  margin-top: 25px;
+  opacity: 0.5;
+}

@@ -1,0 +1,56 @@
+.section {
+  background: var(--color-6);
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.heading {
+  text-align: center;
+  max-width: 654px;
+  margin: 0 auto 50px;
+}
+
+/* ── Blueprint illustration ────────────────────────────────────────────────── */
+
+.blueprintWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.blueprint {
+  width: 90%;
+  height: auto;
+}
+
+/* ── Specs grid ───────────────────────────────────────────────────────────── */
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  background: var(--color-5);
+  height: 91px;
+  padding: 14px 20px 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Orange square indicator */
+.dot {
+  position: absolute;
+  left: 14px;
+  top: 19px;
+  width: 10px;
+  height: 10px;
+  background: var(--color-1);
+}
+
+.card :global(.body-1) {
+  color: var(--color-1);
+}

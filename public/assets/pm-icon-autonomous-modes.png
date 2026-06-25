@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 67 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon">
+<circle id="Ellipse 45" cx="33.5" cy="33.5" r="32" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+<circle id="Ellipse 46" cx="33.5018" cy="33.5018" r="25.7674" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+<circle id="Ellipse 47" cx="34.0116" cy="34.0116" r="5.51163" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+<g id="Icon Element">
+<path id="Vector 198" d="M29 32L9 37.3594" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+<path id="Vector 200" d="M29 37L9 42.3594" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+</g>
+<g id="Icon Element_2">
+<path id="Vector 198_2" d="M38.5 32.5L58 37.3594" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+<path id="Vector 200_2" d="M38 37L58 42.3594" stroke="var(--stroke-0, #F43D00)" stroke-width="3"/>
+</g>
+<path id="Vector 198_3" d="M36.0078 8L34.5167 8.03079L34.5163 29.7364L36.0074 29.7056L37.4986 29.6748L37.4989 7.96921L36.0078 8Z" fill="var(--stroke-0, #F43D00)"/>
+<path id="Vector 200_3" d="M31.1719 8L29.6808 8.03078L29.6804 29.7364L31.1715 29.7056L32.6626 29.6748L32.663 7.96921L31.1719 8Z" fill="var(--stroke-0, #F43D00)"/>
+</g>
+</svg>

@@ -1,0 +1,78 @@
+.section {
+  padding: 100px 0;
+  background: var(--color-6);
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  max-width: 856px;
+  margin: 0 auto 50px;
+}
+
+.desc {
+  opacity: 0.5;
+}
+
+/* ── Cards grid ───────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  height: 497px;
+  overflow: hidden;
+}
+
+/* ── Card image ───────────────────────────────────────────────────────────── */
+
+.imageWrap {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Play icon ────────────────────────────────────────────────────────────── */
+
+.play {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* ── Card label ───────────────────────────────────────────────────────────── */
+
+.cardLabel {
+  position: absolute;
+  bottom: 32px;
+  left: 24px;
+  right: 24px;
+  height: 53px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  color: var(--color-6);
+}

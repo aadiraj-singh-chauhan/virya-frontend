@@ -1,0 +1,31 @@
+.section {
+  position: relative;
+  height: 790px;
+  overflow: hidden;
+}
+
+/* ── Background image ─────────────────────────────────────────────────────── */
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── CTA buttons ──────────────────────────────────────────────────────────── */
+
+.buttons {
+  position: absolute;
+  bottom: 85px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}

@@ -1,0 +1,105 @@
+.section {
+  position: relative;
+  padding: 100px 0;
+  background: var(--color-6);
+  overflow: hidden;
+}
+
+/* ── Decorative grid pattern ──────────────────────────────────────────────── */
+
+.pattern {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1512px;
+  height: 885px;
+  pointer-events: none;
+}
+
+/* ── Content ──────────────────────────────────────────────────────────────── */
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  max-width: 904px;
+  margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+  background: var(--color-6);
+  padding: 20px 40px;
+}
+
+.desc {
+  opacity: 0.5;
+  max-width: 856px;
+}
+
+/* ── Image frame ──────────────────────────────────────────────────────────── */
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  height: 504px;
+  overflow: hidden;
+}
+
+/* Image is wider/taller than the frame — centered and clipped */
+.imageWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 950px;
+  height: 638px;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Play button (center) ─────────────────────────────────────────────────── */
+
+.playCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(14px);
+  border: 1.1px solid #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ── Play icon (corner) ───────────────────────────────────────────────────── */
+
+.playCorner {
+  position: absolute;
+  top: 16px;
+  right: 23px;
+  width: 24px;
+  height: 24px;
+}

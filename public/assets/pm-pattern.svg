@@ -1,0 +1,70 @@
+<svg width="1512" height="885" viewBox="0 0 1512 885" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#pm-clip)">
+    <path id="Vector 190" opacity="0.2" d="M25.1924 -94.7358V297.644M25.1924 591.316V789.959" stroke="black" stroke-width="0.440719"/>
+    <path id="Vector 191" opacity="0.3" d="M25.1924 297.641L1683 297.641" stroke="black" stroke-width="0.440719"/>
+    <path id="Vector 192" opacity="0.3" d="M-170.996 591.931H25.1938" stroke="black" stroke-width="0.440719"/>
+    <path id="Vector 193" opacity="0.3" d="M415.733 592.543H1006.14V348.532M1202.33 395.74V788.733M221.995 202.615H1202.33V51.181M1594.1 4.58581H122.061M613.762 788.733V-96.5747" stroke="black" stroke-width="0.440719"/>
+    <path id="Vector 194" opacity="0.3" d="M-170.996 395.743L1683 395.743" stroke="black" stroke-width="0.440719"/>
+    <path id="Vector 195" opacity="0.3" d="M-72.2891 493.837H1683.61" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 489" opacity="0.3" x1="515.891" y1="-94.7358" x2="515.891" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 496" opacity="0.3" x1="712.08" y1="-94.7358" x2="712.08" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 497" opacity="0.3" x1="908.268" y1="-94.7358" x2="908.268" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 503" opacity="0.3" x1="1104.46" y1="-94.7358" x2="1104.46" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 498" opacity="0.3" x1="810.174" y1="-94.7358" x2="810.174" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 492" opacity="0.3" x1="1300.65" y1="-94.7358" x2="1300.65" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 493" opacity="0.3" x1="1398.75" y1="-94.7358" x2="1398.75" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 494" opacity="0.3" x1="1496.83" y1="-94.7358" x2="1496.83" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 491" opacity="0.3" x1="1683" y1="101.673" x2="-170.999" y2="101.673" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 490" opacity="0.3" x1="417.79" y1="-94.7358" x2="417.79" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 499" opacity="0.3" x1="221.601" y1="199.547" x2="221.601" y2="789.343" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 502" opacity="0.3" x1="319.703" y1="-94.7358" x2="319.702" y2="789.346" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 500" opacity="0.3" x1="123.507" y1="-94.7358" x2="123.507" y2="199.549" stroke="black" stroke-width="0.440719"/>
+    <line id="Line 501" opacity="0.3" x1="123.507" y1="591.931" x2="123.507" y2="789.347" stroke="black" stroke-width="0.440719"/>
+    <g id="Dot container">
+      <rect x="1500.29" y="398.188" width="3.67856" height="24.5238" transform="rotate(-90 1500.29 398.188)" fill="#F43D00"/>
+    </g>
+    <g id="Dot container 2">
+      <rect x="220.154" y="320.944" width="3.67856" height="24.5238" fill="#F43D00"/>
+      <rect x="220.154" y="345.468" width="3.67856" height="24.5238" fill="url(#pm-grad-0)"/>
+    </g>
+    <g id="Dot container 3">
+      <rect x="196.859" y="3.35693" width="3.67856" height="24.5238" transform="rotate(90 196.859 3.35693)" fill="#F43D00"/>
+      <rect x="172.335" y="3.35693" width="3.67856" height="24.5238" transform="rotate(90 172.335 3.35693)" fill="url(#pm-grad-1)"/>
+    </g>
+    <g id="Dot container 4">
+      <rect x="1399.75" y="150.503" width="3.67856" height="24.5238" transform="rotate(180 1399.75 150.503)" fill="#F43D00"/>
+      <rect x="1399.75" y="125.979" width="3.67856" height="24.5238" transform="rotate(180 1399.75 125.979)" fill="url(#pm-grad-2)"/>
+    </g>
+    <circle opacity="0.2" cx="1496.62" cy="199.548" r="97.8747" stroke="black" stroke-width="0.440719"/>
+    <path id="Vector 196" opacity="0.2" d="M405.311 -82.4717L25.1924 297.647" stroke="black" stroke-width="0.440719"/>
+    <!-- Fade top -->
+    <rect width="1513" height="200" fill="url(#pm-fade-top)"/>
+    <!-- Fade bottom -->
+    <rect width="1508" height="343" transform="matrix(-1 0 0 1 1510 542)" fill="url(#pm-fade-bottom)"/>
+  </g>
+  <defs>
+    <linearGradient id="pm-grad-0" x1="221.993" y1="345.468" x2="221.993" y2="369.992" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF4000"/>
+      <stop offset="1" stop-color="#FF4000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="pm-grad-1" x1="174.174" y1="3.35693" x2="174.174" y2="27.8807" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF4000"/>
+      <stop offset="1" stop-color="#FF4000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="pm-grad-2" x1="1401.59" y1="125.979" x2="1401.59" y2="150.503" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF4000"/>
+      <stop offset="1" stop-color="#FF4000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="pm-fade-top" x1="756.5" y1="200" x2="756.5" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDF8F5" stop-opacity="0"/>
+      <stop offset="1" stop-color="#FDF8F5"/>
+    </linearGradient>
+    <linearGradient id="pm-fade-bottom" x1="754" y1="0" x2="754" y2="343" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDF8F5" stop-opacity="0"/>
+      <stop offset="1" stop-color="#FDF8F5"/>
+    </linearGradient>
+    <clipPath id="pm-clip">
+      <rect width="1512" height="885" fill="white"/>
+    </clipPath>
+  </defs>
+</svg>

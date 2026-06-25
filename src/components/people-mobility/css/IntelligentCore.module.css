@@ -1,0 +1,78 @@
+.section {
+  padding-top: 100px;
+  background: var(--color-6);
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* ── Rows ─────────────────────────────────────────────────────────────────── */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  height: 122px;
+  overflow: hidden;
+  border-bottom: 0.2px solid var(--color-3);
+  background: var(--color-6);
+  transition: height 0.4s ease, background-color 0.4s ease;
+  cursor: default;
+}
+
+.rowInner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rowBorderTop {
+  border-top: 0.2px solid var(--color-3);
+}
+
+.row:hover {
+  height: 321px;
+  background: var(--color-8);
+}
+
+/* ── Expanded content ─────────────────────────────────────────────────────── */
+
+.rowDesc {
+  margin-top: 10px;
+  max-width: 550px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease 0.15s, transform 0.25s ease 0.15s;
+}
+
+.row:hover .rowDesc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Feature image (only for items that have one) ─────────────────────────── */
+
+.rowImage {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 560px;
+  height: 426px;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+}
+
+.row:hover .rowImage {
+  opacity: 1;
+}
+
+.image {
+  object-fit: contain;
+  object-position: bottom center;
+}
