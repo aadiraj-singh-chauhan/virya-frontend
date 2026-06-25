@@ -1,9 +1,12 @@
-import styles from './page.module.css';
-import Banner from '@/components/material-mobility/components/Banner';
-import VideoSection from '@/components/material-mobility/components/VideoSection';
-import Features from '@/components/material-mobility/components/Features';
-import Ecosystem from '@/components/material-mobility/components/Ecosystem';
-import Specs from '@/components/material-mobility/components/Specs';
+import styles from "./page.module.css";
+import Banner from "@/components/material-mobility/components/Banner";
+import VideoSection from "@/components/material-mobility/components/VideoSection";
+import Features from "@/components/material-mobility/components/Features";
+import Ecosystem from "@/components/material-mobility/components/Ecosystem";
+import Specs from "@/components/material-mobility/components/Specs";
+import Platforms from "@/components/material-mobility/components/Platforms";
+import CustomSolution from "@/components/material-mobility/components/CustomSolution";
+import RoutingCTAs from "@/components/material-mobility/components/RoutingCTAs";
 
 export default function MaterialMobility() {
   return (
@@ -13,6 +16,9 @@ export default function MaterialMobility() {
       <Features />
       <Ecosystem />
       <Specs />
+      <Platforms />
+      <CustomSolution />
+      <RoutingCTAs />
     </main>
   );
 }

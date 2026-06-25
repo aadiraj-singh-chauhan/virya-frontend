@@ -1,0 +1,120 @@
+.section {
+  padding: 100px 0 0;
+  background: var(--color-6);
+}
+
+.heading {
+  text-align: center;
+  max-width: 916px;
+  margin: 0 auto 60px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-5);
+  height: 531px;
+  cursor: pointer;
+}
+
+/* Cream-to-transparent gradient overlaid at top of every card */
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-2);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Product name ─────────────────────────────────────────────────────────── */
+
+.name {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+  color: var(--color-3);
+  opacity: 0.1;
+  pointer-events: none;
+  transition:
+    color 0.4s ease,
+    opacity 0.4s ease;
+}
+
+.card:hover .name {
+  color: var(--color-2);
+  opacity: 1;
+}
+
+/* ── Robot image ──────────────────────────────────────────────────────────── */
+
+/* Fixed bounds so every robot renders at the same visual size */
+.imageWrap {
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  right: 20px;
+  bottom: 100px;
+  z-index: 1;
+}
+
+.image {
+  object-fit: contain;
+  object-position: center center;
+}
+
+/* ── Bottom zone — description ↔ explore button ──────────────────────────── */
+
+.bottom {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.description {
+  text-align: center;
+  padding: 0 51px;
+  /* lock to 3 lines of body-1 so all cards are equal height */
+  height: calc(3 * 1.4 * 16px);
+  overflow: hidden;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.card:hover .description {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+.explore {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-14px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  pointer-events: none;
+}
+
+.card:hover .explore {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
