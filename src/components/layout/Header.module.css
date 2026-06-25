@@ -110,6 +110,67 @@
   margin-top: 1px;
 }
 
+/* ── Solutions dropdown ────────────────────────────────────────────────────── */
+.navItem {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  width: 245px;
+  background: rgba(14, 18, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px 17px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdownOpen {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdownLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-5);
+}
+
+.dropdownLink + .dropdownLink {
+  padding-top: 12px;
+}
+
+.dropdownLink:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.dropdownArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-1);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.dropdownLink:hover .dropdownArrow {
+  opacity: 1;
+}
+
 /* ── Mobile hamburger ──────────────────────────────────────────────────────── */
 .menuBtn {
   display: none;

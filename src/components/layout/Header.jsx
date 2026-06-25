@@ -7,12 +7,18 @@ import Button from '@/components/ui/Button';
 import { useScramble } from '@/hooks/useScramble';
 import styles from './Header.module.css';
 
+const SOLUTION_ITEMS = [
+  { label: 'Material Mobility', href: '/material-mobility' },
+  { label: 'People Mobility',   href: '/people-mobility'   },
+  { label: 'R&D Platforms',     href: '/rd-platforms'       },
+];
+
 const NAV_ITEMS = [
-  { label: 'Solutions',  href: '/solutions',  dropdown: true  },
-  { label: 'Technology', href: '/technology', dropdown: false },
-  { label: 'Resources',  href: '/resources',  dropdown: true  },
-  { label: 'Company',    href: '/company',    dropdown: false },
-  { label: 'Careers',    href: '/careers',    dropdown: false },
+  { label: 'Solutions',  href: '/solutions',  items: SOLUTION_ITEMS },
+  { label: 'Technology', href: '/technology' },
+  { label: 'Resources',  href: '/resources',  dropdown: true },
+  { label: 'Company',    href: '/company'    },
+  { label: 'Careers',    href: '/careers'    },
 ];
 
 // Vertical midpoint of the header: strip (40px) + half header (40px) = 80px.
@@ -75,9 +81,9 @@ export default function Header() {
         {/* ── Desktop nav pill ─────────────────────────────────────────────── */}
         <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.navList} role="list">
-            {NAV_ITEMS.map(({ label, href, dropdown }) => (
+            {NAV_ITEMS.map(({ label, href, items, dropdown }) => (
               <li key={href}>
-                <NavLink href={href} label={label} dropdown={dropdown} />
+                <NavLink href={href} label={label} items={items} dropdown={dropdown} />
               </li>
             ))}
           </ul>
@@ -123,13 +129,39 @@ export default function Header() {
   );
 }
 
-function NavLink({ href, label, dropdown }) {
+function NavLink({ href, label, items, dropdown }) {
+  const [open, setOpen] = useState(false);
+  const timer = useRef(null);
+  const { display, play, reset } = useScramble(label.toUpperCase());
+
+  const handleEnter = () => { clearTimeout(timer.current); setOpen(true); play(); };
+  const handleLeave = () => { timer.current = setTimeout(() => setOpen(false), 150); reset(); };
+
+  return (
+    <div className={styles.navItem} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+      <Link href={href} className={styles.navLink}>
+        <span className={`label-2 ${styles.navLinkText}`}>
+          <span className={styles.navLinkOriginal}>{label}</span>
+          <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
+        </span>
+        {(items || dropdown) && <Chevron />}
+      </Link>
+      {items && (
+        <div className={`${styles.dropdown} ${open ? styles.dropdownOpen : ''}`}>
+          {items.map((item) => <DropdownItem key={item.href} label={item.label} href={item.href} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DropdownItem({ label, href }) {
   const { display, play, reset } = useScramble(label.toUpperCase());
 
   return (
     <Link
       href={href}
-      className={styles.navLink}
+      className={styles.dropdownLink}
       onMouseEnter={play}
       onMouseLeave={reset}
     >
@@ -137,7 +169,11 @@ function NavLink({ href, label, dropdown }) {
         <span className={styles.navLinkOriginal}>{label}</span>
         <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
       </span>
-      {dropdown && <Chevron />}
+      <span className={styles.dropdownArrow} aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3V9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </span>
     </Link>
   );
 }
