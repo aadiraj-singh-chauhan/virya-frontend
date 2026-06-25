@@ -5,6 +5,7 @@ import TechSpecs from '@/components/products/apt20/components/TechSpecs';
 import Applications from '@/components/products/apt20/components/Applications';
 import RelatedProducts from '@/components/products/apt20/components/RelatedProducts';
 import CTA from '@/components/products/apt20/components/CTA';
+import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
 export default function APT20() {
   return (
@@ -22,6 +23,7 @@ export default function APT20() {
       <Applications />
       <RelatedProducts />
       <CTA />
+      <ProductFooterCTA />
     </main>
   );
 }
