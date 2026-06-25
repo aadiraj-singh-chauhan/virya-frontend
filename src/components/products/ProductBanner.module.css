@@ -1,0 +1,68 @@
+/* ── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  height: 790px;
+  background: linear-gradient(to bottom, var(--color-6) 0%, var(--color-7) 50%, var(--color-6) 100%);
+  overflow: hidden;
+}
+
+/* ── Watermark ────────────────────────────────────────────────────────────── */
+
+.watermark {
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-primary);
+  font-size: 411px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--color-3);
+  opacity: 0.1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Content column (category + image + button, centered) ─────────────────── */
+
+.contentCol {
+  position: absolute;
+  top: 170px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Category tag ─────────────────────────────────────────────────────────── */
+
+.categoryTag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.categoryDot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-1);
+  flex-shrink: 0;
+}
+
+/* ── Product image ────────────────────────────────────────────────────────── */
+
+.imageWrap {
+  position: relative;
+  width: var(--image-w, 609px);
+  height: var(--image-h, 491px);
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: contain;
+}

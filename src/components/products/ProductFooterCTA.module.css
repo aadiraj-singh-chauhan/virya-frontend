@@ -1,0 +1,66 @@
+/* ── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  background: var(--color-6);
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Circuit pattern background ───────────────────────────────────────────── */
+
+.pattern {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  min-width: 1512px;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* ── Two-column content row ───────────────────────────────────────────────── */
+
+.container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 1366px;
+  height: 283px;
+  background: var(--color-6);
+}
+
+/* ── Individual CTA block ─────────────────────────────────────────────────── */
+
+.block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 33px;
+  text-align: center;
+  height: 100%;
+}
+
+/* ── Vertical divider ─────────────────────────────────────────────────────── */
+
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-4);
+  opacity: 0.15;
+  flex-shrink: 0;
+}
+
+/* ── Heading ──────────────────────────────────────────────────────────────── */
+
+.heading {
+  max-width: 520px;
+}
