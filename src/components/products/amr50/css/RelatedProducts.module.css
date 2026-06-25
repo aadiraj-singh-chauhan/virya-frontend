@@ -1,0 +1,156 @@
+/* ── Section ──────────────────────────────────────────────────────────────── */
+
+.section {
+  background: var(--color-6);
+  padding: 100px 0;
+}
+
+.heading {
+  margin-bottom: 30px;
+}
+
+/* ── Cards row ────────────────────────────────────────────────────────────── */
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  position: relative;
+  height: 588px;
+  overflow: hidden;
+  background: var(--color-5);
+  cursor: pointer;
+}
+
+/* ── Background image ─────────────────────────────────────────────────────── */
+
+.bgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgImage {
+  object-fit: cover;
+}
+
+/* ── Gradient ─────────────────────────────────────────────────────────────── */
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Watermark ────────────────────────────────────────────────────────────── */
+
+.watermarkOrange {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 90px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-1);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.watermarkDim {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 90px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-3);
+  opacity: 0.1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.card:hover .watermarkOrange,
+.card:hover .watermarkDim {
+  color: var(--color-2);
+  opacity: 1;
+}
+
+/* ── Robot render ─────────────────────────────────────────────────────────── */
+
+.robotWrap {
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  right: 20px;
+  bottom: 100px;
+  z-index: 2;
+}
+
+.robotImage {
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ── Bottom zone ──────────────────────────────────────────────────────────── */
+
+.bottom {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desc {
+  text-align: center;
+  padding: 0 51px;
+  height: calc(3 * 1.4 * 16px);
+  overflow: hidden;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.card:hover .desc {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+.explore {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.card:hover .explore {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
