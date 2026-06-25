@@ -37,7 +37,7 @@ export default function TechSpecs() {
 
       <div className={styles.blueprint}>
         <Image
-          src="/assets/mm-apt20.png"
+          src="/assets/apt20-ps.webp"
           alt="APT20 product blueprint showing front, side and rear views with dimensions"
           width={1372}
           height={497}
