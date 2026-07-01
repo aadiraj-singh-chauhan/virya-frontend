@@ -22,16 +22,20 @@
 
 /* ── Logo ──────────────────────────────────────────────────────────────────── */
 .logoLink {
-  display: grid; /* stacks both imgs in one cell */
   align-self: center;
   flex-shrink: 0;
 }
 
+.logoWrap {
+  display: block;
+  position: relative;
+  width: 125px;
+  height: 44px;
+}
+
 .logoLight,
 .logoDark {
-  grid-area: 1 / 1;
-  height: 44px;
-  width: auto;
+  object-fit: contain;
   transition: opacity 0.25s ease;
 }
 
@@ -60,16 +64,31 @@
 }
 
 /* ── Desktop nav pill ──────────────────────────────────────────────────────── */
+/* The pill's blur lives on a ::before (not on .nav itself) so .nav never
+   becomes a "backdrop root" — otherwise the dropdown's own backdrop-filter,
+   being a descendant, would only be able to sample pixels painted inside
+   the pill instead of the real page behind it. */
 .nav {
+  position: relative;
+  z-index: 0;
   display: flex;
   align-items: center;
   gap: 28px;
   border-radius: 5px;
-  backdrop-filter: blur(15px);
-  transition: background 0.25s ease, color 0.25s ease;
+  transition: color 0.25s ease;
   /* left padding for nav items, minimal right padding — button sits flush */
   padding: 6px 6px 6px 24px;
   color: var(--color-5);
+}
+
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: blur(15px);
+  transition: background 0.25s ease;
 }
 
 .navList {
@@ -118,23 +137,27 @@
 .dropdown {
   position: absolute;
   top: calc(100% + 16px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-8px);
+  left: -24px;
+  transform: translateY(-8px);
   width: 245px;
-  background: rgba(14, 18, 20, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(15px);
   padding: 20px 17px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.25s ease;
+}
+
+/* Over a light header theme, invert to a dark frosted panel so the white
+   link text stays legible against whatever light section sits behind it. */
+.header[data-theme="light"] .dropdown {
+  background: rgba(14, 18, 20, 0.75);
 }
 
 .dropdownOpen {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 
 .dropdownLink {
@@ -144,6 +167,7 @@
   padding-bottom: 11px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color-5);
+  white-space: nowrap;
 }
 
 .dropdownLink + .dropdownLink {
@@ -185,12 +209,16 @@
 
 /* Nav background and colour follow header theme */
 .header[data-theme="dark"] .nav {
-  background: rgba(255, 255, 255, 0.1);
   color: var(--color-5);
 }
+.header[data-theme="dark"] .nav::before {
+  background: rgba(255, 255, 255, 0.1);
+}
 .header[data-theme="light"] .nav {
-  background: rgba(0, 0, 0, 0.1);
   color: var(--color-3);
+}
+.header[data-theme="light"] .nav::before {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* Hamburger colour follows header theme */
@@ -244,8 +272,8 @@
     height: 64px;
   }
 
-  .logoLight,
-  .logoDark {
+  .logoWrap {
+    width: 80px;
     height: 28px;
   }
 

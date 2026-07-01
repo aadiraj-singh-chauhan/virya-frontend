@@ -16,6 +16,7 @@ export default function LogoSlider() {
               alt="Trusted partner logo"
               width={300}
               height={50}
+              style={{ height: 'auto' }}
               className={styles.logo}
               draggable={false}
             />
@@ -27,6 +28,7 @@ export default function LogoSlider() {
               alt=""
               width={300}
               height={50}
+              style={{ height: 'auto' }}
               aria-hidden="true"
               className={styles.logo}
               draggable={false}

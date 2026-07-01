@@ -10,10 +10,6 @@
 
 /* ── Background image ──────────────────────────────────────────────────────── */
 .bgImage {
-  position: absolute;
-  top: 18.51px;
-  width: 100%;
-  height: 913.986px;
   object-fit: cover;
   pointer-events: none;
 }

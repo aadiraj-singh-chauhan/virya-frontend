@@ -59,6 +59,7 @@ export default function Industries() {
                   src={item.src}
                   alt={item.label}
                   fill
+                  sizes="(max-width: 768px) 100vw, 517px"
                   className={styles.cardImage}
                 />
                 <div className={styles.cardOverlay} aria-hidden="true" />

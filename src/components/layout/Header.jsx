@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button';
 import { useScramble } from '@/hooks/useScramble';
@@ -29,6 +30,7 @@ export default function Header() {
   const [theme, setTheme] = useState('dark'); // dark bg on first load
   const [visible, setVisible] = useState(true);
   const lastY = useRef(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     let raf;
@@ -60,13 +62,14 @@ export default function Header() {
       raf = requestAnimationFrame(update);
     };
 
+    lastY.current = window.scrollY;
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <header className={`${styles.header} ${visible ? '' : styles.headerHidden}`} data-theme={theme}>
@@ -74,8 +77,10 @@ export default function Header() {
 
         {/* ── Logo — both variants stacked; CSS cross-fades on data-theme ────── */}
         <Link href="/" className={styles.logoLink} aria-label="Virya — Autonomous Technologies">
-          <Image src="/assets/logo-light.svg" alt="Virya" className={styles.logoLight} width={142} height={50} />
-          <Image src="/assets/logo-dark.svg"  alt=""       className={styles.logoDark}  width={142} height={50} aria-hidden="true" />
+          <span className={styles.logoWrap}>
+            <Image src="/assets/logo-light.svg" fill alt="Virya" className={styles.logoLight} sizes="(max-width: 768px) 80px, 125px" />
+            <Image src="/assets/logo-dark.svg"  fill alt="" className={styles.logoDark} aria-hidden="true" sizes="(max-width: 768px) 80px, 125px" />
+          </span>
         </Link>
 
         {/* ── Desktop nav pill ─────────────────────────────────────────────── */}

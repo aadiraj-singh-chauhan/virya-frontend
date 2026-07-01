@@ -67,6 +67,7 @@ export default function Legacy() {
                 src={card.image}
                 alt=""
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className={styles.cardImage}
                 aria-hidden="true"
               />

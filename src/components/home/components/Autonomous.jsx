@@ -8,8 +8,8 @@ export default function Autonomous() {
       <Image
         src="/assets/autonomous-system.webp"
         alt=""
-        width={1920}
-        height={914}
+        fill
+        sizes="100vw"
         className={styles.bgImage}
         aria-hidden="true"
       />

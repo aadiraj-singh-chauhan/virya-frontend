@@ -6,12 +6,12 @@ import styles from '../css/LatestFromVirya.module.css';
 
 const ITEMS = [
   {
-    src: '/assets/latest-1.webp',
+    src: '/assets/apt20.webp',
     tags: ['Blog', 'Product Advancement'],
     title: 'A milestone moment: launching our next-generation autonomous pallet truck APT20',
   },
   {
-    src: '/assets/latest-2.webp',
+    src: '/assets/amr10.webp',
     tags: ['Blog', 'Product Advancement'],
     title: 'A milestone moment: launching our next-generation autonomous pallet truck APT20',
   },
@@ -42,7 +42,7 @@ export default function LatestFromVirya() {
 
         <div className={styles.grid}>
           <div className={styles.featured}>
-            <Image src="/assets/latest-featured.webp" alt="Factory automation" fill className={styles.featuredBg} />
+            <Image src="/assets/milestone-moment.webp" alt="Factory automation" fill sizes="(max-width: 768px) 100vw, 676px" className={styles.featuredBg} />
             <div className={styles.featuredOverlay} aria-hidden="true" />
             <div className={styles.featuredContent}>
               <span className={styles.tag}>Case study</span>
