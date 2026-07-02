@@ -6,7 +6,7 @@ export default function ProductBanner({ name, image, imageAlt, imageWidth, image
   return (
     <section className={styles.section} data-header-theme="light">
 
-      <p className={styles.watermark} aria-hidden="true">{name}</p>
+      <h1 className={styles.watermark}>{name}</h1>
 
       <div className={styles.contentCol}>
         <div className={styles.categoryTag}>
@@ -22,6 +22,7 @@ export default function ProductBanner({ name, image, imageAlt, imageWidth, image
             src={image}
             alt={imageAlt}
             fill
+            sizes={imageWidth || '609px'}
             className={styles.image}
             priority
           />

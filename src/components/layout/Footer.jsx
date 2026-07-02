@@ -56,7 +56,7 @@ function NavLink({ href, children }) {
 export default function Footer() {
   return (
     <footer className={styles.footer} data-header-theme="dark">
-      <Image src="/assets/footer-bg.webp" fill className={styles.bgImage} alt="" aria-hidden="true" />
+      <Image src="/assets/footer-bg.webp" fill sizes="100vw" className={styles.bgImage} alt="" aria-hidden="true" />
       <div className={styles.bgOverlay} aria-hidden="true" />
 
       <div className="container">
@@ -83,7 +83,7 @@ export default function Footer() {
 
         <div className={styles.brand}>
           <div className={styles.brandLeft}>
-            <Image src="/assets/logo-light.svg" alt="Virya" width={142} height={49} style={{ width: 'auto', height: '49px' }} className={styles.logo} />
+            <Image src="/assets/logo-light.svg" alt="Virya" width={142} height={50} className={styles.logo} />
             <div className={styles.socials}>
               <a href="https://instagram.com" aria-label="Instagram">
                 <Image src="/assets/icon-instagram.svg" alt="" width={20} height={20} className={styles.socialIcon} />
@@ -101,7 +101,7 @@ export default function Footer() {
       </div>
 
       <div className={styles.dividerWrap}>
-        <Image src="/assets/footer-divider.webp" fill className={styles.divider} alt="" aria-hidden="true" />
+        <Image src="/assets/footer-divider.webp" fill sizes="100vw" className={styles.divider} alt="" aria-hidden="true" />
       </div>
 
       <div className="container">

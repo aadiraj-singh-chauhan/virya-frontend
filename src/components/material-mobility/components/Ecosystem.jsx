@@ -86,11 +86,11 @@ export default function Ecosystem() {
           </div>
 
           <div className={styles.imageBox}>
-            <Image src="/assets/mm-ecosystem-pattern.webp" alt="" fill className={styles.pattern} />
+            <Image src="/assets/mm-ecosystem-pattern.webp" alt="" fill sizes="676px" className={styles.pattern} />
             <Image
               key={active}
               src={STEPS[active].image}
-              alt=""
+              alt={STEPS[active].title}
               width={490}
               height={427}
               className={styles.image}

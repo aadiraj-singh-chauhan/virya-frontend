@@ -9,6 +9,7 @@ export default function CustomSolution() {
         src="/assets/cta-pattern.svg"
         alt=""
         fill
+        sizes="100vw"
         className={styles.pattern}
         aria-hidden="true"
       />

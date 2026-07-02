@@ -40,6 +40,7 @@ export default function Platforms() {
                   src={platform.image}
                   alt={platform.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className={styles.image}
                 />
               </div>

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from '../css/VehicleSpecs.module.css';
 
 const SPECS = [
@@ -16,9 +17,11 @@ export default function VehicleSpecs() {
       </h2>
 
       <div className={styles.blueprintWrap}>
-        <img
+        <Image
           src="/assets/pm-vehicle-blueprint.png"
           alt="APM vehicle — front, side, and rear views with dimensions"
+          width={1251}
+          height={312}
           className={styles.blueprint}
         />
       </div>

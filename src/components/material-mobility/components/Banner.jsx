@@ -10,7 +10,7 @@ export default function Banner() {
 
         <div className={styles.images}>
           <div className={styles.imageLeft}>
-            <Image src="/assets/mm-banner-left.webp" alt="" width={1235} height={824} className={styles.imageLeftImg} />
+            <Image src="/assets/mm-banner-left.webp" alt="Material Mobility autonomous vehicles in operation" width={1235} height={824} className={styles.imageLeftImg} />
           </div>
           <div className={styles.imageCenter}>
             <Image src="/assets/mm-banner-center.webp" alt="" width={828} height={551} className={styles.imageCenterImg} />
@@ -20,7 +20,7 @@ export default function Banner() {
           </div>
         </div>
 
-        <p className={styles.subtitle}>Smart mobility powering better Material operations</p>
+        <h1 className={styles.subtitle}>Smart mobility powering better Material operations</h1>
       </div>
     </section>
   );

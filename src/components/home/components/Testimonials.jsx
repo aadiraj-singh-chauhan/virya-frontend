@@ -13,9 +13,9 @@ export default function Testimonials() {
         <div className={styles.card}>
           <div className={styles.quoteWrap}>
             <p className={`title-1 ${styles.quote}`}>
-              "Client testimonial dolor sit amet, consectetur adipiscing elit,
-              sed do tempor incididunt ut labore et dolore magna aliqua. Sed ut
-              perspiciatis unde omnis iste natus error sit voluptatem, totam"
+              {'"Client testimonial dolor sit amet, consectetur adipiscing elit, '
+                + 'sed do tempor incididunt ut labore et dolore magna aliqua. Sed ut '
+                + 'perspiciatis unde omnis iste natus error sit voluptatem, totam"'}
             </p>
           </div>
 
@@ -23,8 +23,8 @@ export default function Testimonials() {
             <Image
               src="/assets/logoIpsum-asset.webp"
               alt="LogoIpsum"
-              width={200}
-              height={41}
+              width={356}
+              height={200}
               className={styles.profileLogo}
             />
             <span className={styles.separator} aria-hidden="true" />

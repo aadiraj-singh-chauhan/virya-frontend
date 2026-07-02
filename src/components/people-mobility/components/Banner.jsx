@@ -11,10 +11,10 @@ export default function Banner() {
   return (
     <section className={styles.section} data-header-theme="light">
       {/* Large watermark text — sits behind the vehicle image */}
-      <div className={styles.bgText} aria-hidden="true">
+      <h1 className={styles.bgText}>
         <span className={styles.bgPeople}>PEOPLE</span>
         <span className={styles.bgMobility}>MOBILITY</span>
-      </div>
+      </h1>
 
       {/* Vehicle image — layered on top of watermark text */}
       <div className={styles.imageWrap}>
@@ -22,6 +22,7 @@ export default function Banner() {
           src="/assets/people-mobility-banner.webp"
           alt="People Mobility autonomous vehicles"
           fill
+          sizes="100vw"
           className={styles.image}
           priority
         />

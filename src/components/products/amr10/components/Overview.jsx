@@ -14,7 +14,7 @@ export default function Overview() {
 
       {/* ── Top: description + stats ── */}
       <div className={styles.topPart}>
-        <img src="/assets/cta-pattern.svg" alt="" aria-hidden="true" className={styles.pattern} />
+        <Image src="/assets/cta-pattern.svg" alt="" width={1512} height={603} aria-hidden="true" className={styles.pattern} />
         <div className={styles.contentBg} aria-hidden="true" />
 
         <p className={`title-1 ${styles.heading}`}>

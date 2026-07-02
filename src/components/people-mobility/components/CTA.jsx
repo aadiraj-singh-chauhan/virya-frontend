@@ -11,6 +11,7 @@ export default function CTA() {
           alt=""
           aria-hidden="true"
           fill
+          sizes="100vw"
           className={styles.bgImage}
         />
       </div>

@@ -60,6 +60,7 @@ export default function IntelligentCore() {
                     src={item.image}
                     alt={item.title}
                     fill
+                    sizes="560px"
                     className={styles.image}
                   />
                 </div>

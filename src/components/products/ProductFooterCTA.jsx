@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import styles from './ProductFooterCTA.module.css';
 
@@ -20,7 +21,7 @@ const BLOCKS = [
 export default function ProductFooterCTA() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <img src="/assets/cta-pattern.svg" alt="" aria-hidden="true" className={styles.pattern} />
+      <Image src="/assets/cta-pattern.svg" alt="" width={1512} height={603} aria-hidden="true" className={styles.pattern} />
 
       <div className={styles.container}>
         {BLOCKS.map((b, i) => (

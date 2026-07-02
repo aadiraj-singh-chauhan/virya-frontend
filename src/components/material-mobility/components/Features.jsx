@@ -85,7 +85,7 @@ export default function Features() {
           </div>
 
           <div className={styles.imageCol}>
-            <Image key={active} src={tab.image} alt="" fill className={styles.image} />
+            <Image key={active} src={tab.image} alt="" fill sizes="676px" className={styles.image} />
             <div className={styles.imageOverlay} aria-hidden="true" />
             <div className={styles.labels}>
               {tab.labels.map(l => (

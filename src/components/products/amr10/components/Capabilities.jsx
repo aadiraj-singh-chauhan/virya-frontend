@@ -60,6 +60,7 @@ function FeatureItem({ feature, active, onClick }) {
               src={feature.image}
               alt={feature.label}
               fill
+              sizes="328px"
               className={styles.detailImg}
             />
           </div>
@@ -98,6 +99,7 @@ export default function Capabilities() {
               src="/assets/amr10-intelligent.webp"
               alt="AMR10 intelligent systems diagram"
               fill
+              sizes="879px"
               className={styles.robotImage}
             />
           </div>

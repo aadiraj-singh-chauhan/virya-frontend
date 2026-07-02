@@ -42,6 +42,7 @@ export default function RelatedProducts() {
                 src={item.src}
                 alt={item.label}
                 fill
+                sizes="517px"
                 className={styles.cardImage}
               />
               <div className={styles.cardOverlay} aria-hidden="true" />

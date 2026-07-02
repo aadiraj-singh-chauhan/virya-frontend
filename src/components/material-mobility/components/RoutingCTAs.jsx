@@ -37,6 +37,7 @@ export default function RoutingCTAs() {
                   src={card.image}
                   alt={card.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.image}
                 />
               </div>

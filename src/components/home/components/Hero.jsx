@@ -10,6 +10,7 @@ export default function Hero() {
         alt="Virya homepage banner"
         fill
         priority
+        sizes="100vw"
         className={styles.banner}
       />
 

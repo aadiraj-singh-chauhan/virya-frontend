@@ -67,6 +67,7 @@ function FeatureItem({ feature, active, onClick }) {
               src={feature.image}
               alt={feature.label}
               fill
+              sizes="328px"
               className={styles.detailImg}
             />
           </div>
@@ -106,6 +107,7 @@ export default function Capabilities() {
                 src="/assets/product-amr50.webp"
                 alt="AMR50"
                 fill
+                sizes="73px"
                 className={styles.thumbImage}
               />
             </div>
@@ -117,6 +119,7 @@ export default function Capabilities() {
                 src="/assets/product-amr50.webp"
                 alt="AMR50"
                 fill
+                sizes="73px"
                 className={styles.thumbImage}
               />
             </div>
@@ -131,6 +134,7 @@ export default function Capabilities() {
               src="/assets/amr50-intelligent.png"
               alt="AMR50 intelligent systems diagram"
               fill
+              sizes="600px"
               className={styles.robotImage}
             />
           </div>

@@ -8,6 +8,11 @@ import Platforms from "@/components/material-mobility/components/Platforms";
 import CustomSolution from "@/components/material-mobility/components/CustomSolution";
 import RoutingCTAs from "@/components/material-mobility/components/RoutingCTAs";
 
+export const metadata = {
+  title: "Material Mobility · Virya",
+  description: "Smart mobility powering better material operations — autonomous platforms for indoor and outdoor material handling.",
+};
+
 export default function MaterialMobility() {
   return (
     <main className={styles.main}>

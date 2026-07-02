@@ -35,6 +35,7 @@ export default function CTA() {
                   src={p.image}
                   alt={p.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className={styles.robotImage}
                 />
               </div>

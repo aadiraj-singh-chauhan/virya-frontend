@@ -63,7 +63,7 @@ function FeatureItem({ feature, active, onClick }) {
       <div className={styles.expandable}>
         <div className={styles.expandableInner}>
           <div className={styles.detailImage}>
-            <Image src={feature.image} alt={feature.label} fill className={styles.detailImg} />
+            <Image src={feature.image} alt={feature.label} fill sizes="328px" className={styles.detailImg} />
           </div>
           <div className={styles.detailContent}>
             <p className={`body-2 ${styles.featureDesc}`}>{feature.description}</p>
@@ -94,13 +94,13 @@ export default function Capabilities() {
         <div className={styles.thumbnailPanel}>
           <div className={`${styles.thumbCard} ${styles.thumbCardActive}`}>
             <div className={styles.thumbImageWrap}>
-              <Image src="/assets/product-apt20.webp" alt="APT20" fill className={styles.thumbImage} />
+              <Image src="/assets/product-apt20.webp" alt="APT20" fill sizes="73px" className={styles.thumbImage} />
             </div>
             <p className={`label-2 ${styles.thumbLabel}`}>APT 20</p>
           </div>
           <div className={styles.thumbCard}>
             <div className={styles.thumbImageWrap}>
-              <Image src="/assets/product-apt20.webp" alt="APT20" fill className={styles.thumbImage} />
+              <Image src="/assets/product-apt20.webp" alt="APT20" fill sizes="73px" className={styles.thumbImage} />
             </div>
             <p className={`label-2 ${styles.thumbLabel}`}>APT 20</p>
           </div>
@@ -112,6 +112,7 @@ export default function Capabilities() {
               src="/assets/product-apt20.webp"
               alt="APT20 intelligent systems diagram"
               fill
+              sizes="600px"
               className={styles.robotImage}
             />
           </div>

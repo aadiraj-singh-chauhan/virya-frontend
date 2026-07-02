@@ -38,7 +38,7 @@ export default function Applications() {
         <div className={styles.track} ref={trackRef}>
           {items.map((item, i) => (
             <div key={i} className={styles.card}>
-              <Image src={item.src} alt={item.label} fill className={styles.cardImage} />
+              <Image src={item.src} alt={item.label} fill sizes="517px" className={styles.cardImage} />
               <div className={styles.cardOverlay} aria-hidden="true" />
               <div className={styles.labelWrap}>
                 <p className="label-1">{item.label}</p>

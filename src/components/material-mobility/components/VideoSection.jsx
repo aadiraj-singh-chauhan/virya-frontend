@@ -99,9 +99,9 @@ export default function VideoSection() {
         </div>
 
         <div className={styles.videoWrap}>
-          <Image src="/assets/mm-video-bg.webp" alt="" fill className={styles.videoBg} />
+          <Image src="/assets/mm-video-bg.webp" alt="" fill sizes="1030px" className={styles.videoBg} />
           <div className={styles.videoOverlay} aria-hidden="true" />
-          <Image src="/assets/mm-video-fg.webp" alt="Virya autonomous vehicle in warehouse" fill className={styles.videoFg} />
+          <Image src="/assets/mm-video-fg.webp" alt="Virya autonomous vehicle in warehouse" fill sizes="1030px" className={styles.videoFg} />
           <button
             className={styles.playBtn}
             onClick={() => setPlaying(p => !p)}

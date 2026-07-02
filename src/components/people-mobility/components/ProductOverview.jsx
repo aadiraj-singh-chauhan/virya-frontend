@@ -5,9 +5,11 @@ export default function ProductOverview() {
   return (
     <section className={styles.section} data-header-theme="light">
       {/* Decorative grid pattern */}
-      <img
+      <Image
         src="/assets/pm-pattern.svg"
         alt=""
+        width={1512}
+        height={885}
         className={styles.pattern}
         aria-hidden="true"
       />
@@ -19,9 +21,9 @@ export default function ProductOverview() {
             Autonomous Mobility Built for Real Industrial Environments
           </h2>
           <p className={`body-1 ${styles.desc}`}>
-            Virya's Autonomous People Mobility Platform (APM) is designed specifically for
-            factories, research campuses, and logistics facilities — delivering safe, continuous
-            autonomous transport across complex real-world environments.
+            {"Virya's Autonomous People Mobility Platform (APM) is designed specifically for "
+              + 'factories, research campuses, and logistics facilities — delivering safe, continuous '
+              + 'autonomous transport across complex real-world environments.'}
           </p>
         </div>
 
@@ -31,6 +33,7 @@ export default function ProductOverview() {
               src="/assets/pm-apm-vehicle.png"
               alt="Autonomous People Mobility vehicle"
               fill
+              sizes="950px"
               className={styles.image}
             />
             <div className={styles.overlay} />
@@ -38,13 +41,15 @@ export default function ProductOverview() {
 
           {/* Center play button */}
           <div className={styles.playCenter} aria-label="Play video">
-            <img src="/assets/pm-play-arrow.svg" alt="" width={17} height={17} />
+            <Image src="/assets/pm-play-arrow.svg" alt="" width={17} height={17} />
           </div>
 
           {/* Corner play icon */}
-          <img
+          <Image
             src="/assets/play-icon.svg"
             alt=""
+            width={24}
+            height={24}
             className={styles.playCorner}
             aria-hidden="true"
           />

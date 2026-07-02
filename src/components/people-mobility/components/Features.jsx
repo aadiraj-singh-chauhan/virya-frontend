@@ -26,12 +26,13 @@ export default function Features() {
                   src={card.image}
                   alt={card.label}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className={styles.image}
                   {...(card.imagePosition && { style: { objectPosition: card.imagePosition } })}
                 />
                 {card.overlay && <div className={styles.overlay} />}
               </div>
-              <img src="/assets/play-icon.svg" alt="" className={styles.play} aria-hidden="true" />
+              <Image src="/assets/play-icon.svg" alt="" width={24} height={24} className={styles.play} aria-hidden="true" />
               <div className={styles.cardLabel}>
                 <span className="title-2">{card.label}</span>
               </div>

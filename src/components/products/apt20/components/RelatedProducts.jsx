@@ -31,14 +31,14 @@ export default function RelatedProducts() {
           {PRODUCTS.map((p) => (
             <div key={p.id} className={styles.card}>
               <div className={styles.bgWrap} aria-hidden="true">
-                <Image src={p.bg} alt="" fill className={styles.bgImage} />
+                <Image src={p.bg} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className={styles.bgImage} />
               </div>
 
               <div className={styles.gradient} aria-hidden="true" />
               <p className={p.watermark} aria-hidden="true">{p.name}</p>
 
               <div className={styles.robotWrap}>
-                <Image src={p.robot} alt={p.name} fill className={styles.robotImage} />
+                <Image src={p.robot} alt={p.name} fill sizes="(max-width: 768px) 100vw, 50vw" className={styles.robotImage} />
               </div>
 
               <div className={styles.bottom}>

@@ -53,7 +53,7 @@ export default function LatestFromVirya() {
           <div className={styles.items}>
             {ITEMS.map((item, i) => (
               <div key={i} className={styles.item}>
-                <Image src={item.src} alt="" width={328} height={171} className={styles.itemImage} />
+                <Image src={item.src} alt={item.title} width={328} height={171} className={styles.itemImage} />
                 <div className={styles.itemContent}>
                   <div className={styles.tags}>
                     {item.tags.map(tag => <span key={tag} className={styles.tag}>{tag}</span>)}

@@ -29,6 +29,7 @@ export default function LogisticsChallenges() {
         src="/assets/logistics-challenges-bg.webp"
         alt=""
         fill
+        sizes="100vw"
         className={styles.bgImage}
         aria-hidden="true"
       />
