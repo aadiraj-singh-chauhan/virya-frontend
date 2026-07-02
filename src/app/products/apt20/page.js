@@ -7,6 +7,11 @@ import RelatedProducts from '@/components/products/apt20/components/RelatedProdu
 import CTA from '@/components/products/apt20/components/CTA';
 import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
+export const metadata = {
+  title: 'APT20 · Virya',
+  description: 'APT20 is an autonomous pallet truck designed for 2-ton lifting capacity, offering seamless manual and autonomous hybrid operation modes.',
+};
+
 export default function APT20() {
   return (
     <main>

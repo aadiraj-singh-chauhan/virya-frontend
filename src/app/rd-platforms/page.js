@@ -7,6 +7,11 @@ import Applications from '@/components/rd-platforms/components/Applications';
 import Testimonials from '@/components/rd-platforms/components/Testimonials';
 import ClosingBanner from '@/components/rd-platforms/components/ClosingBanner';
 
+export const metadata = {
+  title: 'R&D Platforms · Virya',
+  description: 'From simulation to real-world autonomy — explore the Drive By Wire research platforms behind Virya’s autonomous mobility products.',
+};
+
 export default function RDPlatforms() {
   return (
     <main className={styles.main}>

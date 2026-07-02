@@ -7,6 +7,11 @@ import RelatedProducts from '@/components/products/amr10/components/RelatedProdu
 import CTA from '@/components/products/amr10/components/CTA';
 import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
+export const metadata = {
+  title: 'AMR10 · Virya',
+  description: 'AMR10 is a compact and powerful autonomous mobile robot, designed to tow payloads up to 1000kg in confined manufacturing environments.',
+};
+
 export default function AMR10() {
   return (
     <main>

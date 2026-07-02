@@ -8,6 +8,11 @@ import Capabilities from '@/components/people-mobility/components/Capabilities';
 import VehicleSpecs from '@/components/people-mobility/components/VehicleSpecs';
 import CTA from '@/components/people-mobility/components/CTA';
 
+export const metadata = {
+  title: 'People Mobility · Virya',
+  description: 'An intelligent autonomous system for continuous, real-world people mobility across industrial and campus environments.',
+};
+
 export default function PeopleMobility() {
   return (
     <main className={styles.main}>

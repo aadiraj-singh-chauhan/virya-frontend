@@ -7,6 +7,11 @@ import RelatedProducts from '@/components/products/amr50/components/RelatedProdu
 import CTA from '@/components/products/amr50/components/CTA';
 import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
+export const metadata = {
+  title: 'AMR50 · Virya',
+  description: 'AMR50 is a rugged and powerful autonomous mobile robot, designed to tow payloads up to 5000kg with hybrid manual and autonomous operation.',
+};
+
 export default function AMR50() {
   return (
     <main>
