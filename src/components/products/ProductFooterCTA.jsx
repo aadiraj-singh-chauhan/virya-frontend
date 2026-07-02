@@ -21,7 +21,7 @@ const BLOCKS = [
 export default function ProductFooterCTA() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <Image src="/assets/cta-pattern.svg" alt="" width={1512} height={603} aria-hidden="true" className={styles.pattern} />
+      <Image src="/assets/cta-pattern.svg" alt="" fill sizes="100vw" aria-hidden="true" className={styles.pattern} />
 
       <div className={styles.container}>
         {BLOCKS.map((b, i) => (

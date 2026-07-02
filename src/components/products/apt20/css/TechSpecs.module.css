@@ -45,13 +45,14 @@
 /* ── Blueprint ────────────────────────────────────────────────────────────── */
 
 .blueprint {
+  position: relative;
   width: 1372px;
+  height: 497px;
+  overflow: hidden;
 }
 
 .blueprintImage {
-  width: 100%;
-  height: auto;
-  display: block;
+  object-fit: cover;
 }
 
 /* ── Spec grid ────────────────────────────────────────────────────────────── */
