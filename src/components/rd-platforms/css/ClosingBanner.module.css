@@ -1,0 +1,36 @@
+.section {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1513 / 1139.2;
+  overflow: hidden;
+  background: var(--color-6);
+}
+
+.imageWrap {
+  position: absolute;
+  inset: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.panel {
+  position: absolute;
+  left: 4.83%;
+  top: 60.67%;
+  width: 57.57%;
+  height: 26.86%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+  border-radius: 5px;
+  padding: 51px 35px 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+  color: var(--color-5);
+}
+
+.desc {
+  max-width: 628px;
+}

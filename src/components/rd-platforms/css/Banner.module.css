@@ -1,0 +1,104 @@
+/* ── Section ──────────────────────────────────────────────────────────────── */
+.section {
+  position: relative;
+  height: calc(574px + 42.6vw);
+  background: var(--color-6);
+  overflow: hidden;
+}
+
+/* ── Blueprint grid backdrop ──────────────────────────────────────────────── */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(to right, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 80px);
+  background-position: 80px 160px;
+  pointer-events: none;
+}
+
+/* ── Orange tick accents scattered over the grid ─────────────────────────── */
+.tick {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tickH {
+  width: 40px;
+  height: 3px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to right, var(--color-1) 0 50%, rgba(244, 61, 0, 0) 100%);
+}
+
+.tickH.tickFlip {
+  background: linear-gradient(to left, var(--color-1) 0 50%, rgba(244, 61, 0, 0) 100%);
+}
+
+.tickV {
+  width: 3px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom, var(--color-1) 0 50%, rgba(244, 61, 0, 0) 100%);
+}
+
+/* ── Title + description ──────────────────────────────────────────────────── */
+.content {
+  position: absolute;
+  top: 138px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  text-align: center;
+}
+
+.desc {
+  max-width: 564px;
+  opacity: 0.5;
+}
+
+/* ── Wireframe watermark ──────────────────────────────────────────────────── */
+.wireframeWrap {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 1040px;
+  height: 313px;
+  overflow: hidden;
+}
+
+.wireframe {
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ── Vehicle lineup photo (full-bleed — spans the viewport edge to edge) ─── */
+.imageWrap {
+  position: absolute;
+  top: 534px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  width: 100%;
+  aspect-ratio: 1024 / 436;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.image {
+  object-fit: contain;
+  object-position: top;
+}
+
+.imageFade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 65%, var(--color-6) 100%);
+  pointer-events: none;
+}

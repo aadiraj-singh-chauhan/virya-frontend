@@ -1,0 +1,42 @@
+.section {
+  background: var(--color-5);
+  padding: 0 35px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+  text-align: center;
+}
+
+.title {
+  max-width: 756px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.images {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.imageWrap {
+  position: relative;
+  flex: 1;
+  aspect-ratio: 514 / 349;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.desc {
+  max-width: 810px;
+}

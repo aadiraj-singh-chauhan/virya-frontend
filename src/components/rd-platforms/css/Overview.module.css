@@ -1,0 +1,44 @@
+.section {
+  background: var(--color-5);
+  padding: 80px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  text-align: center;
+}
+
+.title {
+  max-width: 856px;
+}
+
+.desc {
+  max-width: 673px;
+  opacity: 0.5;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 27px;
+  padding: 12px 20px 13px;
+  background: var(--color-6);
+  border-radius: 100px;
+  color: var(--color-3);
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-1);
+}
