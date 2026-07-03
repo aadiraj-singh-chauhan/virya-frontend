@@ -7,12 +7,14 @@ const ITEMS = [
     title: 'High-Precision Localization',
     description:
       'Centimetre-level accuracy using multi-sensor fusion — LiDAR, IMU, and visual odometry — so the vehicle always knows exactly where it is.',
+    image: '/assets/pm-indoor-operation.png',
   },
   {
     id: 'path-planning',
     title: 'Real-Time Path Planning',
     description:
       'Dynamic route computation that reacts to obstacles, traffic, and changing layouts without stopping or waiting for a remote update.',
+    image: '/assets/pm-indoor-operation.png',
   },
   {
     id: 'indoor-outdoor',
@@ -26,18 +28,21 @@ const ITEMS = [
     title: 'Environment-Aware Navigation',
     description:
       'Continuous perception of people, vehicles, and infrastructure lets the system make safe, context-aware decisions at every moment.',
+    image: '/assets/pm-indoor-operation.png',
   },
   {
     id: 'fleet',
     title: 'Fleet Coordination',
     description:
       'Centralised orchestration assigns tasks, resolves conflicts, and optimises throughput across an entire fleet from a single interface.',
+    image: '/assets/pm-indoor-operation.png',
   },
   {
     id: 'control',
     title: 'Hybrid Control Modes',
     description:
       'Seamlessly switch between fully autonomous, semi-autonomous, and manual operation to match the needs of any environment or workflow.',
+    image: '/assets/pm-indoor-operation.png',
   },
 ];
 
