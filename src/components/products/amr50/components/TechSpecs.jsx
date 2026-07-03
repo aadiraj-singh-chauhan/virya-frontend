@@ -36,16 +36,28 @@ export default function TechSpecs() {
         ))}
       </div>
 
-      {/* Blueprint diagram */}
       <div className={styles.blueprint}>
-        <Image
-          src="/assets/amr50-blueprint.png"
-          alt="AMR50 product blueprint showing front, side and rear views with dimensions"
-          width={1372}
-          height={497}
-          className={styles.blueprintImage}
-        />
-      </div>
+
+{/* Desktop */}
+<Image
+  src="/assets/amr50-blueprint.png"
+  alt="AMR50 Blueprint"
+  width={1372}
+  height={497}
+  className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}
+/>
+
+{/* Mobile */}
+<Image
+  src="/assets/amr.png"
+  alt="AMR50 Blueprint"
+  width={320}
+  height={760}
+  className={`${styles.blueprintImage} ${styles.blueprintMobile}`}
+/>
+
+
+</div>
 
       {/* Spec cards */}
       <div className={styles.grid}>
