@@ -11,7 +11,8 @@ import styles from './Header.module.css';
 const SOLUTION_ITEMS = [
   { label: 'Material Mobility', href: '/material-mobility' },
   { label: 'People Mobility',   href: '/people-mobility'   },
-  { label: 'R&D Platforms',     href: '/rd-platforms'       },
+  // R&D Platforms temporarily disabled — remove this comment to re-enable.
+  // { label: 'R&D Platforms',  href: '/rd-platforms'       },
 ];
 
 const NAV_ITEMS = [
@@ -81,7 +82,16 @@ export default function Header() {
       <div className={`container ${styles.inner}`}>
 
         {/* ── Logo — both variants stacked; CSS cross-fades on data-theme ────── */}
-        <Link href="/" className={styles.logoLink} aria-label="Virya — Autonomous Technologies">
+        <Link
+          href="/"
+          className={styles.logoLink}
+          aria-label="Virya — Autonomous Technologies"
+          onClick={() => {
+            // Same-route navigation is a no-op for next/link, so clicking the
+            // logo while already on "/" wouldn't otherwise scroll to top.
+            if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <span className={styles.logoWrap}>
             <Image src="/assets/logo-light.svg" fill alt="Virya" className={styles.logoLight} sizes="(max-width: 768px) 80px, 125px" />
             <Image src="/assets/logo-dark.svg"  fill alt="" className={styles.logoDark} aria-hidden="true" sizes="(max-width: 768px) 80px, 125px" />
