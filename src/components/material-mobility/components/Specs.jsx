@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/Specs.module.css';
 
@@ -13,6 +15,8 @@ const SPECS = [
 ];
 
 export default function Specs() {
+  const [active, setActive] = useState(0);
+
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
@@ -20,9 +24,18 @@ export default function Specs() {
           Built differently,<br />so you can operate differently
         </h2>
         <div className={styles.grid}>
-          {SPECS.map((spec) => (
-            <div key={spec.title} className={styles.card}>
-              <div className={styles.cardHeader}>
+          {SPECS.map((spec, i) => (
+            <div
+              key={spec.title}
+              className={`${styles.card} ${active === i ? styles.cardActive : ''}`}
+            >
+              <div
+                className={styles.cardHeader}
+                onClick={() => setActive(i)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && setActive(i)}
+              >
                 <Image src={spec.icon} alt="" width={50} height={50} className={styles.icon} />
                 <p className={`title-2 ${styles.cardTitle}`}>{spec.title}</p>
               </div>

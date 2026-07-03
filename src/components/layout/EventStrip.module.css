@@ -20,3 +20,13 @@
 .arrow {
   flex-shrink: 0;
 }
+
+@media (max-width: 768px) {
+  .text {
+    white-space: normal;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.3;
+    padding: 0 8px;
+  }
+}

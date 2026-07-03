@@ -30,7 +30,7 @@ export default function LogisticsChallenges() {
         alt=""
         fill
         sizes="100vw"
-        className={styles.bgImage}
+        className={`${styles.bgImage} ${styles.bgImageDesktop}`}
         aria-hidden="true"
       />
 
@@ -40,20 +40,56 @@ export default function LogisticsChallenges() {
         </h2>
       </div>
 
-      {CARDS.map(({ id, title, body, style }) => (
-        <article key={id} className={styles.card} style={style}>
-          <div className={styles.cardHeader}>
-            <span className={styles.bullet} aria-hidden="true" />
-            <span className="label-2">The difference we deliver</span>
-          </div>
-          <div className={styles.cardContent}>
-            <h3 className="title-1">{title}</h3>
-            <div className={styles.cardBody}>
-              <p className="body-1">{body}</p>
+      <div className={styles.mobileDiagram}>
+        <Image
+          src="/assets/logistics-challenges-bg-md.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.mobileDiagramImage}
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className={styles.cardGrid}>
+        {CARDS.map(({ id, title, body, style }) => (
+          <article
+            key={id}
+            className={styles.card}
+            style={{ '--card-left': style.left, '--card-top': style.top }}
+          >
+            <div className={styles.cardHeader}>
+              <span className={styles.bullet} aria-hidden="true" />
+              <span className="label-2">The difference we deliver</span>
             </div>
-          </div>
-        </article>
-      ))}
+            <div className={styles.cardContent}>
+              <h3 className="title-1">{title}</h3>
+              <div className={styles.cardBody}>
+                <p className="body-1">{body}</p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <button type="button" className={styles.skipSection}>
+        <span className="label-2">Skip this section</span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M6 9L12 15L18 9"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </section>
   );
 }

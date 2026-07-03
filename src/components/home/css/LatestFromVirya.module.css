@@ -134,3 +134,127 @@
   gap: 15px;
   flex-wrap: wrap;
 }
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  /* Unwrap .header so heading + link can be reordered independently */
+  .header {
+    display: contents;
+    text-align: center;
+  }
+
+  .headingText {
+    order: 1;
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
+
+  .divider {
+    order: 2;
+  }
+
+  /* Unwrap .container so header's children + divider + grid + link
+     all become orderable flex items in one column */
+  .section :global(.container) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Horizontal slider — featured + items become one continuous scroll-snap row */
+  .grid {
+    order: 3;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Explore link moves to the very end, below the whole slider, centered */
+  .exploreLink {
+    order: 4;
+    margin-top: 24px;
+    align-self: center;
+  }
+
+  /* Featured slide: structured identically to .item — image wrap on top, text below */
+  .featured {
+    position: static;
+    flex: 0 0 85%;
+    width: 85%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .featuredImageWrap {
+    position: relative;
+    width: 100%;
+    height: 220px;
+  }
+
+  .featuredBg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featuredOverlay {
+    display: none;
+  }
+
+  .featuredContent {
+    position: static;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .featuredText {
+    color: var(--color-3);
+  }
+
+  /* Unwrap .items so its two .item children become direct slides in .grid */
+  .items {
+    display: contents;
+  }
+
+  .item {
+    position: static;
+    flex: 0 0 85%;
+    width: 85%;
+    flex-direction: column;
+    gap: 15px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .itemImage {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    flex: none;
+  }
+
+  .itemContent {
+    flex: none;
+  }
+}

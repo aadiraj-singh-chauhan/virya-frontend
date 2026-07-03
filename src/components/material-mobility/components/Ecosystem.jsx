@@ -183,25 +183,64 @@ export default function Ecosystem() {
         <div className={styles.sticky} style={pinStyle}>
           <div className="container">
             <div className={styles.inner}>
-
+  
               <div className={styles.textCol}>
                 <p className="label-2">How we implement this ecosystem</p>
-
+  
                 <div className={styles.stepsContainer} ref={containerRef}>
                   <div className={styles.progressTrack}>
                     <div className={styles.progressFill} />
                   </div>
+  
                   {STEPS.map((step, i) => (
                     <div key={step.title} className={styles.stepItem}>
-                      <span data-dot="" className={`${styles.stepDot} ${i <= active ? styles.stepDotActive : ''}`} />
-                      <Step title={step.title} active={active === i} />
+                      <div className={styles.stepHead}>
+                        <span
+                          data-dot=""
+                          className={`${styles.stepDot} ${
+                            i <= active ? styles.stepDotActive : ""
+                          }`}
+                        />
+  
+                        <Step
+                          title={step.title}
+                          active={active === i}
+                          onClick={() => setActive(i)}
+                        />
+                      </div>
+  
+                      <p
+                        className={`body-1 ${styles.mobileDesc} ${
+                          active === i ? styles.mobileDescActive : ""
+                        }`}
+                      >
+                        {step.desc}
+                      </p>
+  
+                      <div
+                        className={`${styles.mobileImageWrap} ${
+                          active === i ? styles.mobileImageActive : ""
+                        }`}
+                      >
+                        <div className={styles.mobileImageInner}>
+                          <Image
+                            src={step.image}
+                            alt={step.title}
+                            fill
+                            sizes="100vw"
+                            className={styles.mobileImage}
+                          />
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-
+  
+              {/* Right Image */}
               <div className={styles.imageBox}>
                 <EcosystemPatternBg className={styles.pattern} />
+  
                 <Image
                   key={active}
                   src={STEPS[active].image}
@@ -210,9 +249,12 @@ export default function Ecosystem() {
                   height={427}
                   className={styles.image}
                 />
-                <p className={`body-1 ${styles.desc}`}>{STEPS[active].desc}</p>
+  
+                <p className={`body-1 ${styles.desc}`}>
+                  {STEPS[active].desc}
+                </p>
               </div>
-
+  
             </div>
           </div>
         </div>

@@ -32,6 +32,15 @@ export default function EventBanner() {
               className={styles.image}
             />
           </div>
+          <div className={styles.imageWrap}>
+  <Image
+    src="/assets/milestone-moment.webp"
+    alt="APT20 launch event"
+    width={535}
+    height={308}
+    className={styles.image}
+  />
+</div>
         </div>
       </div>
     </section>

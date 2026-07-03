@@ -118,3 +118,103 @@
   transform: translateY(0);
   pointer-events: auto;
 }
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 1024px) {
+
+  .section {
+    padding: 80px 0 0;
+  }
+
+  .heading {
+    max-width: 600px;
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    height: 460px;
+  }
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 767px) {
+
+  .section {
+    padding: 60px 0 0;
+  }
+
+  .heading {
+    text-align: left;
+    max-width: 100%;
+    margin: 0 0 32px;
+    font-size: 25px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    height: 420px;
+  }
+
+  /* No hover on touch — name always colored/visible */
+
+  /* Mobile */
+
+.name {
+  top: 20px;
+  color: var(--color-3);
+  opacity: 0.1;
+}
+
+  .imageWrap {
+    top: 70px;
+    left: 16px;
+    right: 16px;
+    bottom: 80px;
+  }
+
+  .bottom {
+    bottom: 20px;
+  }
+
+  /* No hover on touch — description hidden, button always shown */
+
+  .description {
+    display: none;
+  }
+
+  .explore {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+/* ===========================
+   Small Mobile
+=========================== */
+
+@media (max-width: 480px) {
+
+  .card {
+    height: 380px;
+  }
+
+  .imageWrap {
+    top: 60px;
+    bottom: 70px;
+  }
+}

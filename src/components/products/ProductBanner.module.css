@@ -66,3 +66,43 @@
 .image {
   object-fit: contain;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE (matches provided screenshot)
+   Smaller watermark tucked behind image, tag + image + button stacked,
+   full-width dark button pinned near bottom
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .section {
+    height: 552px;
+    padding: 0 16px;
+  }
+
+  .watermark {
+
+    top: 142px;
+    font-size: 96px;
+    line-height: 1;
+  }
+
+  .contentCol {
+    top: 96px;
+    width: calc(100% - 32px);
+    gap: 24px;
+  }
+
+  .categoryTag {
+    gap: 8px;
+    padding-top: 30px;
+  }
+
+  .imageWrap {
+    width: var(--image-w-mobile, 260px);
+    height: var(--image-h-mobile, 210px);
+  }
+
+  .contentCol :global(.button) {
+    width: 100%;
+  }
+}

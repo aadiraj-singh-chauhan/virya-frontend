@@ -80,3 +80,118 @@
   padding: 0;
   line-height: 0;
 }
+
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 1024px) {
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .heading {
+    max-width: 700px;
+    margin-bottom: 48px;
+  }
+
+  .videoWrap {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1030 / 579;
+  }
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 767px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .heading {
+    max-width: 100%;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  /* Feature pills slide horizontally instead of wrapping/squeezing */
+
+  .features {
+    display: flex;
+    justify-content: flex-start;
+    gap: 24px;
+    margin-bottom: 32px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+  }
+
+  .features::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featureItem {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* Video slides full width, same treatment as features */
+
+  .videoWrap {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 375 / 320;
+    margin: 0;
+  }
+
+  .playBtn {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .playBtn svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ===========================
+   Small Mobile
+=========================== */
+
+@media (max-width: 480px) {
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .heading {
+    margin-bottom: 24px;
+    font-size: 25px;
+  }
+
+  .features {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .videoWrap {
+    aspect-ratio: 335 / 300;
+  }
+
+  .playBtn {
+    left: 16px;
+    bottom: 16px;
+  }
+}

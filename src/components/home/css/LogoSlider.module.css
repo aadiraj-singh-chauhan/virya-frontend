@@ -34,3 +34,14 @@
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+@media (max-width: 768px) {
+  .track {
+    gap: 40px;
+  }
+
+  /* Only 2 logos fill the visible width on mobile, so each renders much bigger */
+  .logo {
+    width: calc((min(95vw, 1730px) - 1 * 40px) / 2);
+  }
+}

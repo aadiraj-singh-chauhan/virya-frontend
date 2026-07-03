@@ -36,12 +36,22 @@ export default function TechSpecs() {
       </div>
 
       <div className={styles.blueprint}>
+        {/* Desktop */}
         <Image
           src="/assets/apt20-blueprint.svg"
           alt="APT20 product blueprint showing front, side and rear views with dimensions"
           width={1372}
           height={497}
-          className={styles.blueprintImage}
+          className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}
+        />
+
+        {/* Mobile */}
+        <Image
+          src="/assets/apt.png"
+          alt="APT20 Blueprint"
+          width={320}
+          height={760}
+          className={`${styles.blueprintImage} ${styles.blueprintMobile}`}
         />
       </div>
 

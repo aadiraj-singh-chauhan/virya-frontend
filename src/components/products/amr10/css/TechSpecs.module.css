@@ -23,6 +23,9 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
 }
 
 .cardHeader {
@@ -53,4 +56,51 @@
 
 .cardDesc {
   opacity: 0.5;
+}
+
+/* ── Expandable area (grid trick animates height) ────────────────────────── */
+
+.expandable {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.cardActive .expandable {
+  grid-template-rows: 1fr;
+}
+
+.expandableInner {
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE (matches provided screenshot)
+   Single column, compact rows. Accordion: only active card shows description.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 40px 20px;
+  }
+
+  .grid {
+    gap: 12px;
+  }
+
+  .card {
+    flex: 0 0 100%;
+    height: auto;
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .iconWrap {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cardTitle {
+    font-size: 14px;
+  }
 }

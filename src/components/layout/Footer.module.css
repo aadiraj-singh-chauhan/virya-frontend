@@ -143,3 +143,46 @@
   font-size: 15px;
   line-height: 1.2;
 }
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+    padding: 40px 0 60px;
+    gap: 48px;
+  }
+
+  .cta {
+    flex: none;
+    width: 100%;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding-bottom: 32px;
+  }
+
+  .brandLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 48px;
+  }
+
+  .policies {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

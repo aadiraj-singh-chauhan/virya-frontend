@@ -44,3 +44,70 @@
 .cardDesc {
   opacity: 0.5;
 }
+/* ---------------- Mobile Accordion ---------------- */
+
+@media (max-width: 1024px) {
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .heading {
+    text-align: left;
+    max-width: 100%;
+    margin: 0 0 32px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 20px 24px;
+    gap: 0;
+    cursor: pointer;
+  }
+
+  .cardHeader {
+    gap: 16px;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cardDesc {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: opacity 0.35s ease, max-height 0.35s ease, margin-top 0.35s ease;
+  }
+
+  .cardActive .cardDesc {
+    opacity: 0.5;
+    max-height: 200px;
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .card {
+    padding: 16px 20px;
+  }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+  }
+}

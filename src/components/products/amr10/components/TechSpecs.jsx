@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/TechSpecs.module.css';
 
@@ -41,20 +43,39 @@ const FEATURES = [
 ];
 
 export default function TechSpecs() {
+  const [activeId, setActiveId] = useState(FEATURES[0].id); // first one open by default, matches screenshot
+
+  const toggle = (id) => {
+    setActiveId((prev) => (prev === id ? null : id)); // click again to collapse
+  };
+
   return (
     <section className={styles.section} data-header-theme="light">
       <div className={styles.grid}>
-        {FEATURES.map((f) => (
-          <div key={f.id} className={styles.card}>
-            <div className={styles.cardHeader}>
-              <div className={styles.iconWrap}>
-                <Image src={f.icon} alt="" width={50} height={50} />
+        {FEATURES.map((f) => {
+          const isActive = activeId === f.id;
+          return (
+            <button
+              key={f.id}
+              className={`${styles.card} ${isActive ? styles.cardActive : ''}`}
+              onClick={() => toggle(f.id)}
+              aria-expanded={isActive}
+            >
+              <div className={styles.cardHeader}>
+                <div className={styles.iconWrap}>
+                  <Image src={f.icon} alt="" width={50} height={50} />
+                </div>
+                <p className={styles.cardTitle}>{f.title}</p>
               </div>
-              <p className={styles.cardTitle}>{f.title}</p>
-            </div>
-            <p className={`body-1 ${styles.cardDesc}`}>{f.description}</p>
-          </div>
-        ))}
+
+              <div className={styles.expandable}>
+                <div className={styles.expandableInner}>
+                  <p className={`body-1 ${styles.cardDesc}`}>{f.description}</p>
+                </div>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </section>
   );

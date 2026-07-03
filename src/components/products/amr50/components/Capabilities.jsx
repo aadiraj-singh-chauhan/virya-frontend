@@ -43,6 +43,7 @@ const TECH_CARDS = [
   { id: 'compact-footprint', title: 'Compact Footprint', icon: '/assets/amr10-icon-compact-footprint.svg', description: 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the' },
   { id: 'indoor-outdoor', title: 'Indoor & Outdoor Operational Capability', icon: '/assets/amr10-icon-indoor-outdoor.svg', description: 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the' },
 ];
+const TABS = ['AMR 50', 'AMR 51'];
 
 function FeatureItem({ feature, active, onClick }) {
   const { display, play, reset } = useScramble(feature.label);
@@ -82,7 +83,9 @@ function FeatureItem({ feature, active, onClick }) {
 
 export default function Capabilities() {
   const [active, setActive] = useState(0);
+  const [activeTech, setActiveTech] = useState(-1);
   const activeFeature = FEATURES[active];
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <section className={styles.section} data-header-theme="light">
@@ -99,33 +102,57 @@ export default function Capabilities() {
       {/* ── Content row ── */}
       <div className={styles.contentRow}>
 
-        {/* Left thumbnails */}
-        <div className={styles.thumbnailPanel}>
-          <div className={`${styles.thumbCard} ${styles.thumbCardActive}`}>
-            <div className={styles.thumbImageWrap}>
-              <Image
-                src="/assets/product-amr50.webp"
-                alt="AMR50"
-                fill
-                sizes="73px"
-                className={styles.thumbImage}
-              />
-            </div>
-            <p className={`label-2 ${styles.thumbLabel}`}>AMR 50</p>
-          </div>
-          <div className={styles.thumbCard}>
-            <div className={styles.thumbImageWrap}>
-              <Image
-                src="/assets/product-amr50.webp"
-                alt="AMR50"
-                fill
-                sizes="73px"
-                className={styles.thumbImage}
-              />
-            </div>
-            <p className={`label-2 ${styles.thumbLabel}`}>AMR 50</p>
-          </div>
-        </div>
+       {/* Desktop */}
+<div className={styles.thumbnailPanel}>
+  <div className={`${styles.thumbCard} ${styles.thumbCardActive}`}>
+    <div className={styles.thumbImageWrap}>
+      <Image
+        src="/assets/product-amr50.webp"
+        alt="AMR50"
+        fill
+        sizes="73px"
+        className={styles.thumbImage}
+      />
+    </div>
+
+    <p className={`label-2 ${styles.thumbLabel}`}>
+      AMR 50
+    </p>
+  </div>
+
+  <div className={styles.thumbCard}>
+    <div className={styles.thumbImageWrap}>
+      <Image
+        src="/assets/product-amr50.webp"
+        alt="AMR51"
+        fill
+        sizes="73px"
+        className={styles.thumbImage}
+      />
+    </div>
+
+    <p className={`label-2 ${styles.thumbLabel}`}>
+      AMR 51
+    </p>
+  </div>
+</div>
+
+{/* Mobile */}
+<div className={styles.mobileTabs}>
+  <div className={styles.tabBar}>
+    {TABS.map((tab, i) => (
+      <button
+        key={tab}
+        className={`${styles.tab} ${
+          activeTab === i ? styles.tabActive : ''
+        }`}
+        onClick={() => setActiveTab(i)}
+      >
+        <span className="label-2">{tab}</span>
+      </button>
+    ))}
+  </div>
+</div>
 
         {/* Robot image with dots */}
         <div className={styles.imageArea}>
@@ -181,20 +208,53 @@ export default function Capabilities() {
 
       </div>
 
-      {/* ── Tech spec cards ── */}
       <div className={styles.techGrid}>
-        {TECH_CARDS.map((c) => (
-          <div key={c.id} className={styles.techCard}>
-            <div className={styles.techCardHeader}>
-              <div className={styles.techIconWrap}>
-                <Image src={c.icon} alt="" width={50} height={50} />
-              </div>
-              <p className={styles.techCardTitle}>{c.title}</p>
-            </div>
-            <p className={`body-1 ${styles.techCardDesc}`}>{c.description}</p>
-          </div>
-        ))}
+  {TECH_CARDS.map((card, index) => (
+    <div
+      key={card.id}
+      className={`${styles.techCard} ${
+        activeTech === index ? styles.techCardActive : ""
+      }`}
+    >
+      <button
+        type="button"
+        className={styles.techCardHeader}
+        onClick={() =>
+          setActiveTech(activeTech === index ? -1 : index)
+        }
+      >
+        <div className={styles.techIconWrap}>
+          <Image
+            src={card.icon}
+            alt=""
+            width={50}
+            height={50}
+          />
+        </div>
+
+        <p className={styles.techCardTitle}>
+          {card.title}
+        </p>
+
+        <span className={styles.techArrow}>
+          {activeTech === index ? "−" : "+"}
+        </span>
+      </button>
+
+      <div
+        className={`${styles.techContent} ${
+          activeTech === index
+            ? styles.techContentOpen
+            : ""
+        }`}
+      >
+        <p className={`body-1 ${styles.techCardDesc}`}>
+          {card.description}
+        </p>
       </div>
+    </div>
+  ))}
+</div>
 
     </section>
   );

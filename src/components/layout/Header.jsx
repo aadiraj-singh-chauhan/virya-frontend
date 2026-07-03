@@ -22,8 +22,12 @@ const NAV_ITEMS = [
   { label: 'Careers',    href: '/careers'    },
 ];
 
-// Vertical midpoint of the header: strip (40px) + half header (40px) = 80px.
-const LOGO_Y = 80;
+function getLogoY() {
+  const root = getComputedStyle(document.documentElement);
+  const strip = parseFloat(root.getPropertyValue('--strip-height')) || 40;
+  const header = parseFloat(root.getPropertyValue('--header-height')) || 80;
+  return strip + header / 2;
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -50,7 +54,8 @@ export default function Header() {
       const sections = document.querySelectorAll('[data-header-theme]');
       for (const section of sections) {
         const { top, bottom } = section.getBoundingClientRect();
-        if (top <= LOGO_Y && bottom > LOGO_Y) {
+        const logoY = getLogoY();
+        if (top <= logoY && bottom > logoY) {
           setTheme(section.dataset.headerTheme);
           return;
         }

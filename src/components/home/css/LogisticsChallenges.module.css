@@ -17,6 +17,15 @@
   pointer-events: none;
 }
 
+/* ── Mobile diagram (in-flow, not absolute) ──────────────────────────────────── */
+.mobileDiagram {
+  display: none;
+}
+
+.mobileDiagramImage {
+  object-fit: contain;
+}
+
 /* ── Heading ───────────────────────────────────────────────────────────────── */
 /* left: 70/1512 · top: 90/1562 · width: 832/1512 */
 .heading {
@@ -30,6 +39,8 @@
 /* width: 490/1512 · height: 301/1562 */
 .card {
   position: absolute;
+  left: var(--card-left);
+  top: var(--card-top);
   width: 32.41%;
   height: 19.27%;
   background: var(--color-4);
@@ -64,4 +75,93 @@
 
 .cardBody {
   margin-top: auto;
+}
+
+.cardGrid {
+  display: contents;
+}
+
+/* ── Skip this section ────────────────────────────────────────────────────── */
+.skipSection {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .section {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 60px 0;
+  }
+
+  .bgImageDesktop {
+    display: none;
+  }
+
+  .heading {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    padding: 0 24px;
+    z-index: 1;
+  }
+
+  .mobileDiagram {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 0 24px;
+  }
+
+  .cardGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+  }
+
+  .card:not(:first-child) {
+    display: none;
+  }
+
+  .skipSection {
+    display: flex;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--color-2);
+    cursor: pointer;
+    padding: 0;
+    margin-top: 8px;
+  }
+}
+@media (max-width: 768px) {
+  .heading {
+    text-align: center;
+  }
+
+  .heading h2 {
+    font-size: 28px;
+    line-height: 1.25;
+  }
 }

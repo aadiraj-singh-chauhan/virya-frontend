@@ -81,3 +81,87 @@
   color: var(--color-1);
   white-space: nowrap;
 }
+.blueprint {
+  width: 100%;
+}
+
+.blueprintDesktop {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.blueprintMobile {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE (matches provided screenshot)
+   Full-width stacked blueprint, single-column spec list with static
+   (non-absolute) label/value pairs, full-width button
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 40px 20px;
+    gap: 32px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .blueprintDesktop {
+    display: none;
+  }
+
+  .blueprintMobile {
+    display: block;
+  }
+  
+
+  .grid {
+    width: 100%;
+    flex-direction: column;
+    gap: 0;
+    background: var(--color-5);
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 16px 16px 16px 36px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .grid .card:last-child {
+    border-bottom: none;
+  }
+
+  .dot {
+    left: 16px;
+    top: 22px;
+  }
+
+  .cardLabel {
+    position: static;
+    display: block;
+    white-space: normal;
+    font-size: 13px;
+  }
+
+  .cardValue {
+    position: static;
+    display: block;
+    margin-top: 4px;
+    white-space: normal;
+    font-size: 15px;
+  }
+
+  .section :global(.button) {
+    width: 100%;
+  }
+}

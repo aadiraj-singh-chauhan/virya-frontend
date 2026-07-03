@@ -54,3 +54,107 @@
   object-fit: contain;
   object-position: center;
 }
+.section {
+  padding: 44px 0 45px;
+  background: var(--color-6);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+
+.card {
+  position: relative;
+  height: 216px;
+  background: var(--color-5);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Left: text content ───────────────────────────────────────────────────── */
+
+.info {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 307px;
+  padding-left: 39px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* title-1 handles typography; no extra overrides needed */
+.title {
+  max-width: 260px;
+}
+
+/* ── Right: product image ─────────────────────────────────────────────────── */
+
+/* Fixed identical box for both images so they render at the same size */
+.imageWrap {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 280px;
+  height: 220px;
+}
+
+.image {
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE (matches provided screenshot)
+   Stacked cards: image on top, title centered below, button centered below title
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 32px 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .card {
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px 32px;
+    text-align: center;
+  }
+
+  .info {
+    order: 2;
+    width: 100%;
+    padding-left: 0;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .title {
+    max-width: 280px;
+  }
+
+  .imageWrap {
+    order: 1;
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    max-width: 280px;
+    height: 180px;
+    margin-bottom: 12px;
+  }
+}

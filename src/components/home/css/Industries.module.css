@@ -152,3 +152,49 @@
   opacity: 0.15;
   flex-shrink: 0;
 }
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .heading {
+    margin-bottom: 32px;
+    padding: 0 14px;
+    text-align: center;
+    font-size: 25px;
+  }
+
+  .track {
+    scroll-padding-left: 24px;
+  }
+
+  .track::before {
+    width: 4px;
+  }
+
+  .card {
+   
+    max-width: 400px;
+    height: 340px;
+  }
+
+  .nextBtn {
+    display: none;
+  }
+
+  .cta {
+    height: auto;
+    padding: 0px 24px;
+  }
+
+  .ctaContainer {
+    flex-direction: column;
+    gap: 48px;
+  }
+
+
+  .ctaTitle {
+    width: 100%;
+  }
+}

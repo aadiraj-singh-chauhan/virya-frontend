@@ -192,3 +192,174 @@
     opacity: 1;
   }
 }
+
+/* ---------------- Mobile stepHead wrapper ---------------- */
+
+.stepHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.mobileDesc,
+.mobileImageWrap {
+  display: none;
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 1024px) {
+
+  .section {
+    padding: 80px 0;
+  }
+
+  .inner {
+    gap: 50px;
+  }
+
+  .textCol {
+    flex: 1;
+  }
+
+  .imageBox {
+    flex: 1;
+    height: 480px;
+  }
+
+  .image {
+    top: 50px;
+    left: 60px;
+    width: 400px;
+    height: 350px;
+  }
+
+  .desc {
+    left: 57px;
+    width: 260px;
+  }
+
+  .imageBox::before,
+  .imageBox::after {
+    box-shadow: none;
+  }
+
+  .imageBox::after {
+    bottom: 0;
+    right: 0;
+    left: auto;
+  }
+
+  .imageBox::before {
+    top: 0;
+    right: 0;
+    left: auto;
+    box-shadow: -400px 0 0 var(--color-1);
+  }
+
+  .imageBox::after {
+    box-shadow: -400px 0 0 var(--color-1);
+  }
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 767px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .inner {
+    display: block;
+  }
+
+  .textCol {
+    width: 100%;
+    flex: none;
+  }
+
+  .stepsContainer {
+    gap: 32px;
+  }
+
+  /* Force each step to stack vertically: head → desc → image */
+
+  .stepItem {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .stepHead {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 25px;
+  }
+
+  .stepTitle {
+    font-size: 24px;
+    white-space: normal;
+  }
+
+  .mobileDesc {
+    display: block;
+    margin: 0;
+    padding-left: 32px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.35s ease, max-height 0.35s ease, margin 0.35s ease;
+  }
+
+  .mobileDescActive {
+    opacity: 0.6;
+    max-height: 120px;
+    margin-top: 12px;
+  }
+
+  .mobileImageWrap {
+    display: block;
+    width: 100%;
+    height: 0;
+    margin-top: 0;
+    padding-left: 32px;
+    overflow: hidden;
+    transition: height 0.45s cubic-bezier(0.4, 0, 0.2, 1), margin 0.45s ease;
+    box-sizing: border-box;
+  }
+
+  .mobileImageInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mobileImageActive {
+    height: 260px;
+    margin-top: 16px;
+  }
+
+  .mobileImage {
+    object-fit: cover;
+  }
+
+  /* Hide desktop shared image box */
+
+  .imageBox {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .mobileImageActive {
+    height: 200px;
+  }
+}
