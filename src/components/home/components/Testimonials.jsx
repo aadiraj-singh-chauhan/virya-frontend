@@ -1,9 +1,11 @@
 import Image from 'next/image';
+import TestimonialsPatternBg from './TestimonialsPatternBg';
 import styles from '../css/Testimonials.module.css';
 
 export default function Testimonials() {
   return (
     <section className={styles.section} data-header-theme="light">
+      <TestimonialsPatternBg className={styles.patternBg} />
 
       <div className={styles.inner}>
         <h2 className={`heading-2 ${styles.heading}`}>
