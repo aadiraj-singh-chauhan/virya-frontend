@@ -17,7 +17,7 @@ export default function AMR10() {
     <main>
       <ProductBanner
         name="AMR10"
-        image="/assets/product-amr10.webp"
+        image="/assets/amr10-banner.webp"
         imageAlt="AMR10 autonomous mobile robot"
         imageWidth="609px"
         imageHeight="491px"
