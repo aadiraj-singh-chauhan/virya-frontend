@@ -46,14 +46,25 @@ export default function Industries() {
   const moveByRef = useRef(() => {});
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isLeftSide, setIsLeftSide] = useState(false);
 
   const scrollNext = () => {
     moveByRef.current(CARD_WIDTH + GAP);
   };
 
+  const scrollPrev = () => {
+    moveByRef.current(-(CARD_WIDTH + GAP));
+  };
+
+  const handleSliderClick = () => {
+    if (isLeftSide) scrollPrev();
+    else scrollNext();
+  };
+
   const handleMouseMove = (e) => {
     const bounds = wrapperRef.current.getBoundingClientRect();
     setCursorPos({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
+    setIsLeftSide(e.clientX - bounds.left < bounds.width / 2);
   };
 
   // The track renders SLIDES tripled; we sit in the middle copy and silently
@@ -128,12 +139,12 @@ export default function Industries() {
           ref={wrapperRef}
           role="button"
           tabIndex={0}
-          aria-label="Next industry"
+          aria-label={isLeftSide ? 'Previous industry' : 'Next industry'}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           onMouseMove={handleMouseMove}
-          onClick={scrollNext}
-          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && scrollNext()}
+          onClick={handleSliderClick}
+          onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSliderClick()}
         >
           <div className={styles.track} ref={trackRef}>
             {items.map((item, i) => (
@@ -161,7 +172,14 @@ export default function Industries() {
               transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) scale(${isHovering ? 1 : 0.4})`,
             }}
           >
-            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" aria-hidden="true">
+            <svg
+              width="14"
+              height="12"
+              viewBox="0 0 14 12"
+              fill="none"
+              aria-hidden="true"
+              style={{ transform: isLeftSide ? 'rotate(180deg)' : 'none' }}
+            >
               <path
                 d="M0.5 6H13.5M13.5 6L8 1M13.5 6L8 11"
                 stroke="white"
