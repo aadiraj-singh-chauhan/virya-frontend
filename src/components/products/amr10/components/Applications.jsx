@@ -19,14 +19,24 @@ export default function Applications() {
 
       {/* Blueprint diagram */}
       <div className={styles.blueprint}>
-        <Image
-          src="/assets/amr10-blueprint.png"
-          alt="AMR10 product blueprint showing front, side and rear views with dimensions"
-          width={1370}
-          height={405}
-          className={styles.blueprintImage}
-        />
-      </div>
+  {/* Desktop */}
+  <Image
+    src="/assets/amr10-blueprint.png"
+    alt="AMR10 product blueprint"
+    width={1370}
+    height={405}
+    className={styles.blueprintDesktop}
+  />
+
+  {/* Mobile */}
+  <Image
+    src="/assets/product-specification.png"
+    alt="AMR10 product blueprint"
+    width={390}
+    height={700} // change to your mobile image size
+    className={styles.blueprintMobile}
+  />
+</div>
 
       {/* Spec cards */}
       <div className={styles.grid}>
