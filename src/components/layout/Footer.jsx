@@ -17,7 +17,7 @@ const NAV = [
   },
   {
     title: 'People mobility',
-    links: [{ label: 'APM', href: '/products/apm' }],
+    links: [{ label: 'APM', href: '/people-mobility' }],
   },
   {
     title: 'R&D platform',
