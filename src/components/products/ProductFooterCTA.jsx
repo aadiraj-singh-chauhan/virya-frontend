@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import styles from './ProductFooterCTA.module.css';
@@ -24,15 +23,12 @@ export default function ProductFooterCTA() {
       <Image src="/assets/cta-pattern.svg" alt="" fill sizes="100vw" aria-hidden="true" className={styles.pattern} />
 
       <div className={styles.container}>
-        {BLOCKS.map((b, i) => (
-          <Fragment key={b.href}>
-            {i > 0 && <div className={styles.divider} aria-hidden="true" />}
-            <div className={styles.block}>
-              <p className="label-2">{b.eyebrow}</p>
-              <p className={`title-1 ${styles.heading}`}>{b.heading}</p>
-              <Button property1="Default" size="Button-2" href={b.href}>{b.cta}</Button>
-            </div>
-          </Fragment>
+        {BLOCKS.map((b) => (
+          <div key={b.href} className={styles.block}>
+            <p className="label-2">{b.eyebrow}</p>
+            <p className={`title-1 ${styles.heading}`}>{b.heading}</p>
+            <Button property1="Default" size="Button-2" href={b.href}>{b.cta}</Button>
+          </div>
         ))}
       </div>
     </section>

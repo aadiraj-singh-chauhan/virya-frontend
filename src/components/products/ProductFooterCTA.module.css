@@ -42,16 +42,6 @@
   height: 100%;
 }
 
-/* ── Vertical divider ─────────────────────────────────────────────────────── */
-
-.divider {
-  width: 1px;
-  align-self: stretch;
-  background: var(--color-4);
-  opacity: 0.15;
-  flex-shrink: 0;
-}
-
 /* ── Heading ──────────────────────────────────────────────────────────────── */
 
 .heading {
