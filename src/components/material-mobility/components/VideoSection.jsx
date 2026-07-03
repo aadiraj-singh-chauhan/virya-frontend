@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/VideoSection.module.css';
 
@@ -79,7 +79,20 @@ function PlayIcon() {
 }
 
 export default function VideoSection() {
+  const videoRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setPlaying(true);
+    } else {
+      video.pause();
+      setPlaying(false);
+    }
+  };
 
   return (
     <section className={styles.section} data-header-theme="light">
@@ -101,10 +114,18 @@ export default function VideoSection() {
         <div className={styles.videoWrap}>
           <Image src="/assets/mm-video-bg.webp" alt="" fill sizes="1030px" className={styles.videoBg} />
           <div className={styles.videoOverlay} aria-hidden="true" />
-          <Image src="/assets/mm-video-fg.webp" alt="Virya autonomous vehicle in warehouse" fill sizes="1030px" className={styles.videoFg} />
+          <video
+            ref={videoRef}
+            src="/assets/amr50-overview.mp4"
+            loop
+            muted
+            playsInline
+            aria-label="Virya autonomous vehicle in warehouse"
+            className={styles.videoFg}
+          />
           <button
             className={styles.playBtn}
-            onClick={() => setPlaying(p => !p)}
+            onClick={togglePlay}
             aria-label={playing ? 'Pause video' : 'Play video'}
           >
             {playing ? <PauseIcon /> : <PlayIcon />}

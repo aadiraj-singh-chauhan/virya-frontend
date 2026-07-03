@@ -67,9 +67,10 @@ export default function Ecosystem() {
   // state is replicated manually with position: fixed instead.
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
+    if (!track) return undefined;
 
     let raf = null;
+    let listening = false;
 
     const update = () => {
       const headerHeight = parseFloat(
@@ -80,39 +81,68 @@ export default function Ecosystem() {
       const total = rect.height - stickyHeight;
 
       if (total <= 0 || rect.top > headerHeight) {
-        setPinStyle(PIN_STYLE.before);
+        setPinStyle((prev) => (prev === PIN_STYLE.before ? prev : PIN_STYLE.before));
         targetRef.current = 0;
         return;
       }
 
       if (rect.bottom < headerHeight + stickyHeight) {
-        setPinStyle(PIN_STYLE.after);
+        setPinStyle((prev) => (prev === PIN_STYLE.after ? prev : PIN_STYLE.after));
         targetRef.current = STEPS.length - 1;
         return;
       }
 
-      setPinStyle({
-        position: 'fixed',
-        top: headerHeight,
-        left: rect.left,
-        width: rect.width,
+      setPinStyle((prev) => {
+        if (
+          prev.position === 'fixed'
+          && prev.top === headerHeight
+          && prev.left === rect.left
+          && prev.width === rect.width
+        ) {
+          return prev;
+        }
+        return { position: 'fixed', top: headerHeight, left: rect.left, width: rect.width };
       });
       const progress = Math.min(1, Math.max(0, (headerHeight - rect.top) / total));
       targetRef.current = Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length));
     };
 
+    // Scroll/resize listeners force a synchronous layout read every frame —
+    // only keep them attached while the track is near the viewport, so
+    // scrolling through the rest of the page doesn't pay that cost.
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(update);
     };
 
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
+    const startListening = () => {
+      if (listening) return;
+      listening = true;
+      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+    };
+
+    const stopListening = () => {
+      if (!listening) return;
+      listening = false;
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) startListening();
+        else stopListening();
+      },
+      { rootMargin: '100% 0px 100% 0px' }
+    );
+    observer.observe(track);
+
+    return () => {
+      observer.disconnect();
+      stopListening();
     };
   }, []);
 
