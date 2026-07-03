@@ -6,14 +6,14 @@ const PRODUCTS = [
   {
     id: 'amr50',
     name: 'AMR50',
-    image: '/assets/mm-amr50.png',
+    image: '/assets/mm-amr50.webp',
     description: 'Autonomous mobile robot engineered for heavy-duty indoor and outdoor towing of payloads up to 5-ton',
     watermark: styles.watermarkOrange,
   },
   {
     id: 'apt20',
     name: 'APT20',
-    image: '/assets/mm-apt20.png',
+    image: '/assets/mm-apt20.webp',
     description: 'Autonomous pallet truck designed for 2-ton lifting capacity, offering seamless manual and autonomous hybrid modes',
     watermark: styles.watermarkDim,
   },

@@ -23,7 +23,7 @@
   position: relative;
   height: 588px;
   overflow: hidden;
-  background: var(--color-5);
+  background: var(--color-5) url('/assets/mm-amr-bg.webp') center / cover no-repeat;
   cursor: pointer;
 }
 
