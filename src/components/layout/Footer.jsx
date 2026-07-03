@@ -56,8 +56,7 @@ function NavLink({ href, children }) {
 export default function Footer() {
   return (
     <footer className={styles.footer} data-header-theme="dark">
-      <Image src="/assets/footer-bg.webp" fill sizes="100vw" className={styles.bgImage} alt="" aria-hidden="true" />
-      <div className={styles.bgOverlay} aria-hidden="true" />
+      <div className={styles.bgGlow} aria-hidden="true" />
 
       <div className="container">
         <div className={styles.main}>
