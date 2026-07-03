@@ -36,14 +36,24 @@ export default function TechSpecs() {
       </div>
 
       <div className={styles.blueprint}>
-        <Image
-          src="/assets/mm-apt20.png"
-          alt="APT20 autonomous pallet truck"
-          fill
-          sizes="1372px"
-          className={styles.blueprintImage}
-        />
-      </div>
+
+<Image
+  src="/assets/mm-apt20.png"
+  alt="AMR50 Blueprint"
+  width={1372}
+  height={497}
+  className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}
+/>
+
+{/* Mobile */}
+<Image
+  src="/assets/apt.png"
+  alt="AMR50 Blueprint"
+  width={320}
+  height={760}
+  className={`${styles.blueprintImage} ${styles.blueprintMobile}`}
+/>
+</div>
 
       <div className={styles.grid}>
         {SPECS.map((s) => (

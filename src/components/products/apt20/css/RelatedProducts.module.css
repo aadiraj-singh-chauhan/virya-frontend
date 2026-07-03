@@ -154,3 +154,87 @@
   transform: translateY(0);
   pointer-events: auto;
 }
+
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 767px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .heading {
+    text-align: left;
+    margin: 0 0 32px;
+    max-width: 244px;
+    font-size: 25px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card {
+    height: 360px;
+  }
+
+  .watermarkOrange,
+  .watermarkDim {
+    top: 18px;
+    font-size: 56px;
+  }
+
+  .robotWrap {
+    top: 60px;
+    left: 20px;
+    right: 20px;
+    bottom: 78px;
+  }
+
+  .bottom {
+    bottom: 16px;
+  }
+
+  .desc {
+    display: none;
+  }
+
+  .explore {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .explore a,
+  .explore button {
+    width: 160px;
+    margin: 0 auto;
+  }
+
+}
+@media (max-width: 480px) {
+
+  .card {
+    height: 320px;
+  }
+
+  .watermarkOrange,
+  .watermarkDim {
+    font-size: 42px;
+    top: 16px;
+  }
+
+  .robotWrap {
+    top: 52px;
+    left: 16px;
+    right: 16px;
+    bottom: 72px;
+  }
+
+}
