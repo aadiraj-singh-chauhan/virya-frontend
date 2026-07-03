@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/VideoSection.module.css';
 
@@ -80,7 +80,11 @@ function PlayIcon() {
 
 export default function VideoSection() {
   const videoRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
+
+  useEffect(() => {
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -117,6 +121,7 @@ export default function VideoSection() {
           <video
             ref={videoRef}
             src="/assets/amr50-overview.mp4"
+            autoPlay
             loop
             muted
             playsInline

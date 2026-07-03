@@ -12,6 +12,8 @@ export default function ProductOverview() {
     const video = videoRef.current;
     if (!video) return undefined;
 
+    video.play().catch(() => {});
+
     const handleFullscreenChange = () => {
       setIsFullscreen(document.fullscreenElement === video);
     };

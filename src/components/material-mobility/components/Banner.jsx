@@ -1,9 +1,19 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import styles from '../css/Banner.module.css';
 
 export default function Banner() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    videoRef.current?.play().catch(() => {});
+  }, []);
+
   return (
     <section className={styles.section} data-header-theme="light">
       <video
+        ref={videoRef}
         className={styles.bannerVideo}
         src="/assets/vat-mm-banner-animation.mp4"
         autoPlay

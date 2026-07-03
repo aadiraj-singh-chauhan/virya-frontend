@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import OverviewPatternBg from '@/components/products/OverviewPatternBg';
 import VideoPlayToggle from '@/components/products/VideoPlayToggle';
 import styles from '../css/Overview.module.css';
@@ -15,6 +15,10 @@ const STATS = [
 export default function Overview() {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   const togglePlay = () => {
     const video = videoRef.current;

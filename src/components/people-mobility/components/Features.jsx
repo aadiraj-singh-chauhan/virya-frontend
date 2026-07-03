@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import styles from '../css/Features.module.css';
 
 const CARDS = [
@@ -7,6 +10,12 @@ const CARDS = [
 ];
 
 export default function Features() {
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    gridRef.current?.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
+  }, []);
+
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
@@ -17,7 +26,7 @@ export default function Features() {
             from production lines to warehouses. To truly optimize operations, mobility must become:
           </p>
         </div>
-        <div className={styles.grid}>
+        <div className={styles.grid} ref={gridRef}>
           {CARDS.map((card) => (
             <div key={card.id} className={styles.card}>
               <div className={styles.imageWrap}>
