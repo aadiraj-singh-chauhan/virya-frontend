@@ -17,7 +17,7 @@ export default function APT20() {
     <main>
       <ProductBanner
         name="APT20"
-        image="/assets/product-apt20.webp"
+        image="/assets/apt20-banner.webp"
         imageAlt="APT20 autonomous pallet truck"
         imageWidth="480px"
         imageHeight="540px"
