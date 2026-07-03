@@ -27,7 +27,14 @@ export default function Testimonials() {
               alt="LogoIpsum"
               width={356}
               height={200}
-              className={styles.profileLogo}
+              className={`${styles.profileLogo} ${styles.profileLogoDesktop}`}
+            />
+            <Image
+              src="/assets/LogoIpsum Asset.png"
+              alt="LogoIpsum"
+              width={356}
+              height={200}
+              className={`${styles.profileLogo} ${styles.profileLogoMobile}`}
             />
             <span className={styles.separator} aria-hidden="true" />
             <div className={styles.profileText}>

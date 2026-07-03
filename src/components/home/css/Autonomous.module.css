@@ -11,6 +11,7 @@
 /* ── Background image ──────────────────────────────────────────────────────── */
 .bgImage {
   object-fit: cover;
+  object-position: center bottom;
   pointer-events: none;
 }
 
@@ -47,4 +48,34 @@
   align-items: center;
   gap: 28px;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .section {
+    min-height: 743px;
+    padding-top: 0px;
+    padding-bottom: 60px;
+    justify-content: flex-start;
+  }
+  
+
+  .gradientTop {
+    height: 220px;
+  }
+
+  .gradientBottom {
+    height: 200px;
+  }
+
+  .content {
+    gap: 20px;
+    padding: 0 24px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .content h2 {
+    font-size: 28px;
+    line-height: 1.25;
+  }
 }

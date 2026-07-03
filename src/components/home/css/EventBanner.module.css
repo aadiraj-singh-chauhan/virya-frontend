@@ -68,8 +68,94 @@
   position: absolute;
   right: 61px;
   top: 62px;
-  width: 535px;
+  width: 535px;@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .card {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--color-6);
+  }
+
+  .card::before,
+  .card::after {
+    display: none;
+  }
+
+  .content {
+    flex: none;
+    padding: 32px 24px;
+    order: 2;
+  }
+
+  .imageWrap {
+    position: relative;
+    order: 1;
+    width: 100%;
+    aspect-ratio: 535 / 308;
+    background: url('/assets/event-card-pattern.png') center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 85%;
+    height: 85%;
+    object-fit: cover;
+  }
+}
   height: 308px;
   object-fit: cover;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .card {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--color-6);
+  }
+
+  .card::before,
+  .card::after {
+    display: none;
+  }
+
+  .content {
+    flex: none;
+    padding: 32px 24px;
+    order: 2;
+  }
+
+  .imageWrap {
+    position: relative;
+    order: 1;
+    width: 100%;
+    aspect-ratio: 535 / 308;
+    background: url('/assets/event-card-pattern.png') center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 85%;
+    height: 85%;
+    object-fit: cover;
+  }
 }
