@@ -115,6 +115,27 @@
   letter-spacing: 0em;
 }
 
+/* Source: Figma › Styles and elements → Text styles → Mobile */
+@media (max-width: 768px) {
+  .heading-1 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .label-1 {
+    font-size: 13px;
+  }
+
+  .heading-2 {
+    font-size: 25px;
+    line-height: 1.1;
+  }
+
+  .body-1 {
+    font-size: 14px;
+  }
+}
+
 /* ─── Color tokens ───────────────────────────────────────────────────────────
    Source: Figma › Modes → colors → selections
    ─────────────────────────────────────────────────────────────────────────── */

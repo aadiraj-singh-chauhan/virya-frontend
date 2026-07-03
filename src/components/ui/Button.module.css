@@ -27,6 +27,12 @@
   );
 }
 
+@media (max-width: 768px) {
+  .button {
+    font-size: 13px;
+  }
+}
+
 /* ─── Sizes — matches Figma component names ──────────────────────────────── */
 .Button_1 {
   padding: 15px 24px; /* results in ~49px total height */

@@ -151,7 +151,7 @@
 /* Over a light header theme, invert to a dark frosted panel so the white
    link text stays legible against whatever light section sits behind it. */
 .header[data-theme="light"] .dropdown {
-  background: rgba(14, 18, 20, 0.75);
+  background: rgba(14, 18, 20, 0.369);
 }
 
 .dropdownOpen {
