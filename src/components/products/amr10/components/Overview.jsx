@@ -1,5 +1,8 @@
-import Image from 'next/image';
-import OverviewPatternBg from './OverviewPatternBg';
+'use client';
+
+import { useRef, useState } from 'react';
+import OverviewPatternBg from '@/components/products/OverviewPatternBg';
+import VideoPlayToggle from '@/components/products/VideoPlayToggle';
 import styles from '../css/Overview.module.css';
 
 const STATS = [
@@ -10,6 +13,21 @@ const STATS = [
 ];
 
 export default function Overview() {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <section className={styles.section} data-header-theme="light">
 
@@ -35,15 +53,20 @@ export default function Overview() {
         </div>
       </div>
 
-      {/* ── Bottom: product-in-action image ── */}
+      {/* ── Bottom: product-in-action video ── */}
       <div className={styles.imagePart}>
-        <Image
-          src="/assets/amr10.webp"
-          alt="AMR10 in operation"
-          fill
+        <video
+          ref={videoRef}
+          src="/assets/amr10-overview.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-label="AMR10 in operation"
           className={styles.image}
         />
         <div className={styles.imageOverlay} aria-hidden="true" />
+        <VideoPlayToggle isPlaying={isPlaying} onToggle={togglePlay} />
       </div>
 
     </section>

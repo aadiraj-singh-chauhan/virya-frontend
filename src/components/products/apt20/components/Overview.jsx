@@ -1,4 +1,8 @@
-import Image from 'next/image';
+'use client';
+
+import { useRef, useState } from 'react';
+import OverviewPatternBg from '@/components/products/OverviewPatternBg';
+import VideoPlayToggle from '@/components/products/VideoPlayToggle';
 import styles from '../css/Overview.module.css';
 
 const STATS = [
@@ -9,11 +13,26 @@ const STATS = [
 ];
 
 export default function Overview() {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <section className={styles.section} data-header-theme="light">
 
       <div className={styles.topPart}>
-        <Image src="/assets/cta-pattern.svg" alt="" fill sizes="100vw" aria-hidden="true" className={styles.pattern} />
+        <OverviewPatternBg className={styles.pattern} />
         <div className={styles.contentBg} aria-hidden="true" />
 
         <p className={`title-1 ${styles.heading}`}>
@@ -34,13 +53,18 @@ export default function Overview() {
       </div>
 
       <div className={styles.imagePart}>
-        <Image
-          src="/assets/apt20.webp"
-          alt="APT20 in operation"
-          fill
+        <video
+          ref={videoRef}
+          src="/assets/apt20-overview.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-label="APT20 in operation"
           className={styles.image}
         />
         <div className={styles.imageOverlay} aria-hidden="true" />
+        <VideoPlayToggle isPlaying={isPlaying} onToggle={togglePlay} />
       </div>
 
     </section>
