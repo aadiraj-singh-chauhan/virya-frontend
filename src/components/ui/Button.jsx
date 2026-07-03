@@ -8,6 +8,7 @@ import styles from './Button.module.css';
  *
  * property1 → "Default" (orange) | "Variant2" (black) | "Variant3" (white) | "Button-3" (text link)
  * size      → "Button-1" (49px tall) | "Button-2" (38px tall)  — ignored for "Button-3"
+ * icon      → "arrow" (default) | "download"
  */
 export default function Button({
   children,
@@ -16,6 +17,8 @@ export default function Button({
   href,
   onClick,
   className = '',
+  icon = 'arrow',
+  type,
 }) {
   const label = typeof children === 'string' ? children : '';
   const { display, play, reset } = useScramble(label);
@@ -27,6 +30,7 @@ export default function Button({
   return (
     <Tag
       href={href}
+      type={!href ? type : undefined}
       onClick={onClick}
       onMouseEnter={play}
       onMouseLeave={reset}
@@ -41,7 +45,7 @@ export default function Button({
         {/* scrambled display — absolutely overlaid */}
         <span className={styles.textDisplay} aria-hidden="true">{display || children}</span>
       </span>
-      <ArrowIcon />
+      {icon === 'download' ? <DownloadIcon /> : <ArrowIcon />}
     </Tag>
   );
 }
@@ -64,6 +68,22 @@ function ArrowIcon() {
         stroke="currentColor"
         strokeWidth="1"
       />
+    </svg>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg
+      className={styles.arrow}
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M6 1V8M6 8L3 5M6 8L9 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M1.5 10.5H10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
     </svg>
   );
 }

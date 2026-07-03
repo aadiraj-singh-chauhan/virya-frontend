@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
-import Button from '@/components/ui/Button';
+import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
 import styles from '../css/TechSpecs.module.css';
 
 const TABS = ['APT 20', 'APT 21'];
@@ -37,10 +37,10 @@ export default function TechSpecs() {
 
       <div className={styles.blueprint}>
         <Image
-          src="/assets/mm-apt20.png"
-          alt="APT20 autonomous pallet truck"
-          fill
-          sizes="1372px"
+          src="/assets/apt20-blueprint.svg"
+          alt="APT20 product blueprint showing front, side and rear views with dimensions"
+          width={1372}
+          height={497}
           className={styles.blueprintImage}
         />
       </div>
@@ -55,7 +55,7 @@ export default function TechSpecs() {
         ))}
       </div>
 
-      <Button property1="Variant2" size="Button-2" href="#">Download Brochure</Button>
+      <DownloadBrochureButton property1="Variant2" size="Button-2" />
 
     </section>
   );

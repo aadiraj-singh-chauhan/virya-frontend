@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Button from '@/components/ui/Button';
+import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
 import styles from '../css/Applications.module.css';
 
 const SPECS = [
@@ -20,7 +20,7 @@ export default function Applications() {
       {/* Blueprint diagram */}
       <div className={styles.blueprint}>
         <Image
-          src="/assets/amr10-blueprint.png"
+          src="/assets/amr10-blueprint.svg"
           alt="AMR10 product blueprint showing front, side and rear views with dimensions"
           width={1370}
           height={405}
@@ -39,7 +39,7 @@ export default function Applications() {
         ))}
       </div>
 
-      <Button property1="Variant2" size="Button-2" href="#">Download Brochure</Button>
+      <DownloadBrochureButton property1="Variant2" size="Button-2" />
 
     </section>
   );

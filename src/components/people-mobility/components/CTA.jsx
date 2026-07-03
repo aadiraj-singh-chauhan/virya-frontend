@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
+import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
 import styles from '../css/CTA.module.css';
 
 export default function CTA() {
@@ -19,9 +20,7 @@ export default function CTA() {
         <Button property1="Default" size="Button-1" href="/contact">
           Request a Consultation
         </Button>
-        <Button property1="Variant2" size="Button-1">
-          Download Brochure
-        </Button>
+        <DownloadBrochureButton property1="Variant2" size="Button-1" />
       </div>
     </section>
   );

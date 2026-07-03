@@ -1,0 +1,115 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  position: relative;
+  width: min(902px, 100%);
+  overflow: hidden;
+  background: var(--color-5);
+  padding: 40px;
+}
+
+.pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 210px;
+  height: 216px;
+  pointer-events: none;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+  width: 37px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-1);
+  border: none;
+  cursor: pointer;
+}
+
+.heading {
+  position: relative;
+  max-width: 520px;
+  color: var(--color-3);
+}
+
+.subheading {
+  position: relative;
+  margin-top: 8px;
+  color: var(--color-3);
+  opacity: 0.6;
+}
+
+.form {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.field {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 0.2px solid var(--color-3);
+  background: transparent;
+  font-family: var(--font-primary);
+  font-size: 15px;
+  color: var(--color-3);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.fieldLabel {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-primary);
+  font-size: 15px;
+  color: var(--color-3);
+  pointer-events: none;
+}
+
+.required {
+  color: var(--color-1);
+  margin-left: 2px;
+}
+
+.input:not(:placeholder-shown) ~ .fieldLabel {
+  display: none;
+}
+
+.submitRow {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 13px;
+}
+
+@media (max-width: 640px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}
