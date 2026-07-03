@@ -141,10 +141,17 @@ function NavLink({ href, label, items, dropdown }) {
 
   const handleEnter = () => { clearTimeout(timer.current); setOpen(true); play(); };
   const handleLeave = () => { timer.current = setTimeout(() => setOpen(false), 150); reset(); };
+  const handleClick = (e) => {
+    if (items) {
+      e.preventDefault();
+      clearTimeout(timer.current);
+      setOpen(true);
+    }
+  };
 
   return (
     <div className={styles.navItem} onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
-      <Link href={href} className={styles.navLink}>
+      <Link href={href} className={styles.navLink} onClick={handleClick}>
         <span className={`label-2 ${styles.navLinkText}`}>
           <span className={styles.navLinkOriginal}>{label}</span>
           <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
