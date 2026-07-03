@@ -133,8 +133,16 @@ export default function Ecosystem() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) startListening();
-        else stopListening();
+        if (entry.isIntersecting) {
+          startListening();
+        } else {
+          // A fast scroll/fling can exit the observer's margin before the
+          // last scheduled rAF update settles the pin state — resolve it
+          // synchronously here so .sticky never gets stuck mid-transition
+          // (e.g. permanently position: fixed) once listening stops.
+          update();
+          stopListening();
+        }
       },
       { rootMargin: '100% 0px 100% 0px' }
     );
