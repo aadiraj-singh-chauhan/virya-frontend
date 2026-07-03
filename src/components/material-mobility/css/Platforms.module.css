@@ -20,7 +20,7 @@
 .card {
   position: relative;
   overflow: hidden;
-  background: var(--color-5);
+  background: var(--color-5) url('/assets/mm-amr-bg.webp') center / cover no-repeat;
   height: 531px;
   cursor: pointer;
 }
@@ -61,10 +61,10 @@
 /* Fixed bounds so every robot renders at the same visual size */
 .imageWrap {
   position: absolute;
-  top: 90px;
-  left: 20px;
-  right: 20px;
-  bottom: 100px;
+  top: 60px;
+  left: 10px;
+  right: 10px;
+  bottom: 80px;
   z-index: 1;
 }
 

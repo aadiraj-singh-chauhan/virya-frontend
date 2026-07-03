@@ -6,19 +6,19 @@ const PLATFORMS = [
   {
     id: 'amr10',
     name: 'AMR10',
-    image: '/assets/mm-amr10.png',
+    image: '/assets/mm-amr10.webp',
     description: 'Compact autonomous mobile robot designed for agile indoor navigation and light-duty material transport',
   },
   {
     id: 'amr50',
     name: 'AMR50',
-    image: '/assets/mm-amr50.png',
+    image: '/assets/mm-amr50.webp',
     description: 'Autonomous mobile robot engineered for heavy-duty indoor and outdoor towing of payloads up to 5-ton',
   },
   {
     id: 'apt20',
     name: 'APT20',
-    image: '/assets/mm-apt20.png',
+    image: '/assets/mm-apt20.webp',
     description: 'Autonomous pallet truck designed for 2-ton lifting capacity, offering seamless manual and autonomous hybrid modes',
   },
 ];
