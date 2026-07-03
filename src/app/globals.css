@@ -6,11 +6,43 @@
   --font-accent:    var(--font-chakra-petch), sans-serif;
   --strip-height:   40px;
   --header-height:  80px;
+  --logo-y:         80px;
 }
 
 @media (max-width: 768px) {
   :root {
     --header-height: 64px;
+    --logo-y: 72px; /* strip (40px) + half header (32px) */
+  }
+
+  .heading-0 {
+    font-size: 48px;
+  }
+
+  .heading-1 {
+    font-size: 36px;
+  }
+
+  .heading-2 {
+    font-size: 28px;
+  }
+
+  .headin-3 {
+    font-size: 40px;
+  }
+
+  .lable-3 {
+    font-size: 14px;
+  }
+
+  .title-1 {
+    font-size: 20px;
+  }
+
+  .container {
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 
