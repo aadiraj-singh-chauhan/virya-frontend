@@ -70,7 +70,6 @@ export default function Ecosystem() {
     if (!track) return undefined;
 
     let raf = null;
-    let listening = false;
 
     const update = () => {
       const headerHeight = parseFloat(
@@ -107,50 +106,24 @@ export default function Ecosystem() {
       targetRef.current = Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length));
     };
 
-    // Scroll/resize listeners force a synchronous layout read every frame —
-    // only keep them attached while the track is near the viewport, so
-    // scrolling through the rest of the page doesn't pay that cost.
+    // Listeners stay attached for the section's whole lifetime — an earlier
+    // attempt to gate them behind an IntersectionObserver (detaching once
+    // the track left an extended margin) could leave .sticky permanently
+    // stuck at position: fixed if the observer fired before the pin state
+    // had settled, blocking the rest of the page until a refresh. A cheap
+    // getBoundingClientRect() per scroll frame is worth paying to avoid that.
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(update);
     };
 
-    const startListening = () => {
-      if (listening) return;
-      listening = true;
-      update();
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
-    };
-
-    const stopListening = () => {
-      if (!listening) return;
-      listening = false;
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          startListening();
-        } else {
-          // A fast scroll/fling can exit the observer's margin before the
-          // last scheduled rAF update settles the pin state — resolve it
-          // synchronously here so .sticky never gets stuck mid-transition
-          // (e.g. permanently position: fixed) once listening stops.
-          update();
-          stopListening();
-        }
-      },
-      { rootMargin: '100% 0px 100% 0px' }
-    );
-    observer.observe(track);
-
-    return () => {
-      observer.disconnect();
-      stopListening();
     };
   }, []);
 
