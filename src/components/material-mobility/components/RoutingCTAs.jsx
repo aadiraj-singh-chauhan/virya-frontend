@@ -6,14 +6,14 @@ const CARDS = [
   {
     id: 'people-mobility',
     title: 'Safe autonomous people mobility',
-    image: '/assets/people-mobility.webp',
+    image: '/assets/mm-safe-autonomous-pm.webp',
     cta: 'Explore People Mobility',
     href: '/people-mobility',
   },
   {
     id: 'rd-platforms',
     title: 'Platforms that drive innovation',
-    image: '/assets/r-d-platforms.webp',
+    image: '/assets/mm-platforms-innovation.webp',
     cta: 'Explore R&D Platforms',
     href: '/r-d-platforms',
   },
