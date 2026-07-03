@@ -1,7 +1,38 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/ProductOverview.module.css';
 
 export default function ProductOverview() {
+  const videoRef = useRef(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === video);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const handlePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
+    }
+  };
+
   return (
     <section className={styles.section} data-header-theme="light">
       {/* Decorative grid pattern */}
@@ -29,30 +60,32 @@ export default function ProductOverview() {
 
         <div className={styles.imageFrame}>
           <div className={styles.imageWrap}>
-            <Image
-              src="/assets/pm-apm-vehicle.png"
-              alt="Autonomous People Mobility vehicle"
-              fill
-              sizes="950px"
+            <video
+              ref={videoRef}
+              src="/assets/pm-apm-video.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls={isFullscreen}
+              aria-label="Autonomous People Mobility vehicle in operation"
               className={styles.image}
             />
             <div className={styles.overlay} />
           </div>
 
-          {/* Center play button */}
-          <div className={styles.playCenter} aria-label="Play video">
-            <Image src="/assets/pm-play-arrow.svg" alt="" width={17} height={17} />
-          </div>
-
-          {/* Corner play icon */}
-          <Image
-            src="/assets/play-icon.svg"
-            alt=""
-            width={24}
-            height={24}
-            className={styles.playCorner}
-            aria-hidden="true"
-          />
+          {/* Center play button — click to view fullscreen */}
+          <button
+            type="button"
+            className={styles.playCenter}
+            onClick={handlePlay}
+            aria-label="Play video fullscreen"
+          >
+            <svg width="19" height="18" viewBox="0 0 18.7683 18.1908" fill="none" aria-hidden="true">
+              <path d="M12.7979 0.852912H17.9154V5.97039" stroke="white" strokeWidth="1.70582" strokeLinecap="square" />
+              <path d="M5.97039 17.3379H0.852912V12.2204" stroke="white" strokeWidth="1.70582" strokeLinecap="square" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

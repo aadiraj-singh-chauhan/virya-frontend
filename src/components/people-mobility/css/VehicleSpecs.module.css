@@ -1,6 +1,6 @@
 .section {
   background: var(--color-6);
-  padding: 100px 0;
+  padding-bottom: 100px;
   overflow: hidden;
 }
 

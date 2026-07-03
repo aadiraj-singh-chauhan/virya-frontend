@@ -19,7 +19,7 @@ export default function Banner() {
       {/* Vehicle image — layered on top of watermark text */}
       <div className={styles.imageWrap}>
         <Image
-          src="/assets/people-mobility-banner.webp"
+          src="/assets/people-mobility-banner-img.webp"
           alt="People Mobility autonomous vehicles"
           fill
           sizes="100vw"

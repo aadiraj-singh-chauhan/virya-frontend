@@ -1,10 +1,9 @@
-import Image from 'next/image';
 import styles from '../css/Features.module.css';
 
 const CARDS = [
-  { id: 'autonomous', image: '/assets/pm-cockpit.webp', label: 'Autonomous', overlay: true },
-  { id: 'reliable', image: '/assets/pm-vehicle-front.webp', label: 'Reliable across indoor and outdoor spaces' },
-  { id: 'safe', image: '/assets/pm-vehicle-urban.webp', label: 'Safe in dynamic environments', imagePosition: 'bottom' },
+  { id: 'autonomous', video: '/assets/pm-autonomous.mp4', label: 'Autonomous', overlay: true },
+  { id: 'reliable', video: '/assets/pm-Indoor-outdoor.mp4', label: 'Reliable across indoor and outdoor spaces' },
+  { id: 'safe', video: '/assets/pm-dynamic-environments.mp4', label: 'Safe in dynamic environments' },
 ];
 
 export default function Features() {
@@ -22,17 +21,17 @@ export default function Features() {
           {CARDS.map((card) => (
             <div key={card.id} className={styles.card}>
               <div className={styles.imageWrap}>
-                <Image
-                  src={card.image}
-                  alt={card.label}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                <video
+                  src={card.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={card.label}
                   className={styles.image}
-                  {...(card.imagePosition && { style: { objectPosition: card.imagePosition } })}
                 />
                 {card.overlay && <div className={styles.overlay} />}
               </div>
-              <Image src="/assets/play-icon.svg" alt="" width={24} height={24} className={styles.play} aria-hidden="true" />
               <div className={styles.cardLabel}>
                 <span className="title-2">{card.label}</span>
               </div>

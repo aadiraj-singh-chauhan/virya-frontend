@@ -18,7 +18,7 @@ export default function VehicleSpecs() {
 
       <div className={styles.blueprintWrap}>
         <Image
-          src="/assets/pm-vehicle-blueprint.png"
+          src="/assets/people-mobility-blueprint.svg"
           alt="APM vehicle — front, side, and rear views with dimensions"
           width={1251}
           height={312}
