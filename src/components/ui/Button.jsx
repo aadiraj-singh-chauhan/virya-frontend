@@ -19,23 +19,26 @@ export default function Button({
   className = '',
   icon = 'arrow',
   type,
+  disabled = false,
 }) {
   const label = typeof children === 'string' ? children : '';
   const { display, play, reset } = useScramble(label);
 
-  const Tag = href ? 'a' : 'button';
+  const Tag = href && !disabled ? 'a' : 'button';
   const variantClass = styles[property1.replace('-', '_')];
   const sizeClass = property1 !== 'Button-3' ? styles[size.replace('-', '_')] : '';
 
   return (
     <Tag
-      href={href}
-      type={!href ? type : undefined}
-      onClick={onClick}
-      onMouseEnter={play}
-      onMouseLeave={reset}
+      href={disabled ? undefined : href}
+      type={Tag === 'button' ? type : undefined}
+      disabled={Tag === 'button' ? disabled : undefined}
+      aria-disabled={disabled || undefined}
+      onClick={disabled ? undefined : onClick}
+      onMouseEnter={disabled ? undefined : play}
+      onMouseLeave={disabled ? undefined : reset}
       aria-label={label || undefined}
-      className={[styles.button, variantClass, sizeClass, className]
+      className={[styles.button, variantClass, sizeClass, disabled && styles.disabled, className]
         .filter(Boolean)
         .join(' ')}
     >

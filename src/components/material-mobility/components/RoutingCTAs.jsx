@@ -15,7 +15,8 @@ const CARDS = [
     title: 'Platforms that drive innovation',
     image: '/assets/mm-platforms-innovation.webp',
     cta: 'Explore R&D Platforms',
-    href: '/r-d-platforms',
+    href: '/rd-platforms',
+    disabled: true, // R&D Platforms temporarily disabled
   },
 ];
 
@@ -28,7 +29,7 @@ export default function RoutingCTAs() {
             <div key={card.id} className={styles.card}>
               <div className={styles.info}>
                 <h2 className={`title-1 ${styles.title}`}>{card.title}</h2>
-                <Button property1="Default" size="Button-2" href={card.href}>
+                <Button property1="Default" size="Button-2" href={card.href} disabled={card.disabled}>
                   {card.cta}
                 </Button>
               </div>
