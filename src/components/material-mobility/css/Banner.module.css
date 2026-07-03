@@ -87,3 +87,92 @@
   letter-spacing: -0.02em;
   z-index: 2;
 }
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+    padding-top: 50px;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+  }
+
+
+  .inner {
+    position: relative;
+    inset: auto;
+    top: auto;
+    width: 100%;
+    min-height: 500px;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  /* Decorative text sits behind the image again */
+  .textMaterial {
+    position: absolute;
+    left: 50%;
+    top: 8%;
+    transform: translateX(-50%);
+    font-size: 88px;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  .textMobility {
+    position: absolute;
+    left: 50%;
+    top: 26%;
+    transform: translateX(-50%);
+    font-size: 84px;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  /* Only the center image shows on mobile — overlaid on top of the text */
+  .images {
+    position: relative;
+    left: auto;
+    transform: none;
+    width: 100%;
+    top: auto;
+    height: 320px;
+    z-index: 2;
+  }
+
+  .imageLeft,
+  .imageRight {
+    display: none;
+  }
+
+  .imageCenter {
+    position: relative;
+    left: auto;
+    transform: none;
+    top: auto;
+    width: 100%;
+    height: 320px;
+    margin: 0 auto;
+  }
+
+  .imageCenterImg {
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    width: auto;
+    max-width: none;
+    transform: translate(-50%, -50%);
+  }
+
+  .subtitle {
+    position: relative;
+    top: auto;
+    width: 100%;
+    font-size: 18px;
+    z-index: 2;
+  }
+}
