@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import Button from '@/components/ui/Button';
+import FooterGlow from './FooterGlow';
 import styles from './Footer.module.css';
 
 const NAV = [
@@ -56,7 +57,7 @@ function NavLink({ href, children }) {
 export default function Footer() {
   return (
     <footer className={styles.footer} data-header-theme="dark">
-      <div className={styles.bgGlow} aria-hidden="true" />
+      <FooterGlow className={styles.bgGlow} />
 
       <div className="container">
         <div className={styles.main}>
