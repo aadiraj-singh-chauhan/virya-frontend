@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import OverviewPatternBg from './OverviewPatternBg';
 import styles from '../css/Overview.module.css';
 
 const STATS = [
@@ -14,7 +15,7 @@ export default function Overview() {
 
       {/* ── Top: description + stats ── */}
       <div className={styles.topPart}>
-        <Image src="/assets/cta-pattern.svg" alt="" fill sizes="100vw" aria-hidden="true" className={styles.pattern} />
+        <OverviewPatternBg className={styles.pattern} />
         <div className={styles.contentBg} aria-hidden="true" />
 
         <p className={`title-1 ${styles.heading}`}>

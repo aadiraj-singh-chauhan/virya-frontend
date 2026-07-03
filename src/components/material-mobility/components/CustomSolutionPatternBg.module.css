@@ -1,0 +1,34 @@
+@keyframes travelX {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(var(--travel-distance)); opacity: 0; }
+}
+
+@keyframes travelY {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(var(--travel-distance)); opacity: 0; }
+}
+
+.pulseA, .pulseB, .pulseC, .pulseD, .pulseE {
+  will-change: transform, opacity;
+}
+
+/* Each dash rides a specific grid line; --travel-distance is clamped to
+   whichever is tighter — the line's own endpoint or this pattern's clipped
+   frame (0–1512, 0–603; note this frame is shorter than Testimonials' — no
+   -18 bleed offset here) — so the pulse never drifts past where the line
+   it's tracing actually stops being visible. */
+.pulseA { --travel-distance: -1363px; animation: travelX 12.5s linear infinite; animation-delay: -1s; }
+.pulseB { --travel-distance: -97px; animation: travelY 1s linear infinite; animation-delay: -0.3s; }
+.pulseC { --travel-distance: 1392px; animation: travelX 12.5s linear infinite; animation-delay: -5s; }
+.pulseD { --travel-distance: 1139.5px; animation: travelX 10.5s linear infinite; animation-delay: -2s; }
+.pulseE { --travel-distance: 421px; animation: travelY 4s linear infinite; animation-delay: -1.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulseA, .pulseB, .pulseC, .pulseD, .pulseE {
+    animation: none;
+  }
+}
