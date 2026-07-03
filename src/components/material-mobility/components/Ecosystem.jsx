@@ -1,7 +1,8 @@
 'use client';
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
+import EcosystemPatternBg from './EcosystemPatternBg';
 import styles from '../css/Ecosystem.module.css';
 
 const STEPS = [
@@ -27,24 +28,106 @@ const STEPS = [
   },
 ];
 
-function Step({ title, active, onClick }) {
+function Step({ title, active }) {
   const { display, play, reset } = useScramble(title);
+
+  useEffect(() => {
+    if (active) play();
+    else reset();
+  }, [active, play, reset]);
+
   return (
-    <button
-      className={`${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}
-      onClick={onClick}
-      onMouseEnter={play}
-      onMouseLeave={reset}
-    >
+    <div className={`${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}>
       <span className={styles.textOriginal}>{title}</span>
       <span className={styles.textDisplay} aria-hidden="true">{display || title}</span>
-    </button>
+    </div>
   );
 }
 
+const PIN_STYLE = {
+  before: { position: 'absolute', top: 0, left: 0, right: 0 },
+  after: { position: 'absolute', bottom: 0, left: 0, right: 0 },
+};
+
+// Minimum time (ms) the active step holds before advancing to the next one —
+// keeps a hard/fast scroll from jumping straight to the target step and
+// skipping the ones in between.
+const STEP_SCRUB_MS = 550;
+
 export default function Ecosystem() {
   const [active, setActive] = useState(0);
+  const [pinStyle, setPinStyle] = useState(PIN_STYLE.before);
   const containerRef = useRef(null);
+  const trackRef = useRef(null);
+  const targetRef = useRef(0);
+
+  // Drive the active step from scroll progress through the tall .scrollTrack.
+  // position: sticky can't be used here — html/body has overflow-x: hidden,
+  // which breaks sticky descendants in Chromium/WebKit — so the "pinned"
+  // state is replicated manually with position: fixed instead.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let raf = null;
+
+    const update = () => {
+      const headerHeight = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+      ) || 0;
+      const stickyHeight = window.innerHeight - headerHeight;
+      const rect = track.getBoundingClientRect();
+      const total = rect.height - stickyHeight;
+
+      if (total <= 0 || rect.top > headerHeight) {
+        setPinStyle(PIN_STYLE.before);
+        targetRef.current = 0;
+        return;
+      }
+
+      if (rect.bottom < headerHeight + stickyHeight) {
+        setPinStyle(PIN_STYLE.after);
+        targetRef.current = STEPS.length - 1;
+        return;
+      }
+
+      setPinStyle({
+        position: 'fixed',
+        top: headerHeight,
+        left: rect.left,
+        width: rect.width,
+      });
+      const progress = Math.min(1, Math.max(0, (headerHeight - rect.top) / total));
+      targetRef.current = Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length));
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  // Walks `active` toward the scroll-computed target one step at a time,
+  // instead of snapping straight to it — so every point gets its own scroll.
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActive((current) => {
+        const target = targetRef.current;
+        if (current === target) return current;
+        return current + Math.sign(target - current);
+      });
+    }, STEP_SCRUB_MS);
+    return () => clearInterval(id);
+  }, []);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -66,38 +149,42 @@ export default function Ecosystem() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <div className="container">
-        <div className={styles.inner}>
+      <div className={styles.scrollTrack} ref={trackRef}>
+        <div className={styles.sticky} style={pinStyle}>
+          <div className="container">
+            <div className={styles.inner}>
 
-          <div className={styles.textCol}>
-            <p className="label-2">How we implement this ecosystem</p>
+              <div className={styles.textCol}>
+                <p className="label-2">How we implement this ecosystem</p>
 
-            <div className={styles.stepsContainer} ref={containerRef}>
-              <div className={styles.progressTrack}>
-                <div className={styles.progressFill} />
-              </div>
-              {STEPS.map((step, i) => (
-                <div key={step.title} className={styles.stepItem}>
-                  <span data-dot="" className={`${styles.stepDot} ${i <= active ? styles.stepDotActive : ''}`} />
-                  <Step title={step.title} active={active === i} onClick={() => setActive(i)} />
+                <div className={styles.stepsContainer} ref={containerRef}>
+                  <div className={styles.progressTrack}>
+                    <div className={styles.progressFill} />
+                  </div>
+                  {STEPS.map((step, i) => (
+                    <div key={step.title} className={styles.stepItem}>
+                      <span data-dot="" className={`${styles.stepDot} ${i <= active ? styles.stepDotActive : ''}`} />
+                      <Step title={step.title} active={active === i} />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              <div className={styles.imageBox}>
+                <EcosystemPatternBg className={styles.pattern} />
+                <Image
+                  key={active}
+                  src={STEPS[active].image}
+                  alt={STEPS[active].title}
+                  width={490}
+                  height={427}
+                  className={styles.image}
+                />
+                <p className={`body-1 ${styles.desc}`}>{STEPS[active].desc}</p>
+              </div>
+
             </div>
           </div>
-
-          <div className={styles.imageBox}>
-            <Image src="/assets/mm-ecosystem-pattern.webp" alt="" fill sizes="676px" className={styles.pattern} />
-            <Image
-              key={active}
-              src={STEPS[active].image}
-              alt={STEPS[active].title}
-              width={490}
-              height={427}
-              className={styles.image}
-            />
-            <p className={`body-1 ${styles.desc}`}>{STEPS[active].desc}</p>
-          </div>
-
         </div>
       </div>
     </section>
