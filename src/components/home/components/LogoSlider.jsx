@@ -1,7 +1,31 @@
 import Image from 'next/image';
 import styles from '../css/LogoSlider.module.css';
 
-const LOGOS = Array.from({ length: 8 }, (_, i) => i);
+const LOGOS = [
+  { src: 'bosch', alt: 'Bosch' },
+  { src: 'ceat', alt: 'CEAT' },
+  { src: 'denso', alt: 'DENSO' },
+  { src: 'elecon', alt: 'Elecon' },
+  { src: 'forbes', alt: 'Forbes' },
+  { src: 'givaudan', alt: 'Givaudan' },
+  { src: 'hero', alt: 'Hero' },
+  { src: 'himedia', alt: 'HiMedia' },
+  { src: 'infosys', alt: 'Infosys' },
+  { src: 'kc', alt: 'Kimberly-Clark' },
+  { src: 'kle', alt: 'KLE' },
+  { src: 'manipal', alt: 'Manipal' },
+  { src: 'ms', alt: 'Maruti Suzuki' },
+  { src: 're', alt: 'Royal Enfield' },
+  { src: 'rrkabel', alt: 'RR Kabel' },
+  { src: 'sahyadri', alt: 'Sahyadri' },
+  { src: 'tdk-1', alt: 'TDK' },
+  { src: 'tdk', alt: 'TDK' },
+  { src: 'toyota', alt: 'Toyota' },
+  { src: 'tvs', alt: 'TVS' },
+  { src: 'vecna', alt: 'Vecna' },
+  { src: 'yamaha', alt: 'Yamaha' },
+  { src: 'yokohama', alt: 'Yokohama' },
+];
 
 export default function LogoSlider() {
   return (
@@ -9,25 +33,25 @@ export default function LogoSlider() {
       <p className="label-3">Trusted by</p>
       <div className={styles.outer}>
         <div className={styles.track}>
-          {LOGOS.map(i => (
+          {LOGOS.map(({ src, alt }) => (
             <Image
-              key={i}
-              src="/assets/logoIpsum-asset.webp"
-              alt="Trusted partner logo"
-              width={300}
-              height={50}
+              key={src}
+              src={`/assets/${src}.webp`}
+              alt={alt}
+              width={360}
+              height={200}
               style={{ height: 'auto' }}
               className={styles.logo}
               draggable={false}
             />
           ))}
-          {LOGOS.map(i => (
+          {LOGOS.map(({ src, alt }) => (
             <Image
-              key={`d${i}`}
-              src="/assets/logoIpsum-asset.webp"
+              key={`d-${src}`}
+              src={`/assets/${src}.webp`}
               alt=""
-              width={300}
-              height={50}
+              width={360}
+              height={200}
               style={{ height: 'auto' }}
               aria-hidden="true"
               className={styles.logo}

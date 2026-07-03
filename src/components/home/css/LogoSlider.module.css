@@ -17,17 +17,16 @@
   display: flex;
   gap: 60px;
   width: max-content;
-  animation: marquee 22s linear infinite;
+  animation: marquee 63s linear infinite;
 }
 
-/* Width is calculated so exactly 5 logos fill the slider's visible area.
-   The container above is 95vw (max 1730px), so each logo = (container - 4 gaps) / 5. */
+/* Width is calculated so exactly 6 logos fill the slider's visible area.
+   The container above is 95vw (max 1730px), so each logo = (container - 5 gaps) / 6. */
 .logo {
   flex-shrink: 0;
-  width: calc((min(95vw, 1730px) - 4 * 60px) / 5);
+  width: calc((min(95vw, 1730px) - 5 * 60px) / 6);
   height: auto;
   filter: brightness(0) invert(1);
-  opacity: 0.55;
   user-select: none;
 }
 
