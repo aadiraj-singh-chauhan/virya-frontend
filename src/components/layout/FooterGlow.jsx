@@ -139,7 +139,7 @@ export default function FooterGlow({ className }) {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const start = performance.now();
-    let rafId;
+    let rafId = null;
 
     const frame = (now) => {
       const phase = reduced ? 0 : ((now - start) / 1000 / LOOP_SECONDS) % 1;
@@ -148,11 +148,28 @@ export default function FooterGlow({ className }) {
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (!reduced) rafId = requestAnimationFrame(frame);
     };
-    rafId = requestAnimationFrame(frame);
+
+    // The footer sits far below the fold on every page and this canvas
+    // renders unconditionally once mounted — left running while off-screen,
+    // it was found to trigger multi-second GPU/compositor stalls that froze
+    // the whole page (including scrolling) until a refresh. Only render
+    // while actually visible.
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (rafId === null && !reduced) rafId = requestAnimationFrame(frame);
+      } else if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    });
+    intersectionObserver.observe(canvas);
+
+    if (reduced) frame(performance.now());
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
     };
   }, []);
 
