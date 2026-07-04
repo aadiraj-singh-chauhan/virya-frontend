@@ -223,7 +223,6 @@ export default function Ecosystem() {
                 <EcosystemPatternBg className={styles.pattern} />
   
                 <Image
-                  key={active}
                   src={STEPS[active].image}
                   alt={STEPS[active].title}
                   width={490}
