@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/IntelligentCore.module.css';
+import styles from './IntelligentCore.module.css';
 
 const ITEMS = [
   {

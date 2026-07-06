@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/LogoSlider.module.css';
+import styles from './LogoSlider.module.css';
 
 const LOGOS = [
   { src: 'bosch', alt: 'Bosch' },

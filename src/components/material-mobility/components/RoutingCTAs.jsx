@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from '../css/RoutingCTAs.module.css';
+import styles from './RoutingCTAs.module.css';
 
 const CARDS = [
   {

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/Banner.module.css';
+import styles from './Banner.module.css';
 
 const BULLETS = [
   'Indoor + Outdoor Autonomous Navigation',

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/Testimonials.module.css';
+import styles from './Testimonials.module.css';
 
 const LOGOS = [
   '/assets/testimonial-logo-5.svg',

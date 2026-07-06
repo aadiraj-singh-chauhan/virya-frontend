@@ -1,4 +1,4 @@
-import styles from '../css/Overview.module.css';
+import styles from './Overview.module.css';
 
 const HIGHLIGHTS = [
   'Real-world validation',

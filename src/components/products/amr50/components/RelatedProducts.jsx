@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from '../css/RelatedProducts.module.css';
+import styles from './RelatedProducts.module.css';
 
 const PRODUCTS = [
   {

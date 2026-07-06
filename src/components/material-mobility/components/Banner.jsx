@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import styles from '../css/Banner.module.css';
+import styles from './Banner.module.css';
 
 export default function Banner() {
   const videoRef = useRef(null);

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import styles from '../css/WhereItWorks.module.css';
+import styles from './WhereItWorks.module.css';
 
 const SLIDES = [
   { src: '/assets/pm-airports.png', label: 'Airports' },

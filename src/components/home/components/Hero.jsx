@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from '../css/Hero.module.css';
+import styles from './Hero.module.css';
 
 export default function Hero() {
   return (

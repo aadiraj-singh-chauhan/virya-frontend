@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import OverviewPatternBg from '@/components/products/OverviewPatternBg';
 import VideoPlayToggle from '@/components/products/VideoPlayToggle';
-import styles from '../css/Overview.module.css';
+import styles from './Overview.module.css';
 
 const STATS = [
   { label: 'Max Lifting Capacity', value: '2000 kg.', sub: '(Includes payload attachment)' },

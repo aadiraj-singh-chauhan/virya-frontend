@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
-import styles from '../css/LatestFromVirya.module.css';
+import styles from './LatestFromVirya.module.css';
 
 const ITEMS = [
   {

@@ -3,7 +3,7 @@ import { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import EcosystemPatternBg from './EcosystemPatternBg';
-import styles from '../css/Ecosystem.module.css';
+import styles from './Ecosystem.module.css';
 
 const STEPS = [
   {

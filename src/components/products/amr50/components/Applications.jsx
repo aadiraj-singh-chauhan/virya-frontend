@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
-import styles from '../css/Applications.module.css';
+import styles from './Applications.module.css';
 
 const SLIDES = [
   {

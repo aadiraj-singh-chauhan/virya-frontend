@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import styles from '../css/Features.module.css';
+import styles from './Features.module.css';
 
 const CARDS = [
   { id: 'autonomous', video: '/assets/pm-autonomous.mp4', label: 'Autonomous', overlay: true },

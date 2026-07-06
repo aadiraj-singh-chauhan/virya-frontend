@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/VehicleSpecs.module.css';
+import styles from './VehicleSpecs.module.css';
 
 const SPECS = [
   { label: 'Max Speed',                value: '15 km/h' },

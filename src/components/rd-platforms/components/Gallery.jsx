@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from '../css/Gallery.module.css';
+import styles from './Gallery.module.css';
 
 const IMAGES = [
   { src: '/assets/rd-platforms-gallery-1.webp', alt: 'Operator driving an autonomous platform outdoors' },

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/Banner.module.css';
+import styles from './Banner.module.css';
 
 const TICKS = [
   { x: 90.15, y: 55.34, axis: 'h' },

@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useScramble } from "@/hooks/useScramble";
-import styles from "../css/LogisticsChallenges.module.css";
+import styles from "./LogisticsChallenges.module.css";
 
 const CARDS = [
   {

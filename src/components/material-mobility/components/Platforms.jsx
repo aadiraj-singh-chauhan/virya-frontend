@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from '../css/Platforms.module.css';
+import styles from './Platforms.module.css';
 
 const PLATFORMS = [
   {

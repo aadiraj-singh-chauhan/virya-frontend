@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
-import styles from '../css/Platforms.module.css';
+import styles from './Platforms.module.css';
 
 const FEATURES = [
   'Multi-Sensor Perception',

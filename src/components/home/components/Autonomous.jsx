@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from '../css/Autonomous.module.css';
+import styles from './Autonomous.module.css';
 
 export default function Autonomous() {
   return (

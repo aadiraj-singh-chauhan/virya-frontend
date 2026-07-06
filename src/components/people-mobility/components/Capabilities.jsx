@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../css/Capabilities.module.css';
+import styles from './Capabilities.module.css';
 
 const FEATURES = [
   {
