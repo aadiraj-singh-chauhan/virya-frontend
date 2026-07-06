@@ -66,7 +66,7 @@ export default function Features() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} data-header-theme="light">
       <div className="container">
         <div className={styles.inner}>
 
