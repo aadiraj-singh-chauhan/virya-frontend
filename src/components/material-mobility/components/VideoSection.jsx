@@ -83,18 +83,16 @@ export default function VideoSection() {
   const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
-    videoRef.current?.play().catch(() => {});
+    videoRef.current?.play().catch(() => setPlaying(false));
   }, []);
 
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
-      video.play();
-      setPlaying(true);
+      video.play().catch(() => {});
     } else {
       video.pause();
-      setPlaying(false);
     }
   };
 
@@ -127,6 +125,8 @@ export default function VideoSection() {
             playsInline
             aria-label="Virya autonomous vehicle in warehouse"
             className={styles.videoFg}
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
           />
           <button
             className={styles.playBtn}
