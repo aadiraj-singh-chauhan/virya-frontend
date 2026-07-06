@@ -75,9 +75,9 @@ export default function Legacy() {
                 <div className={styles.cardTop}>
                   <div className={styles.cardHeader}>
                     <span className={styles.bullet} aria-hidden="true" />
-                    <span className="label-2">{card.label}</span>
+                    <span className="label-2 label-3-md">{card.label}</span>
                   </div>
-                  <h3 className="title-1">{card.title}</h3>
+                  <h3 className="title-1 title-1-md">{card.title}</h3>
                 </div>
                 <Button href={card.href} property1="Default" size="Button-2">
                   {card.cta}
@@ -89,7 +89,7 @@ export default function Legacy() {
 
         <div className={styles.contentSection} data-header-theme="dark">
           <div className={styles.taglineSection}>
-            <h2 className={`heading-2 ${styles.taglineHeading}`}>
+            <h2 className={`heading-2 heading-2-md ${styles.taglineHeading}`}>
               Proven legacy. Real-world scale. Trusted performance.
             </h2>
             <div className={styles.metricsRow}>
@@ -146,8 +146,8 @@ function MetricCard({ value, label }) {
 
   return (
     <div ref={ref} className={styles.metricCard}>
-      <p className="headin-3">{count}{suffix}</p>
-      <p className="label-1">{label}</p>
+      <p className="headin-3 headin-3-md">{count}{suffix}</p>
+      <p className="label-1 label-1-md">{label}</p>
     </div>
   );
 }

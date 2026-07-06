@@ -25,7 +25,7 @@ export default function LatestFromVirya() {
       <div className="container">
 
         <div className={styles.header}>
-          <h2 className={`heading-2 ${styles.headingText}`}>Latest from Virya</h2>
+          <h2 className={`heading-2 heading-2-md ${styles.headingText}`}>Latest from Virya</h2>
           <a href="/resources" className={`label-2 ${styles.exploreLink}`} onMouseEnter={play} onMouseLeave={reset}>
             <span className={styles.linkText}>
               <span className={styles.textOriginal}>Explore more</span>
@@ -48,7 +48,7 @@ export default function LatestFromVirya() {
             </div>
             <div className={styles.featuredContent}>
               <span className={styles.tag}>Case study</span>
-              <p className="body-1">Real-world deployment: factory automation transformation</p>
+              <p className="body-1 body-1-md">Real-world deployment: factory automation transformation</p>
             </div>
           </div>
 

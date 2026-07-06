@@ -15,7 +15,7 @@ export default function Hero() {
       />
 
       <div className={styles.content}>
-        <h1 className={`heading-1 ${styles.heading}`}>
+        <h1 className={`heading-1 heading-1-md ${styles.heading}`}>
           Autonomous
           <br />
           mobility for
@@ -48,7 +48,7 @@ export default function Hero() {
             <span className={styles.scrollText}>See how that looks</span>
           </div>
 
-          <div className={styles.cta}>
+          <div className={`label-1 label-1-md ${styles.cta}`}>
             <Button href="/solutions/material-mobility" property1="Variant3" size="Button-2">
               Explore material mobility
             </Button>

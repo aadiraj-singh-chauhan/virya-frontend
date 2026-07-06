@@ -34,15 +34,23 @@
    ::before handles the left column, ::after the right. */
 .card::before,
 .card::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 6px;
   height: 6px;
   background: var(--color-1);
   z-index: 2;
 }
-.card::before { top: -4px; left: -4px;  box-shadow: 0 436px 0 var(--color-1); }
-.card::after  { top: -4px; right: -4px; box-shadow: 0 436px 0 var(--color-1); }
+.card::before {
+  top: -4px;
+  left: -4px;
+  box-shadow: 0 436px 0 var(--color-1);
+}
+.card::after {
+  top: -4px;
+  right: -4px;
+  box-shadow: 0 436px 0 var(--color-1);
+}
 
 .content {
   padding: 0 51px;
@@ -60,9 +68,13 @@
   gap: 19px;
 }
 
-.meta span:not(:first-child) { color: var(--color-2); }
+.meta span:not(:first-child) {
+  color: var(--color-2);
+}
 
-.title { margin-bottom: 8px; }
+.title {
+  margin-bottom: 8px;
+}
 
 .image {
   position: absolute;
@@ -106,7 +118,7 @@
     order: 1;
     width: 100%;
     aspect-ratio: 535 / 308;
-    background: url('/assets/event-card-pattern.png') center / cover no-repeat;
+    background: url("/assets/event-card-pattern.png") center / cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,8 +128,18 @@
     position: relative;
     right: auto;
     top: auto;
-    width: 85%;
-    height: 85%;
-    object-fit: cover;
+    width: 100%;
+    height: auto;
+    object-fit: fill;
+  }
+
+  .cardInner {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .cardInner img {
+    width: 100%;
+    height: auto;
   }
 }
