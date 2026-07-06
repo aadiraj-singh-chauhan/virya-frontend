@@ -1,7 +1,6 @@
 import { Space_Grotesk, Chakra_Petch } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import EventStrip from "@/components/layout/EventStrip";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import "./globals.css";
 
@@ -30,7 +29,6 @@ export default function RootLayout({ children }) {
     >
       <body>
         <SmoothScroll />
-        <EventStrip />
         <Header />
         <div>{children}</div>
         <Footer />

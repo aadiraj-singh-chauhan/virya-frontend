@@ -1,7 +1,7 @@
 /* ── Shell ─────────────────────────────────────────────────────────────────── */
 .header {
   position: fixed;
-  top: var(--strip-height);
+  top: 0;
   left: 0;
   right: 0;
   z-index: 100;
@@ -10,7 +10,7 @@
 }
 
 .headerHidden {
-  transform: translateY(calc(-100% - var(--strip-height)));
+  transform: translateY(-100%);
 }
 
 .inner {

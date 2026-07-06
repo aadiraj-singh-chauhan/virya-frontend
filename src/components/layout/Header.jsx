@@ -25,9 +25,8 @@ const NAV_ITEMS = [
 
 function getLogoY() {
   const root = getComputedStyle(document.documentElement);
-  const strip = parseFloat(root.getPropertyValue('--strip-height')) || 40;
   const header = parseFloat(root.getPropertyValue('--header-height')) || 80;
-  return strip + header / 2;
+  return header / 2;
 }
 
 export default function Header() {
