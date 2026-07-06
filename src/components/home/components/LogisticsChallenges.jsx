@@ -1,4 +1,8 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import { useScramble } from "@/hooks/useScramble";
 import styles from "../css/LogisticsChallenges.module.css";
 
 const CARDS = [
@@ -23,8 +27,15 @@ const CARDS = [
 ];
 
 export default function LogisticsChallenges() {
+  const sectionRef = useRef(null);
+  const { display, play, reset } = useScramble("Skip this section");
+
+  const handleSkip = () => {
+    sectionRef.current?.nextElementSibling?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section className={styles.section} data-header-theme="light">
+    <section ref={sectionRef} className={styles.section} data-header-theme="light">
       <Image
         src="/assets/logistics-challenges-bg.webp"
         alt=""
@@ -72,8 +83,17 @@ export default function LogisticsChallenges() {
         ))}
       </div>
 
-      <button type="button" className={styles.skipSection}>
-        <span className="label-2">Skip this section</span>
+      <button
+        type="button"
+        className={styles.skipSection}
+        onClick={handleSkip}
+        onMouseEnter={play}
+        onMouseLeave={reset}
+      >
+        <span className={`label-2 ${styles.skipText}`}>
+          <span className={styles.skipTextOriginal}>Skip this section</span>
+          <span className={styles.skipTextDisplay} aria-hidden="true">{display}</span>
+        </span>
         <svg
           width="16"
           height="16"

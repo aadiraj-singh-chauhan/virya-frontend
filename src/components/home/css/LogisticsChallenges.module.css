@@ -86,6 +86,22 @@
   display: none;
 }
 
+.skipText {
+  position: relative;
+  display: inline-block;
+}
+
+.skipTextOriginal {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.skipTextDisplay {
+  position: absolute;
+  inset: 0;
+}
+
 @media (max-width: 768px) {
   .section {
     aspect-ratio: auto;
