@@ -37,8 +37,8 @@ function Step({ title, active }) {
   }, [active, play, reset]);
 
   return (
-    <div className={`${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}>
-      <span className={styles.textOriginal}>{title}</span>
+    <div className={`title-1-md title-1 ${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}>
+      <span className={`body-1 ${styles.textOriginal}`}>{title}</span>
       <span className={styles.textDisplay} aria-hidden="true">{display || title}</span>
     </div>
   );

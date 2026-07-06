@@ -100,7 +100,7 @@ export default function VideoSection() {
     <section className={styles.section} data-header-theme="light">
       <div className="container">
 
-        <p className={`heading-2 ${styles.heading}`}>
+        <p className={`${styles.heading} heading-2 heading-2-md`}>
           Virya delivers seamless mobility that keeps operations efficient and moving.
         </p>
 
@@ -114,8 +114,8 @@ export default function VideoSection() {
         </div>
 
         <div className={styles.videoWrap}>
-          <Image src="/assets/mm-video-bg.webp" alt="" fill sizes="1030px" className={styles.videoBg} />
-          <div className={styles.videoOverlay} aria-hidden="true" />
+          {/* <Image src="/assets/mm-video-bg.webp" alt="" fill sizes="1030px" className={styles.videoBg} /> */}
+          {/* <div className={styles.videoOverlay} aria-hidden="true" /> */}
           <video
             ref={videoRef}
             src="/assets/amr50-overview.mp4"

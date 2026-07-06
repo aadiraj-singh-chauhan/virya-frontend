@@ -7,7 +7,17 @@ export default function Banner() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    videoRef.current?.play().catch(() => {});
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+
+    return () => {
+      video.pause();
+    };
   }, []);
 
   return (
@@ -26,7 +36,7 @@ export default function Banner() {
       <div className={styles.inner}>
         <p className={styles.textMaterial} aria-hidden="true">Material</p>
         <p className={styles.textMobility} aria-hidden="true">Mobility</p>
-        <h1 className={styles.subtitle}>Smart mobility powering better Material operations</h1>
+        <h1 className={`${styles.subtitle} label-1-md`}>Smart mobility powering better Material operations</h1>
       </div>
 
       <div className={styles.bottomFade} aria-hidden="true" />

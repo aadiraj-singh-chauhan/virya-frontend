@@ -93,12 +93,6 @@
   position: relative;
   flex: 1;
   overflow: hidden;
-  font-family: var(--font-primary);
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 1.1;
-  text-transform: uppercase;
-  text-align: left;
   transition:
     color 0.35s ease,
     opacity 0.35s ease;
@@ -304,7 +298,6 @@
   }
 
   .stepTitle {
-    font-size: 24px;
     white-space: normal;
   }
 
