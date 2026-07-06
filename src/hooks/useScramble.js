@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const FRAME_MS = 18;
@@ -41,6 +41,8 @@ export function useScramble(original) {
     clearTimeout(timerRef.current);
     setDisplay(original);
   }, [original]);
+
+  useEffect(() => () => clearTimeout(timerRef.current), []);
 
   return { display, play, reset };
 }
