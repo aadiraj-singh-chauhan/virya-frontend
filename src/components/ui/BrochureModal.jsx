@@ -1,23 +1,48 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import BrochureModalPattern from './BrochureModalPattern';
 import styles from './BrochureModal.module.css';
 
 export default function BrochureModal({ open, onClose }) {
+  const modalRef = useRef(null);
+  const previousFocusRef = useRef(null);
+
   useEffect(() => {
     if (!open) return;
 
+    previousFocusRef.current = document.activeElement;
+    modalRef.current?.querySelector('input, button')?.focus();
+
     const onKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+
+      const focusable = modalRef.current?.querySelectorAll('input, button, [href]');
+      if (!focusable || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     document.addEventListener('keydown', onKeyDown);
     document.body.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = '';
+      previousFocusRef.current?.focus();
     };
   }, [open, onClose]);
 
@@ -31,6 +56,7 @@ export default function BrochureModal({ open, onClose }) {
   return createPortal(
     <div className={styles.overlay} onClick={onClose}>
       <div
+        ref={modalRef}
         className={styles.modal}
         role="dialog"
         aria-modal="true"
