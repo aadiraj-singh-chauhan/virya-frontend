@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   color: var(--color-5);
-  background: #000;
+  background: var(--color-3);
 }
 
 /* WebGL canvas (FooterGlow) rendering the animated diagonal ember-stripe

@@ -170,6 +170,9 @@ export default function FooterGlow({ className }) {
       if (rafId) cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
+      gl.deleteBuffer(buffer);
+      gl.deleteProgram(program);
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, []);
 
