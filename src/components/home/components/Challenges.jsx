@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import styles from './Challenges.module.css';
+import styles from '../css/Challenges.module.css';
 
 export default function Challenges() {
   const videoRef = useRef(null);

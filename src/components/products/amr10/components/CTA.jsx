@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from './CTA.module.css';
+import styles from '../css/CTA.module.css';
 
 const PRODUCTS = [
   {

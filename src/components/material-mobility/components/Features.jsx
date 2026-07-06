@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
-import styles from './Features.module.css';
+import styles from '../css/Features.module.css';
 
 const TABS = [
   {

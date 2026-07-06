@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
-import styles from './Applications.module.css';
+import styles from '../css/Applications.module.css';
 
 const SPECS = [
   { label: 'Max Speed',            value: '2.3 m/s (8km/hr)' },

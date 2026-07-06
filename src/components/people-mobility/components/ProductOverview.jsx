@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import styles from './ProductOverview.module.css';
+import styles from '../css/ProductOverview.module.css';
 
 export default function ProductOverview() {
   const videoRef = useRef(null);

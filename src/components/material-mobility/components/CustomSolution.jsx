@@ -1,6 +1,6 @@
 import Button from '@/components/ui/Button';
 import CustomSolutionPatternBg from './CustomSolutionPatternBg';
-import styles from './CustomSolution.module.css';
+import styles from '../css/CustomSolution.module.css';
 
 export default function CustomSolution() {
   return (

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import LogoSlider from './LogoSlider';
-import styles from './Legacy.module.css';
+import styles from '../css/Legacy.module.css';
 
 const CARDS = [
   {

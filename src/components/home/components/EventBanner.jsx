@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import EventBannerPatternBg from './EventBannerPatternBg';
-import styles from './EventBanner.module.css';
+import styles from '../css/EventBanner.module.css';
 
 export default function EventBanner() {
   return (

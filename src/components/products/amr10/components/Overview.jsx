@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import OverviewPatternBg from '@/components/products/OverviewPatternBg';
 import VideoPlayToggle from '@/components/products/VideoPlayToggle';
-import styles from './Overview.module.css';
+import styles from '../css/Overview.module.css';
 
 const STATS = [
   { label: 'Max Towing Capacity', value: '5000 kg.', sub: '(Includes payload attachment)' },

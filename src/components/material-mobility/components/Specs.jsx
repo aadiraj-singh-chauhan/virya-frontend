@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
-import styles from './Specs.module.css';
+import styles from '../css/Specs.module.css';
 
 const dummy = 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the';
 

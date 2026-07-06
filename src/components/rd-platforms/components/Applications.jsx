@@ -1,4 +1,4 @@
-import styles from './Applications.module.css';
+import styles from '../css/Applications.module.css';
 
 const FEATURE_COLUMNS = [
   ['Software-Defined Vehicles', 'Fleet Intelligence', 'Production-Grade Autonomy'],

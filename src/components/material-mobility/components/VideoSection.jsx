@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import styles from './VideoSection.module.css';
+import styles from '../css/VideoSection.module.css';
 
 const FEATURES = [
   'Indoor and outdoor operations',

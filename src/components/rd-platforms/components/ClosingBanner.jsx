@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from './ClosingBanner.module.css';
+import styles from '../css/ClosingBanner.module.css';
 
 export default function ClosingBanner() {
   return (

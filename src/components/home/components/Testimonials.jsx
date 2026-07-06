@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import TestimonialsPatternBg from './TestimonialsPatternBg';
-import styles from './Testimonials.module.css';
+import styles from '../css/Testimonials.module.css';
 
 export default function Testimonials() {
   return (

@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, Fragment } from 'react';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from './Industries.module.css';
+import styles from '../css/Industries.module.css';
 
 const SLIDES = [
   {

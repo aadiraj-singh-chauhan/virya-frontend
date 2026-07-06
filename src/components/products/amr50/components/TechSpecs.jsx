@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
-import styles from './TechSpecs.module.css';
+import styles from '../css/TechSpecs.module.css';
 
 const TABS = ['AMR 50', 'AMR 51'];
 

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
-import styles from './Capabilities.module.css';
+import styles from '../css/Capabilities.module.css';
 
 const FEATURES = [
   {

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
-import styles from './CTA.module.css';
+import styles from '../css/CTA.module.css';
 
 export default function CTA() {
   return (
