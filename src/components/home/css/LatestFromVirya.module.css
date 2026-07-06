@@ -81,7 +81,7 @@
   width: 353px;
 }
 
-.featuredText {
+.featuredContent p {
   color: var(--color-5);
 }
 
@@ -228,7 +228,7 @@
     gap: 15px;
   }
 
-  .featuredText {
+  .featuredContent p {
     color: var(--color-3);
   }
 

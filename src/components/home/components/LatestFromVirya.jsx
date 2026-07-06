@@ -48,7 +48,7 @@ export default function LatestFromVirya() {
             </div>
             <div className={styles.featuredContent}>
               <span className={styles.tag}>Case study</span>
-              <p className={`body-1 ${styles.featuredText}`}>Real-world deployment: factory automation transformation</p>
+              <p className="body-1">Real-world deployment: factory automation transformation</p>
             </div>
           </div>
 
