@@ -13,8 +13,8 @@ export default function EventBanner() {
             <div className={styles.content}>
               <div className={styles.meta}>
                 <span className="label-2">Event</span>
-                <span className={`label-2 ${styles.accent}`}>Nov 20</span>
-                <span className={`label-2 ${styles.accent}`}>4pm · Mumbai</span>
+                <span className="label-2">Nov 20</span>
+                <span className="label-2">4pm · Mumbai</span>
               </div>
               <p className={`title-1 ${styles.title}`}>
                 A milestone moment: launching our next-generation autonomous pallet truck APT20
@@ -33,14 +33,14 @@ export default function EventBanner() {
             />
           </div>
           <div className={styles.imageWrap}>
-  <Image
-    src="/assets/milestone-moment.webp"
-    alt="APT20 launch event"
-    width={535}
-    height={308}
-    className={styles.image}
-  />
-</div>
+            <Image
+              src="/assets/milestone-moment.webp"
+              alt="APT20 launch event"
+              width={535}
+              height={308}
+              className={styles.image}
+            />
+          </div>
         </div>
       </div>
     </section>
