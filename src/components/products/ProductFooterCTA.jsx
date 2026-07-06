@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import styles from './ProductFooterCTA.module.css';
+import styles from './css/ProductFooterCTA.module.css';
 
 const BLOCKS = [
   {

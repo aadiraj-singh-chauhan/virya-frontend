@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import BrochureModalPattern from './BrochureModalPattern';
-import styles from './BrochureModal.module.css';
+import styles from './css/BrochureModal.module.css';
 
 export default function BrochureModal({ open, onClose }) {
   const modalRef = useRef(null);

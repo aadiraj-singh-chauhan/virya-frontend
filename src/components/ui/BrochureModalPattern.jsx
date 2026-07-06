@@ -1,4 +1,4 @@
-import pulseStyles from './BrochureModalPattern.module.css';
+import pulseStyles from './css/BrochureModalPattern.module.css';
 
 export default function BrochureModalPattern({ className }) {
   return (

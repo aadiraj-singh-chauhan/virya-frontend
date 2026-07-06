@@ -1,4 +1,4 @@
-import pulseStyles from './EventBannerPatternBg.module.css';
+import pulseStyles from '../css/EventBannerPatternBg.module.css';
 
 export default function EventBannerPatternBg({ className }) {
   return (

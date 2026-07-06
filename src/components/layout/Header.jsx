@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button';
 import { useScramble } from '@/hooks/useScramble';
-import styles from './Header.module.css';
+import styles from './css/Header.module.css';
 
 const SOLUTION_ITEMS = [
   { label: 'Material Mobility', href: '/material-mobility' },

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
-import styles from './ProductBanner.module.css';
+import styles from './css/ProductBanner.module.css';
 
 export default function ProductBanner({ name, image, imageAlt, imageWidth, imageHeight }) {
   return (

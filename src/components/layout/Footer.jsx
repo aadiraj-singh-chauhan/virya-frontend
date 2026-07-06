@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import Button from '@/components/ui/Button';
 import FooterGlow from './FooterGlow';
-import styles from './Footer.module.css';
+import styles from './css/Footer.module.css';
 
 const NAV = [
   {

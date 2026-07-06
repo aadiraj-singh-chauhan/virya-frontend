@@ -1,4 +1,4 @@
-import pulseStyles from './CustomSolutionPatternBg.module.css';
+import pulseStyles from '../css/CustomSolutionPatternBg.module.css';
 
 export default function CustomSolutionPatternBg({ className }) {
   return (

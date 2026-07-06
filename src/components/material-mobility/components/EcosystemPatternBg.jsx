@@ -1,4 +1,4 @@
-import pulseStyles from './EcosystemPatternBg.module.css';
+import pulseStyles from '../css/EcosystemPatternBg.module.css';
 
 export default function EcosystemPatternBg({ className }) {
   return (

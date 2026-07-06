@@ -1,4 +1,4 @@
-import pulseStyles from './TestimonialsPatternBg.module.css';
+import pulseStyles from '../css/TestimonialsPatternBg.module.css';
 
 export default function TestimonialsPatternBg({ className }) {
   return (

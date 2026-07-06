@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './VideoPlayToggle.module.css';
+import styles from './css/VideoPlayToggle.module.css';
 
 function PauseIcon() {
   return (

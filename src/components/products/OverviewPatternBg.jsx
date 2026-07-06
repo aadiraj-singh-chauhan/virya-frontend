@@ -1,4 +1,4 @@
-import pulseStyles from './OverviewPatternBg.module.css';
+import pulseStyles from './css/OverviewPatternBg.module.css';
 
 export default function OverviewPatternBg({ className }) {
   return (

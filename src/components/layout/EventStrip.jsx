@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import styles from './EventStrip.module.css';
+import styles from './css/EventStrip.module.css';
 
 export default function EventStrip() {
   const [visible, setVisible] = useState(true);

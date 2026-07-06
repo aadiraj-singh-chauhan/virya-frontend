@@ -1,7 +1,7 @@
 'use client';
 
 import { useScramble } from '@/hooks/useScramble';
-import styles from './Button.module.css';
+import styles from './css/Button.module.css';
 
 /**
  * Figma: Styles and elements → Button 1 / Button 2 / Button-3
