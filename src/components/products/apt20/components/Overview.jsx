@@ -6,10 +6,11 @@ import VideoPlayToggle from '@/components/products/VideoPlayToggle';
 import styles from '../css/Overview.module.css';
 
 const STATS = [
-  { label: 'Max Lifting Capacity', value: '2000 kg.', sub: '(Includes payload attachment)' },
-  { label: 'Max Speed', value: '2 m/s' },
-  { label: 'Motor Capacity', value: '3 kW' },
-  { label: 'Tyres', value: 'Solid Rubber', sub: '(Indoor & Outdoor)' },
+  { label: 'Max Payload Capacity', value: '2000 kg.' },
+  { label: 'Max Speed', value: '1.5 m/s' },
+  { label: 'Lifting Speed', value: '40mm/s' },
+  { label: 'Lowering Speed', value: '30mm/s' },
+  { label: 'Motor Capacity', value: '2 kW' },
 ];
 
 export default function Overview() {
@@ -40,9 +41,9 @@ export default function Overview() {
         <div className={styles.contentBg} aria-hidden="true" />
 
         <p className={`title-1 ${styles.heading}`}>
-          <span className={styles.accent}>APT 20 </span>
-          is an autonomous pallet truck designed for 2-ton lifting capacity,
-          offering seamless manual and autonomous hybrid operation modes.
+          A versatile autonomous pallet truck designed for 2-ton lifting capacity, offering
+          seamless manual and autonomous hybrid modes to ensure uninterrupted productivity in
+          industrial environments
         </p>
 
         <div className={styles.stats}>

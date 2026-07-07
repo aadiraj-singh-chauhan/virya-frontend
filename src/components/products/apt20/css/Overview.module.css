@@ -29,7 +29,7 @@
   top: 123px;
   left: 50%;
   transform: translateX(-50%);
-  width: 975px;
+  width: 1070px;
   height: 401px;
   background: var(--color-6);
 }
@@ -41,7 +41,7 @@
   top: 144px;
   left: 50%;
   transform: translateX(-50%);
-  width: 838px;
+  width: 948px;
   text-align: center;
 }
 
@@ -57,9 +57,9 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 77px;
+  gap: 79px;
   align-items: flex-start;
-  width: 959px;
+  width: 1070px;
 }
 
 .statItem {
