@@ -50,10 +50,10 @@ export default function ProductOverview() {
       {/* Content */}
       <div className={styles.content}>
         <div className={styles.header}>
-          <h2 className="heading-2">
+          <h2 className="heading-2 heading-2-md">
             Autonomous Mobility Built for Real Industrial Environments
           </h2>
-          <p className={`body-1 ${styles.desc}`}>
+          <p className={`body-1 body-1-md ${styles.desc}`}>
             {"Virya's Autonomous People Mobility Platform (APM) is designed specifically for "
               + 'factories, research campuses, and logistics facilities — delivering safe, continuous '
               + 'autonomous transport across complex real-world environments.'}

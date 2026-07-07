@@ -75,3 +75,128 @@
   object-fit: contain;
   object-position: bottom center;
 }
+
+/* ── Row header (title + toggle icon) ──────────────────────────────────────── */
+
+.rowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.rowIcon {
+  display: none;
+  flex-shrink: 0;
+  margin-left: 16px;
+  transition: transform 0.35s ease;
+}
+
+/* ── Mobile accordion (≤ 767px) ───────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .headingWrap {
+    margin-left: 16px;
+    margin-right: 48px;
+    width: auto;
+    padding-left: 0px;
+  }
+
+  .heading {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  .row {
+    height: auto;
+    cursor: pointer;
+    border-bottom: none;
+  }
+
+  .rowBorderTop {
+    border-top: none;
+  }
+
+  .rowInner {
+    height: auto;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    justify-content: flex-start;
+    border-bottom: 0.2px solid var(--color-3);
+    margin-left: 16px;
+    margin-right: 48px;
+    width: auto;
+    padding-left: 0px;
+  }
+
+  .rowIcon {
+    display: block;
+  }
+
+  .rowIconOpen {
+    transform: rotate(45deg);
+  }
+
+  /* Reset hover expansion on touch devices */
+  .row:hover {
+    height: auto;
+    background: var(--color-6);
+  }
+
+  /* Open row gets the expanded background */
+  .row.rowOpen {
+    background: var(--color-8);
+  }
+
+  /* Description: hidden by default on mobile */
+  .rowDesc {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: none;
+    margin-top: 0;
+    transition: opacity 0.3s ease, max-height 0.4s ease, margin-top 0.3s ease;
+  }
+
+  /* Prevent desktop hover rule from showing desc on touch */
+  .row:hover .rowDesc {
+    opacity: 0;
+    max-height: 0;
+    transform: none;
+    margin-top: 0;
+  }
+
+  /* Show desc for explicitly opened rows — same specificity, later order wins */
+  .row.rowOpen .rowDesc {
+    opacity: 1;
+    max-height: 200px;
+    margin-top: 12px;
+  }
+
+  /* Image: switch to in-flow layout on mobile */
+  .rowImage {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 240px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease 0.1s, margin-top 0.3s ease;
+  }
+
+  /* Prevent desktop hover rule from showing image on touch */
+  .row:hover .rowImage {
+    opacity: 0;
+    max-height: 0;
+  }
+
+  /* Show image for explicitly opened rows — same specificity, later order wins */
+  .row.rowOpen .rowImage {
+    max-height: 260px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+}

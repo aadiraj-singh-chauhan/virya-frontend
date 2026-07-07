@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/Capabilities.module.css';
 
@@ -25,20 +27,28 @@ const FEATURES = [
 ];
 
 export default function Capabilities() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.heading}`}>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
         Not just another solution<br />
         built to outperform at every level
       </h2>
       <div className={`container ${styles.grid}`}>
-        {FEATURES.map((f) => (
-          <div key={f.title} className={styles.card}>
-            <div className={styles.iconAndTitle}>
+        {FEATURES.map((f, i) => (
+          <div
+            key={f.title}
+            className={`${styles.card} ${i === activeIndex ? styles.cardActive : ''}`}
+          >
+            <div
+              className={styles.iconAndTitle}
+              onClick={() => setActiveIndex(i === activeIndex ? -1 : i)}
+            >
               <Image src={f.image} alt="" width={96} height={96} className={styles.icon} aria-hidden="true" />
-              <p className="lable-3">{f.title}</p>
+              <p className="label-3 label-3-md">{f.title}</p>
             </div>
-            <p className="body-1">{f.body}</p>
+            <p className="body-1 body-1-md">{f.body}</p>
           </div>
         ))}
       </div>

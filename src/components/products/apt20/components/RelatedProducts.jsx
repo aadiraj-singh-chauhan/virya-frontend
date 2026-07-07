@@ -25,7 +25,7 @@ export default function RelatedProducts() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
-        <h2 className={`heading-2 ${styles.heading}`}>Explore other products</h2>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Explore other products</h2>
 
         <div className={styles.row}>
           {PRODUCTS.map((p) => (

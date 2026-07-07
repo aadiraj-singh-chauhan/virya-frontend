@@ -12,7 +12,7 @@ const SPECS = [
 export default function VehicleSpecs() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.heading}`}>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
         Bring autonomous mobility to your facility
       </h2>
 
@@ -30,8 +30,8 @@ export default function VehicleSpecs() {
         {SPECS.map((spec) => (
           <div key={spec.label} className={styles.card}>
             <span className={styles.dot} aria-hidden="true" />
-            <p className="title-2">{spec.label}</p>
-            <p className="body-1">{spec.value}</p>
+            <p className="title-2 title-2-md">{spec.label}</p>
+            <p className="body-1 body-1-md">{spec.value}</p>
           </div>
         ))}
       </div>

@@ -109,3 +109,68 @@
   max-width: 562px;
   opacity: 0.6;
 }
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .section {
+    height: 620px;
+    padding-top: 50px;
+  }
+
+  .bgPeople,
+  .bgMobility {
+    font-size: 22vw;
+  }
+
+  .bgText {
+    top: 50px;
+  }
+
+  .imageWrap {
+    top: 90px;
+    height: 430px;
+    width: 100%;
+  }
+
+  /* cover fills the container — landscape image scales to container height,
+     cropping left/right edges while keeping vehicles centered and fully tall */
+  .image {
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .gradient {
+    height: 220px;
+  }
+
+  .content {
+    bottom: 20px;
+    gap: 20px;
+  }
+
+  /* Horizontal scroll row — bullets never wrap */
+  .bullets {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 0 20px;
+  }
+
+  .bullets::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bullet {
+    flex-shrink: 0;
+  }
+
+  .desc {
+    padding: 0 20px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}

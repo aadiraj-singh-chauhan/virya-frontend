@@ -21,7 +21,7 @@ export default function TechSpecs() {
   return (
     <section className={styles.section} data-header-theme="light">
 
-      <h2 className={`heading-2 ${styles.title}`}>Product Specifications</h2>
+      <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
 
       <div className={styles.tabBar}>
         {TABS.map((tab, i) => (
@@ -30,7 +30,7 @@ export default function TechSpecs() {
             className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
             onClick={() => setActiveTab(i)}
           >
-            <span className="label-2">{tab}</span>
+            <span className="label-2 label-1-md">{tab}</span>
           </button>
         ))}
       </div>
@@ -59,8 +59,8 @@ export default function TechSpecs() {
         {SPECS.map((s) => (
           <div key={s.label} className={styles.card}>
             <span className={styles.dot} aria-hidden="true" />
-            <p className={styles.cardLabel}>{s.label}</p>
-            <p className={styles.cardValue}>{s.value}</p>
+            <p className={`${styles.cardLabel} title-2 title-2-md `}>{s.label}</p>
+            <p className={`${styles.cardValue} body-1 body-1-md`}>{s.value}</p>
           </div>
         ))}
       </div>
