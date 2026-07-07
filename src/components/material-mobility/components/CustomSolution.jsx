@@ -7,7 +7,7 @@ export default function CustomSolution() {
     <section className={styles.section} data-header-theme="light">
       <CustomSolutionPatternBg className={styles.pattern} />
       <div className={styles.content}>
-        <h2 className="heading-2">Create what your business actually needs</h2>
+        <h2 className="heading-2 heading-2-md">Create what your business actually needs</h2>
         <Button property1="Default" href="/contact">Get custom solutions</Button>
       </div>
     </section>

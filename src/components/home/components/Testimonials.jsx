@@ -8,7 +8,7 @@ export default function Testimonials() {
       <TestimonialsPatternBg className={styles.patternBg} />
 
       <div className={styles.inner}>
-        <h2 className={`heading-2 ${styles.heading}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
           Results speak it better
         </h2>
 
@@ -38,8 +38,8 @@ export default function Testimonials() {
             />
             <span className={styles.separator} aria-hidden="true" />
             <div className={styles.profileText}>
-              <p className="label-2">Joey Samual</p>
-              <p className="label-2">Senior supervisor, Logoipsum</p>
+              <p className="label-2 label-2-md">Joey Samual</p>
+              <p className="label-2 label-2-md">Senior supervisor, Logoipsum</p>
             </div>
           </div>
         </div>

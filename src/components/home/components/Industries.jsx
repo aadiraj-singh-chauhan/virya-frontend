@@ -37,7 +37,7 @@ export default function Industries() {
   return (
     <>
       <section className={styles.section} data-header-theme="light">
-        <h2 className={`heading-2 ${styles.heading}`}>Industries we cater to</h2>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Industries we cater to</h2>
         <ImageSlider slides={SLIDES} cardAspectRatio="517 / 288" />
       </section>
 
@@ -47,8 +47,8 @@ export default function Industries() {
             <Fragment key={href}>
               {i > 0 && <div className={styles.ctaDivider} aria-hidden="true" />}
               <div className={styles.ctaBlock}>
-                <p className="label-2">{eyebrow}</p>
-                <p className={`title-1 ${styles.ctaTitle}`}>{heading}</p>
+                <p className="label-2 label-2-md">{eyebrow}</p>
+                <p className={`title-1 title-1-md ${styles.ctaTitle}`}>{heading}</p>
                 <Button href={href} property1="Default" size="Button-2">{cta}</Button>
               </div>
             </Fragment>

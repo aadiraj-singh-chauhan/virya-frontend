@@ -2,11 +2,11 @@
    Loaded via next/font in layout.js — use these vars in components.
    ─────────────────────────────────────────────────────────────────────────── */
 :root {
-  --font-primary:   var(--font-space-grotesk), sans-serif;
-  --font-accent:    var(--font-chakra-petch), sans-serif;
-  --strip-height:   40px;
-  --header-height:  80px;
-  --logo-y:         80px;
+  --font-primary: var(--font-space-grotesk), sans-serif;
+  --font-accent: var(--font-chakra-petch), sans-serif;
+  --strip-height: 40px;
+  --header-height: 80px;
+  --logo-y: 80px;
 }
 
 @media (max-width: 768px) {
@@ -21,14 +21,6 @@
 
   .heading-1 {
     font-size: 36px;
-  }
-
-  .heading-2 {
-    font-size: 28px;
-  }
-
-  .headin-3 {
-    font-size: 40px;
   }
 
   .lable-3 {
@@ -77,6 +69,7 @@
   letter-spacing: 0em;
   text-transform: uppercase;
 }
+
 
 .headin-3 {
   font-family: var(--font-primary);
@@ -154,17 +147,101 @@
     line-height: 1.1;
   }
 
-  .label-1 {
+  .label-3-md{
+    font-family: "Chakra Petch";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 14px */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+   .headin-3-md {
+    color: var(--color-3, #000);
+    font-family: "Space Grotesk";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%; /* 44px */
+    text-transform: uppercase;
+  }
+
+  .label-1-md {
+    font-family: "Chakra Petch";
     font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%; /* 18.2px */
+    letter-spacing: 1.04px;
+    text-transform: uppercase;
   }
 
-  .heading-2 {
+  .heading-2-md {
     font-size: 25px;
-    line-height: 1.1;
   }
 
-  .body-1 {
-    font-size: 14px;
+  .heading-2-md {
+  font-family: var(--font-primary);
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+  text-transform: uppercase;
+  }
+
+  .title-1-md {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+  text-transform: uppercase;
+  }
+
+  .body-1-md {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  }
+
+  .label-2-md {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: 0.55px;
+  text-transform: uppercase;
+  }
+
+  .title-2-md{
+    font-family: "Space Grotesk";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 15.6px */
+    text-transform: uppercase;
+  }
+
+  .heading-1-md{
+    font-family: "Space Grotesk";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 110%; /* 44px */
+    text-transform: uppercase;
+  }
+
+  .heading-2-md{
+    font-family: "Space Grotesk";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%; /* 27.5px */
+    text-transform: uppercase;
   }
 }
 

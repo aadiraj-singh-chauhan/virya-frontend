@@ -46,7 +46,7 @@ export default function LogisticsChallenges() {
       />
 
       <div className={styles.heading}>
-        <h2 className="heading-2">
+        <h2 className="heading-2 heading-2-md">
           Every operation faces unique logistics challenges.
         </h2>
       </div>
@@ -71,12 +71,12 @@ export default function LogisticsChallenges() {
           >
             <div className={styles.cardHeader}>
               <span className={styles.bullet} aria-hidden="true" />
-              <span className="label-2">The difference we deliver</span>
+              <span className="label-2 label-3-md">The difference we deliver</span>
             </div>
             <div className={styles.cardContent}>
-              <h3 className="title-1">{title}</h3>
+              <h3 className="title-1 title-1-md">{title}</h3>
               <div className={styles.cardBody}>
-                <p className="body-1">{body}</p>
+                <p className="body-1 body-1-md">{body}</p>
               </div>
             </div>
           </article>
@@ -90,7 +90,7 @@ export default function LogisticsChallenges() {
         onMouseEnter={play}
         onMouseLeave={reset}
       >
-        <span className={`label-2 ${styles.skipText}`}>
+        <span className={`label-2 label-2-md ${styles.skipText}`}>
           <span className={styles.skipTextOriginal}>Skip this section</span>
           <span className={styles.skipTextDisplay} aria-hidden="true">{display}</span>
         </span>

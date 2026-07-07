@@ -194,12 +194,6 @@
 /* ── Feature label (width-lock scramble pattern) ──────────────────────────── */
 
 .featureLabel {
-  position: relative;
-  font-family: var(--font-primary);
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.1;
-  text-transform: uppercase;
   color: var(--color-3);
 }
 
@@ -282,9 +276,5 @@
   
     .detailContent {
       padding: 16px 0 0;
-    }
-  
-    .featureLabel {
-      font-size: 16px;
     }
   }

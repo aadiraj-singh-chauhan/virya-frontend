@@ -6,7 +6,7 @@ import VideoPlayToggle from '@/components/products/VideoPlayToggle';
 import styles from '../css/Overview.module.css';
 
 const STATS = [
-  { label: 'Max Towing Capacity', value: '5000 kg.', sub: '(Includes payload attachment)' },
+  { label: 'Max Towing Capacity', value: '1000 kg.', sub: '(Includes payload attachment)' },
   { label: 'Max Speed', value: '3 m/s' },
   { label: 'Motor Capacity', value: '4 kW' },
   { label: 'Tyres', value: 'Solid Rubber', sub: '(Indoor & Outdoor)' },
@@ -40,7 +40,7 @@ export default function Overview() {
         <OverviewPatternBg className={styles.pattern} />
         <div className={styles.contentBg} aria-hidden="true" />
 
-        <p className={`title-1 ${styles.heading}`}>
+        <p className={`title-1 heading-2-md ${styles.heading}`}>
           <span className={styles.accent}>AMR 10 </span>
           is a compact and powerful autonomous mobile robot, designed to tow payloads upto 1000kg.
           With its compact footprint, AMR 10 optimises space in confined manufacturing environments.
@@ -49,9 +49,9 @@ export default function Overview() {
         <div className={styles.stats}>
           {STATS.map((s) => (
             <div key={s.label} className={styles.statItem}>
-              <p className="label-2">{s.label}</p>
-              <p className={styles.statValue}>{s.value}</p>
-              {s.sub && <p className={styles.statSub}>{s.sub}</p>}
+              <p className="label-2 label-2-md">{s.label}</p>
+              <p className={`${styles.statValue} heading-2 heading-2-md`}>{s.value}</p>
+              {s.sub && <p className={`${styles.statSub} body-1 body-1-md`}>{s.sub}</p>}
             </div>
           ))}
         </div>

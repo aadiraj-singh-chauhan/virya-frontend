@@ -123,6 +123,26 @@
   opacity: 1;
 }
 
+/* Chevron — hidden on desktop, shown on mobile in place of the arrow link */
+.chevron {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-3);
+  opacity: 0.45;
+  flex-shrink: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+  opacity: 1;
+  color: var(--color-1);
+}
+
 /* ===========================
    DESKTOP IMAGE
 =========================== */
@@ -212,6 +232,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  width: fit-content;
+  background: var(--color-5);
+  border-radius: 999px;
+  padding: 6px 14px;
 }
 
 .mobileImage {
@@ -266,13 +290,19 @@
   }
 
   .tabItem{
-    gap:20px;
-    padding-bottom:28px;
+    gap:16px;
+    padding: 24px 0;
     border-bottom:1px solid rgba(0,0,0,.1);
   }
 
-  .tabTitle{
-    font-size:28px;
+  /* Arrow link is desktop-only; chevron takes over as the mobile
+     accordion's open/close indicator. */
+  .arrow{
+    display:none;
+  }
+
+  .chevron{
+    display:flex;
   }
 
   /* Hide desktop content */
@@ -285,12 +315,28 @@
     display:none;
   }
 
-  /* Show mobile content */
+  /* Mobile accordion — smooth slide + fade */
 
   .mobileContent{
     display:flex;
     flex-direction:column;
     gap:20px;
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transform:translateY(-6px);
+    pointer-events:none;
+    transition:
+      max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
+
+  .mobileContentOpen{
+    max-height:700px;
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
   }
 
   .mobileDesc{
@@ -330,10 +376,6 @@
     gap:32px;
   }
 
-  .tabTitle{
-    font-size:24px;
-  }
-
   .mobileImage{
     height:240px;
   }
@@ -342,14 +384,9 @@
     width:10px;
     height:10px;
   }
+
   .mobileLabel {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: fit-content;
-    background: var(--color-5);
-    border-radius: 999px;
-    padding: 5px 10px;
+    padding: 5px 12px;
   }
 
 }

@@ -17,8 +17,8 @@ export default function Autonomous() {
       <div className={styles.gradientBottom} />
 
       <div className={styles.content}>
-        <p className="lable-3">Virya platforms are</p>
-        <h2 className="heading-2">
+        <p className="lable-3 label-1-md">Virya platforms are</p>
+        <h2 className="heading-2 heading-2-md">
           Autonomous systems that fit the way your factory actually runs
         </h2>
         <Button href="/solutions" property1="Default" size="Button-2">

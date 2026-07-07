@@ -120,7 +120,7 @@ export default function RelatedProducts() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.heading}`}>Industries we cater to</h2>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Industries we cater to</h2>
 
       <div
         className={styles.sliderWrapper}
@@ -146,7 +146,7 @@ export default function RelatedProducts() {
               />
               <div className={styles.cardOverlay} aria-hidden="true" />
               <div className={styles.labelWrap}>
-                <p className="label-1">{item.label}</p>
+                <p className="label-1 label-1-md">{item.label}</p>
               </div>
             </div>
           ))}

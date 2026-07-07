@@ -15,7 +15,7 @@ export default function Applications() {
   return (
     <section className={styles.section} data-header-theme="light">
 
-      <h2 className={`heading-2 ${styles.title}`}>Product Specifications</h2>
+      <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
 
       {/* Blueprint diagram */}
       <div className={styles.blueprint}>
@@ -43,8 +43,8 @@ export default function Applications() {
         {SPECS.map((s) => (
           <div key={s.label} className={styles.card}>
             <span className={styles.dot} aria-hidden="true" />
-            <p className={styles.cardLabel}>{s.label}</p>
-            <p className={styles.cardValue}>{s.value}</p>
+            <p className={`${styles.cardLabel} title-1 title-1-md`}>{s.label}</p>
+            <p className={`${styles.cardValue} body-1 body-1-md`}>{s.value}</p>
           </div>
         ))}
       </div>

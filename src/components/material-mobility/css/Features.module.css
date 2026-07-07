@@ -42,16 +42,11 @@
 .tabTitle {
   position: relative;
   display: inline-block;
-  font-family: var(--font-primary);
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 1.1;
-  text-transform: uppercase;
   background: transparent;
   border: none;
   padding: 0;
   cursor: pointer;
-  transition: .35s;
+  transition:all .35s;
 }
 
 .tabActive {
@@ -86,15 +81,24 @@
   max-height: 120px;
 }
 
-.arrow {
-  display: flex;
-  opacity: 0;
-  color: var(--color-1);
-  transition: .35s;
+/* Chevron — hidden on desktop, shown on mobile */
+.chevron {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-3);
+  opacity: 0.45;
+  flex-shrink: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    color 0.3s ease;
 }
 
-.arrowVisible {
+.chevronOpen {
+  transform: rotate(180deg);
   opacity: 1;
+  color: var(--color-1);
 }
 
 /* ===========================
@@ -148,12 +152,14 @@
 }
 
 /* ===========================
-   MOBILE
+   MOBILE ACCORDION BASE
+   (hidden on desktop)
 =========================== */
 
 .mobileContent {
   display: none;
 }
+
 
 .mobileDesc {
   opacity: .5;
@@ -169,6 +175,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  width: fit-content;
+  background: var(--color-5);
+  border-radius: 999px;
+  padding: 6px 14px;
 }
 
 .mobileImage {
@@ -219,20 +229,22 @@
 
   .tabs{
     width:100%;
-    gap:28px;
+    gap:0;
   }
 
   .tabItem{
-    gap:20px;
-    padding-bottom:28px;
+    gap:16px;
+    padding: 24px 0;
     border-bottom:1px solid rgba(0,0,0,.1);
   }
 
-  .tabTitle{
-    font-size:28px;
+  /* Show chevron on mobile */
+
+  .chevron{
+    display:flex;
   }
 
-  /* Hide desktop content */
+  /* Hide desktop-only content */
 
   .tabDesc{
     display:none;
@@ -242,12 +254,28 @@
     display:none;
   }
 
-  /* Show mobile content */
+  /* Mobile accordion — smooth slide + fade */
 
   .mobileContent{
     display:flex;
     flex-direction:column;
     gap:20px;
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transform:translateY(-6px);
+    pointer-events:none;
+    transition:
+      max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
+
+  .mobileContentOpen{
+    max-height:700px;
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
   }
 
   .mobileDesc{
@@ -287,10 +315,6 @@
     gap:32px;
   }
 
-  .tabTitle{
-    font-size:24px;
-  }
-
   .mobileImage{
     height:240px;
   }
@@ -299,14 +323,9 @@
     width:10px;
     height:10px;
   }
+
   .mobileLabel {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: fit-content;
-    background: var(--color-5);
-    border-radius: 999px;
-    padding: 5px 10px;
+    padding: 5px 12px;
   }
 
 }

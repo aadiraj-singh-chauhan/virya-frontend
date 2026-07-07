@@ -40,7 +40,7 @@ export default function Banner() {
       <div className={styles.inner}>
         <p className={styles.textMaterial} aria-hidden="true">Material</p>
         <p className={styles.textMobility} aria-hidden="true">Mobility</p>
-        <h1 className={styles.subtitle}>Smart mobility powering better Material operations</h1>
+        <h1 className={`${styles.subtitle} label-1-md`}>Smart mobility powering better Material operations</h1>
       </div>
 
       <div className={styles.bottomFade} aria-hidden="true" />

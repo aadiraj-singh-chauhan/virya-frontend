@@ -170,9 +170,8 @@
 
   .subtitle {
     position: relative;
-    top: auto;
+    top: 150px;
     width: 100%;
-    font-size: 18px;
     z-index: 2;
   }
 }

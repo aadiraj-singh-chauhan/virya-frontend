@@ -27,7 +27,7 @@ export default function Platforms() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
-        <h2 className={`heading-2 ${styles.heading}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
           Explore our platforms that can work for your operations
         </h2>
         <div className={styles.grid}>

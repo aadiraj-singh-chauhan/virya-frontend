@@ -65,12 +65,12 @@ export default function TechSpecs() {
                 <div className={styles.iconWrap}>
                   <Image src={f.icon} alt="" width={50} height={50} />
                 </div>
-                <p className={styles.cardTitle}>{f.title}</p>
+                <p className={`${styles.cardTitle} title-2 title-2-md`}>{f.title}</p>
               </div>
 
               <div className={styles.expandable}>
                 <div className={styles.expandableInner}>
-                  <p className={`body-1 ${styles.cardDesc}`}>{f.description}</p>
+                  <p className={`body-1 body-1-md ${styles.cardDesc}`}>{f.description}</p>
                 </div>
               </div>
             </button>

@@ -23,7 +23,7 @@ export default function CTA() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
-        <h2 className={`heading-2 ${styles.heading}`}>Explore other products</h2>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Explore other products</h2>
 
         <div className={styles.row}>
           {PRODUCTS.map((p) => (
@@ -40,7 +40,7 @@ export default function CTA() {
                 />
               </div>
               <div className={styles.bottom}>
-                <p className={`body-1 ${styles.desc}`}>{p.description}</p>
+                <p className={`body-1 body-1-md ${styles.desc}`}>{p.description}</p>
                 <div className={styles.explore}>
                   <Button property1="Default" size="Button-1" href={`/products/${p.id}`}>
                     Explore {p.name}

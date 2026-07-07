@@ -20,7 +20,7 @@ export default function Specs() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
-        <h2 className={`heading-2 ${styles.heading}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
           Built differently,<br />so you can operate differently
         </h2>
         <div className={styles.grid}>
@@ -37,9 +37,9 @@ export default function Specs() {
                 onKeyDown={(e) => e.key === 'Enter' && setActive(i)}
               >
                 <Image src={spec.icon} alt="" width={50} height={50} className={styles.icon} />
-                <p className={`title-2 ${styles.cardTitle}`}>{spec.title}</p>
+                <p className={`title-2 title-2-md ${styles.cardTitle}`}>{spec.title}</p>
               </div>
-              <p className={`body-1 ${styles.cardDesc}`}>{spec.desc}</p>
+              <p className={`body-1 body-1-md ${styles.cardDesc}`}>{spec.desc}</p>
             </div>
           ))}
         </div>

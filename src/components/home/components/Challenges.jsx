@@ -16,8 +16,8 @@ export default function Challenges() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className={styles.titleSection}>
-        <h2 className="heading-2">Every Operation Has Different Challenges!</h2>
-        <p className={`body-1 ${styles.subtitle}`}>
+        <h2 className="heading-2 heading-2-md">Every Operation Has Different Challenges!</h2>
+        <p className={`body-1 body-1-md ${styles.subtitle}`}>
           Factories, warehouses, and industrial campuses all have unique logistics problems
         </p>
       </div>
