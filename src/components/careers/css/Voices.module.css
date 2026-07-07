@@ -1,0 +1,156 @@
+.section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 622px;
+  margin-bottom: 100px;
+  background: var(--color-6);
+  overflow: hidden;
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.photoWrap {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 457px;
+  height: 600px;
+  margin-left: 140px;
+  overflow: hidden;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: top;
+}
+
+.photoAnim {
+  position: absolute;
+  inset: 0;
+  animation: slideIn 0.4s ease both;
+}
+
+.testimonial {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  max-width: 761px;
+  margin-left: 85px;
+  padding: 60px 80px;
+  background: var(--color-6);
+}
+
+.heading {
+  color: var(--color-3);
+}
+
+.textWrap {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+}
+
+.textAnim {
+  animation: slideIn 0.4s ease both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 24px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.quoteMark {
+  display: block;
+  margin-top: 30px;
+  font-family: var(--font-primary);
+  font-size: 60px;
+  line-height: 1;
+  color: var(--color-1);
+}
+
+.quote {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--color-3);
+  max-width: 588px;
+  margin-top: 8px;
+}
+
+.person {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-3);
+  text-transform: uppercase;
+}
+
+.position {
+  color: var(--color-3);
+  opacity: 0.6;
+}
+
+.navWrap {
+  position: absolute;
+  right: 80px;
+  bottom: 60px;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    height: auto;
+    flex-direction: column;
+    padding: 60px 40px;
+  }
+
+  .photoWrap {
+    margin-left: 0;
+    flex: 0 0 320px;
+    width: 100%;
+    height: 320px;
+  }
+
+  .testimonial {
+    margin-left: 0;
+    margin-top: 40px;
+    max-width: none;
+    padding: 40px;
+  }
+
+  .navWrap {
+    position: static;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 24px;
+    margin-bottom: 60px;
+  }
+
+  .testimonial {
+    padding: 32px 24px;
+  }
+}

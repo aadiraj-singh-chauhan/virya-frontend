@@ -1,0 +1,11 @@
+.section {
+  background: var(--color-6);
+  padding: 0 0 100px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-bottom: 60px;
+  }
+}

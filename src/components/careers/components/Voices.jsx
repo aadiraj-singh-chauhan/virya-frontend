@@ -1,0 +1,82 @@
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
+import TestimonialsPatternBg from '@/components/home/components/TestimonialsPatternBg';
+import NavButtons from './NavButtons';
+import styles from '../css/Voices.module.css';
+
+const TESTIMONIALS = [
+  {
+    quote: 'We are all excited by the challenge. I think the tougher it is, the more it motivates us to keep going and to keep dreaming big.',
+    name: 'Person name',
+    position: 'Position in the company',
+    photo: '/assets/careers/careers-voices-photo.png',
+  },
+  {
+    quote: 'What keeps me here is how fast an idea can go from a whiteboard sketch to something running on a robot on the floor.',
+    name: 'Person name',
+    position: 'Position in the company',
+    photo: '/assets/careers/careers-voice-photo-two.webp',
+  },
+  {
+    quote: "Every team here genuinely cares about getting the details right, even the ones nobody outside the company will ever notice.",
+    name: 'Person name',
+    position: 'Position in the company',
+    photo: '/assets/careers/careers-voice-photo-three.webp',
+  },
+];
+
+export default function Voices() {
+  const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const testimonial = TESTIMONIALS[active];
+
+  const go = (delta) => {
+    setDirection(delta);
+    setActive((i) => (i + delta + TESTIMONIALS.length) % TESTIMONIALS.length);
+  };
+
+  return (
+    <section className={styles.section} data-header-theme="light">
+      <TestimonialsPatternBg className={styles.pattern} />
+
+      <div className={styles.photoWrap}>
+        <div key={`photo-${active}`} className={styles.photoAnim} style={{ '--dir': direction }}>
+          <Image
+            src={testimonial.photo}
+            alt={testimonial.name}
+            fill
+            sizes="(max-width: 1024px) 100vw, 457px"
+            className={styles.photo}
+          />
+        </div>
+      </div>
+
+      <div className={styles.testimonial}>
+        <h2 className={`heading-2 ${styles.heading}`}>Voices from within</h2>
+
+        <div className={styles.textWrap}>
+          <div key={active} className={styles.textAnim} style={{ '--dir': direction }}>
+            <span className={styles.quoteMark} aria-hidden="true">&ldquo;</span>
+            <p className={styles.quote}>{testimonial.quote}</p>
+
+            <div className={styles.person}>
+              <p className={styles.name}>{testimonial.name}</p>
+              <p className={`label-2 ${styles.position}`}>{testimonial.position}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.navWrap}>
+          <NavButtons
+            onPrev={() => go(-1)}
+            onNext={() => go(1)}
+            prevLabel="Previous testimonial"
+            nextLabel="Next testimonial"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}

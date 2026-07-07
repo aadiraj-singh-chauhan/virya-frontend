@@ -1,0 +1,119 @@
+.section {
+  position: relative;
+  height: 833px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+.heading {
+  position: relative;
+  z-index: 1;
+  margin: 81px 70px 0;
+  max-width: 723px;
+  font-family: var(--font-primary);
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--color-5);
+}
+
+.card {
+  position: absolute;
+  z-index: 1;
+  left: 65px;
+  bottom: 70px;
+  width: 864px;
+  max-width: calc(100% - 130px);
+  padding: 58px 47px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(25px);
+  border: 0.2px solid var(--color-5);
+}
+
+.cardTextWrap {
+  position: relative;
+  height: 130px;
+  overflow: hidden;
+}
+
+.cardText {
+  animation: slideIn 0.4s ease both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir, 1) * 24px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.cardTitle {
+  color: var(--color-5);
+}
+
+.cardDesc {
+  color: var(--color-5);
+  max-width: 526px;
+  margin-top: 20px;
+}
+
+.divider {
+  display: block;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin-top: 22px;
+}
+
+.navWrap {
+  position: absolute;
+  right: 47px;
+  top: 51px;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    left: 40px;
+    bottom: 40px;
+  }
+
+  .navWrap {
+    position: static;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    height: auto;
+    padding-bottom: 40px;
+  }
+
+  .heading {
+    margin: 60px 24px 0;
+    font-size: 32px;
+  }
+
+  .card {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    margin: 40px 24px 0;
+    padding: 32px 24px;
+    width: auto;
+    max-width: none;
+  }
+}
