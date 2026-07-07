@@ -55,7 +55,7 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseLeave={reset}
     >
       <div className={styles.labelRow}>
-        <p className={styles.featureLabel}>
+        <p className={`${styles.featureLabel} title-1 title-2-md `}>
           <span className={styles.labelHidden}>{feature.label}</span>
           <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
         </p>
@@ -73,7 +73,7 @@ function FeatureItem({ feature, active, onClick }) {
             />
           </div>
           <div className={styles.detailContent}>
-            <p className={`body-2 ${styles.featureDesc}`}>{feature.description}</p>
+            <p className={`body-2 body-1-md ${styles.featureDesc}`}>{feature.description}</p>
           </div>
         </div>
       </div>
@@ -92,8 +92,8 @@ export default function Capabilities() {
 
       {/* ── Header ── */}
       <div className={styles.header}>
-        <h2 className="heading-2">Built on an Intelligent Core</h2>
-        <p className={`body-1 ${styles.subtitle}`}>
+        <h2 className="heading-2 heading-2-md">Built on an Intelligent Core</h2>
+        <p className={`body-1 body-1-md ${styles.subtitle}`}>
           Lorem ipsum dolor sit amet consectetur. Cursus sit diam pulvinar netus eget.
           Neque cras eget quis sapien cursus. Lorem ultrices neque sed sapien mattis.
         </p>
@@ -115,7 +115,7 @@ export default function Capabilities() {
       />
     </div>
 
-    <p className={`label-2 ${styles.thumbLabel}`}>
+    <p className={`label-2 label-1-md ${styles.thumbLabel}`}>
       AMR 50
     </p>
   </div>
@@ -131,7 +131,7 @@ export default function Capabilities() {
       />
     </div>
 
-    <p className={`label-2 ${styles.thumbLabel}`}>
+    <p className={`label-2 label-1-md ${styles.thumbLabel}`}>
       AMR 51
     </p>
   </div>
@@ -232,7 +232,7 @@ export default function Capabilities() {
           />
         </div>
 
-        <p className={styles.techCardTitle}>
+        <p className={`${styles.techCardTitle} title-2 title-2-md`}>
           {card.title}
         </p>
 
@@ -248,7 +248,7 @@ export default function Capabilities() {
             : ""
         }`}
       >
-        <p className={`body-1 ${styles.techCardDesc}`}>
+        <p className={`body-1 body-1-md ${styles.techCardDesc}`}>
           {card.description}
         </p>
       </div>

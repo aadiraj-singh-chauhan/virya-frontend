@@ -40,7 +40,7 @@ export default function Overview() {
         <OverviewPatternBg className={styles.pattern} />
         <div className={styles.contentBg} aria-hidden="true" />
 
-        <p className={`title-1 ${styles.heading}`}>
+        <p className={`title-1 heading-2-md ${styles.heading}`}>
           <span className={styles.accent}>AMR 50 </span>
           is a rugged and powerful autonomous mobile robot, designed to tow payloads upto 5000kg.
           It&apos;s a versatile hybrid platform that operates autonomously and manually.
@@ -49,9 +49,9 @@ export default function Overview() {
         <div className={styles.stats}>
           {STATS.map((s) => (
             <div key={s.label} className={styles.statItem}>
-              <p className="label-2">{s.label}</p>
-              <p className={styles.statValue}>{s.value}</p>
-              {s.sub && <p className={styles.statSub}>{s.sub}</p>}
+              <p className="label-2 label-2-md">{s.label}</p>
+              <p className={`${styles.statValue} heading-2 heading-2-md`}>{s.value}</p>
+              {s.sub && <p className={`${styles.statSub} body-2 body-1-md`}>{s.sub}</p>}
             </div>
           ))}
         </div>
