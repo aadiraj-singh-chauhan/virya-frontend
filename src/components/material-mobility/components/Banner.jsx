@@ -6,8 +6,22 @@ import styles from '../css/Banner.module.css';
 export default function Banner() {
   const videoRef = useRef(null);
 
+  // Pause while scrolled out of view — this and VideoSection's video would
+  // otherwise both decode at full res for the whole session regardless of
+  // scroll position, competing for the main thread/GPU during scroll.
   useEffect(() => {
-    videoRef.current?.play().catch(() => {});
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   return (

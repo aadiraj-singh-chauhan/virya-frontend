@@ -81,17 +81,38 @@ function PlayIcon() {
 export default function VideoSection() {
   const videoRef = useRef(null);
   const [playing, setPlaying] = useState(true);
+  const userPausedRef = useRef(false);
 
+  // Pause while scrolled out of view — otherwise this and Banner's video both
+  // decode at full res for the whole session regardless of scroll position,
+  // competing for the main thread/GPU during scroll. Respect an explicit
+  // manual pause (below) so scrolling back into view doesn't override it.
   useEffect(() => {
-    videoRef.current?.play().catch(() => setPlaying(false));
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!userPausedRef.current) video.play().catch(() => setPlaying(false));
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
+      userPausedRef.current = false;
       video.play().catch(() => {});
     } else {
+      userPausedRef.current = true;
       video.pause();
     }
   };
