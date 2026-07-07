@@ -1,0 +1,112 @@
+.section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-6);
+  padding: 100px 70px;
+  overflow: hidden;
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 900px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.heading {
+  color: var(--color-3);
+}
+
+.desc {
+  color: var(--color-3);
+  opacity: .7;
+  max-width: 876px;
+}
+
+.diagram {
+  position: relative;
+  width: 100%;
+  max-width: 1300px;
+  aspect-ratio: 1445 / 1088;
+  margin-top: 40px;
+}
+
+.diagramImage {
+  object-fit: contain;
+  object-position: center center;
+}
+
+.fadeTop {
+  display: none;
+}
+
+.fadeBottom {
+  display: none;
+}
+
+.checklist {
+  position: absolute;
+  left: 3%;
+  top: 55%;
+  width: min(58%, 871px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(25px);
+  border-radius: 5px;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checklistDot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--color-1);
+  flex-shrink: 0;
+}
+
+.checklist :global(.label-2) {
+  color: var(--color-5);
+}
+
+@media (max-width: 1024px) {
+  .checklist {
+    width: 90%;
+    left: 5%;
+    padding: 24px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 24px 0;
+  }
+
+  .desc {
+    max-width: 100%;
+  }
+
+  .diagram {
+    margin-top: 32px;
+  }
+
+  .checklist {
+    position: static;
+    width: 100%;
+    margin-top: 20px;
+  }
+}

@@ -1,0 +1,87 @@
+.section {
+  padding: 100px 70px;
+  background: var(--color-6);
+}
+
+.heading {
+  color: var(--color-3);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 60px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1372px;
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  aspect-ratio: 327 / 371;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.scrim {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 40%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000);
+}
+
+.scrimTall {
+  inset: 0 0 0 0;
+  height: auto;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.textWrap {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.textWrap :global(.label-1) {
+  color: var(--color-5);
+}
+
+.textWrap :global(.body-2) {
+  color: var(--color-5);
+  opacity: .85;
+}
+
+.textWrapRaised {
+  bottom: auto;
+  top: 40%;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heading {
+    margin-bottom: 32px;
+  }
+}
