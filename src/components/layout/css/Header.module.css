@@ -6,11 +6,6 @@
   right: 0;
   z-index: 100;
   background: transparent;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.headerHidden {
-  transform: translateY(-100%);
 }
 
 .inner {
@@ -212,13 +207,13 @@
   color: var(--color-5);
 }
 .header[data-theme="dark"] .nav::before {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.35);
 }
 .header[data-theme="light"] .nav {
   color: var(--color-3);
 }
 .header[data-theme="light"] .nav::before {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 /* Hamburger colour follows header theme */

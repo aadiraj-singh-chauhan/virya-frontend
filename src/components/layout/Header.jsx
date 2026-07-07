@@ -15,10 +15,17 @@ const SOLUTION_ITEMS = [
   // { label: 'R&D Platforms',  href: '/rd-platforms'       },
 ];
 
+const RESOURCE_ITEMS = [
+  { label: 'Service & Training', href: '/resources/service-and-training' },
+  { label: 'Partners',           href: '/resources/partners'             },
+  { label: 'Blogs',              href: '/resources/blogs'                },
+  { label: 'Case studies',       href: '/resources/case-studies'         },
+];
+
 const NAV_ITEMS = [
   { label: 'Solutions',  href: '/solutions',  items: SOLUTION_ITEMS },
   { label: 'Technology', href: '/technology' },
-  { label: 'Resources',  href: '/resources',  dropdown: true },
+  { label: 'Resources',  href: '/resources',  items: RESOURCE_ITEMS },
   { label: 'Company',    href: '/company'    },
   { label: 'Careers',    href: '/careers'    },
 ];
@@ -32,24 +39,12 @@ function getLogoY() {
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState('dark'); // dark bg on first load
-  const [visible, setVisible] = useState(true);
-  const lastY = useRef(0);
   const pathname = usePathname();
 
   useEffect(() => {
     let raf;
 
     const update = () => {
-      const currentY = window.scrollY;
-
-      // Hide on scroll down, show on scroll up
-      if (currentY > lastY.current && currentY > 80) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-      lastY.current = currentY;
-
       // Theme detection
       const sections = document.querySelectorAll('[data-header-theme]');
       for (const section of sections) {
@@ -67,7 +62,6 @@ export default function Header() {
       raf = requestAnimationFrame(update);
     };
 
-    lastY.current = window.scrollY;
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
@@ -77,7 +71,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className={`${styles.header} ${visible ? '' : styles.headerHidden}`} data-theme={theme}>
+    <header className={styles.header} data-theme={theme}>
       <div className={`container ${styles.inner}`}>
 
         {/* ── Logo — both variants stacked; CSS cross-fades on data-theme ────── */}

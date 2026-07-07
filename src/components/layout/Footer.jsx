@@ -34,7 +34,7 @@ const NAV = [
   {
     title: 'Resources',
     links: [
-      { label: 'Service & Training', href: '/resources/service' },
+      { label: 'Service & Training', href: '/resources/service-and-training' },
       { label: 'Partners', href: '/resources/partners' },
       { label: 'Blogs', href: '/resources/blogs' },
       { label: 'Case studies', href: '/resources/case-studies' },
