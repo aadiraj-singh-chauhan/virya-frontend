@@ -1,0 +1,355 @@
+.section {
+  padding: 100px 0;
+  background: var(--color-6);
+}
+
+.centeredHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 60px;
+}
+
+.centeredHead :global(.heading-2) {
+  color: var(--color-3);
+}
+
+.centeredTag {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--color-3);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* ===========================
+   LEFT
+=========================== */
+
+.textCol {
+  flex: 0 0 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.intro {
+  color: var(--color-3);
+  opacity: .7;
+}
+
+.tabs {
+  width: 381px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tabItem {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.tabRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabTitle {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: .35s;
+}
+
+.tabActive {
+  color: var(--color-1);
+}
+
+.tabDim {
+  color: var(--color-3);
+  opacity: .4;
+}
+
+.textOriginal {
+  visibility: hidden;
+}
+
+.textDisplay {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+
+.tabDesc {
+  width: 299px;
+  opacity: 0;
+  overflow: hidden;
+  max-height: 0;
+  transition: .35s;
+}
+
+.tabDescVisible {
+  opacity: .5;
+  max-height: 120px;
+}
+
+.arrow {
+  display: flex;
+  opacity: 0;
+  color: var(--color-1);
+  transition: .35s;
+}
+
+.arrowVisible {
+  opacity: 1;
+}
+
+/* ===========================
+   DESKTOP IMAGE
+=========================== */
+
+.desktopImage {
+  position: relative;
+  flex: 0 0 676px;
+  height: 480px;
+}
+
+.tag {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 24px);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  z-index: 1;
+}
+
+.tagDot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-1);
+  flex-shrink: 0;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.2);
+}
+
+.labels {
+  position: absolute;
+  left: 37px;
+  top: 296px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.labelItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-5);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
+.labelDot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--color-1);
+  flex-shrink: 0;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+.mobileContent {
+  display: none;
+}
+
+.mobileDesc {
+  opacity: .5;
+}
+
+.mobileLabels {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobileLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobileImage {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width:1024px){
+
+  .inner{
+    gap:50px;
+  }
+
+  .textCol{
+    flex:1;
+  }
+
+  .desktopImage{
+    flex:1;
+    height:420px;
+  }
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width:767px){
+
+  .section{
+    padding:60px 0;
+  }
+
+  .inner{
+    display:block;
+  }
+
+  .textCol{
+    width:100%;
+    gap:32px;
+  }
+
+  .tabs{
+    width:100%;
+    gap:28px;
+  }
+
+  .tabItem{
+    gap:20px;
+    padding-bottom:28px;
+    border-bottom:1px solid rgba(0,0,0,.1);
+  }
+
+  .tabTitle{
+    font-size:28px;
+  }
+
+  /* Hide desktop content */
+
+  .tabDesc{
+    display:none;
+  }
+
+  .desktopImage{
+    display:none;
+  }
+
+  /* Show mobile content */
+
+  .mobileContent{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .mobileDesc{
+    display:block;
+  }
+
+  .mobileLabels{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .mobileLabel{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .mobileImage{
+    width:100%;
+    height:320px;
+  }
+
+}
+
+/* ===========================
+   SMALL MOBILE
+=========================== */
+
+@media (max-width:480px){
+
+  .section{
+    padding:48px 0;
+  }
+
+  .textCol{
+    gap:32px;
+  }
+
+  .tabTitle{
+    font-size:24px;
+  }
+
+  .mobileImage{
+    height:240px;
+  }
+
+  .labelDot{
+    width:10px;
+    height:10px;
+  }
+  .mobileLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    background: var(--color-5);
+    border-radius: 999px;
+    padding: 5px 10px;
+  }
+
+}
