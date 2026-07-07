@@ -1,0 +1,86 @@
+.section {
+  padding: 0 0 100px;
+  background: var(--color-6);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 19px;
+  border: 0.2px solid var(--color-3);
+  position: relative;
+}
+
+.corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--color-1);
+}
+
+.cornerTL { top: -3px; left: -3px; }
+.cornerTR { top: -3px; right: -3px; }
+.cornerBL { bottom: -3px; left: -3px; }
+.cornerBR { bottom: -3px; right: -3px; }
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: var(--color-7);
+  overflow: hidden;
+}
+
+.bgImage {
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;
+  height: auto;
+}
+
+.textWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 19px;
+  width: 100%;
+}
+
+.name {
+  color: var(--color-3);
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--color-3);
+  opacity: 0.5;
+}
+
+.button {
+  width: 340px;
+  max-width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

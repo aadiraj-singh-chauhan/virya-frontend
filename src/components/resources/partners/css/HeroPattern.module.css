@@ -1,0 +1,23 @@
+@keyframes travelY {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(var(--travel-distance)); opacity: 0; }
+}
+
+.pulseLeft,
+.pulseRight {
+  will-change: transform, opacity;
+}
+
+/* Dash rides the long vertical run of its path; --travel-distance is clamped
+   so the pulse never drifts past where that run actually ends. */
+.pulseLeft { --travel-distance: 350px; animation: travelY 4s linear infinite; animation-delay: -1s; }
+.pulseRight { --travel-distance: 190px; animation: travelY 4.6s linear infinite; animation-delay: -2.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulseLeft,
+  .pulseRight {
+    animation: none;
+  }
+}
