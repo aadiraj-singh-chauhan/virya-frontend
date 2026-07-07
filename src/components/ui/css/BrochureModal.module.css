@@ -62,45 +62,6 @@
   margin-top: 40px;
 }
 
-.field {
-  position: relative;
-}
-
-.input {
-  width: 100%;
-  height: 56px;
-  padding: 0 16px;
-  border: 0.2px solid var(--color-3);
-  background: transparent;
-  font-family: var(--font-primary);
-  font-size: 15px;
-  color: var(--color-3);
-}
-
-.input:focus {
-  outline: none;
-}
-
-.fieldLabel {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-primary);
-  font-size: 15px;
-  color: var(--color-3);
-  pointer-events: none;
-}
-
-.required {
-  color: var(--color-1);
-  margin-left: 2px;
-}
-
-.input:not(:placeholder-shown) ~ .fieldLabel {
-  display: none;
-}
-
 .submitRow {
   grid-column: 1 / -1;
   display: flex;

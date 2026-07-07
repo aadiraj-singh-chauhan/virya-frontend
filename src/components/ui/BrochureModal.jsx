@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Button from './Button';
 import BrochureModalPattern from './BrochureModalPattern';
+import FormField from '@/components/shared/components/FormField';
 import styles from './css/BrochureModal.module.css';
 
 export default function BrochureModal({ open, onClose }) {
@@ -75,10 +76,10 @@ export default function BrochureModal({ open, onClose }) {
         <p className={`body-2 ${styles.subheading}`}>Get this insightful case study in your inbox</p>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          <Field name="fullName" label="Enter your full name" />
-          <Field name="companyName" label="Company name" />
-          <Field name="companyEmail" label="Your company email" type="email" />
-          <Field name="phoneNumber" label="Your phone number" type="tel" />
+          <FormField idPrefix="brochure" name="fullName" label="Enter your full name" />
+          <FormField idPrefix="brochure" name="companyName" label="Company name" />
+          <FormField idPrefix="brochure" name="companyEmail" label="Your company email" type="email" />
+          <FormField idPrefix="brochure" name="phoneNumber" label="Your phone number" type="tel" />
 
           <div className={styles.submitRow}>
             <Button type="submit" property1="Variant2" size="Button-2" icon="download">
@@ -89,26 +90,6 @@ export default function BrochureModal({ open, onClose }) {
       </div>
     </div>,
     document.body
-  );
-}
-
-function Field({ name, label, type = 'text' }) {
-  return (
-    <div className={styles.field}>
-      <input
-        id={`brochure-${name}`}
-        name={name}
-        type={type}
-        required
-        placeholder=" "
-        aria-label={label}
-        className={styles.input}
-      />
-      <label htmlFor={`brochure-${name}`} className={styles.fieldLabel} aria-hidden="true">
-        {label}
-        <span className={styles.required}>*</span>
-      </label>
-    </div>
   );
 }
 
