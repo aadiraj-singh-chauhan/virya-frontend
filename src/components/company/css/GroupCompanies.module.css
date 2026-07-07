@@ -1,0 +1,101 @@
+.section {
+  background: var(--color-6);
+  padding: 40px 70px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.group {
+  max-width: 1372px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.groupTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.groupTitleText {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-3);
+}
+
+.bullet {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-1);
+  flex-shrink: 0;
+}
+
+.outer {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: groupMarquee 36s linear infinite;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes groupMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.card {
+  flex-shrink: 0;
+  /* 3 cards fill the viewport width at a time (2 gaps between them) */
+  width: calc((100vw - 2 * 20px) / 3);
+  min-height: 253px;
+  background: var(--color-5);
+  padding: 44px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  user-select: none;
+}
+
+.card p {
+  opacity: 0.5;
+}
+
+.logo {
+  width: auto;
+  height: 44px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 24px 24px 60px;
+  }
+
+  .card {
+    /* 1 card per slide on mobile */
+    width: calc(100vw - 48px);
+    padding: 28px 24px;
+  }
+}
