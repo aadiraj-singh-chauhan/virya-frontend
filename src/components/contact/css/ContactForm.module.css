@@ -1,0 +1,182 @@
+.section {
+  padding: 60px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--color-6);
+}
+
+.container {
+  display: flex;
+  gap: 128px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  width: 683px;
+  max-width: 100%;
+}
+
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.reasonPill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px;
+  border-radius: 100px;
+  border: none;
+  background: var(--color-7);
+  color: var(--color-3);
+  font-family: var(--font-primary);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.reasonDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--color-1);
+  background: var(--color-5);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.reasonDot::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: var(--color-1);
+  opacity: 0.2;
+}
+
+.reasonActive {
+  background: var(--color-1);
+  color: var(--color-5);
+}
+
+.reasonActive .reasonDot {
+  border-color: var(--color-5);
+}
+
+.reasonActive .reasonDot::after {
+  background: var(--color-6);
+  opacity: 1;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* ── Side info ────────────────────────────────────────────────────────────── */
+
+.sideInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  flex: 0 0 414px;
+  padding-top: 49px;
+}
+
+.sideHeading {
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-3);
+}
+
+.connect {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sideText {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-3);
+  max-width: 300px;
+}
+
+.emailLink {
+  color: var(--color-1);
+}
+
+.phone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-3);
+  font-family: var(--font-primary);
+  font-size: 15px;
+}
+
+.office {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  max-width: 260px;
+}
+
+.mapLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--color-1);
+  color: var(--color-1);
+  font-family: var(--font-accent);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mapLinkText {
+  position: relative;
+  display: inline-block;
+}
+
+.textOriginal {
+  visibility: hidden;
+}
+
+.textDisplay {
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .sideInfo {
+    flex: none;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 40px 0;
+  }
+}
