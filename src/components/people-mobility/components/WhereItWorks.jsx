@@ -92,9 +92,14 @@ export default function WhereItWorks() {
     moveByRef.current = moveBy;
 
     const handleWheel = (e) => {
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      // Only hijack genuinely horizontal gestures (trackpad two-finger swipe).
+      // This used to preventDefault() on every wheel event unconditionally,
+      // so a normal vertical scroll over this slider silently ate the whole
+      // page's scroll input — the page couldn't advance past this section
+      // until the cursor moved off it.
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
       e.preventDefault();
-      moveBy(delta);
+      moveBy(e.deltaX);
     };
 
     track.addEventListener('wheel', handleWheel, { passive: false });
