@@ -2,6 +2,7 @@
 
 import { useScramble } from '@/hooks/useScramble';
 import styles from './css/Button.module.css';
+import '../../app/globals.css';
 
 /**
  * Figma: Styles and elements → Button 1 / Button 2 / Button-3
@@ -38,7 +39,7 @@ export default function Button({
       onMouseEnter={disabled ? undefined : play}
       onMouseLeave={disabled ? undefined : reset}
       aria-label={label || undefined}
-      className={[styles.button, variantClass, sizeClass, disabled && styles.disabled, className]
+      className={[styles.button,'label-2','label-1-md', variantClass, sizeClass, disabled && styles.disabled, className]
         .filter(Boolean)
         .join(' ')}
     >

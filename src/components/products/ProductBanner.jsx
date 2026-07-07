@@ -11,7 +11,7 @@ export default function ProductBanner({ name, image, imageAlt, imageWidth, image
       <div className={styles.contentCol}>
         <div className={styles.categoryTag}>
           <span className={styles.categoryDot} aria-hidden="true" />
-          <span className="label-2">Material Mobility</span>
+          <span className="label-2 label-3-md">Material Mobility</span>
         </div>
 
         <div

@@ -46,7 +46,7 @@ function FeatureItem({ feature, active, onClick }) {
     >
       {/* Label row — always visible */}
       <div className={styles.labelRow}>
-        <p className={styles.featureLabel}>
+        <p className={`${styles.featureLabel} title-2 title-2-md`}>
           <span className={styles.labelHidden}>{feature.label}</span>
           <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
         </p>
@@ -65,7 +65,7 @@ function FeatureItem({ feature, active, onClick }) {
             />
           </div>
           <div className={styles.detailContent}>
-            <p className={`body-2 ${styles.featureDesc}`}>{feature.description}</p>
+            <p className={`body-2 body-1-md ${styles.featureDesc}`}>{feature.description}</p>
           </div>
         </div>
       </div>
@@ -82,8 +82,8 @@ export default function Capabilities() {
 
       {/* ── Header ── */}
       <div className={styles.header}>
-        <h2 className="heading-2">Built on an Intelligent Core</h2>
-        <p className={`body-1 ${styles.subtitle}`}>
+        <h2 className="heading-2 heading-2-md">Built on an Intelligent Core</h2>
+        <p className={`body-1 body-1-md${styles.subtitle}`}>
           Lorem ipsum dolor sit amet consectetur. Cursus sit diam pulvinar netus eget.
           Neque cras eget quis sapien cursus. Lorem ultrices neque sed sapien mattis.
         </p>
@@ -127,7 +127,7 @@ export default function Capabilities() {
               top: activeFeature.dot.top + 5,
             }}
           >
-            <span className="label-2">{activeFeature.label}</span>
+            <span className="label-2 label-2-md">{activeFeature.label}</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v12M2 8h12" stroke="white" strokeWidth="1"/>
             </svg>
