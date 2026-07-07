@@ -40,7 +40,7 @@ export default function Overview() {
         <OverviewPatternBg className={styles.pattern} />
         <div className={styles.contentBg} aria-hidden="true" />
 
-        <p className={`title-1 ${styles.heading}`}>
+        <p className={`title-1 heading-2-md ${styles.heading}`}>
           A versatile autonomous pallet truck designed for 2-ton lifting capacity, offering
           seamless manual and autonomous hybrid modes to ensure uninterrupted productivity in
           industrial environments
@@ -49,9 +49,9 @@ export default function Overview() {
         <div className={styles.stats}>
           {STATS.map((s) => (
             <div key={s.label} className={styles.statItem}>
-              <p className="label-2">{s.label}</p>
-              <p className={styles.statValue}>{s.value}</p>
-              {s.sub && <p className={styles.statSub}>{s.sub}</p>}
+              <p className="label-2 label-2-md">{s.label}</p>
+              <p className={`${styles.statValue} label-1 heading-2-md`}>{s.value}</p>
+              {s.sub && <p className={`${styles.statSub}`}>{s.sub}</p>}
             </div>
           ))}
         </div>

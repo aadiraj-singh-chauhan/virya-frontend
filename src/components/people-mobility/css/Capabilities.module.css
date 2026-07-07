@@ -44,3 +44,63 @@
   margin-top: 25px;
   opacity: 0.5;
 }
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .section {
+    padding: 50px 0;
+  }
+
+  .heading {
+    margin-bottom: 32px;
+    padding: 0 16px;
+  }
+
+  .grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card {
+    flex: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  .iconAndTitle {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .iconAndTitle :global(.label-3) {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  /* Body hidden by default on mobile */
+  .card :global(.body-1) {
+    display: none;
+    margin-top: 16px;
+    padding: 0;
+  }
+
+  /* Body visible for the active card — must come after the hide rule */
+  .cardActive :global(.body-1) {
+    display: block;
+  }
+}

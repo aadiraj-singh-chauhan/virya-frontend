@@ -56,7 +56,7 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseLeave={reset}
     >
       <div className={styles.labelRow}>
-        <p className={styles.featureLabel}>
+        <p className={`${styles.featureLabel} title-2 title-2-md`}>
           <span className={styles.labelHidden}>{feature.label}</span>
           <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
         </p>
@@ -68,7 +68,7 @@ function FeatureItem({ feature, active, onClick }) {
             <Image src={feature.image} alt={feature.label} fill sizes="328px" className={styles.detailImg} />
           </div>
           <div className={styles.detailContent}>
-            <p className={`body-2 ${styles.featureDesc}`}>{feature.description}</p>
+            <p className={`body-2 body-1-md ${styles.featureDesc}`}>{feature.description}</p>
           </div>
         </div>
       </div>
@@ -85,8 +85,8 @@ export default function Capabilities() {
     <section className={styles.section} data-header-theme="light">
 
       <div className={styles.header}>
-        <h2 className="heading-2">Built on an Intelligent Core</h2>
-        <p className={`body-1 ${styles.subtitle}`}>
+        <h2 className="heading-2 heading-2-md">Built on an Intelligent Core</h2>
+        <p className={`body-1 body-1-md ${styles.subtitle}`}>
           Precision autonomy meets heavy-duty lifting. The APT20 combines
           advanced sensing with a robust fork mechanism for reliable pallet handling.
         </p>
@@ -108,7 +108,7 @@ export default function Capabilities() {
       />
     </div>
 
-    <p className={`label-2 ${styles.thumbLabel}`}>
+    <p className={`label-2 label-2-md ${styles.thumbLabel}`}>
       AMR 50
     </p>
   </div>
@@ -124,7 +124,7 @@ export default function Capabilities() {
       />
     </div>
 
-    <p className={`label-2 ${styles.thumbLabel}`}>
+    <p className={`label-2 label-2-md ${styles.thumbLabel}`}>
       AMR 51
     </p>
   </div>
@@ -141,7 +141,7 @@ export default function Capabilities() {
         }`}
         onClick={() => setActiveTab(i)}
       >
-        <span className="label-2">{tab}</span>
+        <span className="label-2 label-2-md">{tab}</span>
       </button>
     ))}
   </div>
@@ -176,7 +176,7 @@ export default function Capabilities() {
             className={styles.pill}
             style={{ left: activeFeature.dot.left + 55, top: activeFeature.dot.top + 5 }}
           >
-            <span className="label-2">{activeFeature.label}</span>
+            <span className="label-2 label-2-md">{activeFeature.label}</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M8 2v12M2 8h12" stroke="white" strokeWidth="1"/>
             </svg>
@@ -220,7 +220,7 @@ export default function Capabilities() {
           />
         </div>
 
-        <p className={styles.techCardTitle}>
+        <p className={`${styles.techCardTitle} title-2 title-2-md`}>
           {card.title}
         </p>
 
@@ -236,7 +236,7 @@ export default function Capabilities() {
             : ""
         }`}
       >
-        <p className={`body-1 ${styles.techCardDesc}`}>
+        <p className={`body-1 body-1-md ${styles.techCardDesc}`}>
           {card.description}
         </p>
       </div>

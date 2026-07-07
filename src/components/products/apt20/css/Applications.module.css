@@ -114,7 +114,6 @@
   }
 
   .heading {
-    font-size: 25px;
     width: 240px;
     padding-left: 20px;
     margin-bottom: 30px;
@@ -146,7 +145,6 @@
 
   .labelWrap p {
     max-width: 100%;
-    font-size: 14px;
     line-height: 1.3;
   }
 

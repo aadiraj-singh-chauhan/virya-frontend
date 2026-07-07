@@ -37,11 +37,11 @@ export default function Banner() {
           {BULLETS.map((item) => (
             <div key={item} className={styles.bullet}>
               <span className={styles.dot} />
-              <span className="label-1">{item}</span>
+              <span className="label-1 label-1-md">{item}</span>
             </div>
           ))}
         </div>
-        <p className={`body-1 ${styles.desc}`}>
+        <p className={`body-1 body-1-md ${styles.desc}`}>
           An intelligent autonomous system for continuous, real-world mobility
           across industrial and campus environments.
         </p>

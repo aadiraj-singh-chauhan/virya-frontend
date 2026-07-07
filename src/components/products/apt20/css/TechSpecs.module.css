@@ -97,12 +97,6 @@
   position: absolute;
   left: 36px;
   top: 14px;
-  font-family: var(--font-primary);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
   color: var(--color-3);
   white-space: nowrap;
 }
@@ -111,11 +105,6 @@
   position: absolute;
   left: 36px;
   top: 41px;
-  font-family: var(--font-primary);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: var(--color-1);
   white-space: nowrap;
 }
 
@@ -124,10 +113,6 @@
   .section {
     padding: 40px 20px;
     gap: 32px;
-  }
-
-  .title {
-    font-size: 28px;
   }
 
   .blueprint {
@@ -172,7 +157,6 @@
     position: static;
     display: block;
     white-space: normal;
-    font-size: 13px;
   }
 
   .cardValue {
@@ -180,7 +164,6 @@
     display: block;
     margin-top: 4px;
     white-space: normal;
-    font-size: 15px;
   }
 
   .section :global(.button) {
