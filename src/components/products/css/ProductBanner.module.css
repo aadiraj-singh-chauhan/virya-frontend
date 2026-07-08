@@ -75,14 +75,14 @@
 
 @media (max-width: 767px) {
   .section {
-    height: 552px;
+    height: 540px;
     padding: 0 16px;
   }
 
   .watermark {
 
     top: 142px;
-    font-size: 96px;
+    font-size: 115px;
     line-height: 1;
   }
 
@@ -98,8 +98,8 @@
   }
 
   .imageWrap {
-    width: var(--image-w-mobile, 260px);
-    height: var(--image-h-mobile, 210px);
+    width: var(--image-w-mobile, 340px);
+    height: var(--image-h-mobile, 274px);
   }
 
   .contentCol :global(.button) {
