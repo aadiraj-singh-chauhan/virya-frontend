@@ -1,181 +1,64 @@
-'use client';
-
-import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import Button from '@/components/ui/Button';
 import styles from '../css/RelatedProducts.module.css';
 
-const SLIDES = [
+const PRODUCTS = [
   {
-    src: '/assets/manufacturing-&-industrial-facilities.webp',
-    label: 'Manufacturing &\nIndustrial Facilities',
+    id: 'amr50',
+    name: 'AMR50',
+    bg: '/assets/mm-amr-bg.webp',
+    robot: '/assets/mm-amr50.webp',
+    description: 'Rugged and powerful autonomous mobile robot designed for 5-ton towing capacity with indoor and outdoor capability',
+    watermark: styles.watermarkOrange,
   },
   {
-    src: '/assets/warehousing-&-logistics.webp',
-    label: 'Warehousing &\nLogistics',
-  },
-  {
-    src: '/assets/intralogistics-&-supply-chain-operations.webp',
-    label: 'Intralogistics & Supply\nChain Operations',
+    id: 'apt20',
+    name: 'APT20',
+    bg: '/assets/mm-amr-bg.webp',
+    robot: '/assets/mm-apt20.webp',
+    description: 'Autonomous pallet truck designed for 2-ton lifting capacity, offering seamless manual and autonomous hybrid modes',
+    watermark: styles.watermarkDim,
   },
 ];
 
-const CARD_WIDTH = 517;
-const GAP = 20;
-const SPACER = 50; // matches .track::before, the left-indent spacer
-
 export default function RelatedProducts() {
-  const items = [...SLIDES, ...SLIDES, ...SLIDES];
-  const trackRef = useRef(null);
-  const wrapperRef = useRef(null);
-  const moveByRef = useRef(() => {});
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isLeftSide, setIsLeftSide] = useState(false);
-
-  const scrollNext = () => {
-    moveByRef.current(CARD_WIDTH + GAP);
-  };
-
-  const scrollPrev = () => {
-    moveByRef.current(-(CARD_WIDTH + GAP));
-  };
-
-  const handleSliderClick = () => {
-    if (isLeftSide) scrollPrev();
-    else scrollNext();
-  };
-
-  const handleMouseMove = (e) => {
-    const bounds = wrapperRef.current.getBoundingClientRect();
-    setCursorPos({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
-    setIsLeftSide(e.clientX - bounds.left < bounds.width / 2);
-  };
-
-  // The track renders SLIDES tripled; we sit in the middle copy and silently
-  // snap back by one copy-width whenever the eased scroll drifts into a buffer
-  // copy, so the three sets read as one endless loop in either direction.
-  // Wheel and click both drive this same loop so only one thing ever writes
-  // to scrollLeft — avoids fighting with a separately-driven native scroll.
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    const setWidth = SLIDES.length * (CARD_WIDTH + GAP);
-    const lowerBound = SPACER + setWidth;
-    const upperBound = SPACER + setWidth * 2;
-    track.scrollLeft = lowerBound;
-
-    let target = lowerBound;
-    let rafId = null;
-
-    const wrapIfNeeded = () => {
-      if (track.scrollLeft < lowerBound) {
-        track.scrollLeft += setWidth;
-        target += setWidth;
-      } else if (track.scrollLeft >= upperBound) {
-        track.scrollLeft -= setWidth;
-        target -= setWidth;
-      }
-    };
-
-    const ease = () => {
-      wrapIfNeeded();
-      const current = track.scrollLeft;
-      const diff = target - current;
-      if (Math.abs(diff) < 0.5) {
-        track.scrollLeft = target;
-        rafId = null;
-        wrapIfNeeded();
-        return;
-      }
-      track.scrollLeft = current + diff * 0.15;
-      rafId = requestAnimationFrame(ease);
-    };
-
-    const moveBy = (delta) => {
-      if (!rafId) target = track.scrollLeft;
-      const max = track.scrollWidth - track.clientWidth;
-      target = Math.min(Math.max(target + delta, 0), max);
-      if (!rafId) rafId = requestAnimationFrame(ease);
-    };
-    moveByRef.current = moveBy;
-
-    const handleWheel = (e) => {
-      // Only hijack genuinely horizontal gestures (trackpad two-finger swipe).
-      // This used to preventDefault() on every wheel event unconditionally,
-      // so a normal vertical scroll over this slider silently ate the whole
-      // page's scroll input — the page couldn't advance past this section
-      // until the cursor moved off it.
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      moveBy(e.deltaX);
-    };
-
-    track.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      track.removeEventListener('wheel', handleWheel);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
-
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Industries we cater to</h2>
+      <div className="container">
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Explore other products</h2>
 
-      <div
-        className={styles.sliderWrapper}
-        ref={wrapperRef}
-        role="button"
-        tabIndex={0}
-        aria-label={isLeftSide ? 'Previous industry' : 'Next industry'}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        onMouseMove={handleMouseMove}
-        onClick={handleSliderClick}
-        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSliderClick()}
-      >
-        <div className={styles.track} ref={trackRef}>
-          {items.map((item, i) => (
-            <div key={i} className={styles.card}>
-              <Image
-                src={item.src}
-                alt={item.label.replace('\n', ' ')}
-                fill
-                sizes="(max-width: 768px) 100vw, 517px"
-                className={styles.cardImage}
-              />
-              <div className={styles.cardOverlay} aria-hidden="true" />
-              <div className={styles.labelWrap}>
-                <p className="label-1 label-1-md">{item.label}</p>
+        <div className={styles.row}>
+          {PRODUCTS.map((p) => (
+            <div key={p.id} className={styles.card}>
+              {/* Background environment image */}
+              <div className={styles.bgWrap} aria-hidden="true">
+                <Image src={p.bg} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className={styles.bgImage} />
+              </div>
+
+              <div className={styles.gradient} aria-hidden="true" />
+              <p className={p.watermark} aria-hidden="true">{p.name}</p>
+
+              {/* Robot render */}
+              <div className={styles.robotWrap}>
+                <Image
+                  src={p.robot}
+                  alt={p.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className={styles.robotImage}
+                />
+              </div>
+
+              <div className={styles.bottom}>
+                <p className={`body-1 ${styles.desc}`}>{p.description}</p>
+                <div className={styles.explore}>
+                  <Button property1="Default" size="Button-1" href={`/products/${p.id}`}>
+                    Explore {p.name}
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div
-          className={styles.nextBtn}
-          aria-hidden="true"
-          style={{
-            opacity: isHovering ? 1 : 0,
-            transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) scale(${isHovering ? 1 : 0.4})`,
-          }}
-        >
-          <svg
-            width="14"
-            height="12"
-            viewBox="0 0 14 12"
-            fill="none"
-            aria-hidden="true"
-            style={{ transform: isLeftSide ? 'rotate(180deg)' : 'none' }}
-          >
-            <path
-              d="M0.5 6H13.5M13.5 6L8 1M13.5 6L8 11"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
         </div>
       </div>
     </section>

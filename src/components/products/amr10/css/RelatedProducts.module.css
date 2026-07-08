@@ -3,108 +3,162 @@
 .section {
   background: var(--color-6);
   padding: 100px 0;
-  overflow: hidden;
 }
 
 .heading {
-  padding-left: 70px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
-/* ── Slider ───────────────────────────────────────────────────────────────── */
+/* ── Cards row ────────────────────────────────────────────────────────────── */
 
-.sliderWrapper {
-  position: relative;
-  cursor: none;
-}
-
-.track {
-  display: flex;
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Left indent via flex spacer — padding-left is suppressed by overflow-x */
-.track::before {
-  content: "";
-  flex-shrink: 0;
-  width: 50px;
-}
-
-.track::-webkit-scrollbar {
-  display: none;
 }
 
 /* ── Card ─────────────────────────────────────────────────────────────────── */
 
 .card {
   position: relative;
-  width: 517px;
-  height: 288px;
-  flex-shrink: 0;
+  height: 588px;
   overflow: hidden;
+  background: var(--color-5);
+  cursor: pointer;
 }
 
-.cardImage {
+/* ── Background image ─────────────────────────────────────────────────────── */
+
+.bgWrap {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 0;
+}
+
+.bgImage {
   object-fit: cover;
 }
 
-.cardOverlay {
+/* ── Gradient ─────────────────────────────────────────────────────────────── */
+
+.gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background: var(--gradient-2);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.labelWrap {
+/* ── Watermark ────────────────────────────────────────────────────────────── */
+
+.watermarkOrange {
   position: absolute;
-  left: 20px;
-  bottom: 20px;
-  width: 90%;
-  height: 76px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-}
-
-.labelWrap p {
-  max-width: 280px;
-  white-space: pre-line;
-  color: var(--color-5);
-}
-
-/* ── Next button ──────────────────────────────────────────────────────────── */
-
-/* Follows the cursor while hovering the slider, standing in for the pointer itself */
-.nextBtn {
-  position: absolute;
-  top: 0;
+  top: 31px;
   left: 0;
-  width: 42px;
-  height: 42px;
-  background: var(--color-2);
-  border: none;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 90px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-1);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.watermarkDim {
+  position: absolute;
+  top: 31px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-primary);
+  font-size: 90px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-3);
+  opacity: 0.1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  transition: color 0.4s ease, opacity 0.4s ease;
+}
+
+.card:hover .watermarkOrange,
+.card:hover .watermarkDim {
+  color: var(--color-2);
+  opacity: 1;
+}
+
+/* ── Robot render ─────────────────────────────────────────────────────────── */
+
+.robotWrap {
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  right: 20px;
+  bottom: 100px;
+  z-index: 2;
+}
+
+.robotImage {
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ── Bottom zone ──────────────────────────────────────────────────────────── */
+
+.bottom {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  pointer-events: none;
-  z-index: 2;
-  transform-origin: center;
-  transition: opacity 0.3s ease, transform 0.15s ease-out, background 0.2s ease;
 }
 
-.sliderWrapper:hover .nextBtn {
-  background: var(--color-1);
+.desc {
+  text-align: center;
+  padding: 0 51px;
+  height: calc(3 * 1.4 * 16px);
+  overflow: hidden;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
+
+.card:hover .desc {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+.explore {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.card:hover .explore {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+/* ===========================
+   Mobile
+=========================== */
 
 @media (max-width: 767px) {
 
@@ -113,43 +167,74 @@
   }
 
   .heading {
+    text-align: left;
+    margin: 0 0 32px;
+    max-width: 244px;
     font-size: 25px;
-    width: 240px;
-    padding-left: 20px;
-    margin-bottom: 30px;
   }
 
-  .track {
-    gap: 12px;
-    scroll-padding-left: 20px;
-  }
-
-  .track::before {
-    width: 20px;
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
   .card {
-    width: 82vw;
-    height: 240px;
+    height: 360px;
   }
 
-  .labelWrap {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    width: auto;
-    height: auto;
-    min-height: 56px;
-    padding: 12px 16px;
+  .watermarkOrange,
+  .watermarkDim {
+    top: 18px;
+    font-size: 56px;
   }
 
-  .labelWrap p {
-    max-width: 100%;
-    font-size: 14px;
-    line-height: 1.3;
+  .robotWrap {
+    top: 60px;
+    left: 20px;
+    right: 20px;
+    bottom: 78px;
   }
 
-  .nextBtn {
+  .bottom {
+    bottom: 16px;
+  }
+
+  .desc {
     display: none;
   }
+
+  .explore {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .explore a,
+  .explore button {
+    width: 160px;
+    margin: 0 auto;
+  }
+
+}
+@media (max-width: 480px) {
+
+  .card {
+    height: 320px;
+  }
+
+  .watermarkOrange,
+  .watermarkDim {
+    font-size: 42px;
+    top: 16px;
+  }
+
+  .robotWrap {
+    top: 52px;
+    left: 16px;
+    right: 16px;
+    bottom: 72px;
+  }
+
 }
