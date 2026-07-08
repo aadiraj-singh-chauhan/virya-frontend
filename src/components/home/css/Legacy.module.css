@@ -14,6 +14,10 @@
   pointer-events: none;
 }
 
+.bgImageMobile {
+  display: none;
+}
+
 .bgOverlay {
   position: absolute;
   inset: 0;
@@ -150,7 +154,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  min-height: 253px;
+  min-height: 200px;
   text-transform: uppercase;
   text-align: left;
 }
@@ -170,6 +174,11 @@
 
   .bgImageMobile {
     display: block;
+    /* Cards (3 x 420px stacked) + contentSection's 48px margin-top sit above the
+       dark area — start the photo there instead of stretching it across the
+       cards too, which was forcing an extreme, unrecognizable crop. */
+    top: 1308px;
+    height: calc(100% - 1308px);
   }
 
   /* Cards break out of the container's side padding to go edge-to-edge */
@@ -196,12 +205,25 @@
 
   /* contentSection also breaks out edge-to-edge — no side padding/border */
   .contentSection {
+    position: relative;
     margin-top: 48px;
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     gap: 48px;
     padding-bottom: 48px;
+  }
+
+  /* Cream fade so the cards above blend into the dark contentSection instead of a hard cut */
+  .contentSection::before {
+    content: '';
+    position: absolute;
+    top: -70px;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(180deg, #FDF8F5 0%, rgba(253, 252, 243, 0.00) 100%);
+    pointer-events: none;
   }
 
   .taglineSection {

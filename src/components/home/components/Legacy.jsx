@@ -13,7 +13,7 @@ const CARDS = [
     title: 'Autonomous movement for materials',
     cta: 'Explore material mobility',
     href: '/solutions/material-mobility',
-    image: '/assets/material-mobility.webp',
+    image: '/assets/hp-material-mobility.jpg',
   },
   {
     id: 'people',
@@ -21,7 +21,7 @@ const CARDS = [
     title: 'Smart mobility for people',
     cta: 'Explore people mobility',
     href: '/solutions/people-mobility',
-    image: '/assets/people-mobility.webp',
+    image: '/assets/hp-people-mobility.jpg',
   },
   {
     id: 'rnd',
@@ -29,7 +29,7 @@ const CARDS = [
     title: 'Platforms that drive innovation',
     cta: 'Explore R&D Platforms',
     href: '/solutions/rnd-platforms',
-    image: '/assets/r-d-platforms.webp',
+    image: '/assets/hp-r-and-d.jpg',
   },
 ];
 
@@ -49,7 +49,15 @@ export default function Legacy() {
         alt=""
         width={1920}
         height={1200}
-        className={styles.bgImage}
+        className={`${styles.bgImage} ${styles.bgImageDesktop}`}
+        aria-hidden="true"
+      />
+      <Image
+        src="/assets/legacy-platform-bg-rwd.jpg"
+        alt=""
+        width={640}
+        height={1334}
+        className={`${styles.bgImage} ${styles.bgImageMobile}`}
         aria-hidden="true"
       />
       <div className={styles.bgOverlay} aria-hidden="true" />
