@@ -17,14 +17,14 @@
 
 .card {
   flex: 0 0 calc((100% - 40px) / 3);
-  height: 168px;
+  height: auto;
   background: var(--color-5);
   padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   border: none;
-  cursor: pointer;
+  cursor: default;
   text-align: left;
 }
 
@@ -60,13 +60,9 @@
 
 /* ── Expandable area (grid trick animates height) ────────────────────────── */
 
+/* Desktop always shows the description — no expand/collapse needed */
 .expandable {
   display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
-}
-
-.cardActive .expandable {
   grid-template-rows: 1fr;
 }
 
@@ -93,6 +89,7 @@
     height: auto;
     padding: 20px;
     gap: 12px;
+    cursor: pointer;
   }
 
   .iconWrap {
@@ -102,5 +99,15 @@
 
   .cardTitle {
     font-size: 14px;
+  }
+
+  /* Restore the click-to-expand accordion on mobile */
+  .expandable {
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .cardActive .expandable {
+    grid-template-rows: 1fr;
   }
 }
