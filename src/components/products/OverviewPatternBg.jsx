@@ -5,6 +5,7 @@ export default function OverviewPatternBg({ className }) {
     <svg
       className={className}
       viewBox="0 0 1511 572"
+      preserveAspectRatio="xMidYMid slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
