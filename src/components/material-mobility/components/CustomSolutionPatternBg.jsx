@@ -5,6 +5,7 @@ export default function CustomSolutionPatternBg({ className }) {
     <svg
       className={className}
       viewBox="0 0 1512 603"
+      preserveAspectRatio="xMidYMid slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
