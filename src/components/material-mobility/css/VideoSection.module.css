@@ -1,5 +1,5 @@
 .section {
-  padding: 100px 0;
+  padding: 100px 0 40px;
   background: var(--color-6);
 }
 
@@ -66,6 +66,7 @@
   top: -4.25%;
   width: 109.84%;
   max-width: none;
+  object-fit: cover;
   z-index: 2;
 }
 
@@ -111,7 +112,7 @@
 @media (max-width: 767px) {
 
   .section {
-    padding: 60px 0;
+    padding: 90px 0 60px;
   }
 
   .heading {
@@ -151,8 +152,16 @@
   .videoWrap {
     width: 100%;
     height: auto;
-    aspect-ratio: 375 / 320;
+    aspect-ratio: 16 / 9;
     margin: 0;
+  }
+
+  .videoFg {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .playBtn {
@@ -173,7 +182,7 @@
 @media (max-width: 480px) {
 
   .section {
-    padding: 20px 0;
+    padding: 70px 0 20px;
   }
 
   .heading {
@@ -187,12 +196,12 @@
 
   .videoWrap {
     width: 100%;
-    height: 100%;
-    aspect-ratio: 335 / 300;
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 
   .playBtn {
-    left: 8px;
-    bottom: 53.5px;
+    left: 12px;
+    bottom: 12px;
   }
 }
