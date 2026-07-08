@@ -29,7 +29,7 @@ const STEPS = [
   },
 ];
 
-function Step({ title, active }) {
+function Step({ title, active, onClick }) {
   const { display, play, reset } = useScramble(title);
 
   useEffect(() => {
@@ -38,7 +38,10 @@ function Step({ title, active }) {
   }, [active, play, reset]);
 
   return (
-    <div className={`title-1-md title-1 ${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}>
+    <div
+      className={`title-1-md title-1 ${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}
+      onClick={onClick}
+    >
       <span className={`body-1 ${styles.textOriginal}`}>{title}</span>
       <span className={styles.textDisplay} aria-hidden="true">{display || title}</span>
     </div>
@@ -46,7 +49,7 @@ function Step({ title, active }) {
 }
 
 export default function Ecosystem() {
-  const { active, setActive, pinStyle, trackRef } = useScrollSteps(STEPS.length);
+  const { active, setActive, pinStyle, trackRef, stickyRef } = useScrollSteps(STEPS.length);
   const containerRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -70,7 +73,7 @@ export default function Ecosystem() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className={styles.scrollTrack} ref={trackRef}>
-        <div className={styles.sticky} style={pinStyle}>
+        <div className={styles.sticky} style={pinStyle} ref={stickyRef}>
           <div className="container">
             <div className={styles.inner}>
   

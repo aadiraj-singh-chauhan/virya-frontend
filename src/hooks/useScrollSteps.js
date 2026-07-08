@@ -20,6 +20,7 @@ export function useScrollSteps(stepCount) {
   const [active, setActive] = useState(0);
   const [pinStyle, setPinStyle] = useState(PIN_STYLE.before);
   const trackRef = useRef(null);
+  const stickyRef = useRef(null);
   const targetRef = useRef(0);
 
   useEffect(() => {
@@ -32,7 +33,13 @@ export function useScrollSteps(stepCount) {
       const headerHeight = parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue('--header-height')
       ) || 0;
-      const stickyHeight = window.innerHeight - headerHeight;
+      // Measure the pinned panel's real (content-driven) height rather than
+      // assuming it always fills the viewport — otherwise a shorter panel
+      // (e.g. mobile's more compact accordion) desyncs the pin/unpin math
+      // and leaves a visible gap of empty space before it unpins.
+      const stickyHeight = stickyRef.current
+        ? stickyRef.current.getBoundingClientRect().height
+        : window.innerHeight - headerHeight;
       const rect = track.getBoundingClientRect();
       const total = rect.height - stickyHeight;
 
@@ -97,5 +104,5 @@ export function useScrollSteps(stepCount) {
     return () => clearInterval(id);
   }, []);
 
-  return { active, setActive, pinStyle, trackRef };
+  return { active, setActive, pinStyle, trackRef, stickyRef };
 }

@@ -268,6 +268,21 @@
     padding: 60px 0;
   }
 
+  /* Same scroll-jacked pin as desktop, just a shorter runway — the
+     accordion's content is more compact than desktop's side-by-side panel,
+     and 700vh left a huge empty scroll gap before any content appeared. */
+  .scrollTrack {
+    height: 300vh;
+  }
+
+  .sticky {
+    height: auto;
+    max-height: 100svh;
+    align-items: flex-start;
+    padding-top: 24px;
+    overflow-y: auto;
+  }
+
   .inner {
     display: block;
   }
