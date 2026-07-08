@@ -30,10 +30,10 @@ export default function Applications() {
 
         {/* Mobile */}
         <Image
-          src="/assets/product-specification.png"
+          src="/assets/product-specification-mob.svg"
           alt="AMR10 product blueprint"
-          width={390}
-          height={700}
+          width={228}
+          height={361}
           className={`${styles.blueprintImage} ${styles.blueprintMobile}`}
         />
       </div>
@@ -43,7 +43,7 @@ export default function Applications() {
         {SPECS.map((s) => (
           <div key={s.label} className={styles.card}>
             <span className={styles.dot} aria-hidden="true" />
-            <p className={`${styles.cardLabel} title-1 title-1-md`}>{s.label}</p>
+            <p className={`${styles.cardLabel} title-2 title-2-md`}>{s.label}</p>
             <p className={`${styles.cardValue} body-1 body-1-md`}>{s.value}</p>
           </div>
         ))}
