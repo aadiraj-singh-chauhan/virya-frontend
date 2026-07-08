@@ -24,13 +24,15 @@ export default function EventBanner() {
               </p>
               <Button href="/events/apt20" property1="Default" size="Button-2">Learn more</Button>
             </div>
-            <Image
-              src="/assets/milestone-moment.webp"
-              alt="APT20 launch event"
-              width={535}
-              height={308}
-              className={styles.image}
-            />
+            <div className={styles.imageWrap}>
+              <Image
+                src="/assets/milestone-moment.webp"
+                alt="APT20 launch event"
+                width={535}
+                height={308}
+                className={styles.image}
+              />
+            </div>
           </div>
         </div>
       </div>

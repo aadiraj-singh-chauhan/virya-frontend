@@ -86,8 +86,10 @@
   z-index: 1;
 }
 
+/* display: contents so the wrapper doesn't interfere with .image's own
+   absolute positioning on desktop; mobile below turns it into a real box. */
 .imageWrap {
-  display: none;
+  display: contents;
 }
 
 @media (max-width: 768px) {
@@ -102,15 +104,32 @@
     background: var(--color-6);
   }
 
+  /* .cardInner is now height: auto on mobile, so the desktop box-shadow
+     trick (which offsets by a fixed 436px) can't place the bottom dot.
+     Use top/bottom insets instead — they track whatever height the
+     stacked image+content actually end up with. */
   .card::before,
   .card::after {
-    display: none;
+    top: -4px;
+    bottom: -4px;
+    width: 6px;
+    height: auto;
+    background-color: transparent;
+    background-image:
+      linear-gradient(var(--color-1), var(--color-1)),
+      linear-gradient(var(--color-1), var(--color-1));
+    background-size: 6px 6px, 6px 6px;
+    background-position: top, bottom;
+    background-repeat: no-repeat;
+    box-shadow: none;
   }
 
   .content {
     flex: none;
     padding: 32px 24px;
     order: 2;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
   }
 
   .imageWrap {
@@ -118,6 +137,7 @@
     order: 1;
     width: 100%;
     aspect-ratio: 535 / 308;
+    padding: 16px;
     background: url("/assets/event-card-pattern.png") center / cover no-repeat;
     display: flex;
     align-items: center;
@@ -129,8 +149,8 @@
     right: auto;
     top: auto;
     width: 100%;
-    height: auto;
-    object-fit: fill;
+    height: 100%;
+    object-fit: cover;
   }
 
   .cardInner {
