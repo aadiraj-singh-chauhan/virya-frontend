@@ -9,6 +9,8 @@
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -195,11 +197,35 @@
   display: none;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   flex-shrink: 0;
+}
+
+.hamburgerLine {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburgerLineMiddle {
+  transition: opacity 0.2s ease;
+}
+
+.hamburgerOpen .hamburgerLineTop {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburgerOpen .hamburgerLineMiddle {
+  opacity: 0;
+}
+
+.hamburgerOpen .hamburgerLineBottom {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Nav background and colour follow header theme */
@@ -216,39 +242,36 @@
   background: rgba(255, 255, 255, 0.55);
 }
 
-/* Hamburger colour follows header theme */
-.header[data-theme="dark"] .menuBtn {
-  color: var(--color-5);
-}
-.header[data-theme="light"] .menuBtn {
-  color: var(--color-4);
-}
-
 /* ── Mobile nav drawer ─────────────────────────────────────────────────────── */
 .mobileNav {
   display: none;
   flex-direction: column;
   background: var(--color-5);
   color: var(--color-4);
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow-y: auto;
+  padding-top: var(--header-height);
+  transform: translateX(100%);
+  pointer-events: none;
+  transition: transform 0.35s ease;
 }
 
 .mobileNavOpen {
-  max-height: 560px;
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
 .mobileNavList {
   list-style: none;
-  padding: 0;
+  padding: 32px 0 0;
   margin: 0;
 }
 
 .mobileNavLink {
   display: block;
-  padding: 18px 32px;
+  padding: 18px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   transition: opacity 0.18s ease;
 }
@@ -258,7 +281,7 @@
 }
 
 .mobileCta {
-  padding: 28px 32px;
+  padding: 28px 0;
 }
 
 /* ── Responsive ────────────────────────────────────────────────────────────── */
@@ -268,8 +291,8 @@
   }
 
   .logoWrap {
-    width: 80px;
-    height: 28px;
+    width: 111px;
+    height: 40px;
   }
 
   /* hide desktop nav, show hamburger + drawer */

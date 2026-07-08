@@ -11,8 +11,7 @@ import styles from './css/Header.module.css';
 const SOLUTION_ITEMS = [
   { label: 'Material Mobility', href: '/material-mobility' },
   { label: 'People Mobility',   href: '/people-mobility'   },
-  // R&D Platforms temporarily disabled — remove this comment to re-enable.
-  // { label: 'R&D Platforms',  href: '/rd-platforms'       },
+  { label: 'R&D Platforms',     href: '/rd-platforms'      },
 ];
 
 const RESOURCE_ITEMS = [
@@ -71,7 +70,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className={styles.header} data-theme={theme}>
+    <header className={styles.header} data-theme={open ? 'light' : theme}>
       <div className={`container ${styles.inner}`}>
 
         {/* ── Logo — both variants stacked; CSS cross-fades on data-theme ────── */}
@@ -86,8 +85,8 @@ export default function Header() {
           }}
         >
           <span className={styles.logoWrap}>
-            <Image src="/assets/logo-light.svg" fill alt="Virya" className={styles.logoLight} sizes="(max-width: 768px) 80px, 125px" />
-            <Image src="/assets/logo-dark.svg"  fill alt="" className={styles.logoDark} aria-hidden="true" sizes="(max-width: 768px) 80px, 125px" />
+            <Image src="/assets/logo-light.svg" fill alt="Virya" className={styles.logoLight} sizes="(max-width: 768px) 111px, 125px" />
+            <Image src="/assets/logo-dark.svg"  fill alt="" className={styles.logoDark} aria-hidden="true" sizes="(max-width: 768px) 111px, 125px" />
           </span>
         </Link>
 
@@ -123,19 +122,21 @@ export default function Header() {
         className={`${styles.mobileNav} ${open ? styles.mobileNavOpen : ''}`}
         aria-hidden={!open}
       >
-        <ul className={styles.mobileNavList} role="list">
-          {NAV_ITEMS.map(({ label, href }) => (
-            <li key={href}>
-              <Link href={href} className={styles.mobileNavLink} onClick={() => setOpen(false)}>
-                <span className="label-2">{label}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className={styles.mobileCta}>
-          <Button href="/contact" size="Button-1" property1="Default" onClick={() => setOpen(false)}>
-            Contact Us
-          </Button>
+        <div className="container">
+          <ul className={styles.mobileNavList} role="list">
+            {NAV_ITEMS.map(({ label, href }) => (
+              <li key={href}>
+                <Link href={href} className={styles.mobileNavLink} onClick={() => setOpen(false)}>
+                  <span className="label-2">{label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className={styles.mobileCta}>
+            <Button href="/contact" size="Button-1" property1="Default" onClick={() => setOpen(false)}>
+              Contact Us
+            </Button>
+          </div>
         </div>
       </div>
     </header>
@@ -208,19 +209,21 @@ function Chevron() {
 
 function Hamburger({ open }) {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      {open ? (
-        <>
-          <line x1="4" y1="4" x2="18" y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          <line x1="18" y1="4" x2="4"  y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        </>
-      ) : (
-        <>
-          <line x1="2" y1="6"  x2="20" y2="6"  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          <line x1="2" y1="11" x2="20" y2="11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          <line x1="2" y1="16" x2="20" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        </>
-      )}
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      aria-hidden="true"
+      className={`${styles.hamburger} ${open ? styles.hamburgerOpen : ''}`}
+    >
+      <rect width="32" height="32" fill="var(--color-5)" />
+      <line className={`${styles.hamburgerLine} ${styles.hamburgerLineTop}`}
+        x1="5.85" y1="9.5" x2="25.85" y2="9.5" stroke="var(--color-3)" strokeWidth="2" strokeLinejoin="round"/>
+      <line className={`${styles.hamburgerLine} ${styles.hamburgerLineMiddle}`}
+        x1="5.85" y1="16.5" x2="25.85" y2="16.5" stroke="var(--color-3)" strokeWidth="2" strokeLinejoin="round"/>
+      <line className={`${styles.hamburgerLine} ${styles.hamburgerLineBottom}`}
+        x1="5.85" y1="23.5" x2="25.85" y2="23.5" stroke="var(--color-3)" strokeWidth="2" strokeLinejoin="round"/>
     </svg>
   );
 }
