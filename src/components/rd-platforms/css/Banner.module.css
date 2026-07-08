@@ -1,45 +1,21 @@
 /* ── Section ──────────────────────────────────────────────────────────────── */
 .section {
   position: relative;
-  height: calc(574px + 42.6vw);
+  /* Match rd-platform-bg.webp's native ratio so object-fit: cover needs
+     zero cropping — the image fills the section exactly, edge to edge. */
+  aspect-ratio: 3024 / 1589;
   background: var(--color-6);
   overflow: hidden;
 }
 
-/* ── Blueprint grid backdrop ──────────────────────────────────────────────── */
-.grid {
+/* ── Blueprint grid + traveling tick pattern ─────────────────────────────── */
+.patternBg {
   position: absolute;
   inset: 0;
-  background-image:
-    repeating-linear-gradient(to right, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 80px),
-    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 80px);
-  background-position: 80px 160px;
-  pointer-events: none;
-}
-
-/* ── Orange tick accents scattered over the grid ─────────────────────────── */
-.tick {
-  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: 1;
   pointer-events: none;
-}
-
-.tickH {
-  width: 40px;
-  height: 3px;
-  transform: translate(-50%, -50%);
-  background: linear-gradient(to right, var(--color-1) 0 50%, rgba(244, 61, 0, 0) 100%);
-}
-
-.tickH.tickFlip {
-  background: linear-gradient(to left, var(--color-1) 0 50%, rgba(244, 61, 0, 0) 100%);
-}
-
-.tickV {
-  width: 3px;
-  height: 40px;
-  transform: translate(-50%, -50%);
-  background: linear-gradient(to bottom, var(--color-1) 0 50%, rgba(244, 61, 0, 0) 100%);
 }
 
 /* ── Title + description ──────────────────────────────────────────────────── */
@@ -62,43 +38,14 @@
   opacity: 0.5;
 }
 
-/* ── Wireframe watermark ──────────────────────────────────────────────────── */
-.wireframeWrap {
-  position: absolute;
-  top: 220px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  width: 1040px;
-  height: 313px;
-  overflow: hidden;
-}
-
-.wireframe {
-  object-fit: cover;
-  object-position: top;
-}
-
-/* ── Vehicle lineup photo (full-bleed — spans the viewport edge to edge) ─── */
+/* ── Vehicle lineup banner — full-section background, content sits on top ─── */
 .imageWrap {
   position: absolute;
-  top: 534px;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  width: 100%;
-  aspect-ratio: 1024 / 436;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  inset: 0;
+  z-index: 0;
 }
 
 .image {
-  object-fit: contain;
-  object-position: top;
-}
-
-.imageFade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 65%, var(--color-6) 100%);
-  pointer-events: none;
+  object-fit: cover;
+  object-position: bottom center;
 }
