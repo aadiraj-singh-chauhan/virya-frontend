@@ -1,7 +1,12 @@
 .section {
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  /* Everything inside (subtitle, decorative text, images) is positioned with
+     fixed px offsets matching the 773px-tall Figma frame, inside .inner which
+     itself adds a (header-height - 20px) top offset — height:100vh let the
+     subtitle's top:735px fall past the section's bottom edge and get clipped
+     by overflow:hidden on any viewport shorter than ~815px. */
+  height: calc(773px + var(--header-height) - 20px);
   background: var(--color-6);
 }
 
@@ -170,7 +175,7 @@
 
   .subtitle {
     position: relative;
-    top: 150px;
+    top: 190px;
     width: 100%;
     z-index: 2;
   }
