@@ -19,10 +19,6 @@
 }
 
 .description {
-  font-family: var(--font-primary);
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.5;
   max-width: 900px;
   opacity: 0.75;
 }
@@ -36,9 +32,5 @@
   .logo {
     width: 160px;
     height: 160px;
-  }
-
-  .description {
-    font-size: 16px;
   }
 }

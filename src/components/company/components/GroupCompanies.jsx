@@ -55,7 +55,7 @@ function GroupRow({ title, items }) {
     <div className={styles.group}>
       <div className={styles.groupTitle}>
         <span className={styles.bullet} aria-hidden="true" />
-        <p className={styles.groupTitleText}>{title}</p>
+        <p className={`title-2-md ${styles.groupTitleText}`}>{title}</p>
       </div>
       <div className={styles.outer}>
         <div className={styles.track}>

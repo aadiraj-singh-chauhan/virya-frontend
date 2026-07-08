@@ -15,12 +15,12 @@ export default function Banner() {
       <div className={styles.gradient} aria-hidden="true" />
 
       <div className={styles.content}>
+        <h1 className={`heading-2 heading-2-md ${styles.tagline}`}>
+          Zero defects, Zero inefficiencies, Zero tolerance for compromise
+        </h1>
         <span className={styles.muteIcon} aria-hidden="true">
           <MuteIcon />
         </span>
-        <h1 className={`heading-2 ${styles.tagline}`}>
-          Zero defects, Zero inefficiencies, Zero tolerance for compromise
-        </h1>
       </div>
     </section>
   );

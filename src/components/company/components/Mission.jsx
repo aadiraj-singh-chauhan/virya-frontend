@@ -10,9 +10,9 @@ export default function Mission() {
       <div className={styles.content}>
         <div className={styles.eyebrow}>
           <span className={styles.bullet} aria-hidden="true" />
-          <p className="label-1">Our mission</p>
+          <p className="label-1 label-1-md">Our mission</p>
         </div>
-        <h2 className={`heading-2 ${styles.heading}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
           Powering seamless motion across every environment
         </h2>
         <p className={styles.quote}>

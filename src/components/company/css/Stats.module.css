@@ -1,3 +1,4 @@
+/* ── DESKTOP (unchanged) ── */
 .section {
   position: relative;
   margin-top: -137px;
@@ -39,20 +40,55 @@
   }
 }
 
+/* ── MOBILE slider (hidden on desktop) ── */
+.slider {
+  display: none;
+  overflow: hidden;
+  width: 100%;
+}
+
+.track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: marquee 12s linear infinite;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.mobileCard {
+  flex-shrink: 0;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 180px;
+  padding: 20px 24px;
+  background: var(--color-5);
+  color: var(--color-3);
+}
+
+/* ── MOBILE breakpoint ── */
 @media (max-width: 768px) {
   .section {
     margin-top: -60px;
-    padding: 0 20px;
+    padding: 0;
   }
 
   .row {
-    flex-direction: column;
-    gap: 12px;
+    display: none;
   }
 
-  .card {
-    min-height: auto;
-    padding: 20px 24px;
-    gap: 20px;
+  .slider {
+    display: block;
   }
 }

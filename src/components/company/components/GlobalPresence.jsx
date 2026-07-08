@@ -51,7 +51,7 @@ function pct(value, total) {
 export default function GlobalPresence() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.heading}`}>Global presence</h2>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Global presence</h2>
 
       <WorldMap />
 
@@ -145,8 +145,8 @@ const StatCard = memo(function StatCard({ value, label }) {
 
   return (
     <div ref={ref} className={styles.stat}>
-      <p className="headin-3">{count}{suffix}</p>
-      <p className={styles.statLabel}>{label}</p>
+      <p className="headin-3 heading-1-md">{count}{suffix}</p>
+      <p className={`${styles.statLabel} label-3 label-1-md`}>{label}</p>
     </div>
   );
 });

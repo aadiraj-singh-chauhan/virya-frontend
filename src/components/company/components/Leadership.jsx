@@ -15,7 +15,7 @@ export default function Leadership() {
       <GridPatternBg className={styles.pattern} />
 
       <div className={styles.content}>
-        <h2 className={`heading-2 ${styles.heading}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
           Leadership Driving Industrial Operations Excellence
         </h2>
         <div className={styles.grid}>
@@ -27,14 +27,14 @@ export default function Leadership() {
                   alt={member.name}
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
-                  className={styles.photo}
+                  className={`${styles.photo}`}
                 />
                 <span className={styles.linkedin} aria-hidden="true">
                   <LinkedInIcon />
                 </span>
               </div>
-              <p className={styles.name}>{member.name}</p>
-              <p className={styles.role}>{member.role}</p>
+              <p className={`label-3-md ${styles.name}`}>{member.name}</p>
+              <p className={`label-3-md ${styles.role}`}>{member.role}</p>
             </article>
           ))}
         </div>

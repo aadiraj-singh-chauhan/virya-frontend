@@ -24,12 +24,12 @@ export default function Legacy() {
         height={278}
         className={styles.logo}
       />
-      <h2 className={`heading-2 ${styles.heading}`}>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
         A Legacy of Trust
         <br />
         Powering the Future of Mobility
       </h2>
-      <p className={styles.description}>
+      <p className={`title-1 body-1-md ${styles.description}`}>
         The company specializes in precision engineering, aerospace components, material
         handling systems, and electric mobility solutions. With global operations and
         customers across multiple countries, the group focuses on innovation, quality, and
