@@ -29,11 +29,9 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: 34vh;
-  padding-bottom: 14vh;
-  padding-left: 5vw;
-  padding-right: 5vw;
+  justify-content: flex-end;
+  gap: 50px;
+  padding-bottom: 18vh;
 }
 
 /* Heading sits in the right half */
@@ -96,24 +94,18 @@
   }
 
   .content {
-    justify-content: flex-end;
-    padding-top: 0;
     padding-bottom: 48px;
-    padding-left: 24px;
-    padding-right: 24px;
     text-align: left;
   }
 
   .heading {
     margin-left: 0;
     width: 100%;
-    margin-bottom: 32px;
   }
 
   .bottom {
     flex-direction: column;
     align-items: stretch;
-    width: 100%;
   }
 
   .scrollHint {

@@ -15,17 +15,19 @@ export default function Hero() {
       />
 
       <div className={styles.content}>
-        <h1 className={`heading-1 heading-1-md ${styles.heading}`}>
-          Autonomous
-          <br />
-          mobility for
-          <br />
-          smarter
-          <br />
-          operations
-        </h1>
+        <div className="container">
+          <h1 className={`heading-1 heading-1-md ${styles.heading}`}>
+            Autonomous
+            <br />
+            mobility for
+            <br />
+            smarter
+            <br />
+            operations
+          </h1>
+        </div>
 
-        <div className={styles.bottom}>
+        <div className={`container ${styles.bottom}`}>
           <div className={styles.scrollHint}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
