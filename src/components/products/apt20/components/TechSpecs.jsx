@@ -47,10 +47,10 @@ export default function TechSpecs() {
 
         {/* Mobile */}
         <Image
-          src="/assets/apt.png"
-          alt="APT20 Blueprint"
-          width={320}
-          height={760}
+          src="/assets/product-specification-apt20-mob.svg"
+          alt="APT20 product blueprint"
+          width={290}
+          height={557}
           className={`${styles.blueprintImage} ${styles.blueprintMobile}`}
         />
       </div>
