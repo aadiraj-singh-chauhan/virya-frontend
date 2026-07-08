@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Button from '@/components/ui/Button';
+import ProductFooterCTAPatternBg from './ProductFooterCTAPatternBg';
 import styles from './css/ProductFooterCTA.module.css';
 
 const BLOCKS = [
@@ -20,7 +20,7 @@ const BLOCKS = [
 export default function ProductFooterCTA() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <Image src="/assets/cta-pattern.svg" alt="" fill sizes="100vw" aria-hidden="true" className={styles.pattern} />
+      <ProductFooterCTAPatternBg className={styles.pattern} />
 
       <div className={styles.container}>
         {BLOCKS.map((b) => (
