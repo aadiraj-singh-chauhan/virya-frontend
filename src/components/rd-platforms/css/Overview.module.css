@@ -24,6 +24,16 @@
   gap: 7px;
 }
 
+/* transparent wrapper on desktop — pills lay out as direct children of .pills */
+.pillsTrack {
+  display: contents;
+}
+
+/* hide aria-hidden duplicates on desktop */
+.pill[aria-hidden='true'] {
+  display: none;
+}
+
 .pill {
   display: flex;
   align-items: center;
@@ -41,4 +51,33 @@
   height: 6px;
   border-radius: 50%;
   background: var(--color-1);
+}
+
+/* ── Mobile marquee (≤ 767px) ─────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .pills {
+    overflow: hidden;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    width: 100%;
+  }
+
+  .pillsTrack {
+    display: flex;
+    flex-shrink: 0;
+    gap: 7px;
+    width: max-content;
+    animation: pillsMarquee 8s linear infinite;
+  }
+
+  .pill[aria-hidden='true'] {
+    display: flex;
+  }
+}
+
+@keyframes pillsMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }

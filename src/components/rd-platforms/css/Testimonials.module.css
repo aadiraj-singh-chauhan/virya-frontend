@@ -91,3 +91,43 @@
 .logo {
   object-fit: contain;
 }
+
+/* transparent wrapper on desktop — logoWraps lay out as direct children of .logos */
+.logosTrack {
+  display: contents;
+}
+
+/* hide aria-hidden duplicates on desktop */
+.logoWrap[aria-hidden='true'] {
+  display: none;
+}
+
+/* ── Mobile marquee (≤ 767px) ─────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .logos {
+    overflow: hidden;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    max-width: 100%;
+  }
+
+  .logosTrack {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: max-content;
+    flex-shrink: 0;
+    animation: logosMarquee 10s linear infinite;
+  }
+
+  .logoWrap[aria-hidden='true'] {
+    display: block;
+  }
+}
+
+@keyframes logosMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

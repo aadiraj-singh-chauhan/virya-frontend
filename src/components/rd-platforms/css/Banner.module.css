@@ -49,3 +49,31 @@
   object-fit: cover;
   object-position: bottom center;
 }
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .section {
+    aspect-ratio: unset;
+    height: 400px;
+  }
+
+  .content {
+    top: 80px;
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .desc {
+    max-width: 100%;
+  }
+
+  .imageWrap {
+    inset: unset;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+  }
+}

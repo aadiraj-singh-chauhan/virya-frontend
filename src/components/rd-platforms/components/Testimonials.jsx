@@ -13,12 +13,12 @@ const LOGOS = [
 export default function Testimonials() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.heading}`}>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
         Results speak it better
       </h2>
 
       <div className={styles.card}>
-        <p className={`title-1 ${styles.quote}`}>
+        <p className={`title-1 title-1-md ${styles.quote}`}>
           {'"Client testimonial dolor sit amet, consectetur adipiscing elit, '
             + 'sed do tempor incididunt ut labore et dolore magna aliqua. Sed ut '
             + 'perspiciatis unde omnis iste natus error sit voluptatem, totam"'}
@@ -34,24 +34,25 @@ export default function Testimonials() {
           />
           <span className={styles.separator} aria-hidden="true" />
           <div className={styles.profileText}>
-            <p className="label-2">Joey Samual</p>
-            <p className="label-2">Senior supervisor, Logoipsum</p>
+            <p className="label-2 label-2-md">Joey Samual</p>
+            <p className="label-2 label-2-md">Senior supervisor, Logoipsum</p>
           </div>
         </div>
       </div>
 
       <div className={styles.logos}>
-        {LOGOS.map((src, i) => (
-          <div key={src} className={styles.logoWrap}>
-            <Image
-              src={src}
-              alt={`Client logo ${i + 1}`}
-              fill
-              sizes="150px"
-              className={styles.logo}
-            />
-          </div>
-        ))}
+        <div className={styles.logosTrack}>
+          {LOGOS.map((src, i) => (
+            <div key={src} className={styles.logoWrap}>
+              <Image src={src} alt={`Client logo ${i + 1}`} fill sizes="150px" className={styles.logo} />
+            </div>
+          ))}
+          {LOGOS.map((src, i) => (
+            <div key={`d-${src}`} className={styles.logoWrap} aria-hidden="true">
+              <Image src={src} alt="" fill sizes="150px" className={styles.logo} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

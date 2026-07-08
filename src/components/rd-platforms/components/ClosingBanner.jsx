@@ -16,8 +16,8 @@ export default function ClosingBanner() {
       </div>
 
       <div className={styles.panel}>
-        <h2 className="heading-2">The future of autonomous mobility in industry</h2>
-        <p className={`body-1 ${styles.desc}`}>
+        <h2 className="heading-2 heading-2-md">The future of autonomous mobility in industry</h2>
+        <p className={`body-1 body-1-md ${styles.desc}`}>
           Lorem ipsum dolor sit amet consectetur. Risus tristique tellus ullamcorper arcu nec convallis libero. Tincidunt risus in sapien urna donec morbi aliquam ac. Tempus sed id sem mi nullam. A placerat posuere vulputate lacinia quis morbi
         </p>
       </div>

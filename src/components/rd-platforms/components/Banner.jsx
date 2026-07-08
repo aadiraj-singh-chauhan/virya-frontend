@@ -8,7 +8,7 @@ export default function Banner() {
       <BannerPatternBg className={styles.patternBg} />
 
       <div className={styles.content}>
-        <h1 className="heading-2">Simulation to real-world autonomy</h1>
+        <h1 className="heading-2 heading-2-md">Simulation to real-world autonomy</h1>
         <p className={`body-1 ${styles.desc}`}>
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text
         </p>

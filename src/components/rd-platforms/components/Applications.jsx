@@ -8,7 +8,7 @@ const FEATURE_COLUMNS = [
 export default function Applications() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.title}`}>
+      <h2 className={`heading-2 heading-2-md ${styles.title}`}>
         Applications across autonomy and robotics research
       </h2>
 
@@ -18,7 +18,7 @@ export default function Applications() {
             {items.map((label) => (
               <div key={label} className={styles.pill}>
                 <span className={styles.dot} aria-hidden="true" />
-                <span className="title-2">{label}</span>
+                <span className="title-2 label-1-md">{label}</span>
               </div>
             ))}
           </div>

@@ -34,3 +34,53 @@
 .desc {
   max-width: 628px;
 }
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .section {
+    aspect-ratio: unset;
+    display: flex;
+    flex-direction: column;
+    position: static;
+    overflow: visible;
+  }
+
+  .imageWrap {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .imageWrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent 0%, var(--color-5) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .panel {
+    position: static;
+    width: 100%;
+    height: auto;
+    background: var(--color-5);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
+    padding: 30px 24px 40px;
+    color: var(--color-3);
+    gap: 20px;
+  }
+
+  .desc {
+    max-width: 100%;
+    opacity: 0.5;
+  }
+}

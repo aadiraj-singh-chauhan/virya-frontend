@@ -28,7 +28,7 @@ export default function Platforms() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.title}`}>Drive By Wire research platform</h2>
+      <h2 className={`heading-2 heading-2-md ${styles.title}`}>Drive By Wire research platform</h2>
 
       <div className={styles.list}>
         {PLATFORMS.map((platform, i) => (
@@ -57,7 +57,7 @@ function PlatformRow({ platform, open, onToggle }) {
         onMouseLeave={reset}
         aria-expanded={open}
       >
-        <span className={`title-1 ${styles.rowTitle}`}>
+        <span className={`title-1 title-1-md ${styles.rowTitle}`}>
           <span className={styles.rowTitleOriginal}>{platform.title}</span>
           <span className={styles.rowTitleDisplay} aria-hidden="true">{display}</span>
         </span>
@@ -86,14 +86,14 @@ function PlatformRow({ platform, open, onToggle }) {
             />
           </div>
 
-          <h3 className={`title-1 ${styles.panelTitle}`}>{platform.expandedTitle}</h3>
-          <p className={`body-1 ${styles.panelDesc}`}>{DESCRIPTION}</p>
+          <h3 className={`title-1 title-1-md ${styles.panelTitle}`}>{platform.expandedTitle}</h3>
+          <p className={`body-1 body-1-md ${styles.panelDesc}`}>{DESCRIPTION}</p>
 
           <div className={styles.features}>
             {FEATURES.map((feature) => (
               <span key={feature} className={styles.feature}>
                 <span className={styles.featureDot} aria-hidden="true" />
-                <span className="label-1">{feature}</span>
+                <span className="label-1 label-2-md">{feature}</span>
               </span>
             ))}
           </div>

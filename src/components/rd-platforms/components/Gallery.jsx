@@ -11,7 +11,7 @@ const IMAGES = [
 export default function Gallery() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.title}`}>
+      <h2 className={`heading-2 heading-2-md ${styles.title}`}>
         Engineering autonomy for real-world applications
       </h2>
 
@@ -24,7 +24,7 @@ export default function Gallery() {
           ))}
         </div>
 
-        <p className={`body-1 ${styles.desc}`}>
+        <p className={`body-1 body-1-md ${styles.desc}`}>
           Lorem ipsum dolor sit amet consectetur. Risus tristique tellus ullamcorper arcu nec convallis libero. Tincidunt risus in sapien urna donec morbi aliquam ac. Tempus sed id sem mi nullam. A placerat posuere vulputate lacinia quis morbi lobortis feugiat est. Vestibulum arcu egestas pellentesque
         </p>
 
