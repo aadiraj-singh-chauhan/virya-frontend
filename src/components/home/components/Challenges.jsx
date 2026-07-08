@@ -5,12 +5,15 @@ import styles from '../css/Challenges.module.css';
 
 export default function Challenges() {
   const videoRef = useRef(null);
+  const mobileVideoRef = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {});
-    }
+    [videoRef, mobileVideoRef].forEach((ref) => {
+      if (ref.current) {
+        ref.current.muted = true;
+        ref.current.play().catch(() => {});
+      }
+    });
   }, []);
 
   return (
@@ -25,8 +28,19 @@ export default function Challenges() {
       <div className={styles.diagram}>
         <video
           ref={videoRef}
-          className={styles.video}
+          className={`${styles.video} ${styles.videoDesktop}`}
           src="/assets/warehouses-logistics.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        />
+        <video
+          ref={mobileVideoRef}
+          className={`${styles.video} ${styles.videoMobile}`}
+          src="/assets/warehouses-logistics-rwd.mp4"
           autoPlay
           muted
           loop

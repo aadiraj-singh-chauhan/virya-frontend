@@ -39,6 +39,10 @@
   object-fit: cover;
 }
 
+.videoMobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .section {
     padding-top: 60px;
@@ -51,6 +55,19 @@
 
   .subtitle {
     max-width: none;
+  }
+
+  .diagram {
+    /* Match the 1080:800 rwd video aspect ratio */
+    aspect-ratio: 1080 / 800;
+  }
+
+  .videoDesktop {
+    display: none;
+  }
+
+  .videoMobile {
+    display: block;
   }
 }
 
