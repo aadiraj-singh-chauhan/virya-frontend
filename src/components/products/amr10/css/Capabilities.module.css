@@ -158,7 +158,7 @@
 
 .expandableInner {
   overflow: hidden;
-  padding-bottom: 0;
+  padding: 0 10px;
   transition: padding-bottom 0.35s ease;
 }
 
@@ -178,13 +178,13 @@
 
 .detailImg {
   object-fit: cover;
-  object-position: center top;
+  object-position: center bottom;
 }
 
 /* ── Detail text ──────────────────────────────────────────────────────────── */
 
 .detailContent {
-  padding: 16px 10px 0;
+  padding: 16px 0 0;
 }
 
 .featureDesc {
@@ -194,6 +194,8 @@
 /* ── Feature label (width-lock scramble pattern) ──────────────────────────── */
 
 .featureLabel {
+  position: relative;
+  display: inline-block;
   color: var(--color-3);
 }
 
@@ -205,6 +207,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  white-space: nowrap;
 }
 
 
@@ -216,7 +219,7 @@
 
    @media (max-width: 767px) {
     .section {
-      padding: 40px 0 0;
+      padding: 70px 0 0;
     }
   
     .header {
