@@ -26,6 +26,7 @@
   flex-shrink: 0;
   width: calc((min(95vw, 1730px) - 5 * 60px) / 6);
   height: auto;
+  object-fit: contain;
   filter: brightness(0) invert(1);
   user-select: none;
 }
