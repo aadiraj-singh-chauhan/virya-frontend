@@ -48,10 +48,10 @@ export default function TechSpecs() {
 
         {/* Mobile */}
         <Image
-          src="/assets/amr.png"
-          alt="AMR50 Blueprint"
-          width={320}
-          height={760}
+          src="/assets/product-specification-amr50-mob.svg"
+          alt="AMR50 product blueprint"
+          width={274}
+          height={669}
           className={`${styles.blueprintImage} ${styles.blueprintMobile}`}
         />
       </div>
