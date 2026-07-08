@@ -16,7 +16,6 @@ const CARDS = [
     image: '/assets/mm-platforms-innovation.webp',
     cta: 'Explore R&D Platforms',
     href: '/rd-platforms',
-    disabled: true, // R&D Platforms temporarily disabled
   },
 ];
 
