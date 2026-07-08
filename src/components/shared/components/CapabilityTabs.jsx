@@ -11,7 +11,7 @@ function Tab({ label, active, expanded, onClick }) {
   return (
     <button
       type="button"
-      className={`title-1-md ${styles.tabTitle} ${
+      className={`title-1 title-1-md ${styles.tabTitle} ${
         active ? styles.tabActive : styles.tabDim
       }`}
       aria-expanded={expanded}
@@ -57,14 +57,14 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
                 <span className="label-2">{tag.label}</span>
               </div>
             )}
-            <h2 className="heading-2">{heading}</h2>
+            <h2 className="heading-2 heading-2-md">{heading}</h2>
           </div>
         )}
 
         <div className={styles.inner}>
 
           <div className={styles.textCol}>
-            {!centered && <h2 className="heading-2">{heading}</h2>}
+            {!centered && <h2 className="heading-2 heading-2-md">{heading}</h2>}
 
             {intro && <p className={`body-1 ${styles.intro}`}>{intro}</p>}
 
