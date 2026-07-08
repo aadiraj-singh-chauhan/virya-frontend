@@ -43,9 +43,6 @@ const TECH_CARDS = [
   { id: 'compact-footprint', title: 'Compact Footprint',                     icon: '/assets/amr10-icon-compact-footprint.svg',description: 'Slim profile navigates standard pallet racking aisles without facility modifications.' },
   { id: 'indoor-outdoor',    title: 'Indoor & Outdoor Operational Capability',icon: '/assets/amr10-icon-indoor-outdoor.svg',  description: 'Solid rubber tyres and sealed electronics support operation across indoor floors and outdoor yard surfaces.' },
 ];
-const TABS = ['AMR 50', 'AMR 51'];
-
-
 function FeatureItem({ feature, active, onClick }) {
   const { display, play, reset } = useScramble(feature.label);
   return (
@@ -80,7 +77,6 @@ export default function Capabilities() {
   const [active, setActive] = useState(0);
   const [activeTech, setActiveTech] = useState(-1);
   const activeFeature = FEATURES[active];
-  const [activeTab, setActiveTab] = useState(0);
   return (
     <section className={styles.section} data-header-theme="light">
 
@@ -93,59 +89,6 @@ export default function Capabilities() {
       </div>
 
       <div className={styles.contentRow}>
-
-       
-       {/* Desktop */}
-<div className={styles.thumbnailPanel}>
-  <div className={`${styles.thumbCard} ${styles.thumbCardActive}`}>
-    <div className={styles.thumbImageWrap}>
-      <Image
-        src="/assets/product-amr50.webp"
-        alt="AMR50"
-        fill
-        sizes="73px"
-        className={styles.thumbImage}
-      />
-    </div>
-
-    <p className={`label-2 label-2-md ${styles.thumbLabel}`}>
-      AMR 50
-    </p>
-  </div>
-
-  <div className={styles.thumbCard}>
-    <div className={styles.thumbImageWrap}>
-      <Image
-        src="/assets/product-amr50.webp"
-        alt="AMR51"
-        fill
-        sizes="73px"
-        className={styles.thumbImage}
-      />
-    </div>
-
-    <p className={`label-2 label-2-md ${styles.thumbLabel}`}>
-      AMR 51
-    </p>
-  </div>
-</div>
-
-{/* Mobile */}
-<div className={styles.mobileTabs}>
-  <div className={styles.tabBar}>
-    {TABS.map((tab, i) => (
-      <button
-        key={tab}
-        className={`${styles.tab} ${
-          activeTab === i ? styles.tabActive : ''
-        }`}
-        onClick={() => setActiveTab(i)}
-      >
-        <span className="label-2 label-2-md">{tab}</span>
-      </button>
-    ))}
-  </div>
-</div>
 
         <div className={styles.imageArea}>
           <div className={styles.robotWrap}>
