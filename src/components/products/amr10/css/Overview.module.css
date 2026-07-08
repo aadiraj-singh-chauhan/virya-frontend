@@ -70,6 +70,7 @@
 }
 
 .statValue {
+  font-size: 36px;
   text-transform: uppercase;
   color: var(--color-3);
 }
@@ -114,34 +115,44 @@
     overflow: visible;
   }
 
-  .pattern {
-    display: none;
-  }
-
   .contentBg {
     display: none;
   }
 
+  /* position:relative (not static) so these stay in the "positioned" paint
+     layer above .pattern/.contentBg — a position:static sibling always
+     paints below positioned ones regardless of DOM order, which is why the
+     pattern was showing through (or, briefly, why .contentBg's absolute
+     box was painting over and hiding this text). left/top are reset since
+     the desktop rule's left:50%/top:Npx would otherwise apply as relative
+     offsets once position isn't static, shoving the text sideways. */
   .heading {
-    position: static;
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 1;
     transform: none;
     width: 100%;
     text-align: left;
+    background: var(--color-6);
   }
 
   .stats {
-    position: static;
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 1;
     transform: none;
     flex-direction: column;
     width: 100%;
     gap: 20px;
     margin-top: 32px;
+    background: var(--color-6);
   }
 
   .statItem {
     gap: 6px;
     padding-top: 16px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .statSub {
@@ -151,6 +162,7 @@
   .imagePart {
     width: calc(100% - 40px); /* 20px padding on each side */
     margin: 8px auto 0;
-    height: 320px;
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 }
