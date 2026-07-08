@@ -23,7 +23,8 @@
 }
 
 .mobileDiagramImage {
-  object-fit: contain;
+  width: 100%;
+  height: auto;
 }
 
 /* ── Heading ───────────────────────────────────────────────────────────────── */
@@ -100,6 +101,7 @@
 .skipTextDisplay {
   position: absolute;
   inset: 0;
+  color: var(--color-3);
 }
 
 @media (max-width: 768px) {
@@ -108,7 +110,7 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
-    padding: 60px 0;
+    padding: 0 0 60px;
   }
 
   .bgImageDesktop {
@@ -126,10 +128,7 @@
 
   .mobileDiagram {
     display: block;
-    position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    padding: 0 24px;
   }
 
   .cardGrid {
@@ -139,6 +138,7 @@
     padding: 0 24px;
     position: relative;
     z-index: 1;
+    margin-top: -70px;
   }
 
   .card {
@@ -148,6 +148,7 @@
     width: 100%;
     height: auto;
     min-height: 200px;
+    padding: 24px 16px;
   }
 
   .card:not(:first-child) {
@@ -160,14 +161,17 @@
     left: auto;
     bottom: auto;
     transform: none;
+    align-self: center;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 4px;
     background: none;
     border: none;
-    color: var(--color-2);
+    border-bottom: 1px solid var(--color-3);
+    color: var(--color-3);
+    opacity: 0.7;
     cursor: pointer;
-    padding: 0;
+    padding: 0 0 4px;
     margin-top: 8px;
   }
 }

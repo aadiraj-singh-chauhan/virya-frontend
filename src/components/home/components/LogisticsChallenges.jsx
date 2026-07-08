@@ -55,7 +55,8 @@ export default function LogisticsChallenges() {
         <Image
           src="/assets/logistics-challenges-bg-md.png"
           alt=""
-          fill
+          width={320}
+          height={374}
           sizes="100vw"
           className={styles.mobileDiagramImage}
           aria-hidden="true"
