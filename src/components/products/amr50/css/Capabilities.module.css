@@ -200,7 +200,7 @@
 
 .expandableInner {
   overflow: hidden;
-  padding-bottom: 0;
+  padding: 0 10px;
   transition: padding-bottom 0.35s ease;
 }
 
@@ -222,7 +222,7 @@
 }
 
 .detailContent {
-  padding: 16px 10px 0;
+  padding: 16px 0 0;
 }
 
 .featureDesc {
@@ -231,6 +231,7 @@
 
 .featureLabel {
   position: relative;
+  display: inline-block;
   text-transform: uppercase;
   color: var(--color-3);
 }
@@ -243,6 +244,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  white-space: nowrap;
 }
 
 /* ── Tech spec cards grid ─────────────────────────────────────────────────── */
@@ -255,7 +257,7 @@
 
 .techCard {
   flex: 0 0 calc((100% - 40px) / 3);
-  height: 168px;
+  height: auto;
   background: var(--color-5);
   padding: 30px;
   display: flex;
