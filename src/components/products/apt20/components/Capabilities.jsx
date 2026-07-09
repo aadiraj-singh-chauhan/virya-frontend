@@ -4,34 +4,40 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/Capabilities.module.css';
 
+// Dot coordinates below are pixel positions on the 879x579 desktop imageArea;
+// converted to percentages at render time so they track the image correctly
+// as imageArea shrinks (flex-shrink) on smaller viewports.
+const IMAGE_WIDTH = 879;
+const IMAGE_HEIGHT = 579;
+
 const FEATURES = [
   {
     id: 'fork-mechanism',
     label: 'Fork Mechanism',
     description: 'Precision-engineered lifting forks designed for stable 2-ton payload handling across uneven surfaces and ramp transitions.',
     image: '/assets/product-apt20.webp',
-    dot: { left: 374, top: 476 },
+    dot: { left: 569, top: 439 },
   },
   {
     id: '3d-lidar',
     label: '3D LiDAR',
     description: 'High-resolution 3D point-cloud sensing for full spatial awareness during lift-and-carry operations in dynamic warehouse environments.',
     image: '/assets/product-apt20.webp',
-    dot: { left: 476, top: 368 },
+    dot: { left: 348, top: 35 },
   },
   {
     id: 'navigation',
     label: 'Navigation System',
     description: 'SLAM-based autonomous navigation with centimetre-level accuracy, enabling pallet pick-up and drop-off without fixed infrastructure.',
     image: '/assets/product-apt20.webp',
-    dot: { left: 90, top: 302 },
+    dot: { left: 238, top: 315 },
   },
   {
     id: 'axis-imu',
     label: 'Axis-IMU',
     description: '6-axis inertial measurement unit for real-time stability monitoring and load-tilt compensation during elevated transport.',
     image: '/assets/product-apt20.webp',
-    dot: { left: 189, top: 140 },
+    dot: { left: 382, top: 286 },
   },
 ];
 
@@ -79,6 +85,7 @@ export default function Capabilities() {
   const activeFeature = FEATURES[active];
   return (
     <section className={styles.section} data-header-theme="light">
+      <div className={`container ${styles.inner}`}>
 
       <div className={styles.header}>
         <h2 className="heading-2 heading-2-md">Built on an Intelligent Core</h2>
@@ -93,10 +100,10 @@ export default function Capabilities() {
         <div className={styles.imageArea}>
           <div className={styles.robotWrap}>
             <Image
-              src="/assets/product-apt20.webp"
+              src="/assets/apt20-capabilities-hero.webp"
               alt="APT20 intelligent systems diagram"
               fill
-              sizes="600px"
+              sizes="879px"
               className={styles.robotImage}
             />
           </div>
@@ -105,7 +112,7 @@ export default function Capabilities() {
             <button
               key={f.id}
               className={`${styles.dot} ${active === i ? styles.dotActive : ''}`}
-              style={{ left: f.dot.left, top: f.dot.top }}
+              style={{ left: `${(f.dot.left / IMAGE_WIDTH) * 100}%`, top: `${(f.dot.top / IMAGE_HEIGHT) * 100}%` }}
               onClick={() => setActive(i)}
               aria-label={`View ${f.label}`}
             >
@@ -117,7 +124,10 @@ export default function Capabilities() {
 
           <div
             className={styles.pill}
-            style={{ left: activeFeature.dot.left + 55, top: activeFeature.dot.top + 5 }}
+            style={{
+              left: `${((activeFeature.dot.left + 55) / IMAGE_WIDTH) * 100}%`,
+              top: `${((activeFeature.dot.top + 5) / IMAGE_HEIGHT) * 100}%`,
+            }}
           >
             <span className="label-2 label-2-md">{activeFeature.label}</span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -187,6 +197,7 @@ export default function Capabilities() {
   ))}
 </div>
 
+      </div>
     </section>
   );
 }

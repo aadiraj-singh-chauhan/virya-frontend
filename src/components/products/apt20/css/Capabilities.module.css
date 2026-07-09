@@ -2,8 +2,11 @@
 
 .section {
   background: var(--color-6);
-  padding: 80px 35px 0;
+  padding: 100px 0;
   overflow: hidden;
+}
+
+.inner {
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -31,65 +34,21 @@
 .contentRow {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
-  height: 568px;
+  justify-content: flex-start;
+  gap: 75px;
+  width: calc(100% - 88px);
+  margin-left: 88px;
+  height: 579px;
 }
 
-/* ── Left thumbnail panel ─────────────────────────────────────────────────── */
-
-.thumbnailPanel {
-  flex: 0 0 127px;
-  background: var(--color-5);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: auto;
-}
-
-.thumbCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 107px;
-  background: var(--color-5);
-  flex-shrink: 0;
-}
-
-.thumbCardActive {
-  background: var(--color-1);
-}
-
-.thumbImageWrap {
-  position: relative;
-  width: 73px;
-  height: 72px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.thumbImage {
-  object-fit: contain;
-}
-
-.thumbLabel {
-  text-align: center;
-  color: var(--color-3);
-}
-
-.thumbCardActive .thumbLabel {
-  color: var(--color-5);
-}
-
-/* ── Robot image area (center) ────────────────────────────────────────────── */
+/* ── Robot image area (left) ──────────────────────────────────────────────── */
 
 .imageArea {
   position: relative;
-  flex: 0 0 600px;
-  height: 568px;
+  flex: 0 1 879px;
+  min-width: 0;
+  height: auto;
+  aspect-ratio: 879 / 579;
   overflow: hidden;
 }
 
@@ -99,7 +58,7 @@
 }
 
 .robotImage {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center bottom;
 }
 
@@ -163,7 +122,8 @@
 /* ── Feature accordion panel (right) ─────────────────────────────────────── */
 
 .panel {
-  flex: 0 0 328px;
+  flex: 1 1 328px;
+  margin-top: 25.5px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -316,6 +276,34 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
+   TABLET
+   imageArea's flex-shrink + aspect-ratio (set in the base rule above) already
+   keep the row from overflowing at any width, so this block only needs to
+   handle presentation for the 768–1200px range: center the row as a block
+   with a tighter gap instead of desktop's left-anchored 88px inset, and trim
+   the section's padding.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+   @media (max-width: 1200px) and (min-width: 768px) {
+    .section {
+      padding: 60px 0 0;
+    }
+
+    .contentRow {
+      width: 100%;
+      margin-left: 0;
+      height: auto;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .panel {
+      flex: 0 0 328px;
+      margin-top: 0;
+    }
+  }
+
+/* ══════════════════════════════════════════════════════════════════════════
    MOBILE (matches provided screenshot)
    Stacked layout: header → full-width robot image (dots/pill hidden) →
    accordion panel full width below, first item expanded by default
@@ -323,7 +311,7 @@
 
    @media (max-width: 767px) {
     .section {
-      padding: 40px 0 0;
+      padding: 60px 0;
     }
   
     .header {
@@ -333,6 +321,8 @@
     }
   
     .contentRow {
+      width: 100%;
+      margin-left: 0;
       flex-direction: column;
       height: auto;
       align-items: stretch;
@@ -340,24 +330,22 @@
       gap: 24px;
     }
   
-    /* Robot image area */
+    /* Robot image area — aspect-ratio (not a fixed height) keeps it proportional
+       to the 879x579 reference so the percentage-positioned dots/pill below
+       still land in the right place instead of drifting. */
     .imageArea {
       flex: none;
       width: 100%;
-      height: 240px;
+      height: auto;
+      aspect-ratio: 879 / 579;
     }
-  
-    /* Dots and pill hidden on mobile until dedicated mobile detail images are ready */
-    .dot,
-    .pill {
-      display: none;
-    }
-  
+
     /* Feature accordion panel */
     .panel {
       flex: none;
       width: 100%;
       margin-left: 0;
+      margin-top: 0;
       gap: 8px;
       padding-bottom: 40px;
     }
