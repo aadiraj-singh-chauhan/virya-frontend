@@ -15,35 +15,6 @@
   text-align: center;
 }
 
-/* ── Tab bar ──────────────────────────────────────────────────────────────── */
-
-.tabBar {
-  display: flex;
-  gap: 10px;
-  background: var(--color-5);
-  backdrop-filter: blur(15px);
-  padding: 6px 10px;
-  border-radius: 5px;
-}
-
-.tab {
-  height: 41px;
-  padding: 0 48px;
-  border: none;
-  cursor: pointer;
-  background: transparent;
-  border-radius: 5px;
-  color: var(--color-3);
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.tabActive {
-  background: var(--color-1);
-  color: var(--color-5);
-}
-
-/* ── Blueprint ────────────────────────────────────────────────────────────── */
-
 /* ── Blueprint ───────────────────────────────────────────── */
 
 .blueprint {

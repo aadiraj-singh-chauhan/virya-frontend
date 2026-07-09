@@ -1,10 +1,6 @@
-'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
 import styles from '../css/TechSpecs.module.css';
-
-const TABS = ['APT 20', 'APT 21'];
 
 const SPECS = [
   { label: 'Max Speed',                  value: '2 m/s (7 km/hr)' },
@@ -16,24 +12,10 @@ const SPECS = [
 ];
 
 export default function TechSpecs() {
-  const [activeTab, setActiveTab] = useState(0);
-
   return (
     <section className={styles.section} data-header-theme="light">
 
       <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
-
-      <div className={styles.tabBar}>
-        {TABS.map((tab, i) => (
-          <button
-            key={tab}
-            className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
-            onClick={() => setActiveTab(i)}
-          >
-            <span className="label-2 label-1-md">{tab}</span>
-          </button>
-        ))}
-      </div>
 
       <div className={styles.blueprint}>
         {/* Desktop */}
