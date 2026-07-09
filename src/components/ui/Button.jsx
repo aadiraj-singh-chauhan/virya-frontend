@@ -80,14 +80,14 @@ function DownloadIcon() {
   return (
     <svg
       className={styles.arrow}
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
+      width="8"
+      height="9"
+      viewBox="0 0 8 9"
       fill="none"
       aria-hidden="true"
     >
-      <path d="M6 1V8M6 8L3 5M6 8L9 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M1.5 10.5H10.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+      <path d="M0.5 3.62008L0.500001 4.8L3.5 7.5L6.53335 4.8L6.53335 3.59557" stroke="currentColor" />
+      <path d="M3.5 7.5L3.5 -3.4297e-08" stroke="currentColor" />
     </svg>
   );
 }
