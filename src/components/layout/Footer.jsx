@@ -96,7 +96,6 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          <p className="label-2">A Maini Group Company</p>
         </div>
       </div>
 
