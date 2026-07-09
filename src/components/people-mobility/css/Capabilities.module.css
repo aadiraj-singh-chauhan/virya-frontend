@@ -24,13 +24,12 @@
 }
 
 .iconAndTitle {
-  flex: 1;
+  height: 148px;
   display: flex;
   flex-direction: column;
 }
 
 .iconAndTitle :global(.label-3) {
-  margin-top: auto;
   padding-top: 10px;
 }
 
@@ -69,6 +68,7 @@
   }
 
   .iconAndTitle {
+    height: auto;
     flex-direction: row;
     align-items: center;
     gap: 16px;
