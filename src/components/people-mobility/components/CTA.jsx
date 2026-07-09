@@ -13,7 +13,15 @@ export default function CTA() {
           aria-hidden="true"
           fill
           sizes="100vw"
-          className={styles.bgImage}
+          className={`${styles.bgImage} ${styles.bgImageDesktop}`}
+        />
+        <Image
+          src="/assets/pm-cta-bg-mob.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className={`${styles.bgImage} ${styles.bgImageMobile}`}
         />
       </div>
       <div className={styles.buttons}>

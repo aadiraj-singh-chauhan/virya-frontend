@@ -17,6 +17,14 @@
   object-position: center;
 }
 
+.bgImageDesktop {
+  display: block;
+}
+
+.bgImageMobile {
+  display: none;
+}
+
 /* ── CTA buttons ──────────────────────────────────────────────────────────── */
 
 .buttons {
@@ -28,4 +36,35 @@
   display: flex;
   justify-content: center;
   gap: 60px;
+}
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .section {
+    height: auto;
+    aspect-ratio: 638 / 772;
+  }
+
+  .bgImageDesktop {
+    display: none;
+  }
+
+  .bgImageMobile {
+    display: block;
+  }
+
+  .buttons {
+    bottom: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    width: fit-content;
+    margin: 0 auto;
+    gap: 16px;
+  }
+
+  .buttons > a,
+  .buttons > button {
+    justify-content: center;
+  }
 }
