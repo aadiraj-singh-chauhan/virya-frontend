@@ -43,7 +43,6 @@ const TECH_CARDS = [
   { id: 'compact-footprint', title: 'Compact Footprint', icon: '/assets/amr10-icon-compact-footprint.svg', description: 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the' },
   { id: 'indoor-outdoor', title: 'Indoor & Outdoor Operational Capability', icon: '/assets/amr10-icon-indoor-outdoor.svg', description: 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the' },
 ];
-const TABS = ['AMR 50', 'AMR 51'];
 
 function FeatureItem({ feature, active, onClick }) {
   const { display, play, reset } = useScramble(feature.label);
@@ -55,7 +54,7 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseLeave={reset}
     >
       <div className={styles.labelRow}>
-        <p className={`${styles.featureLabel} title-1 title-2-md `}>
+        <p className={`${styles.featureLabel} title-2 title-2-md`}>
           <span className={styles.labelHidden}>{feature.label}</span>
           <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
         </p>
@@ -85,7 +84,6 @@ export default function Capabilities() {
   const [active, setActive] = useState(0);
   const [activeTech, setActiveTech] = useState(-1);
   const activeFeature = FEATURES[active];
-  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <section className={styles.section} data-header-theme="light">
@@ -101,58 +99,6 @@ export default function Capabilities() {
 
       {/* ── Content row ── */}
       <div className={styles.contentRow}>
-
-       {/* Desktop */}
-<div className={styles.thumbnailPanel}>
-  <div className={`${styles.thumbCard} ${styles.thumbCardActive}`}>
-    <div className={styles.thumbImageWrap}>
-      <Image
-        src="/assets/product-amr50.webp"
-        alt="AMR50"
-        fill
-        sizes="73px"
-        className={styles.thumbImage}
-      />
-    </div>
-
-    <p className={`label-2 label-1-md ${styles.thumbLabel}`}>
-      AMR 50
-    </p>
-  </div>
-
-  <div className={styles.thumbCard}>
-    <div className={styles.thumbImageWrap}>
-      <Image
-        src="/assets/product-amr50.webp"
-        alt="AMR51"
-        fill
-        sizes="73px"
-        className={styles.thumbImage}
-      />
-    </div>
-
-    <p className={`label-2 label-1-md ${styles.thumbLabel}`}>
-      AMR 51
-    </p>
-  </div>
-</div>
-
-{/* Mobile */}
-<div className={styles.mobileTabs}>
-  <div className={styles.tabBar}>
-    {TABS.map((tab, i) => (
-      <button
-        key={tab}
-        className={`${styles.tab} ${
-          activeTab === i ? styles.tabActive : ''
-        }`}
-        onClick={() => setActiveTab(i)}
-      >
-        <span className="label-2">{tab}</span>
-      </button>
-    ))}
-  </div>
-</div>
 
         {/* Robot image with dots */}
         <div className={styles.imageArea}>

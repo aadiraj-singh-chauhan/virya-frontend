@@ -31,57 +31,10 @@
 .contentRow {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 40px;
   width: 100%;
   height: 568px;
-}
-
-/* ── Left thumbnail panel ─────────────────────────────────────────────────── */
-
-.thumbnailPanel {
-  flex: 0 0 127px;
-  background: var(--color-5);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: auto;
-}
-
-.thumbCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 107px;
-  background: var(--color-5);
-  flex-shrink: 0;
-}
-
-.thumbCardActive {
-  background: var(--color-1);
-}
-
-.thumbImageWrap {
-  position: relative;
-  width: 73px;
-  height: 72px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.thumbImage {
-  object-fit: contain;
-}
-
-.thumbLabel {
-  text-align: center;
-  color: var(--color-3);
-}
-
-.thumbCardActive .thumbLabel {
-  color: var(--color-5);
 }
 
 /* ── Robot image area (center) ────────────────────────────────────────────── */
@@ -285,48 +238,18 @@
 .techCardDesc {
   opacity: 0.5;
 }
-.mobileTabs {
-  display: none;
-}
-
-.tabBar {
-  display: flex;
-  gap: 10px;
-  background: var(--color-5);
-  backdrop-filter: blur(15px);
-  padding: 6px;
-  border-radius: 5px;
-}
-
-.tab {
-  flex: 1;
-  height: 41px;
-  border: none;
-  background: transparent;
-  border-radius: 5px;
-  cursor: pointer;
-  color: var(--color-3);
-  transition: .2s;
-}
-
-.tabActive {
-  background: var(--color-1);
-  color: var(--color-5);
-}
-
 
 /* ══════════════════════════════════════════════════════════════════════════
    TABLET
-   thumbnailPanel + imageArea + panel are fixed-width and sum to 1055px,
-   which overflows any viewport under ~1125px and gets clipped by .section's
-   overflow:hidden — the robot image ends up pinned to the left with the
-   accordion panel pushed off-screen. Matches the APT20/AMR10 tablet fix:
-   thumbnailPanel is hidden (same treatment mobile already gives it) so only
-   imageArea + panel remain, imageArea shrinks from its designed 600px only
-   as much as needed to fit (flex-shrink instead of flex-grow so it doesn't
-   stretch past its design size), and justify-content: center balances the
-   row as a block. Dots/pill are calibrated to the 600px desktop image and
-   drift out of place once imageArea shrinks, so they're hidden here too.
+   imageArea + panel are fixed-width and sum to 928px, which overflows any
+   viewport under ~1000px and gets clipped by .section's overflow:hidden —
+   the robot image ends up pinned to the left with the accordion panel
+   pushed off-screen. Matches the APT20/AMR10 tablet fix: imageArea shrinks
+   from its designed 600px only as much as needed to fit (flex-shrink
+   instead of flex-grow so it doesn't stretch past its design size), and
+   justify-content: center balances the row as a block. Dots/pill are
+   calibrated to the 600px desktop image and drift out of place once
+   imageArea shrinks, so they're hidden here too.
    ══════════════════════════════════════════════════════════════════════════ */
 
    @media (max-width: 1124px) and (min-width: 768px) {
@@ -338,10 +261,6 @@
       height: 460px;
       justify-content: center;
       gap: 32px;
-    }
-
-    .thumbnailPanel {
-      display: none;
     }
 
     .imageArea {
@@ -424,19 +343,6 @@
   
     .detailContent {
       padding: 16px 0 0;
-    }
-   
-    .thumbnailPanel {
-      display: none;
-    }
-    
-    .mobileTabs {
-      display: block;
-      width: 100%;
-    }
-    
-    .tabBar {
-      width: 100%;
     }
   }
   .techArrow {
