@@ -27,7 +27,8 @@
 
 .contentRow {
   position: relative;
-  width: 100%;
+  width: calc(100% - 88px);
+  margin-left: 88px;
   height: 579px;
   display: flex;
   align-items: flex-start;
@@ -115,7 +116,7 @@
 /* ── Feature accordion panel (right) ─────────────────────────────────────── */
 
 .panel {
-  flex: 0 0 328px;
+  flex: 1 1 328px;
   margin-left: 165px;
   display: flex;
   flex-direction: column;
@@ -231,6 +232,8 @@
     }
 
     .contentRow {
+      width: 100%;
+      margin-left: 0;
       height: 460px;
       justify-content: center;
       gap: 40px;
@@ -243,6 +246,7 @@
     }
 
     .panel {
+      flex: 0 0 328px;
       margin-left: 0;
     }
 
@@ -270,6 +274,8 @@
     }
   
     .contentRow {
+      width: 100%;
+      margin-left: 0;
       flex-direction: column;
       height: auto;
       align-items: stretch;

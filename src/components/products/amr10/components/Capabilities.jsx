@@ -79,11 +79,12 @@ export default function Capabilities() {
 
   return (
     <section className={styles.section} data-header-theme="light">
+      <div className="container">
 
       {/* ── Header ── */}
       <div className={styles.header}>
         <h2 className="heading-2 heading-2-md">Built on an Intelligent Core</h2>
-        <p className={`body-1 body-1-md${styles.subtitle}`}>
+        <p className={`body-1 body-1-md ${styles.subtitle}`}>
           Lorem ipsum dolor sit amet consectetur. Cursus sit diam pulvinar netus eget.
           Neque cras eget quis sapien cursus. Lorem ultrices neque sed sapien mattis.
         </p>
@@ -145,6 +146,8 @@ export default function Capabilities() {
             />
           ))}
         </div>
+
+      </div>
 
       </div>
     </section>
