@@ -45,7 +45,7 @@
 
 .imageArea {
   position: relative;
-  flex: 0 1 879px;
+  flex: 1 1 879px;
   min-width: 0;
   height: auto;
   aspect-ratio: 879 / 579;
@@ -296,6 +296,10 @@
       height: auto;
       justify-content: center;
       gap: 40px;
+    }
+
+    .imageArea {
+      flex: 0 1 879px;
     }
 
     .panel {
