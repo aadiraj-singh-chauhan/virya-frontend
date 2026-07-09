@@ -87,6 +87,7 @@ export default function Capabilities() {
 
   return (
     <section className={styles.section} data-header-theme="light">
+      <div className={`container ${styles.inner}`}>
 
       {/* ── Header ── */}
       <div className={styles.header}>
@@ -202,6 +203,7 @@ export default function Capabilities() {
   ))}
 </div>
 
+      </div>
     </section>
   );
 }
