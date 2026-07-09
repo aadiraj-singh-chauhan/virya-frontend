@@ -31,7 +31,7 @@ export default function Features() {
     <section className={styles.section} data-header-theme="light">
       <div className="container">
         <div className={styles.header}>
-          <h2 className="heading-2 heading-2-md">Facilities Are Getting Smarter Mobility Should Too</h2>
+          <h2 className="heading-2 heading-2-md">Facilities Are Getting Smarter Mobility<br />Should Too</h2>
           <p className={`body-1 body-1-md ${styles.desc}`}>
             Factories, research campuses, and logistics facilities are adopting automation everywhere
             from production lines to warehouses. To truly optimize operations, mobility must become:
