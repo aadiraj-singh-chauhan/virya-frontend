@@ -9,7 +9,7 @@ export default function DownloadBrochureButton({ property1, size, className }) {
 
   return (
     <>
-      <Button property1={property1} size={size} className={className} onClick={() => setOpen(true)}>
+      <Button property1={property1} size={size} className={className} icon="download" onClick={() => setOpen(true)}>
         Download Brochure
       </Button>
       <BrochureModal open={open} onClose={() => setOpen(false)} />
