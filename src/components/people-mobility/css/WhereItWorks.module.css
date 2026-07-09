@@ -50,7 +50,7 @@
 .card {
   position: relative;
   width: 517px;
-  height: 288px;
+  height: 260px;
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -123,8 +123,12 @@
     cursor: auto;
   }
 
+  .nextBtn {
+    display: none;
+  }
+
   .track::before {
-    width: 16px;
+    width: 20px;
   }
 
   .card {
