@@ -316,6 +316,47 @@
 
 
 /* ══════════════════════════════════════════════════════════════════════════
+   TABLET
+   thumbnailPanel + imageArea + panel are fixed-width and sum to 1055px,
+   which overflows any viewport under ~1125px and gets clipped by .section's
+   overflow:hidden — the robot image ends up pinned to the left with the
+   accordion panel pushed off-screen. Matches the APT20/AMR10 tablet fix:
+   thumbnailPanel is hidden (same treatment mobile already gives it) so only
+   imageArea + panel remain, imageArea shrinks from its designed 600px only
+   as much as needed to fit (flex-shrink instead of flex-grow so it doesn't
+   stretch past its design size), and justify-content: center balances the
+   row as a block. Dots/pill are calibrated to the 600px desktop image and
+   drift out of place once imageArea shrinks, so they're hidden here too.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+   @media (max-width: 1124px) and (min-width: 768px) {
+    .section {
+      padding: 60px 20px 0;
+    }
+
+    .contentRow {
+      height: 460px;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    .thumbnailPanel {
+      display: none;
+    }
+
+    .imageArea {
+      flex: 0 1 600px;
+      min-width: 0;
+      height: 460px;
+    }
+
+    .dot,
+    .pill {
+      display: none;
+    }
+  }
+
+/* ══════════════════════════════════════════════════════════════════════════
    MOBILE (matches provided screenshot)
    Stacked layout: header → full-width robot image (dots/pill hidden) →
    accordion panel full width below, first item expanded by default
