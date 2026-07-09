@@ -134,10 +134,10 @@
   }
 
   /* cover fills the container — landscape image scales to container height,
-     cropping left/right edges while keeping vehicles centered and fully tall */
+     cropping left/right edges while keeping vehicles fully tall */
   .image {
     object-fit: cover;
-    object-position: center top;
+    object-position: 20% top;
   }
 
   .gradient {
