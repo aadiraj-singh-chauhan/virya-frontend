@@ -95,13 +95,6 @@
 /* ── Mobile accordion (≤ 767px) ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-  .headingWrap {
-    margin-left: 16px;
-    margin-right: 48px;
-    width: auto;
-    padding-left: 0px;
-  }
-
   .heading {
     text-align: left;
     margin-bottom: 24px;
@@ -123,10 +116,6 @@
     padding-bottom: 24px;
     justify-content: flex-start;
     border-bottom: 0.2px solid var(--color-3);
-    margin-left: 16px;
-    margin-right: 48px;
-    width: auto;
-    padding-left: 0px;
   }
 
   .rowIcon {

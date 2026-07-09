@@ -53,44 +53,46 @@ export default function IntelligentCore() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <div className={`container ${styles.headingWrap}`}>
-        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Built on an Intelligent Core</h2>
-      </div>
-      <div className={styles.rows}>
-        {ITEMS.map((item, i) => (
-          <div
-            key={item.id}
-            className={`${styles.row} ${i === 0 ? styles.rowBorderTop : ''} ${activeId === item.id ? styles.rowOpen : ''}`}
-            onClick={() => setActiveId(prev => prev === item.id ? null : item.id)}
-          >
-            <div className={`container ${styles.rowInner}`}>
-              <div className={styles.rowHeader}>
-                <p className="title-1 title-1-md">{item.title}</p>
-                <span className={`${styles.rowIcon} ${activeId === item.id ? styles.rowIconOpen : ''}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
-                    <rect x="11.8633" y="10.0095" width="1.11238" height="7.41587" transform="rotate(-90 11.8633 10.0095)" fill="#F43D00"/>
-                    <rect y="10.0095" width="1.11238" height="7.41587" transform="rotate(-90 0 10.0095)" fill="#F43D00"/>
-                    <rect x="10.3828" y="18.908" width="1.11238" height="7.41587" transform="rotate(180 10.3828 18.908)" fill="#F43D00"/>
-                    <rect x="10.3828" y="10.0095" width="1.11238" height="1.11238" transform="rotate(180 10.3828 10.0095)" fill="#F43D00"/>
-                    <rect x="10.3828" y="7.41577" width="1.11238" height="7.41587" transform="rotate(180 10.3828 7.41577)" fill="#F43D00"/>
-                  </svg>
-                </span>
-              </div>
-              <p className={`body-1 body-1-md ${styles.rowDesc}`}>{item.description}</p>
-              {item.image && (
-                <div className={styles.rowImage}>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 767px) 100vw, 560px"
-                    className={styles.image}
-                  />
+      <div className="container">
+        <div className={styles.headingWrap}>
+          <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Built on an Intelligent Core</h2>
+        </div>
+        <div className={styles.rows}>
+          {ITEMS.map((item, i) => (
+            <div
+              key={item.id}
+              className={`${styles.row} ${i === 0 ? styles.rowBorderTop : ''} ${activeId === item.id ? styles.rowOpen : ''}`}
+              onClick={() => setActiveId(prev => prev === item.id ? null : item.id)}
+            >
+              <div className={styles.rowInner}>
+                <div className={styles.rowHeader}>
+                  <p className="title-1 title-1-md">{item.title}</p>
+                  <span className={`${styles.rowIcon} ${activeId === item.id ? styles.rowIconOpen : ''}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+                      <rect x="11.8633" y="10.0095" width="1.11238" height="7.41587" transform="rotate(-90 11.8633 10.0095)" fill="#F43D00"/>
+                      <rect y="10.0095" width="1.11238" height="7.41587" transform="rotate(-90 0 10.0095)" fill="#F43D00"/>
+                      <rect x="10.3828" y="18.908" width="1.11238" height="7.41587" transform="rotate(180 10.3828 18.908)" fill="#F43D00"/>
+                      <rect x="10.3828" y="10.0095" width="1.11238" height="1.11238" transform="rotate(180 10.3828 10.0095)" fill="#F43D00"/>
+                      <rect x="10.3828" y="7.41577" width="1.11238" height="7.41587" transform="rotate(180 10.3828 7.41577)" fill="#F43D00"/>
+                    </svg>
+                  </span>
                 </div>
-              )}
+                <p className={`body-1 body-1-md ${styles.rowDesc}`}>{item.description}</p>
+                {item.image && (
+                  <div className={styles.rowImage}>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 767px) 100vw, 560px"
+                      className={styles.image}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
