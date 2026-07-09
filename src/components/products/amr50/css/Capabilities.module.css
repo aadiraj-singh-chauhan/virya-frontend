@@ -45,7 +45,7 @@
 
 .imageArea {
   position: relative;
-  flex: 0 0 600px;
+  flex: 1 0 600px;
   height: 568px;
   overflow: hidden;
 }
@@ -254,12 +254,14 @@
    imageArea + panel are fixed-width and sum to 928px, which overflows any
    viewport under ~1000px and gets clipped by .section's overflow:hidden —
    the robot image ends up pinned to the left with the accordion panel
-   pushed off-screen. Matches the APT20/AMR10 tablet fix: imageArea shrinks
-   from its designed 600px only as much as needed to fit (flex-shrink
-   instead of flex-grow so it doesn't stretch past its design size), and
-   justify-content: center balances the row as a block. Dots/pill are
-   calibrated to the 600px desktop image and drift out of place once
-   imageArea shrinks, so they're hidden here too.
+   pushed off-screen. imageArea shrinks from its designed 600px only as
+   much as needed to fit (flex-shrink instead of flex-grow so it doesn't
+   stretch past its design size), and justify-content: center balances the
+   row as a block. aspect-ratio keeps imageArea's box proportions locked to
+   the source image (600:568) as it shrinks, so the dots/pill — positioned
+   in JSX as percentages of that same 600x568 reference — track the image
+   correctly instead of drifting, and can stay visible instead of being
+   hidden.
    ══════════════════════════════════════════════════════════════════════════ */
 
    @media (max-width: 1124px) and (min-width: 768px) {
@@ -278,23 +280,19 @@
     .imageArea {
       flex: 0 1 600px;
       min-width: 0;
-      height: 460px;
+      height: auto;
+      aspect-ratio: 600 / 568;
     }
 
     .panel {
       flex: 0 0 328px;
     }
-
-    .dot,
-    .pill {
-      display: none;
-    }
   }
 
 /* ══════════════════════════════════════════════════════════════════════════
    MOBILE (matches provided screenshot)
-   Stacked layout: header → full-width robot image (dots/pill hidden) →
-   accordion panel full width below, first item expanded by default
+   Stacked layout: header → full-width robot image → accordion panel full
+   width below, first item expanded by default
    ══════════════════════════════════════════════════════════════════════════ */
 
    @media (max-width: 767px) {
@@ -318,19 +316,16 @@
       gap: 24px;
     }
   
-    /* Robot image area */
+    /* Robot image area — aspect-ratio (not a fixed height) keeps it
+       proportional to the 600x568 reference so the percentage-positioned
+       dots/pill below still land in the right place instead of drifting. */
     .imageArea {
       flex: none;
       width: 100%;
-      height: 240px;
+      height: auto;
+      aspect-ratio: 600 / 568;
     }
-  
-    /* Dots and pill hidden on mobile until dedicated mobile detail images are ready */
-    .dot,
-    .pill {
-      display: none;
-    }
-  
+
     /* Feature accordion panel */
     .panel {
       flex: none;
