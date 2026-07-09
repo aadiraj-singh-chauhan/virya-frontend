@@ -18,7 +18,7 @@
 /* ── Blueprint ───────────────────────────────────────────── */
 
 .blueprint {
-  width: 1372px;
+  width: min(1372px, 100%);
 }
 
 .blueprintImage {
@@ -41,7 +41,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 23px 25px;
-  width: 1372px;
+  width: min(1372px, 100%);
 }
 
 /* ── Spec card ────────────────────────────────────────────────────────────── */
