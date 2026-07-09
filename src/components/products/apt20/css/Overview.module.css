@@ -59,13 +59,18 @@
   display: flex;
   gap: 79px;
   align-items: flex-start;
-  width: 1070px;
+  width: max-content;
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 3px;
+}
+
+.statItem p {
+  white-space: nowrap;
 }
 
 .statValue {
@@ -100,6 +105,66 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TABLET
+   .heading (948px), .contentBg (1070px) and .imagePart (1140px, flex-shrink:0)
+   are all fixed-width with no handling between this and the 767px mobile
+   breakpoint, so they overflow past the viewport and get clipped anywhere
+   below ~1150px. heading/stats are position:absolute in the desktop layout,
+   which only works because .topPart has a fixed height (572px) to position
+   against — switching that to height:auto would collapse .topPart to ~0
+   (absolutely-positioned children don't contribute to parent height) and
+   the content would overlap the section above. So, same as the mobile
+   breakpoint below, switch heading/stats to normal document flow instead of
+   trying to patch the absolute positioning, and let .topPart's height
+   derive from that flow naturally.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1150px) and (min-width: 768px) {
+  .topPart {
+    height: auto;
+    padding: 100px 20px 40px;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contentBg {
+    display: none;
+  }
+
+  .heading {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .stats {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px;
+    width: 100%;
+    max-width: 700px;
+    margin: 40px auto 0;
+  }
+
+  .imagePart {
+    width: calc(100% - 40px);
+    height: auto;
+    aspect-ratio: 1140 / 620;
+    flex-shrink: 1;
+    margin: 0 auto;
+  }
 }
 
 @media (max-width: 767px) {
@@ -140,6 +205,10 @@
   .statItem {
     gap: 6px;
     padding-top: 16px;
+  }
+
+  .statItem p {
+    white-space: normal;
   }
 
   .statSub {
