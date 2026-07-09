@@ -118,9 +118,14 @@
 
 /* ── Feature accordion panel (right) ─────────────────────────────────────── */
 
+/* max-width is lower here than APT20/AMR10's 600px cap on purpose: this
+   product's imageArea is only 600px (vs their 879px), so the same 600px
+   cap let the panel grow as wide as the image itself, inverting the
+   intended hierarchy (image dominant, panel a narrower sidebar). Keep this
+   proportional to imageArea rather than copying the other products' value. */
 .panel {
   flex: 1 1 328px;
-  max-width: 600px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 10px;
