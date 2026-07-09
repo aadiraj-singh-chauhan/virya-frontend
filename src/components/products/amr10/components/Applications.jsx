@@ -6,7 +6,7 @@ const SPECS = [
   { label: 'Max Speed',            value: '2.3 m/s (8km/hr)' },
   { label: 'Dimensions',           value: '1170 x 760 x 960 mm' },
   { label: 'Gradient',             value: 'Upto 8%' },
-  { label: 'Max Towing Capacity',  value: '1000 kg incl. payload attachment' },
+  { label: 'Max Towing Capacity',  value: '5000 kg incl. payload attachment' },
   { label: 'Battery Capacity (Li-Ion)', value: 'Upto 300 Ah' },
   { label: 'Runtime',              value: '—' },
 ];
