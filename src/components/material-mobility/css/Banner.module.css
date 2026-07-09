@@ -2,11 +2,13 @@
   position: relative;
   overflow: hidden;
   /* Everything inside (subtitle, decorative text, images) is positioned with
-     fixed px offsets matching the 773px-tall Figma frame, inside .inner which
+     fixed px offsets matching a 773px-tall Figma frame, inside .inner which
      itself adds a (header-height - 20px) top offset — height:100vh let the
-     subtitle's top:735px fall past the section's bottom edge and get clipped
-     by overflow:hidden on any viewport shorter than ~815px. */
-  height: calc(773px + var(--header-height) - 20px);
+     subtitle's top fall past the section's bottom edge and get clipped by
+     overflow:hidden. The extra 30px here (773 -> 803) gives the two-line
+     subtitle (top:745px) room to breathe below the MOBILITY watermark
+     without its second line getting clipped. */
+  height: calc(803px + var(--header-height) - 20px);
   background: var(--color-6);
 }
 
@@ -81,7 +83,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 735px;
+  top: 745px;
   width: 378px;
   text-align: center;
   font-family: var(--font-primary);
