@@ -15,12 +15,6 @@
   text-align: center;
 }
 
-/* ── Blueprint ────────────────────────────────────────────────────────────── */
-
-.blueprint {
-  width: 1370px;
-}
-
 .blueprintImage {
   width: 100%;
   height: auto;
@@ -33,7 +27,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 23px 25px;
-  width: 1370px;
+  width: min(1370px, 100%);
 }
 
 /* ── Spec card ────────────────────────────────────────────────────────────── */
@@ -71,6 +65,8 @@
   color: var(--color-1);
   white-space: nowrap;
 }
+/* ── Blueprint ────────────────────────────────────────────────────────────── */
+
 .blueprint {
   width: 100%;
 }
