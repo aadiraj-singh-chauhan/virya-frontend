@@ -38,7 +38,7 @@
 
 .imageArea {
   position: relative;
-  flex: 0 0 879px;
+  flex: 1 0 879px;
   height: 579px;
   overflow: hidden;
 }
@@ -218,13 +218,15 @@
    imageArea (879px) + panel's 165px margin-left + panel (328px) sum to
    1372px, which overflows any viewport under that and gets clipped by
    .section's overflow:hidden — the robot image ends up pinned to the left
-   with the accordion panel pushed off-screen. Matches the APT20/AMR50
-   tablet fix: imageArea shrinks from its designed 879px only as much as
-   needed to fit (flex-shrink instead of flex-grow so it doesn't stretch
-   past its design size), the 165px margin is replaced by a contentRow gap,
-   and justify-content: center balances the row as a block. Dots/pill are
-   calibrated to the 879px desktop image and drift out of place once
-   imageArea shrinks, so they're hidden here too.
+   with the accordion panel pushed off-screen. imageArea shrinks from its
+   designed 879px only as much as needed to fit (flex-shrink instead of
+   flex-grow so it doesn't stretch past its design size), the 165px margin
+   is replaced by a contentRow gap, and justify-content: center balances
+   the row as a block. aspect-ratio keeps imageArea's box proportions
+   locked to the source image (879:579) as it shrinks, so the dots/pill —
+   positioned in JSX as percentages of that same 879x579 reference — track
+   the image correctly instead of drifting, and can stay visible instead
+   of being hidden.
    ══════════════════════════════════════════════════════════════════════════ */
 
    @media (max-width: 1372px) and (min-width: 768px) {
@@ -243,24 +245,20 @@
     .imageArea {
       flex: 0 1 879px;
       min-width: 0;
-      height: 460px;
+      height: auto;
+      aspect-ratio: 879 / 579;
     }
 
     .panel {
       flex: 0 0 328px;
       margin-left: 0;
     }
-
-    .dot,
-    .pill {
-      display: none;
-    }
   }
 
 /* ══════════════════════════════════════════════════════════════════════════
    MOBILE (matches provided screenshot)
-   Stacked layout: header → full-width robot image (dots/pill hidden) →
-   accordion panel full width below, first item expanded by default
+   Stacked layout: header → full-width robot image → accordion panel full
+   width below, first item expanded by default
    ══════════════════════════════════════════════════════════════════════════ */
 
    @media (max-width: 767px) {
@@ -284,19 +282,16 @@
       gap: 24px;
     }
   
-    /* Robot image area */
+    /* Robot image area — aspect-ratio (not a fixed height) keeps it
+       proportional to the 879x579 reference so the percentage-positioned
+       dots/pill below still land in the right place instead of drifting. */
     .imageArea {
       flex: none;
       width: 100%;
-      height: 240px;
+      height: auto;
+      aspect-ratio: 879 / 579;
     }
-  
-    /* Dots and pill hidden on mobile until dedicated mobile detail images are ready */
-    .dot,
-    .pill {
-      display: none;
-    }
-  
+
     /* Feature accordion panel */
     .panel {
       flex: none;

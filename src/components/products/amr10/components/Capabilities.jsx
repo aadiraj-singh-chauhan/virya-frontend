@@ -4,6 +4,12 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/Capabilities.module.css';
 
+// Dot coordinates below are pixel positions on the 879x579 desktop imageArea;
+// converted to percentages at render time so they track the image correctly
+// as imageArea resizes (flex-shrink/flex-grow) on smaller/larger viewports.
+const IMAGE_WIDTH = 879;
+const IMAGE_HEIGHT = 579;
+
 const FEATURES = [
   {
     id: '2d-lidar',
@@ -110,7 +116,7 @@ export default function Capabilities() {
             <button
               key={f.id}
               className={`${styles.dot} ${active === i ? styles.dotActive : ''}`}
-              style={{ left: f.dot.left, top: f.dot.top }}
+              style={{ left: `${(f.dot.left / IMAGE_WIDTH) * 100}%`, top: `${(f.dot.top / IMAGE_HEIGHT) * 100}%` }}
               onClick={() => setActive(i)}
               aria-label={`View ${f.label}`}
             >
@@ -124,8 +130,8 @@ export default function Capabilities() {
           <div
             className={styles.pill}
             style={{
-              left: activeFeature.dot.left + 55,
-              top: activeFeature.dot.top + 5,
+              left: `${((activeFeature.dot.left + 55) / IMAGE_WIDTH) * 100}%`,
+              top: `${((activeFeature.dot.top + 5) / IMAGE_HEIGHT) * 100}%`,
             }}
           >
             <span className="label-2 label-2-md">{activeFeature.label}</span>
