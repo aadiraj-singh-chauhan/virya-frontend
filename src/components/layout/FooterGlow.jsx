@@ -12,6 +12,7 @@ precision highp float;
 
 uniform vec2  u_res;
 uniform float u_phase;   // 0..1, seamless loop
+uniform float u_vertical; // 0 = anchor left/fade right (wide footer), 1 = anchor top/fade down (tall footer)
 
 #define TAU 6.28318530718
 
@@ -19,7 +20,10 @@ uniform float u_phase;   // 0..1, seamless loop
 const float FREQ        = 7.5;   // stripes per diagonal unit
 const float PATTERN     = 15.0;  // bands per loop (integer -> perfect loop)
 const float EDGE_SHARP  = 26.0;  // hot rim falloff
-const float FADE_END    = 1.45;  // x (in height units) where light fully dies
+const float FADE_END_H  = 1.45;  // x (in height units) where light fully dies, horizontal mode
+const float FADE_END_V  = 0.85;  // y where light fully dies, vertical mode -- p.y always spans
+                                  // exactly [0,1] regardless of aspect, unlike p.x, so this needs
+                                  // its own much smaller constant to still read as "half"
 const vec3  C_BLACK     = vec3(0.004, 0.002, 0.001);
 const vec3  C_EMBER     = vec3(0.16, 0.035, 0.010);
 const vec3  C_MID       = vec3(0.55, 0.135, 0.030);
@@ -57,14 +61,20 @@ void main() {
   float bd2 = d * FREQ * 0.5 - shift * 0.5;
   float broad = pow(1.0 - fract(bd2), 2.2) * 0.35;
 
-  // ---- light mask: anchored to the LEFT edge, dies out horizontally ----
-  float mask = smoothstep(FADE_END, -0.35, p.x);
+  // ---- light mask: anchored to the LEFT edge (horizontal) or TOP edge
+  // (vertical), dies out over roughly half the frame either way ----
+  // p.y always spans exactly [0,1] top-to-bottom regardless of aspect ratio
+  // (it's normalized by the canvas's own height), so 1.0 - p.y gives a
+  // top-anchored axis with the same "0 at the bright edge" shape as p.x.
+  float axisPos = mix(p.x, 1.0 - p.y, u_vertical);
+  float fadeEnd = mix(FADE_END_H, FADE_END_V, u_vertical);
+  float mask = smoothstep(fadeEnd, -0.35, axisPos);
   mask = pow(mask, 1.35);
   // slight extra weight toward the top-left / bottom-left corners
   mask *= 0.88 + 0.12 * smoothstep(0.6, -0.8, d);
 
-  // soft bloom hugging the left side of the frame
-  float bloom = smoothstep(0.7, -0.4, p.x) * 0.20;
+  // soft bloom hugging the bright edge of the frame
+  float bloom = smoothstep(mix(0.7, 0.32, u_vertical), -0.4, axisPos) * 0.20;
 
   float L = mask * ( (grad * 0.55 + broad) * vary
                    + (rim + rim2) * vary * 1.15 )
@@ -124,6 +134,7 @@ export default function FooterGlow({ className }) {
 
     const uRes = gl.getUniformLocation(program, 'u_res');
     const uPhase = gl.getUniformLocation(program, 'u_phase');
+    const uVertical = gl.getUniformLocation(program, 'u_vertical');
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -131,6 +142,10 @@ export default function FooterGlow({ className }) {
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);
+      // The footer switches from a short, wide banner (desktop) to a tall,
+      // stacked column (mobile) — swap the glow's fade axis to match so it
+      // still reads as "half the footer" instead of covering everything.
+      gl.uniform1f(uVertical, canvas.height > canvas.width ? 1.0 : 0.0);
     };
 
     const resizeObserver = new ResizeObserver(resize);
