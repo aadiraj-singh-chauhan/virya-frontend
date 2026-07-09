@@ -42,7 +42,7 @@ function Step({ title, active, onClick }) {
       className={`title-1-md title-1 ${styles.stepTitle} ${active ? styles.stepActive : styles.stepDim}`}
       onClick={onClick}
     >
-      <span className={`body-1 ${styles.textOriginal}`}>{title}</span>
+      <span className={styles.textOriginal}>{title}</span>
       <span className={styles.textDisplay} aria-hidden="true">{display || title}</span>
     </div>
   );
