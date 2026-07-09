@@ -1,6 +1,6 @@
 .section {
   position: relative;
-  padding-top: 50px;
+  padding: 100px 0;
   background: var(--color-6);
   overflow: hidden;
 }
@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 80px;
   max-width: 904px;
   margin: 0 auto;
 }
@@ -52,18 +52,18 @@
 .imageFrame {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 504px;
   overflow: hidden;
 }
 
 /* Image is wider/taller than the frame — centered and clipped */
 .imageWrap {
   position: absolute;
-  top: 100px;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 370px;
-  height: 204px;
+  width: 950px;
+  height: 638px;
 }
 
 .image {
@@ -119,6 +119,31 @@
   pointer-events: none;
 }
 
-@media screen {
-  
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE
+   These were the actual intended mobile values, but a previous edit ("Added
+   rwd to people mobility css pages") applied them directly to the base
+   rules above instead of scoping them to a breakpoint, and left this media
+   query empty — shrinking the video to mobile size at every viewport,
+   including desktop. Moved here where they belong.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .section {
+    padding-top: 50px;
+  }
+
+  .content {
+    gap: 20px;
+  }
+
+  .imageFrame {
+    height: 200px;
+  }
+
+  .imageWrap {
+    top: 100px;
+    width: 370px;
+    height: 204px;
+  }
 }
