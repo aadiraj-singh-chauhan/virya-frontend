@@ -34,12 +34,23 @@ export default function Banner() {
       {/* Bullets + description */}
       <div className={styles.content}>
         <div className={styles.bullets}>
-          {BULLETS.map((item) => (
-            <div key={item} className={styles.bullet}>
-              <span className={styles.dot} />
-              <span className="label-1 label-1-md">{item}</span>
-            </div>
-          ))}
+          {/* Duplicated on mobile only, where the track auto-scrolls in a
+              loop — translating by exactly -50% lands back on an identical
+              copy, so the loop reads as seamless instead of jumping. */}
+          <div className={styles.bulletsTrack}>
+            {BULLETS.map((item) => (
+              <div key={item} className={styles.bullet}>
+                <span className={styles.dot} />
+                <span className="label-1 label-1-md">{item}</span>
+              </div>
+            ))}
+            {BULLETS.map((item) => (
+              <div key={`d-${item}`} className={`${styles.bullet} ${styles.bulletDuplicate}`} aria-hidden="true">
+                <span className={styles.dot} />
+                <span className="label-1 label-1-md">{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <p className={`body-1 body-1-md ${styles.desc}`}>
           An intelligent autonomous system for continuous, real-world mobility

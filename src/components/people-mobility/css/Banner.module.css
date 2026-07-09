@@ -91,6 +91,18 @@
   gap: 30px;
 }
 
+/* display:contents on desktop keeps the duplicated bullets (added for the
+   mobile marquee loop) as direct flex children of .bullets so the 30px gap
+   still applies between them; .bulletDuplicate hides the duplicate set so
+   desktop shows the original 3 bullets once, centered, un-animated. */
+.bulletsTrack {
+  display: contents;
+}
+
+.bullet.bulletDuplicate {
+  display: none;
+}
+
 .bullet {
   display: flex;
   align-items: center;
@@ -108,6 +120,11 @@
   text-align: center;
   max-width: 562px;
   opacity: 0.6;
+}
+
+@keyframes bulletsMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
@@ -145,23 +162,32 @@
   }
 
   .content {
-    bottom: 20px;
+    bottom: 40px;
     gap: 20px;
   }
 
-  /* Horizontal scroll row — bullets never wrap */
+  /* Auto-scrolling loop — bullets never wrap, no manual swipe needed. The
+     mask fades the edges instead of a hard clip. */
   .bullets {
     width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    padding: 0 20px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 
-  .bullets::-webkit-scrollbar {
-    display: none;
+  .bulletsTrack {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: max-content;
+    animation: bulletsMarquee 10s linear infinite;
+  }
+
+  /* Duplicate set (hidden on desktop via .bullet.bulletDuplicate) is needed
+     here to make the loop seamless — re-show it. Matches that selector's
+     specificity so this override actually wins. */
+  .bullet.bulletDuplicate {
+    display: flex;
   }
 
   .bullet {
