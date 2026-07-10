@@ -1,0 +1,181 @@
+.section {
+  display: flex;
+  height: 713px;
+  background: var(--color-6, #FDF8F5);
+  overflow: hidden;
+}
+
+/* ── Left panel ───────────────────────────────────────────────────────────── */
+
+.left {
+  flex: 0 0 516px;
+  background: var(--color-8);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 50px;
+}
+
+/* Left edge matches the shared .container's left inset (max(2.5vw, (100vw-1730px)/2)),
+   computed directly since .left itself is a fixed 516px box, not the viewport —
+   nesting the .container class here would resolve its percentage against 516px
+   instead of the viewport and misalign it. */
+.leftInner {
+  display: flex;
+  flex-direction: column;
+  gap: 53px;
+  padding-left: max(2.5vw, calc((100vw - 1730px) / 2));
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.heading,
+.desc {
+  max-width: 100%;
+}
+
+.desc {
+  opacity: 0.5;
+}
+
+/* ── Right image ──────────────────────────────────────────────────────────── */
+
+.right {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ── Feature pills ────────────────────────────────────────────────────────── */
+
+.features {
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  background: var(--color-5);
+  border-radius: 100px;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--color-1);
+}
+
+/* ── Controls (mute / expand) ─────────────────────────────────────────────── */
+
+.controls {
+  position: absolute;
+  right: 70px;
+  bottom: 50px;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+}
+
+.controlBtn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-5);
+}
+
+/* Decorative — no click behavior, so it shouldn't look clickable */
+.muteIcon {
+  cursor: default;
+}
+
+.expandBtn {
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.expandBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  padding: 1.1px;
+  background: conic-gradient(from 90deg, #666666 0deg, #ff3f00 360deg);
+  -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+  -webkit-mask-origin: border-box, border-box;
+  -webkit-mask-clip: content-box, border-box;
+  -webkit-mask-composite: xor;
+  mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
+  mask-origin: border-box, border-box;
+  mask-clip: content-box, border-box;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .section {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left {
+    flex: none;
+    padding: 40px 0;
+  }
+
+  .leftInner {
+    gap: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .right {
+    height: 420px;
+  }
+
+  .features {
+    left: 16px;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .pill {
+    width: fit-content;
+  }
+
+  .controls {
+    right: 16px;
+    bottom: 16px;
+  }
+}
