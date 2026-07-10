@@ -2,20 +2,30 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 346px;
   background: var(--color-4);
   overflow: hidden;
 }
 
 .glow {
-  object-fit: fill;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   pointer-events: none;
 }
 
-.heading {
+.contentRow {
   position: relative;
   z-index: 1;
-  margin-left: 297px;
+  display: flex;
+  align-items: flex-end;
+  gap: 120px;
+}
+
+.heading {
   font-family: var(--font-primary);
   font-size: 50px;
   font-weight: 400;
@@ -25,39 +35,28 @@
 }
 
 .button {
-  position: relative;
-  z-index: 1;
-  margin-left: auto;
-  margin-right: 120px;
   flex-shrink: 0;
 }
 
 @media (max-width: 1024px) {
-  .heading {
-    margin-left: 70px;
-  }
-
-  .button {
-    margin-right: 70px;
+  .contentRow {
+    gap: 60px;
   }
 }
 
 @media (max-width: 768px) {
   .section {
     height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
     padding: 60px 24px;
   }
 
-  .heading {
-    margin-left: 0;
-    font-size: 32px;
+  .contentRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
   }
 
-  .button {
-    margin-left: 0;
-    margin-right: 0;
+  .heading {
+    font-size: 32px;
   }
 }
