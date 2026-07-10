@@ -121,21 +121,19 @@
 
   .rowInner {
     height: auto;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding: 24px 16px;
     justify-content: flex-start;
     border-bottom: 0.2px solid var(--color-3);
   }
 
-  /* Reset desktop hover padding on touch */
+  /* Reset desktop hover padding on touch — matches the permanent mobile padding above */
   .row:hover .rowInner {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .row.rowOpen .rowInner {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-bottom: 0;
   }
 
   .rowIcon {
