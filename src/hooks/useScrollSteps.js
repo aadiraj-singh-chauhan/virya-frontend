@@ -7,8 +7,9 @@ const PIN_STYLE = {
 
 // Minimum time (ms) the active step holds before advancing to the next one —
 // keeps a hard/fast scroll from jumping straight to the target step and
-// skipping the ones in between.
-const STEP_SCRUB_MS = 550;
+// skipping the ones in between. Kept short so the catch-up still tracks
+// scroll fluidly instead of visibly stalling between steps.
+const STEP_SCRUB_MS = 180;
 
 // Drives a scroll-jacked "pinned panel with advancing steps" effect: while
 // the tall track element is scrolled through, the panel stays pinned (via
