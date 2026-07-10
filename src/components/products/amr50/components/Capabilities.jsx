@@ -41,6 +41,13 @@ const FEATURES = [
   },
 ];
 
+// Side-tab view switcher — swaps the hero image between the annotated
+// diagram (dots calibrated to it) and a plain fleet photo (no dots).
+const VIEWS = [
+  { id: 'diagram', label: 'AMR 50', thumb: '/assets/product-amr50.webp', image: '/assets/amr50-intelligent.png', showDots: true },
+  { id: 'fleet', label: 'AMR 50', thumb: '/assets/amr50-fleet-view.png', image: '/assets/amr50-fleet-view.png', showDots: false },
+];
+
 const TECH_CARDS = [
   { id: '360-perception', title: '360° Perception', icon: '/assets/360-perception.svg', description: 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the' },
   { id: 'obstacle-avoidance', title: 'Obstacle Avoidance & Detection', icon: '/assets/obstacle-avoidance.svg', description: 's simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the' },
@@ -89,7 +96,9 @@ function FeatureItem({ feature, active, onClick }) {
 export default function Capabilities() {
   const [active, setActive] = useState(0);
   const [activeTech, setActiveTech] = useState(-1);
+  const [activeView, setActiveView] = useState(0);
   const activeFeature = FEATURES[active];
+  const view = VIEWS[activeView];
 
   return (
     <section className={styles.section} data-header-theme="light">
@@ -107,19 +116,52 @@ export default function Capabilities() {
       {/* ── Content row ── */}
       <div className={styles.contentRow}>
 
+        {/* Desktop side tab — swaps the hero image below */}
+        <div className={styles.thumbnailPanel}>
+          {VIEWS.map((v, i) => (
+            <button
+              key={v.id}
+              type="button"
+              className={`${styles.thumbCard} ${activeView === i ? styles.thumbCardActive : ''}`}
+              onClick={() => setActiveView(i)}
+            >
+              <div className={styles.thumbImageWrap}>
+                <Image src={v.thumb} alt={v.label} fill sizes="73px" className={styles.thumbImage} />
+              </div>
+              <p className={`label-2 label-1-md ${styles.thumbLabel}`}>{v.label}</p>
+            </button>
+          ))}
+        </div>
+
+        {/* Mobile tab bar — same view switcher */}
+        <div className={styles.mobileTabs}>
+          <div className={styles.tabBar}>
+            {VIEWS.map((v, i) => (
+              <button
+                key={v.id}
+                type="button"
+                className={`${styles.tab} ${activeView === i ? styles.tabActive : ''}`}
+                onClick={() => setActiveView(i)}
+              >
+                <span className="label-2">{v.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Robot image with dots */}
         <div className={styles.imageArea}>
           <div className={styles.robotWrap}>
             <Image
-              src="/assets/amr50-intelligent.png"
-              alt="AMR50 intelligent systems diagram"
+              src={view.image}
+              alt={view.showDots ? 'AMR50 intelligent systems diagram' : 'AMR50 fleet'}
               fill
               sizes="600px"
               className={styles.robotImage}
             />
           </div>
 
-          {FEATURES.map((f, i) => (
+          {view.showDots && FEATURES.map((f, i) => (
             <button
               key={f.id}
               className={`${styles.dot} ${active === i ? styles.dotActive : ''}`}
@@ -133,6 +175,7 @@ export default function Capabilities() {
             </button>
           ))}
 
+          {view.showDots && (
           <div
             className={styles.pill}
             style={{
@@ -145,6 +188,7 @@ export default function Capabilities() {
               <path d="M8 2v12M2 8h12" stroke="white" strokeWidth="1"/>
             </svg>
           </div>
+          )}
         </div>
 
         {/* Feature accordion panel */}

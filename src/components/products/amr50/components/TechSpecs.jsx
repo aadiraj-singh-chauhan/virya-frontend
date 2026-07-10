@@ -1,6 +1,13 @@
+'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
 import styles from '../css/TechSpecs.module.css';
+
+const TABS = [
+  { label: 'AMR 50', blueprint: '/assets/amr50-blueprint.svg' },
+  { label: 'AMR 51', blueprint: '/assets/amr51-blueprint.svg' },
+];
 
 const SPECS = [
   { label: 'Max Speed',                 value: '3 m/s (11km/hr)' },
@@ -12,16 +19,32 @@ const SPECS = [
 ];
 
 export default function TechSpecs() {
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <section className={styles.section} data-header-theme="light">
 
       <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
 
+      {/* Tab switcher — swaps the desktop blueprint below. Spec values stay
+          AMR50's since no separate AMR51 spec sheet exists yet. */}
+      <div className={styles.tabBar}>
+        {TABS.map((tab, i) => (
+          <button
+            key={tab.label}
+            className={`${styles.tab} ${activeTab === i ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab(i)}
+          >
+            <span className="label-2 label-1-md">{tab.label}</span>
+          </button>
+        ))}
+      </div>
+
       <div className={styles.blueprint}>
         {/* Desktop */}
         <Image
-          src="/assets/amr50-blueprint.svg"
-          alt="AMR50 product blueprint showing front, side and rear views with dimensions"
+          src={TABS[activeTab].blueprint}
+          alt={`${TABS[activeTab].label} product blueprint showing front, side and rear views with dimensions`}
           width={1372}
           height={497}
           className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}

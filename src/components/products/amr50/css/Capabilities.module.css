@@ -36,9 +36,88 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 40px;
-  width: calc(100% - 88px);
-  margin-left: 88px;
+  width: 100%;
   height: 568px;
+}
+
+/* ── Left thumbnail panel (desktop) — view switcher for imageArea below ───── */
+
+.thumbnailPanel {
+  flex: 0 0 127px;
+  background: var(--color-5);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: auto;
+}
+
+.thumbCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 107px;
+  background: var(--color-5);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.thumbCardActive {
+  background: var(--color-1);
+}
+
+.thumbImageWrap {
+  position: relative;
+  width: 73px;
+  height: 72px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.thumbImage {
+  object-fit: contain;
+}
+
+.thumbLabel {
+  text-align: center;
+  color: var(--color-3);
+}
+
+.thumbCardActive .thumbLabel {
+  color: var(--color-5);
+}
+
+/* Mobile tab bar — same view switcher, hidden until the mobile breakpoint */
+.mobileTabs {
+  display: none;
+}
+
+.tabBar {
+  display: flex;
+  gap: 10px;
+  background: var(--color-5);
+  backdrop-filter: blur(15px);
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.tab {
+  flex: 1;
+  height: 41px;
+  border: none;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--color-3);
+  transition: .2s;
+}
+
+.tabActive {
+  background: var(--color-1);
+  color: var(--color-5);
 }
 
 /* ── Robot image area (center) ────────────────────────────────────────────── */
@@ -277,6 +356,10 @@
       gap: 32px;
     }
 
+    .thumbnailPanel {
+      display: none;
+    }
+
     .imageArea {
       flex: 0 1 600px;
       min-width: 0;
@@ -315,7 +398,20 @@
       padding: 0 20px;
       gap: 24px;
     }
-  
+
+    .thumbnailPanel {
+      display: none;
+    }
+
+    .mobileTabs {
+      display: block;
+      width: 100%;
+    }
+
+    .tabBar {
+      width: 100%;
+    }
+
     /* Robot image area — aspect-ratio (not a fixed height) keeps it
        proportional to the 600x568 reference so the percentage-positioned
        dots/pill below still land in the right place instead of drifting. */
