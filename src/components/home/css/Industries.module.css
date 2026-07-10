@@ -38,6 +38,13 @@
   text-align: center;
 }
 
+.ctaHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
 .ctaTitle {
   width: 550px;
 }
