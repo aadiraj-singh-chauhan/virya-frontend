@@ -48,7 +48,7 @@ export default function Industries() {
               {i > 0 && <div className={styles.ctaDivider} aria-hidden="true" />}
               <div className={styles.ctaBlock}>
                 <p className="label-2 label-2-md">{eyebrow}</p>
-                <p className={`title-1 title-1-md ${styles.ctaTitle}`}>{heading}</p>
+                <p className={`title-1 heading-2-md ${styles.ctaTitle}`}>{heading}</p>
                 <Button href={href} property1="Default" size="Button-2">{cta}</Button>
               </div>
             </Fragment>
