@@ -41,7 +41,7 @@ export default function Platforms() {
                   alt={platform.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className={styles.image}
+                  className={`${styles.image} ${platform.id === 'amr10' ? styles.imageSmaller : ''}`}
                 />
               </div>
               <div className={styles.bottom}>

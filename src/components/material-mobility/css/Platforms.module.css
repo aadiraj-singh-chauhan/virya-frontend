@@ -73,6 +73,11 @@
   object-position: center center;
 }
 
+/* AMR10's photo reads larger than its neighbors — nudge it down slightly */
+.imageSmaller {
+  transform: scale(0.9);
+}
+
 /* ── Bottom zone — description ↔ explore button ──────────────────────────── */
 
 .bottom {
@@ -105,12 +110,19 @@
 
 .explore {
   position: absolute;
+  width: 80%;
   opacity: 0;
   transform: translateY(-14px);
   transition:
     opacity 0.35s ease,
     transform 0.35s ease;
   pointer-events: none;
+}
+
+.explore > a,
+.explore > button {
+  width: 100%;
+  justify-content: center;
 }
 
 .card:hover .explore {
