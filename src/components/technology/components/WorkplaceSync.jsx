@@ -3,10 +3,12 @@ import FeatureCardGrid from './FeatureCardGrid';
 const CARDS = [
   {
     caption: 'ERP / MES / WMS INTEGRATION',
+    desc: "Connects directly to your existing enterprise systems, so orders, inventory, and task data stay in sync without manual re-entry.",
     image: '/assets/technology/tech-card-erp.png',
   },
   {
     caption: 'MULTI-SITE MANAGEMENT',
+    desc: "Monitor fleets across every facility from a single dashboard, with live status and task history for each site.",
     image: '/assets/technology/tech-card-multisite-bg.png',
     objectPosition: '78% center',
   },
@@ -17,6 +19,7 @@ const CARDS = [
   },
   {
     caption: 'TRAFFIC MANAGEMENT',
+    desc: "Configurable safety and speed zones keep robots, operators, and pedestrians coordinated on a shared floor.",
     image: '/assets/technology/tech-localization-box-bg.png',
   },
 ];

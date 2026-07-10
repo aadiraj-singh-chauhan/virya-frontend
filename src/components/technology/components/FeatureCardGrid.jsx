@@ -8,7 +8,7 @@ export default function FeatureCardGrid({ heading, cards }) {
 
       <div className={styles.grid}>
         {cards.map((card) => (
-          <div key={card.caption} className={styles.card}>
+          <div key={card.image} className={styles.card}>
             <Image
               src={card.image}
               alt=""
@@ -28,12 +28,16 @@ export default function FeatureCardGrid({ heading, cards }) {
               />
             )}
 
-            <div className={`${styles.scrim} ${card.desc ? styles.scrimTall : ''}`} aria-hidden="true" />
+            {card.caption && (
+              <>
+                <div className={styles.scrim} aria-hidden="true" />
 
-            <div className={`${styles.textWrap} ${card.desc ? styles.textWrapRaised : ''}`}>
-              <p className="label-1">{card.caption}</p>
-              {card.desc && <p className="body-2">{card.desc}</p>}
-            </div>
+                <div className={styles.textWrap}>
+                  <p className={`label-1 ${styles.caption}`}>{card.caption}</p>
+                  {card.desc && <p className={`body-2 ${styles.desc}`}>{card.desc}</p>}
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>
