@@ -28,7 +28,7 @@ export default function RoutingCTAs() {
             <div key={card.id} className={styles.card}>
               <div className={styles.info}>
                 <h2 className={`title-1 title-1-md ${styles.title}`}>{card.title}</h2>
-                <Button property1="Default" size="Button-2" href={card.href} disabled={card.disabled}>
+                <Button property1="Default" href={card.href} disabled={card.disabled}>
                   {card.cta}
                 </Button>
               </div>
