@@ -1,0 +1,160 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  padding-top: var(--header-height);
+  background: var(--color-6);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Decorative staircase line art (left + right edges) ──────────────────── */
+
+.decorLeft,
+.decorRight {
+  position: absolute;
+  top: 21px;
+  width: 887.5px;
+  height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.decorLeft {
+  left: -365px;
+}
+
+.decorRight {
+  left: calc(75% - 22px);
+}
+
+.decorLeftInner,
+.decorRightInner {
+  position: relative;
+  flex-shrink: 0;
+  width: 640px;
+  height: 887.5px;
+}
+
+.decorLeftInner {
+  transform: rotate(-90deg);
+}
+
+.decorRightInner {
+  transform: rotate(-90deg) scaleY(-1);
+}
+
+.stair {
+  position: absolute;
+  left: 0;
+  top: 167px;
+  width: 320px;
+  height: 881.5px;
+  opacity: 0.4;
+}
+
+.cornerWrap {
+  position: absolute;
+  left: 320px;
+  top: 0;
+  width: 320px;
+  height: 720.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cornerFlip {
+  position: relative;
+  width: 320px;
+  height: 720.5px;
+  transform: rotate(180deg) scaleY(-1);
+  opacity: 0.4;
+}
+
+.tickPair {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tickPairLeft {
+  left: 382px;
+  top: 478px;
+}
+
+.tickPairRight {
+  left: 234px;
+  top: 646.5px;
+}
+
+.tick {
+  display: block;
+  width: 20px;
+  height: 3px;
+  background: var(--color-3);
+  opacity: 0.2;
+}
+
+/* ── Content ───────────────────────────────────────────────────────────────── */
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.code {
+  color: var(--color-3);
+}
+
+.icon {
+  display: block;
+}
+
+.desc {
+  color: var(--color-3);
+  max-width: 484px;
+}
+
+.homeLink {
+  color: var(--color-1);
+  text-decoration: underline;
+}
+
+/* Width-lock scramble — matches Button.jsx's pattern */
+.linkText {
+  position: relative;
+  display: inline-block;
+}
+
+.textOriginal {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.textDisplay {
+  position: absolute;
+  inset: 0;
+}
+
+@media (max-width: 768px) {
+  .decorLeft,
+  .decorRight {
+    display: none;
+  }
+
+  .content {
+    gap: 20px;
+  }
+}
