@@ -42,8 +42,21 @@ const METRICS = [
   { value: '90+', label: 'Scalable Fleet Deployment' },
 ];
 
+const HOVER_DELAY_MS = 120;
+
 export default function Legacy() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const hoverTimerRef = useRef(null);
+
+  // Debounced so a quick sweep of the cursor across all three cards doesn't
+  // restart the width transition mid-flight for each one in turn — only a
+  // deliberate pause on a card commits the expand.
+  const handleCardHover = (i) => {
+    clearTimeout(hoverTimerRef.current);
+    hoverTimerRef.current = setTimeout(() => setActiveIndex(i), HOVER_DELAY_MS);
+  };
+
+  useEffect(() => () => clearTimeout(hoverTimerRef.current), []);
 
   return (
     <section className={styles.section}>
@@ -72,7 +85,7 @@ export default function Legacy() {
             <article
               key={card.id}
               className={`${styles.card} ${i === activeIndex ? styles.cardExpanded : styles.cardCollapsed}`}
-              onMouseEnter={() => setActiveIndex(i)}
+              onMouseEnter={() => handleCardHover(i)}
             >
               <Image
                 src={card.image}
