@@ -3,9 +3,12 @@ import Banner from '@/components/rd-platforms/components/Banner';
 import Overview from '@/components/rd-platforms/components/Overview';
 import Gallery from '@/components/rd-platforms/components/Gallery';
 import Platforms from '@/components/rd-platforms/components/Platforms';
+import AutonomousLab from '@/components/rd-platforms/components/AutonomousLab';
 import Applications from '@/components/rd-platforms/components/Applications';
 import Testimonials from '@/components/rd-platforms/components/Testimonials';
 import ClosingBanner from '@/components/rd-platforms/components/ClosingBanner';
+import PartnerCTA from '@/components/rd-platforms/components/PartnerCTA';
+import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
 export const metadata = {
   title: 'R&D Platforms · Virya',
@@ -19,9 +22,12 @@ export default function RDPlatforms() {
       <Overview />
       <Gallery />
       <Platforms />
+      <AutonomousLab />
       <Applications />
       <ClosingBanner />
       <Testimonials />
+      <PartnerCTA />
+      <ProductFooterCTA />
     </main>
   );
 }
