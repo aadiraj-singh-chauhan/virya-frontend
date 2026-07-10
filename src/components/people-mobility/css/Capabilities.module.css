@@ -92,18 +92,7 @@
     flex-shrink: 0;
   }
 
-  /* Body hidden by default on mobile — animated via max-height, not display */
   .card :global(.body-1) {
-    max-height: 0;
-    overflow: hidden;
-    margin-top: 0;
-    padding: 0;
-    transition: max-height 0.4s ease, margin-top 0.3s ease;
-  }
-
-  /* Body expanded for the active card */
-  .cardActive :global(.body-1) {
-    max-height: 200px;
     margin-top: 16px;
   }
 }
