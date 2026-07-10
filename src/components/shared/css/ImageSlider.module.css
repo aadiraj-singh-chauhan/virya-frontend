@@ -5,7 +5,7 @@
 
 .track {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -13,11 +13,11 @@
 
 /* Reliable left indent — padding-left on overflow containers is suppressed
    by overflow-x: hidden on html/body, so we use a flex spacer instead.
-   Width is 50px because the 20px gap adds the remaining 20px → 70px total. */
+   Width is 58px because the 12px gap adds the remaining 12px → 70px total. */
 .track::before {
   content: "";
   flex-shrink: 0;
-  width: 50px;
+  width: 58px;
 }
 
 .track::-webkit-scrollbar {
@@ -67,6 +67,7 @@
   max-width: 280px;
   white-space: pre-line;
   color: var(--color-5);
+  font-size: 16px;
 }
 
 /* ── Next button ─────────────────────────────────────────────────────────── */

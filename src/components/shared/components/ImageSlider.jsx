@@ -5,8 +5,8 @@ import Image from 'next/image';
 import styles from '../css/ImageSlider.module.css';
 
 const CARD_WIDTH = 517;
-const GAP = 20;
-const SPACER = 50; // matches .track::before, the left-indent spacer
+const GAP = 12;
+const SPACER = 58; // matches .track::before, the left-indent spacer
 
 // Shared infinite-loop image slider — same drag/wheel/cursor-follow-button
 // mechanics used by the homepage's Industries slider and People Mobility's
