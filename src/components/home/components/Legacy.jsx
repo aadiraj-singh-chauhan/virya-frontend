@@ -14,6 +14,7 @@ const CARDS = [
     cta: 'Explore material mobility',
     href: '/solutions/material-mobility',
     image: '/assets/hp-material-mobility.jpg',
+    mobileImage: '/assets/hp-material-mobility-mob.jpg',
   },
   {
     id: 'people',
@@ -22,6 +23,7 @@ const CARDS = [
     cta: 'Explore people mobility',
     href: '/solutions/people-mobility',
     image: '/assets/hp-people-mobility.jpg',
+    mobileImage: '/assets/hp-people-mobility-mob.jpg',
   },
   {
     id: 'rnd',
@@ -30,6 +32,7 @@ const CARDS = [
     cta: 'Explore R&D Platforms',
     href: '/solutions/rnd-platforms',
     image: '/assets/hp-r-and-d.jpg',
+    mobileImage: '/assets/hp-r-and-d-mob.jpg',
   },
 ];
 
@@ -53,7 +56,7 @@ export default function Legacy() {
         aria-hidden="true"
       />
       <Image
-        src="/assets/legacy-platform-bg-rwd.jpg"
+        src="/assets/legacy-platform-bg-rwd.webp"
         alt=""
         width={640}
         height={1334}
@@ -76,7 +79,15 @@ export default function Legacy() {
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className={styles.cardImage}
+                className={`${styles.cardImage} ${styles.cardImageDesktop}`}
+                aria-hidden="true"
+              />
+              <Image
+                src={card.mobileImage}
+                alt=""
+                fill
+                sizes="100vw"
+                className={`${styles.cardImage} ${styles.cardImageMobile}`}
                 aria-hidden="true"
               />
               <div className={styles.cardContent}>
