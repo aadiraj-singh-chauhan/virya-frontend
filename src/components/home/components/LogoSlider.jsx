@@ -30,7 +30,7 @@ const LOGOS = [
 export default function LogoSlider() {
   return (
     <div className={styles.wrapper}>
-      <p className="label-3">Trusted by</p>
+      <p className="label-3">TRUSTED BY</p>
       <div className={styles.outer}>
         <div className={styles.track}>
           {LOGOS.map(({ src, alt }) => (
