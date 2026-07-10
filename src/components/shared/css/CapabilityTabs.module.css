@@ -127,24 +127,19 @@
   opacity: 1;
 }
 
-/* Chevron — hidden on desktop, shown on mobile in place of the arrow link */
+/* Chevron — hidden on desktop, shown on mobile in place of the arrow link.
+   Dashed-cross "+" glyph that rotates into an "×" when the panel opens. */
 .chevron {
   display: none;
   align-items: center;
   justify-content: center;
-  color: var(--color-3);
-  opacity: 0.45;
+  color: var(--color-1);
   flex-shrink: 0;
-  transition:
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s ease,
-    color 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chevronOpen {
-  transform: rotate(180deg);
-  opacity: 1;
-  color: var(--color-1);
+  transform: rotate(45deg);
 }
 
 /* ===========================
@@ -276,7 +271,7 @@
 @media (max-width:767px){
 
   .section{
-    padding:60px 0;
+    padding:60px 0 0;
   }
 
   .inner{
@@ -295,12 +290,12 @@
 
   .tabs{
     width:100%;
-    gap:28px;
+    gap:0;
   }
 
   .tabItem{
     gap:16px;
-    padding: 24px 0;
+    padding: 18px 0;
     border-bottom:1px solid rgba(0,0,0,.1);
   }
 
@@ -312,6 +307,14 @@
 
   .chevron{
     display:flex;
+  }
+
+  /* Mobile rows read as plain black text regardless of desktop's
+     active/dim state — only the +/× icon carries color here. */
+  .tabActive,
+  .tabDim {
+    color: var(--color-3);
+    opacity: 1;
   }
 
   /* Hide desktop content */
@@ -378,7 +381,7 @@
 @media (max-width:480px){
 
   .section{
-    padding:48px 0;
+    padding:48px 0 0;
   }
 
   .textCol{

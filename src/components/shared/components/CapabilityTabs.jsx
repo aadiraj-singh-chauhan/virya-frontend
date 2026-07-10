@@ -39,8 +39,11 @@ function TabRow({ label, active, expanded, onClick }) {
       </span>
 
       <span className={`${styles.chevron} ${expanded ? styles.chevronOpen : ''}`} aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path d="M4 6.5L9 11.5L14 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg width="19" height="19" viewBox="0 0 19.28 18.91" fill="none">
+          <path d="M9.64 0V7.42" stroke="currentColor" strokeWidth="1.112" />
+          <path d="M9.64 11.49V18.91" stroke="currentColor" strokeWidth="1.112" />
+          <path d="M0 9.46H7.42" stroke="currentColor" strokeWidth="1.112" />
+          <path d="M11.86 9.46H19.28" stroke="currentColor" strokeWidth="1.112" />
         </svg>
       </span>
     </button>
