@@ -58,14 +58,21 @@ export default function Voices() {
 
         <div className={styles.textWrap}>
           <div key={active} className={styles.textAnim} style={{ '--dir': direction }}>
-            <span className={styles.quoteMark} aria-hidden="true">&ldquo;</span>
+            <span className={styles.quoteMark} aria-hidden="true">
+              <svg width="29" height="25" viewBox="0 0 29 25" fill="none">
+                <path
+                  d="M0 0.000175476L6.72619 24.5464H12.4915L8.64795 0.000175476H0ZM16.073 0.000175476L22.7992 24.5464H28.5645L24.7209 0.000175476H16.073Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
             <p className={styles.quote}>{testimonial.quote}</p>
-
-            <div className={styles.person}>
-              <p className={styles.name}>{testimonial.name}</p>
-              <p className={`label-2 ${styles.position}`}>{testimonial.position}</p>
-            </div>
           </div>
+        </div>
+
+        <div key={`person-${active}`} className={styles.person} style={{ '--dir': direction }}>
+          <p className={styles.name}>{testimonial.name}</p>
+          <p className={`label-2 ${styles.position}`}>{testimonial.position}</p>
         </div>
 
         <div className={styles.navWrap}>

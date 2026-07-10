@@ -73,10 +73,7 @@
 
 .quoteMark {
   display: block;
-  margin-top: 30px;
-  font-family: var(--font-primary);
-  font-size: 60px;
-  line-height: 1;
+  margin-top: 50px;
   color: var(--color-1);
 }
 
@@ -91,7 +88,9 @@
 }
 
 .person {
-  margin-top: 40px;
+  position: absolute;
+  left: 80px;
+  bottom: 60px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -136,6 +135,11 @@
     margin-top: 40px;
     max-width: none;
     padding: 40px;
+  }
+
+  .person {
+    position: static;
+    margin-top: 24px;
   }
 
   .navWrap {
