@@ -44,16 +44,20 @@ export default function Header() {
     let raf;
 
     const update = () => {
-      // Theme detection
+      // Theme detection. When sections overlap (e.g. a card grid pulled up
+      // over the section above it via a negative margin), the later one in
+      // DOM order is the one actually painted on top, so it should win —
+      // keep matching instead of stopping at the first hit.
       const sections = document.querySelectorAll('[data-header-theme]');
+      const logoY = getLogoY();
+      let matched;
       for (const section of sections) {
         const { top, bottom } = section.getBoundingClientRect();
-        const logoY = getLogoY();
         if (top <= logoY && bottom > logoY) {
-          setTheme(section.dataset.headerTheme);
-          return;
+          matched = section;
         }
       }
+      if (matched) setTheme(matched.dataset.headerTheme);
     };
 
     const onScroll = () => {

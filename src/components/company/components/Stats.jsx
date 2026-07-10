@@ -34,7 +34,7 @@ export default function Stats() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={styles.section}>
+    <section ref={sectionRef} className={styles.section} data-header-theme="light">
       {/* Desktop: static row */}
       <div className={styles.row}>
         {STATS.map(({ value, label }) => (
