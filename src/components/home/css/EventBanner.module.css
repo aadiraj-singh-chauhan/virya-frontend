@@ -104,6 +104,13 @@
     background: var(--color-6);
   }
 
+  /* The 0.182px desktop border reads fine against a plain image/pattern
+     background, but on mobile .content sits flush against it with its own
+     backdrop-filter: blur — that blur washes the hairline out completely. */
+  .cardInner {
+    border-width: 1px;
+  }
+
   /* .cardInner is now height: auto on mobile, so the desktop box-shadow
      trick (which offsets by a fixed 436px) can't place the bottom dot.
      Use top/bottom insets instead — they track whatever height the
