@@ -71,15 +71,10 @@
 }
 
 .playBtn {
-  position: absolute;
-  left: 36px;
-  bottom: 36px;
+  position: absolute !important;
+  left: 36px !important;
+  bottom: 36px !important;
   z-index: 3;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  line-height: 0;
 }
 
 
@@ -165,13 +160,8 @@
   }
 
   .playBtn {
-    left: 20px;
-    bottom: 20px;
-  }
-
-  .playBtn svg {
-    width: 33.43px;
-    height: 33.43px;
+    left: 20px !important;
+    bottom: 20px !important;
   }
 }
 
@@ -201,7 +191,7 @@
   }
 
   .playBtn {
-    left: 12px;
-    bottom: 12px;
+    left: 12px !important;
+    bottom: 12px !important;
   }
 }

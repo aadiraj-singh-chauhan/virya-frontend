@@ -28,10 +28,17 @@ export default function Banner() {
 
 function MuteIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path d="M7.5 6.5L4 8.5H1.5V11.5H4L7.5 13.5V6.5Z" stroke="white" strokeWidth="1" strokeLinejoin="round" />
-      <path d="M12 5.5L18 14.5" stroke="white" strokeWidth="1" strokeLinecap="round" />
-      <path d="M18 5.5L12 14.5" stroke="white" strokeWidth="1" strokeLinecap="round" />
+    <svg width="18" height="18" viewBox="0 0 19.6445 19.6445" fill="none" aria-hidden="true">
+      <path d="M15.3438 7.97656V11.6599" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+      <path d="M17.8047 6.75V12.8889" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+      <path d="M4.29678 3.07053L16.5746 16.5761" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+      <path d="M9.21875 4.83119L12.2767 2.45312V8.19531" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+      <path
+        d="M12.2754 12.2449V17.1862L6.75037 12.8889H3.06702C2.9042 12.8889 2.74806 12.8242 2.63293 12.7091C2.5178 12.594 2.45312 12.4378 2.45312 12.275V7.36389C2.45312 7.20108 2.5178 7.04493 2.63293 6.9298C2.74806 6.81468 2.9042 6.75 3.06702 6.75L7.0859 6.75"
+        stroke="white"
+        strokeWidth="1.7"
+        strokeLinecap="square"
+      />
     </svg>
   );
 }

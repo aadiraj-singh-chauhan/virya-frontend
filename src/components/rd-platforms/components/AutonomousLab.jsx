@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import FullscreenToggle from '@/components/shared/components/FullscreenToggle';
 import styles from '../css/AutonomousLab.module.css';
 
 const FEATURES = [
@@ -57,26 +58,16 @@ export default function AutonomousLab() {
 
         <div className={styles.controls}>
           <div className={styles.controlBtn} aria-hidden="true">
-            <svg className={styles.muteIcon} width="20" height="20" viewBox="0 0 19.6445 19.6445" fill="none">
-              <path d="M15.3438 7.97656V11.6599" stroke="currentColor" strokeWidth="1.7" strokeLinecap="square" />
-              <path d="M17.8047 6.75V12.8889" stroke="currentColor" strokeWidth="1.7" strokeLinecap="square" />
-              <path d="M4.29678 3.07053L16.5746 16.5761" stroke="currentColor" strokeWidth="1.7" strokeLinecap="square" />
-              <path d="M9.21875 4.83119L12.2767 2.45312V8.19531" stroke="currentColor" strokeWidth="1.7" strokeLinecap="square" />
-              <path d="M12.2754 12.2449V17.1862L6.75037 12.8889H3.06702C2.9042 12.8889 2.74806 12.8242 2.63293 12.7091C2.5178 12.594 2.45312 12.4378 2.45312 12.275V7.36389C2.45312 7.20108 2.5178 7.04493 2.63293 6.9298C2.74806 6.81468 2.9042 6.75 3.06702 6.75L7.0859 6.75" stroke="currentColor" strokeWidth="1.7" strokeLinecap="square" />
+            <svg width="18" height="18" viewBox="0 0 19.6445 19.6445" fill="none">
+              <path d="M15.3438 7.97656V11.6599" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+              <path d="M17.8047 6.75V12.8889" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+              <path d="M4.29678 3.07053L16.5746 16.5761" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+              <path d="M9.21875 4.83119L12.2767 2.45312V8.19531" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
+              <path d="M12.2754 12.2449V17.1862L6.75037 12.8889H3.06702C2.9042 12.8889 2.74806 12.8242 2.63293 12.7091C2.5178 12.594 2.45312 12.4378 2.45312 12.275V7.36389C2.45312 7.20108 2.5178 7.04493 2.63293 6.9298C2.74806 6.81468 2.9042 6.75 3.06702 6.75L7.0859 6.75" stroke="white" strokeWidth="1.7" strokeLinecap="square" />
             </svg>
           </div>
 
-          <button
-            type="button"
-            className={`${styles.controlBtn} ${styles.expandBtn}`}
-            onClick={handleExpand}
-            aria-label="View fullscreen"
-          >
-            <svg width="19" height="18" viewBox="0 0 18.7683 18.1908" fill="none" aria-hidden="true">
-              <path d="M12.7979 0.852912H17.9154V5.97039" stroke="white" strokeWidth="1.70582" strokeLinecap="square" />
-              <path d="M5.97039 17.3379H0.852912V12.2204" stroke="white" strokeWidth="1.70582" strokeLinecap="square" />
-            </svg>
-          </button>
+          <FullscreenToggle onClick={handleExpand} />
         </div>
       </div>
     </section>

@@ -83,40 +83,11 @@
 /* ── Play button (center) ─────────────────────────────────────────────────── */
 
 .playCenter {
-  position: absolute;
+  position: absolute !important;
   top: 50%;
   left: 50%;
   z-index: 1;
   transform: translate(-50%, -50%);
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  border: none;
-  background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.playCenter::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  padding: 1.1px;
-  background: conic-gradient(from 90deg, #666666 0deg, #ff3f00 360deg);
-  -webkit-mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
-  -webkit-mask-origin: border-box, border-box;
-  -webkit-mask-clip: content-box, border-box;
-  -webkit-mask-composite: xor;
-  mask-image: linear-gradient(#fff 0 0), linear-gradient(#fff 0 0);
-  mask-origin: border-box, border-box;
-  mask-clip: content-box, border-box;
-  mask-composite: exclude;
-  pointer-events: none;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
