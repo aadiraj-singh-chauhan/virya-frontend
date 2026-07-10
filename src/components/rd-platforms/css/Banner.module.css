@@ -4,17 +4,22 @@
   /* Match rd-platform-bg.webp's native ratio so object-fit: cover needs
      zero cropping — the image fills the section exactly, edge to edge. */
   aspect-ratio: 3024 / 1589;
-  background: var(--color-6);
+  background: var(--color-6, #FDF8F5);
   overflow: hidden;
 }
 
-/* ── Blueprint grid + traveling tick pattern ─────────────────────────────── */
+/* ── Blueprint grid + traveling tick pattern ─────────────────────────────────
+   Sits behind the vehicle image (z-index 0 vs the image's 1), not above it:
+   rd-platform-bg.webp has real alpha transparency in its upper portion by
+   design, so the grid shows through there and gets correctly hidden behind
+   the image's opaque vehicle pixels lower down — it was previously stacked
+   above the image, drawing grid lines across the vehicles themselves. */
 .patternBg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
 }
 
@@ -42,7 +47,7 @@
 .imageWrap {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
 }
 
 .image {
