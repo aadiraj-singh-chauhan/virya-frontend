@@ -5,15 +5,13 @@ export default function Hero() {
   return (
     <section className={styles.section} data-header-theme="light">
       <Image
-        src="/assets/technology/tech-hero.png"
+        src="/assets/technology-banner-bg.jpg"
         alt="Virya autonomous mobile robot pulling a cart of goods in a warehouse"
         fill
         sizes="100vw"
         priority
         className={styles.bg}
       />
-      <div className={styles.bgFade} aria-hidden="true" />
-
       <div className={styles.content}>
         <h1 className={`heading-2 ${styles.heading}`}>The Intelligence Behind Every Move</h1>
 

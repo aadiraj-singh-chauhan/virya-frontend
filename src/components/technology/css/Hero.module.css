@@ -10,18 +10,8 @@
 }
 
 .bg {
-  object-fit: cover;
-  object-position: center top;
-  pointer-events: none;
-}
-
-.bgFade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 530px;
-  background: linear-gradient(180deg, var(--color-6) 0%, var(--color-6) 55%, rgba(253, 248, 245, 0.00) 100%);
+  object-fit: contain;
+  object-position: center 70%;
   pointer-events: none;
 }
 
@@ -51,8 +41,12 @@
 @media (max-width: 768px) {
   .section {
     height: auto;
-    min-height: 600px;
+    min-height: 820px;
     padding: 120px 24px 60px;
+  }
+
+  .bg {
+    object-position: center bottom;
   }
 
   .desc {
