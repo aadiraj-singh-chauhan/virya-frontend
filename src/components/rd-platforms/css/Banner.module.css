@@ -1,19 +1,30 @@
-/* ── Section ──────────────────────────────────────────────────────────────── */
+/* ── Section / pin track ──────────────────────────────────────────────────────
+   The banner stays pinned (position: fixed, driven by useScrollProgress)
+   while the clip-path reveal plays out across the scrollTrack's extra
+   height, then unpins and the page continues scrolling normally. */
 .section {
   position: relative;
-  /* Match rd-platform-bg.webp's native ratio so object-fit: cover needs
-     zero cropping — the image fills the section exactly, edge to edge. */
+}
+
+.scrollTrack {
+  position: relative;
+  height: 200vh;
+}
+
+/* position/top/left/width are set inline (see Banner.jsx) since they switch
+   between 'before' (absolute, top of track), 'pinned' (fixed, tracks the
+   viewport) and 'after' (absolute, bottom of track). */
+.sticky {
+  /* Match rd-platform-background.webp's native ratio so object-fit: cover
+     needs zero cropping — the image fills the section exactly, edge to edge. */
   aspect-ratio: 3024 / 1589;
   background: var(--color-6, #FDF8F5);
   overflow: hidden;
 }
 
-/* ── Blueprint grid + traveling tick pattern ─────────────────────────────────
-   Sits behind the vehicle image (z-index 0 vs the image's 1), not above it:
-   rd-platform-bg.webp has real alpha transparency in its upper portion by
-   design, so the grid shows through there and gets correctly hidden behind
-   the image's opaque vehicle pixels lower down — it was previously stacked
-   above the image, drawing grid lines across the vehicles themselves. */
+/* ── Blueprint grid (static — animation disabled via animate={false}) ───────
+   Sits behind the vehicle image (z-index 0 vs the image's 1), not above it,
+   so the grid is correctly hidden behind the image's opaque vehicle pixels. */
 .patternBg {
   position: absolute;
   inset: 0;
@@ -26,7 +37,7 @@
 /* ── Title + description ──────────────────────────────────────────────────── */
 .content {
   position: absolute;
-  top: 138px;
+  top: 90px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -53,18 +64,28 @@
 .image {
   object-fit: cover;
   object-position: bottom center;
+  transform: translateY(-80px);
+}
+
+.illustrationWrap {
+  background: #FDF8F5;
+  z-index: 2;
 }
 
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-  .section {
+  .scrollTrack {
+    height: 140vh;
+  }
+
+  .sticky {
     aspect-ratio: unset;
     height: 400px;
   }
 
   .content {
-    top: 80px;
+    top: 48px;
     width: 100%;
     padding: 0 24px;
     box-sizing: border-box;
@@ -80,5 +101,9 @@
     left: 0;
     right: 0;
     height: 30%;
+  }
+
+  .image {
+    transform: translateY(-32px);
   }
 }

@@ -1,6 +1,6 @@
 import pulseStyles from '../css/BannerPatternBg.module.css';
 
-export default function BannerPatternBg({ className }) {
+export default function BannerPatternBg({ className, animate = true }) {
   return (
     <svg
       className={className}
@@ -27,10 +27,12 @@ export default function BannerPatternBg({ className }) {
         <line opacity="0.3" x1="879.1" y1="4.37115e-09" x2="879.1" y2="721" stroke="black" strokeWidth="0.2" />
         <line opacity="0.3" x1="1039.1" y1="4.37115e-09" x2="1039.1" y2="721" stroke="black" strokeWidth="0.2" />
 
-        <g className={pulseStyles.pulseA}>
-          <rect x="1362" y="402" width="3" height="20" transform="rotate(-90 1362 402)" fill="#F43D00" />
-          <rect x="1382" y="402" width="3" height="20" transform="rotate(-90 1382 402)" fill="url(#bannerPatternPaint0)" />
-        </g>
+        {animate && (
+          <g className={pulseStyles.pulseA}>
+            <rect x="1362" y="402" width="3" height="20" transform="rotate(-90 1362 402)" fill="#F43D00" />
+            <rect x="1382" y="402" width="3" height="20" transform="rotate(-90 1382 402)" fill="url(#bannerPatternPaint0)" />
+          </g>
+        )}
 
         <line opacity="0.3" x1="799.1" y1="4.37115e-09" x2="799.1" y2="721" stroke="black" strokeWidth="0.2" />
         <line opacity="0.3" x1="1199.1" y1="4.37115e-09" x2="1199.1" y2="721" stroke="black" strokeWidth="0.2" />
@@ -45,30 +47,34 @@ export default function BannerPatternBg({ className }) {
         <line opacity="0.3" x1="239.1" y1="4.37115e-09" x2="239.1" y2="240" stroke="black" strokeWidth="0.2" />
         <line opacity="0.3" x1="239.1" y1="560" x2="239.1" y2="721" stroke="black" strokeWidth="0.2" />
 
-        <g className={pulseStyles.pulseB}>
-          <rect x="318" y="339" width="3" height="20" fill="#F43D00" />
-          <rect x="318" y="359" width="3" height="20" fill="url(#bannerPatternPaint1)" />
-        </g>
-        <g className={pulseStyles.pulseC}>
-          <rect x="119" y="398" width="3" height="20" transform="rotate(90 119 398)" fill="#F43D00" />
-          <rect x="99" y="398" width="3" height="20" transform="rotate(90 99 398)" fill="url(#bannerPatternPaint2)" />
-        </g>
-        <g className={pulseStyles.pulseD}>
-          <rect x="558.5" y="621.5" width="3" height="20" fill="#F43D00" />
-          <rect x="558.5" y="641.5" width="3" height="20" fill="url(#bannerPatternPaint3)" />
-        </g>
-        <g className={pulseStyles.pulseE}>
-          <rect x="1200" y="661.5" width="3" height="20" transform="rotate(180 1200 661.5)" fill="#F43D00" />
-          <rect x="1200" y="641.5" width="3" height="20" transform="rotate(180 1200 641.5)" fill="url(#bannerPatternPaint4)" />
-        </g>
-        <g className={pulseStyles.pulseF}>
-          <rect x="299" y="80" width="3" height="20" transform="rotate(90 299 80)" fill="#F43D00" />
-          <rect x="279" y="80" width="3" height="20" transform="rotate(90 279 80)" fill="url(#bannerPatternPaint5)" />
-        </g>
-        <g className={pulseStyles.pulseG}>
-          <rect x="1280" y="200" width="3" height="20" transform="rotate(180 1280 200)" fill="#F43D00" />
-          <rect x="1280" y="180" width="3" height="20" transform="rotate(180 1280 180)" fill="url(#bannerPatternPaint6)" />
-        </g>
+        {animate && (
+          <>
+            <g className={pulseStyles.pulseB}>
+              <rect x="318" y="339" width="3" height="20" fill="#F43D00" />
+              <rect x="318" y="359" width="3" height="20" fill="url(#bannerPatternPaint1)" />
+            </g>
+            <g className={pulseStyles.pulseC}>
+              <rect x="119" y="398" width="3" height="20" transform="rotate(90 119 398)" fill="#F43D00" />
+              <rect x="99" y="398" width="3" height="20" transform="rotate(90 99 398)" fill="url(#bannerPatternPaint2)" />
+            </g>
+            <g className={pulseStyles.pulseD}>
+              <rect x="558.5" y="621.5" width="3" height="20" fill="#F43D00" />
+              <rect x="558.5" y="641.5" width="3" height="20" fill="url(#bannerPatternPaint3)" />
+            </g>
+            <g className={pulseStyles.pulseE}>
+              <rect x="1200" y="661.5" width="3" height="20" transform="rotate(180 1200 661.5)" fill="#F43D00" />
+              <rect x="1200" y="641.5" width="3" height="20" transform="rotate(180 1200 641.5)" fill="url(#bannerPatternPaint4)" />
+            </g>
+            <g className={pulseStyles.pulseF}>
+              <rect x="299" y="80" width="3" height="20" transform="rotate(90 299 80)" fill="#F43D00" />
+              <rect x="279" y="80" width="3" height="20" transform="rotate(90 279 80)" fill="url(#bannerPatternPaint5)" />
+            </g>
+            <g className={pulseStyles.pulseG}>
+              <rect x="1280" y="200" width="3" height="20" transform="rotate(180 1280 200)" fill="#F43D00" />
+              <rect x="1280" y="180" width="3" height="20" transform="rotate(180 1280 180)" fill="url(#bannerPatternPaint6)" />
+            </g>
+          </>
+        )}
 
         <circle opacity="0.2" cx="1359" cy="240" r="79.9" stroke="black" strokeWidth="0.2" />
         <path opacity="0.2" d="M469 10L159 320" stroke="black" strokeWidth="0.2" />
