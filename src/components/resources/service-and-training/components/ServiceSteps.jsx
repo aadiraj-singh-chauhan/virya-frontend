@@ -47,12 +47,21 @@ const STEPS = [
   },
 ];
 
+// Matches the .5s grid-template-rows transition on .bulletsWrap/.imageWrap
+// below — the scroll lock holds for exactly as long as that animation
+// takes to play out.
+const TRANSITION_MS = 550;
+
 // All four steps stay stacked and visible; only the one currently crossing
 // the vertical center of the viewport expands to show its image + bullets,
-// while the rest collapse down to just title + description.
+// while the rest collapse down to just title + description. Scrolling
+// briefly locks each time a new step becomes active, so its expand/collapse
+// animation gets to finish playing before the user can scroll past it.
 export default function ServiceSteps() {
   const [active, setActive] = useState(0);
   const panelRefs = useRef([]);
+  const lockedRef = useRef(false);
+  const prevActiveRef = useRef(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,6 +78,27 @@ export default function ServiceSteps() {
 
     panelRefs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (active === prevActiveRef.current) return undefined;
+    prevActiveRef.current = active;
+
+    lockedRef.current = true;
+    const timer = setTimeout(() => { lockedRef.current = false; }, TRANSITION_MS);
+    return () => clearTimeout(timer);
+  }, [active]);
+
+  useEffect(() => {
+    const blockWhileLocked = (e) => {
+      if (lockedRef.current) e.preventDefault();
+    };
+    window.addEventListener('wheel', blockWhileLocked, { passive: false });
+    window.addEventListener('touchmove', blockWhileLocked, { passive: false });
+    return () => {
+      window.removeEventListener('wheel', blockWhileLocked);
+      window.removeEventListener('touchmove', blockWhileLocked);
+    };
   }, []);
 
   return (
