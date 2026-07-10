@@ -1,6 +1,7 @@
 .section {
-  background: var(--color-5);
+  background: var(--color-6, #FDF8F5);
   padding: 0 35px 80px;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,11 +21,15 @@
   width: 100%;
 }
 
+/* Full-bleed — breaks out of the section's own 35px padding and the site's
+   container width to span the full viewport, edge to edge. */
 .images {
   display: flex;
   align-items: center;
   gap: 20px;
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 
 .imageWrap {
