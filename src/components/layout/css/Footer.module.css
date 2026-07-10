@@ -145,6 +145,14 @@
 }
 
 @media (max-width: 768px) {
+  /* Glow is top-anchored and fades downward in vertical mode (see
+     FooterGlow's u_vertical) — trim its height a little so it reads as a
+     smaller accent on the tall mobile footer instead of stretching the
+     full column. */
+  .bgGlow {
+    height: 70%;
+  }
+
   .main {
     flex-direction: column;
     padding: 40px 0 60px;
