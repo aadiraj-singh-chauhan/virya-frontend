@@ -270,14 +270,70 @@
 }
 
 .mobileNavLink {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   padding: 18px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   transition: opacity 0.18s ease;
 }
 
+/* Reset for the <button> variant used by expandable items (Solutions, Resources) */
+button.mobileNavLink {
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
 .mobileNavLink:hover {
   opacity: 0.55;
+}
+
+.mobileNavGroup .mobileNavLink {
+  border-bottom: none;
+}
+
+.mobileChevron {
+  flex-shrink: 0;
+  color: var(--color-4);
+  transition: transform 0.25s ease;
+}
+
+.mobileChevronOpen {
+  transform: rotate(180deg);
+}
+
+.mobileSubList {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.mobileSubListOpen {
+  grid-template-rows: 1fr;
+}
+
+.mobileSubListInner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileSubLink {
+  display: block;
+  padding: 14px 0 14px 20px;
+  opacity: 0.7;
+  transition: opacity 0.18s ease;
+}
+
+.mobileSubLink:hover {
+  opacity: 1;
 }
 
 .mobileCta {

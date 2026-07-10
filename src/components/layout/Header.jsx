@@ -124,11 +124,9 @@ export default function Header() {
       >
         <div className="container">
           <ul className={styles.mobileNavList} role="list">
-            {NAV_ITEMS.map(({ label, href }) => (
+            {NAV_ITEMS.map(({ label, href, items }) => (
               <li key={href}>
-                <Link href={href} className={styles.mobileNavLink} onClick={() => setOpen(false)}>
-                  <span className="label-2">{label}</span>
-                </Link>
+                <MobileNavItem label={label} href={href} items={items} onNavigate={() => setOpen(false)} />
               </li>
             ))}
           </ul>
@@ -140,6 +138,41 @@ export default function Header() {
         </div>
       </div>
     </header>
+  );
+}
+
+function MobileNavItem({ href, label, items, onNavigate }) {
+  const [expanded, setExpanded] = useState(false);
+
+  if (!items) {
+    return (
+      <Link href={href} className={styles.mobileNavLink} onClick={onNavigate}>
+        <span className="label-2">{label}</span>
+      </Link>
+    );
+  }
+
+  return (
+    <div className={styles.mobileNavGroup}>
+      <button
+        type="button"
+        className={styles.mobileNavLink}
+        onClick={() => setExpanded((e) => !e)}
+        aria-expanded={expanded}
+      >
+        <span className="label-2">{label}</span>
+        <Chevron className={`${styles.mobileChevron} ${expanded ? styles.mobileChevronOpen : ''}`} />
+      </button>
+      <div className={`${styles.mobileSubList} ${expanded ? styles.mobileSubListOpen : ''}`}>
+        <div className={styles.mobileSubListInner}>
+          {items.map((item) => (
+            <Link key={item.href} href={item.href} className={styles.mobileSubLink} onClick={onNavigate}>
+              <span className="label-2">{item.label}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -199,9 +232,9 @@ function DropdownItem({ label, href }) {
   );
 }
 
-function Chevron() {
+function Chevron({ className }) {
   return (
-    <svg className={styles.chevron} width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+    <svg className={className || styles.chevron} width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
       <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
