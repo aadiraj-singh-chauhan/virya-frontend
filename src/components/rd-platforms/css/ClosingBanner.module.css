@@ -3,7 +3,7 @@
   width: 100%;
   aspect-ratio: 1513 / 1139.2;
   overflow: hidden;
-  background: var(--color-6);
+  background: var(--color-6, #FDF8F5);
 }
 
 .imageWrap {
