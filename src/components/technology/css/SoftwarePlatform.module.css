@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 70px;
+  gap: 77px;
   background: var(--color-6);
   padding: 100px 70px;
   flex-wrap: wrap;
@@ -21,6 +21,12 @@
 .content {
   flex: 1 1 480px;
   max-width: 590px;
+  display: flex;
+  flex-direction: column;
+  gap: 46px;
+}
+
+.headingGroup {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -47,14 +53,17 @@
 .features {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 15px;
 }
 
 .featureItem {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  width: fit-content;
+  background: var(--color-5);
+  border-radius: 100px;
+  padding: 5px 10px;
   color: var(--color-3);
 }
 

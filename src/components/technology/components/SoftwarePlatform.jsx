@@ -23,14 +23,16 @@ export default function SoftwarePlatform() {
       </div>
 
       <div className={styles.content}>
-        <div className={styles.tag}>
-          <span className={styles.tagDot} aria-hidden="true" />
-          <span className="label-2">Software</span>
-        </div>
+        <div className={styles.headingGroup}>
+          <div className={styles.tag}>
+            <span className={styles.tagDot} aria-hidden="true" />
+            <span className="label-2">Software</span>
+          </div>
 
-        <h2 className={`heading-2 ${styles.heading}`}>
-          Intelligent fleet orchestration and autonomous operations platform
-        </h2>
+          <h2 className={`title-1 ${styles.heading}`}>
+            Intelligent fleet orchestration and autonomous operations platform
+          </h2>
+        </div>
 
         <div className={styles.features}>
           {FEATURES.map((item) => (
