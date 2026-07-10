@@ -11,7 +11,6 @@ const TABS = [
       'Multi-load handling',
       'Fleet-based coordination',
     ],
-    href: '/products/amr50',
   },
   {
     label: 'Lifting',
@@ -23,7 +22,6 @@ const TABS = [
       'Safe vertical transport',
       'Automated stacking',
     ],
-    href: '/products/apt20',
   },
   {
     label: 'Tunnelling',
@@ -35,7 +33,6 @@ const TABS = [
       'Obstacle detection',
       'High maneuverability',
     ],
-    href: '/products/amr10',
   },
 ];
 

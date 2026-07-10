@@ -5,22 +5,44 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/CapabilityTabs.module.css';
 
-function Tab({ label, active, expanded, onClick }) {
+// The whole row is one click target (not just the label text) — clicking
+// anywhere across the label/arrow/chevron switches the tab.
+function TabRow({ label, active, expanded, onClick }) {
   const { display, play, reset } = useScramble(label);
 
   return (
     <button
       type="button"
-      className={`title-1 title-1-md ${styles.tabTitle} ${
-        active ? styles.tabActive : styles.tabDim
-      }`}
+      className={styles.tabRow}
       aria-expanded={expanded}
       onClick={onClick}
       onMouseEnter={play}
       onMouseLeave={reset}
     >
-      <span className={styles.textOriginal}>{label}</span>
-      <span className={styles.textDisplay}>{display || label}</span>
+      <span
+        className={`title-1 title-1-md ${styles.tabTitle} ${
+          active ? styles.tabActive : styles.tabDim
+        }`}
+      >
+        <span className={styles.textOriginal}>{label}</span>
+        <span className={styles.textDisplay}>{display || label}</span>
+      </span>
+
+      <span
+        className={`${styles.arrow} ${active ? styles.arrowVisible : ''}`}
+        aria-hidden="true"
+      >
+        <svg width="20" height="16" viewBox="0 0 12.5 10.056" fill="none">
+          <path d="M0 5.028L12.5 5.028" stroke="currentColor" />
+          <path d="M6 0L8 0L12.5 5.028L8 10.056L6 10.056" stroke="currentColor" />
+        </svg>
+      </span>
+
+      <span className={`${styles.chevron} ${expanded ? styles.chevronOpen : ''}`} aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M4 6.5L9 11.5L14 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
     </button>
   );
 }
@@ -76,50 +98,12 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
                 return (
                   <div key={tab.label} className={styles.tabItem}>
 
-                    <div className={styles.tabRow}>
-
-                      <Tab
-                        label={tab.label}
-                        active={active === index}
-                        expanded={isOpen}
-                        onClick={() => handleTabClick(index)}
-                      />
-
-                      <a
-                        href={tab.href}
-                        className={`${styles.arrow} ${
-                          active === index
-                            ? styles.arrowVisible
-                            : ''
-                        }`}
-                      >
-                        <svg
-                          width="20"
-                          height="16"
-                          viewBox="0 0 12.5 10.056"
-                          fill="none"
-                        >
-                          <path
-                            d="M0 5.028L12.5 5.028"
-                            stroke="currentColor"
-                          />
-                          <path
-                            d="M6 0L8 0L12.5 5.028L8 10.056L6 10.056"
-                            stroke="currentColor"
-                          />
-                        </svg>
-                      </a>
-
-                      <span
-                        className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}
-                        aria-hidden="true"
-                      >
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                          <path d="M4 6.5L9 11.5L14 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
-
-                    </div>
+                    <TabRow
+                      label={tab.label}
+                      active={active === index}
+                      expanded={isOpen}
+                      onClick={() => handleTabClick(index)}
+                    />
 
                     {/* Desktop description */}
                     <p
