@@ -77,6 +77,8 @@
 .crosshair {
   flex-shrink: 0;
   color: var(--color-1);
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .thumbWrap {
@@ -196,34 +198,20 @@
     display: none;
   }
 
-  /* single-column panel, reorder: title → desc → features → image */
+  /* single-column panel: panelText (desc → features) stacks above the image,
+     following DOM order — no explicit order/grid-column overrides needed. */
   .panel {
     grid-template-columns: 1fr;
-    padding: 20px 24px 30px;
+    padding: 0 24px;
     row-gap: 20px;
   }
 
-  .panelTitle {
-    grid-column: 1;
-    order: 1;
+  .rowOpen .panel {
+    padding: 20px 24px 30px;
+    max-height: 1200px;
   }
 
   .panelDesc {
-    grid-column: 1;
     max-width: 100%;
-    order: 2;
-  }
-
-  .features {
-    grid-column: 1;
-    order: 3;
-  }
-
-  /* image goes last, full width */
-  .panelImageWrap {
-    grid-column: 1;
-    grid-row: auto;
-    order: 4;
-    aspect-ratio: 626 / 406.5;
   }
 }
