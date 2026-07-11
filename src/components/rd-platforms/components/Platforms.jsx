@@ -16,11 +16,12 @@ const FEATURES = [
 const DESCRIPTION = "Lorem ipsum dolor sit amet consectetur. Viverra suscipit ut aliquet eu vestibulum mattis amet. In fermentum";
 
 const PLATFORMS = [
-  { title: 'Mini Robot Sensor Platform', expandedTitle: 'Sensor Carts' },
-  { title: 'AMR10 Dev Platform',          expandedTitle: 'AMR10 Dev Platform' },
+  { title: 'Mini Robot Sensor Platform',   expandedTitle: 'Mini Robot Sensor Platform' },
+  { title: 'Sensor Carts',                 expandedTitle: 'Sensor Carts' },
+  { title: 'AMR10 Dev Platform',           expandedTitle: 'AMR10 Dev Platform' },
   { title: '4-Seater Skateboard Platform', expandedTitle: '4-Seater Skateboard Platform' },
-  { title: 'APM for R&D',                 expandedTitle: 'APM for R&D' },
-  { title: 'DBW Buggy for R&D',           expandedTitle: 'DBW Buggy for R&D' },
+  { title: 'APM for R&D',                  expandedTitle: 'APM for R&D' },
+  { title: 'DBW Buggy for R&D',            expandedTitle: 'DBW Buggy for R&D' },
 ];
 
 export default function Platforms() {
