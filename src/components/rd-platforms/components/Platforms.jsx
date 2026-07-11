@@ -63,31 +63,16 @@ function PlatformRow({ platform, open, onToggle }) {
           <span className={styles.rowTitleDisplay} aria-hidden="true">{display}</span>
         </span>
 
-        {!open && (
-          <>
-            <span className={styles.crosshair} aria-hidden="true">
-              <CrosshairIcon />
-            </span>
-            <div className={styles.thumbWrap} aria-hidden="true">
-              <Image src="/assets/rd-platforms-dbw-thumb.webp" alt="" fill sizes="310px" className={styles.thumb} />
-            </div>
-          </>
-        )}
+        <span className={`${styles.crosshair} ${open ? styles.collapsedHidden : ''}`} aria-hidden="true">
+          <CrosshairIcon />
+        </span>
+        <div className={`${styles.thumbWrap} ${open ? styles.collapsedHidden : ''}`} aria-hidden="true">
+          <Image src="/assets/rd-platforms-dbw-thumb.webp" alt="" fill sizes="310px" className={styles.thumb} />
+        </div>
       </button>
 
-      {open && (
-        <div className={styles.panel}>
-          <div className={styles.panelImageWrap}>
-            <Image
-              src="/assets/rd-platforms-dbw-sensor-carts.webp"
-              alt={platform.expandedTitle}
-              fill
-              sizes="626px"
-              className={styles.panelImage}
-            />
-          </div>
-
-          <h3 className={`title-1 title-1-md ${styles.panelTitle}`}>{platform.expandedTitle}</h3>
+      <div className={styles.panel}>
+        <div className={styles.panelText}>
           <p className={`body-1 body-1-md ${styles.panelDesc}`}>{DESCRIPTION}</p>
 
           <div className={styles.features}>
@@ -99,7 +84,17 @@ function PlatformRow({ platform, open, onToggle }) {
             ))}
           </div>
         </div>
-      )}
+
+        <div className={styles.panelImageWrap}>
+          <Image
+            src="/assets/rd-platforms-dbw-sensor-carts.webp"
+            alt={platform.expandedTitle}
+            fill
+            sizes="626px"
+            className={styles.panelImage}
+          />
+        </div>
+      </div>
     </div>
   );
 }
