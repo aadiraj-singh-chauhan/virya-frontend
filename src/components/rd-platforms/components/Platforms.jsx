@@ -37,7 +37,7 @@ export default function Platforms() {
             key={platform.title}
             platform={platform}
             open={openIndex === i}
-            onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
+            onToggle={() => setOpenIndex(i)}
           />
         ))}
       </div>
