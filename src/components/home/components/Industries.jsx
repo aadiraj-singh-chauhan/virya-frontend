@@ -38,7 +38,7 @@ export default function Industries() {
     <>
       <section className={styles.section} data-header-theme="light">
         <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Industries we cater to</h2>
-        <ImageSlider slides={SLIDES} cardAspectRatio="517 / 288" />
+        <ImageSlider slides={SLIDES} cardAspectRatio="517 / 288" arrows="hover" />
       </section>
 
       <section className={styles.cta} data-header-theme="light">

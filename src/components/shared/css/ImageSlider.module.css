@@ -1,4 +1,5 @@
 .sliderWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -8,7 +9,12 @@
    via transform (framer-motion's drag="x" + x motion value), not native
    scrolling, so this is what actually hides the off-screen cards. */
 .viewport {
+  position: relative;
   overflow: hidden;
+}
+
+.cursorArrowsMode .viewport {
+  cursor: pointer;
 }
 
 .track {
@@ -80,27 +86,56 @@
 }
 
 .navBtn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  border-radius: 0;
   border: none;
-  background: var(--color-2);
-  color: var(--color-3);
+  background: var(--color-1);
+  color: var(--color-5);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-}
-
-.navBtn:hover:not(:disabled) {
-  background: var(--color-1);
-  color: var(--color-5);
+  transition: opacity 0.2s ease;
 }
 
 .navBtn:disabled {
   opacity: 0.35;
   cursor: default;
+}
+
+.iconFlip {
+  display: flex;
+  transform: rotate(180deg);
+}
+
+/* Cursor-following single arrow (TeamGallery's marquee, homepage
+   Industries): one icon tracks the pointer over the track, flips to point
+   the other way over the left half, and only shows up while hovering. */
+.cursorArrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-1);
+  color: var(--color-5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 1;
+}
+
+.cursorArrowVisible {
+  opacity: 1;
+}
+
+.cursorArrowDisabled {
+  opacity: 0.35;
 }
 
 @media (max-width: 768px) {

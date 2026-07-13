@@ -10,7 +10,7 @@ const SLIDES = [
 export default function TeamGallery() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <ImageSlider slides={SLIDES} cardAspectRatio="514 / 349" autoplay arrows={false} />
+      <ImageSlider slides={SLIDES} cardAspectRatio="514 / 349" autoplay arrows="hover" />
     </section>
   );
 }
