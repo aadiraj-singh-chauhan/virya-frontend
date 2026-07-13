@@ -112,6 +112,42 @@
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
+  /* Matches the homepage Testimonials mobile treatment: smaller quote,
+     stacked/centered profile row, horizontal separator, tighter card
+     padding — none of which had a mobile override here before, so the
+     quote rendered at full desktop size and the profile row stayed
+     horizontal, overflowing the viewport. */
+  .section {
+    padding: 60px 20px 0;
+    gap: 40px;
+  }
+
+  .card {
+    gap: 40px;
+    padding: 40px 20px;
+  }
+
+  .quote {
+    color: var(--color-3, #000);
+    text-align: center;
+    font-family: "Space Grotesk";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  .profile {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .separator {
+    width: 48px;
+    height: 1px;
+  }
+
   .logosTrack {
     gap: 40px;
   }

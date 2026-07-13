@@ -42,6 +42,16 @@
 .right {
   position: relative;
   flex: 1;
+}
+
+/* Holds the image + overlay + controls specifically — kept separate from
+   .right so .features can sit outside this box (stacked below it on
+   mobile) without being clipped by the overflow:hidden that crops the
+   image. */
+.media {
+  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -149,13 +159,24 @@
   }
 
   .right {
+    /* Base .right has flex: 1 (flex-basis: 0%), which overrides the height
+       set on .media below in the flex sizing algorithm — .section's height
+       is auto on mobile, so there's no free space to flex-grow into and
+       the box (and the image + controls it contains) collapsed to 0px. */
+    flex: none;
+  }
+
+  .media {
     height: 420px;
   }
 
+  /* Figma mobile design (node 1496:29949): feature pills move out from
+     over the image into their own stacked list below it, instead of the
+     desktop's absolute overlay in the image's bottom-left corner. */
   .features {
-    left: 16px;
-    bottom: 16px;
-    right: 16px;
+    position: static;
+    padding: 20px;
+    gap: 12px;
   }
 
   .pill {

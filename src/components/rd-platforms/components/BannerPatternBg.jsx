@@ -11,21 +11,21 @@ export default function BannerPatternBg({ className, animate = true }) {
       aria-hidden="true"
     >
       <g clipPath="url(#bannerPatternClip)">
-        <path opacity="0.2" d="M159 0V320M159 559.5V721.5" stroke="black" strokeWidth="0.2" />
-        <path opacity="0.3" d="M159 320L1511 320" stroke="black" strokeWidth="0.2" />
-        <path opacity="0.3" d="M-1 560H159" stroke="black" strokeWidth="0.2" />
+        <path opacity="0.2" d="M159 0V320M159 559.5V721.5" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <path opacity="0.3" d="M159 320L1511 320" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <path opacity="0.3" d="M-1 560H159" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
         <path
           opacity="0.3"
           d="M477.5 560.5H959V361.5M1119 400V720.5M319.5 242.5H1119V119M1438.5 81H238M639 720.5V-1.5"
           stroke="black"
-          strokeWidth="0.2"
+          strokeWidth="0.2" vectorEffect="non-scaling-stroke"
         />
-        <path opacity="0.3" d="M-1 400L1511 400" stroke="black" strokeWidth="0.2" />
-        <path opacity="0.3" d="M79.5 480H1511.5" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="559.1" y1="4.37115e-09" x2="559.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="719.1" y1="4.37115e-09" x2="719.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="879.1" y1="4.37115e-09" x2="879.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="1039.1" y1="4.37115e-09" x2="1039.1" y2="721" stroke="black" strokeWidth="0.2" />
+        <path opacity="0.3" d="M-1 400L1511 400" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <path opacity="0.3" d="M79.5 480H1511.5" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="559.1" y1="4.37115e-09" x2="559.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="719.1" y1="4.37115e-09" x2="719.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="879.1" y1="4.37115e-09" x2="879.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="1039.1" y1="4.37115e-09" x2="1039.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
 
         {animate && (
           <g className={pulseStyles.pulseA}>
@@ -34,18 +34,18 @@ export default function BannerPatternBg({ className, animate = true }) {
           </g>
         )}
 
-        <line opacity="0.3" x1="799.1" y1="4.37115e-09" x2="799.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="1199.1" y1="4.37115e-09" x2="1199.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="1279.1" y1="4.37115e-09" x2="1279.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="1359.1" y1="4.37115e-09" x2="1359.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="1439.1" y1="4.37115e-09" x2="1439.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="79.1" y1="4.37115e-09" x2="79.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="1511" y1="160.1" x2="-1" y2="160.1" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="479.1" y1="4.37115e-09" x2="479.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="319.1" y1="240" x2="319.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="399.1" y1="4.37115e-09" x2="399.1" y2="721" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="239.1" y1="4.37115e-09" x2="239.1" y2="240" stroke="black" strokeWidth="0.2" />
-        <line opacity="0.3" x1="239.1" y1="560" x2="239.1" y2="721" stroke="black" strokeWidth="0.2" />
+        <line opacity="0.3" x1="799.1" y1="4.37115e-09" x2="799.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="1199.1" y1="4.37115e-09" x2="1199.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="1279.1" y1="4.37115e-09" x2="1279.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="1359.1" y1="4.37115e-09" x2="1359.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="1439.1" y1="4.37115e-09" x2="1439.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="79.1" y1="4.37115e-09" x2="79.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="1511" y1="160.1" x2="-1" y2="160.1" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="479.1" y1="4.37115e-09" x2="479.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="319.1" y1="240" x2="319.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="399.1" y1="4.37115e-09" x2="399.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="239.1" y1="4.37115e-09" x2="239.1" y2="240" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <line opacity="0.3" x1="239.1" y1="560" x2="239.1" y2="721" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
 
         {animate && (
           <>
@@ -76,8 +76,8 @@ export default function BannerPatternBg({ className, animate = true }) {
           </>
         )}
 
-        <circle opacity="0.2" cx="1359" cy="240" r="79.9" stroke="black" strokeWidth="0.2" />
-        <path opacity="0.2" d="M469 10L159 320" stroke="black" strokeWidth="0.2" />
+        <circle opacity="0.2" cx="1359" cy="240" r="79.9" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
+        <path opacity="0.2" d="M469 10L159 320" stroke="black" strokeWidth="0.2" vectorEffect="non-scaling-stroke" />
       </g>
       <defs>
         <linearGradient id="bannerPatternPaint0" x1="1383.5" y1="402" x2="1383.5" y2="422" gradientUnits="userSpaceOnUse">

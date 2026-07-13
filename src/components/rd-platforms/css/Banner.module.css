@@ -75,13 +75,20 @@
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
+  /* scrollTrack = sticky height (380px) + a 64px allowance matching
+     --header-height (the banner starts flush against the top of the page,
+     so useScrollProgress reserves that much of the track to keep the pin
+     math continuous — see the `deficit` comment there) + a ~380px
+     scroll-jack runway for the reveal itself. Keeping the runway short
+     (not a tall 140vh track under a much shorter pinned box) avoids a long
+     stretch of dead page-background showing beneath the pinned panel. */
   .scrollTrack {
-    height: 140vh;
+    height: 824px;
   }
 
   .sticky {
     aspect-ratio: unset;
-    height: 400px;
+    height: 380px;
   }
 
   .content {
@@ -100,10 +107,16 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 30%;
+    /* rd-platform-background.webp's vehicle lineup sits in roughly the
+       bottom half of a 1.88:1 image — at full mobile width that band is
+       naturally ~120px tall. Sizing the box close to that keeps `cover`
+       from having to zoom in and crop the sides to fill a taller box. */
+    height: 140px;
   }
 
   .image {
-    transform: translateY(-32px);
+    object-fit: cover;
+    object-position: bottom center;
+    transform: none;
   }
 }

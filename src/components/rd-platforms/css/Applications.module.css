@@ -147,6 +147,11 @@
     align-items: flex-start;
     justify-content: flex-start;
     gap: 30px;
+    /* Figma (node 1496:30220): a solid card matching the section's own
+       background masks the decorative grid pattern behind the title/pills
+       instead of letting it show through the whole section. */
+    background: var(--color-6);
+    padding: 40px 20px;
   }
 
   .title {
@@ -155,32 +160,17 @@
 
   .columns {
     flex-direction: column;
-    gap: 0;
+    gap: 10px;
     width: 100%;
   }
 
   .column {
-    gap: 0;
+    gap: 10px;
     width: 100%;
   }
 
   .pill {
-    background: none;
-    border-radius: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 18px 0;
-    height: auto;
-    white-space: normal;
-    width: 100%;
-  }
-
-  .column:last-child .pill:last-child {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
+    padding-left: 0;
+    padding-right: 0;
   }
 }

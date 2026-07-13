@@ -119,6 +119,14 @@
 
   .desc {
     max-width: 100%;
+    /* DOM order is desc → cta (matches desktop's left-desc/right-cta row),
+       but stacked on mobile the title should come first and the
+       description last — flip the visual order without touching markup. */
+    order: 2;
+  }
+
+  .cta {
+    order: 1;
   }
 
   .textOriginal,

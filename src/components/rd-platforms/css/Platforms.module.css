@@ -99,6 +99,7 @@
 
 .thumb {
   object-fit: contain;
+  transform: scale(0.82);
 }
 
 /* ── Expanded panel ───────────────────────────────────────────────────────── */
@@ -193,9 +194,31 @@
     padding: 20px 24px;
   }
 
+  /* The base .rowOpen .header padding (72.5px 70px 8px) is tuned for the
+     175px-tall desktop collapsed header and was never overridden here, so
+     opening a row on mobile jumped to that desktop padding instead of
+     staying consistent with the 20px/24px collapsed padding above. */
+  .rowOpen .header {
+    padding: 20px 24px 8px;
+  }
+
   /* hide hover thumbnail on mobile */
   .thumbWrap {
     display: none;
+  }
+
+  /* No hover on touch devices, so the scramble overlay never plays here —
+     drop it and show the plain title instead. It also sidesteps a real
+     layout bug: the longest titles don't fit on one line next to the
+     crosshair at this width, so the nowrap overlay was visually spilling
+     past its own box and rendering behind the icon. The plain text wraps
+     normally in flow, same as any other text. */
+  .rowTitleDisplay {
+    display: none;
+  }
+
+  .rowTitleOriginal {
+    visibility: visible;
   }
 
   /* single-column panel: panelText (desc → features) stacks above the image,

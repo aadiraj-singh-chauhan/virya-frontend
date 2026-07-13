@@ -16,12 +16,42 @@ const FEATURES = [
 const DESCRIPTION = "Lorem ipsum dolor sit amet consectetur. Viverra suscipit ut aliquet eu vestibulum mattis amet. In fermentum";
 
 const PLATFORMS = [
-  { title: 'Mini Robot Sensor Platform',   expandedTitle: 'Mini Robot Sensor Platform' },
-  { title: 'Sensor Carts',                 expandedTitle: 'Sensor Carts' },
-  { title: 'AMR10 Dev Platform',           expandedTitle: 'AMR10 Dev Platform' },
-  { title: '4-Seater Skateboard Platform', expandedTitle: '4-Seater Skateboard Platform' },
-  { title: 'APM for R&D',                  expandedTitle: 'APM for R&D' },
-  { title: 'DBW Buggy for R&D',            expandedTitle: 'DBW Buggy for R&D' },
+  {
+    title: 'Mini Robot Sensor Platform',
+    expandedTitle: 'Mini Robot Sensor Platform',
+    thumb: '/assets/rd-platforms-dbw-thumb.webp',
+    image: '/assets/mini-robot-sensor-platform.png',
+  },
+  {
+    title: 'Sensor Carts',
+    expandedTitle: 'Sensor Carts',
+    thumb: '/assets/rd-platforms-dbw-thumb.webp',
+    image: '/assets/rd-platforms-dbw-sensor-carts.webp',
+  },
+  {
+    title: 'AMR10 Dev Platform',
+    expandedTitle: 'AMR10 Dev Platform',
+    thumb: '/assets/amr10-dev-platform-sketch.png',
+    image: '/assets/amr10-dev-platform.png',
+  },
+  {
+    title: '4-Seater Skateboard Platform',
+    expandedTitle: '4-Seater Skateboard Platform',
+    thumb: '/assets/4-seater-skateboard-platform-sketch.png',
+    image: '/assets/4-seater-skateboard-platform.png',
+  },
+  {
+    title: 'APM for R&D',
+    expandedTitle: 'APM for R&D',
+    thumb: '/assets/apm-for-R&D-sketch.png',
+    image: '/assets/apm-for-R&D.png',
+  },
+  {
+    title: 'DBW Buggy for R&D',
+    expandedTitle: 'DBW Buggy for R&D',
+    thumb: '/assets/dbw-buggy-R&D-sketch.png',
+    image: '/assets/dbw-buggy-R&D.png',
+  },
 ];
 
 export default function Platforms() {
@@ -67,7 +97,7 @@ function PlatformRow({ platform, open, onToggle }) {
           <CrosshairIcon />
         </span>
         <div className={`${styles.thumbWrap} ${open ? styles.collapsedHidden : ''}`} aria-hidden="true">
-          <Image src="/assets/rd-platforms-dbw-thumb.webp" alt="" fill sizes="310px" className={styles.thumb} />
+          <Image src={platform.thumb} alt="" fill sizes="310px" className={styles.thumb} />
         </div>
       </button>
 
@@ -87,7 +117,7 @@ function PlatformRow({ platform, open, onToggle }) {
 
         <div className={styles.panelImageWrap}>
           <Image
-            src="/assets/rd-platforms-dbw-sensor-carts.webp"
+            src={platform.image}
             alt={platform.expandedTitle}
             fill
             sizes="626px"
