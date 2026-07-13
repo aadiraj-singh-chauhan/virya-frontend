@@ -45,6 +45,29 @@ export default function Voices() {
   // drops the outgoing slide so it stops being mounted/animated.
   const handleSettled = () => setOutgoing(null);
 
+  // Rendered twice: once inside .testimonial (desktop position, absolute
+  // within that block) and once after .photoWrap (mobile only, toggled via
+  // display so only one copy is ever visible/focusable at a time) — the
+  // desktop position depends on testimonial's own box, which isn't a fixed
+  // offset from .photoWrap, so it can't just be reordered with one copy.
+  const personAndNav = (
+    <>
+      <div key={`person-${active}`} className={styles.person} style={{ '--dir': direction }}>
+        <p className={styles.name}>{testimonial.name}</p>
+        <p className={`label-2 ${styles.position}`}>{testimonial.position}</p>
+      </div>
+
+      <div className={styles.navWrap}>
+        <NavButtons
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
+          prevLabel="Previous testimonial"
+          nextLabel="Next testimonial"
+        />
+      </div>
+    </>
+  );
+
   return (
     <section className={styles.section} data-header-theme="light">
       <TestimonialsPatternBg className={styles.pattern} />
@@ -73,7 +96,7 @@ export default function Voices() {
       </div>
 
       <div className={styles.testimonial}>
-        <h2 className={`heading-2 ${styles.heading}`}>Voices from within</h2>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Voices from within</h2>
 
         <div className={styles.textWrap}>
           <span className={styles.quoteMark} aria-hidden="true">
@@ -87,20 +110,10 @@ export default function Voices() {
           <p className={styles.quote}>{testimonial.quote}</p>
         </div>
 
-        <div key={`person-${active}`} className={styles.person} style={{ '--dir': direction }}>
-          <p className={styles.name}>{testimonial.name}</p>
-          <p className={`label-2 ${styles.position}`}>{testimonial.position}</p>
-        </div>
-
-        <div className={styles.navWrap}>
-          <NavButtons
-            onPrev={() => go(-1)}
-            onNext={() => go(1)}
-            prevLabel="Previous testimonial"
-            nextLabel="Next testimonial"
-          />
-        </div>
+        <div className={styles.desktopOnly}>{personAndNav}</div>
       </div>
+
+      <div className={styles.mobileOnly}>{personAndNav}</div>
     </section>
   );
 }

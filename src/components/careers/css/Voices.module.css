@@ -149,6 +149,15 @@
   bottom: 60px;
 }
 
+/* person/navWrap render twice — once inside .testimonial (desktop, where
+   their absolute positioning is anchored) and once here after .photoWrap
+   (mobile only). Desktop's position depends on testimonial's own box,
+   which isn't a fixed offset from photoWrap, so a single copy moved with
+   `order` can't serve both layouts. */
+.mobileOnly {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .section {
     height: auto;
@@ -157,21 +166,58 @@
   }
 
   .photoWrap {
+    order: 2;
     margin-left: 0;
-    flex: 0 0 320px;
-    width: 100%;
+    margin-top: 0;
+    flex: 0 0 auto;
+    width: 260px;
     height: 320px;
+    background: var(--color-6);
   }
 
   .testimonial {
+    order: 1;
     margin-left: 0;
-    margin-top: 40px;
     max-width: none;
     padding: 40px;
+    text-align: center;
+  }
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
+  .textWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    overflow: visible;
+  }
+
+  .quoteMark {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    order: 3;
+    text-align: center;
+    background: var(--color-6);
+    padding: 24px;
   }
 
   .person {
     position: static;
+    align-items: center;
     margin-top: 24px;
   }
 
