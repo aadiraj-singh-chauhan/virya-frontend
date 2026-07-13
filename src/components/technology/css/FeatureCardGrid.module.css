@@ -38,6 +38,19 @@
     rgba(0, 0, 0, 0) 50%,
     rgba(0, 0, 0, .85) 100%
   );
+  transition: background .4s ease;
+}
+
+/* Caption moves to the top and desc fades in over a wider area on hover —
+   darken further so both stay readable against the image underneath. */
+.card:hover .scrim {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, .88) 0%,
+    rgba(0, 0, 0, .45) 25%,
+    rgba(0, 0, 0, .6) 50%,
+    rgba(0, 0, 0, .98) 100%
+  );
 }
 
 .textWrap {
@@ -52,9 +65,12 @@
   top: 100%;
   transform: translateY(-100%);
   color: var(--color-5);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Reserve 2 lines (label-1's 18px / 1.4 line-height) so translateY(-100%)
+     resolves to the same fixed offset for every card regardless of
+     whether its title wraps to 1 or 2 lines — otherwise a 1-line card's
+     caption box was shorter, so translateY(-100%) landed less far up and
+     its first line sat lower than a 2-line card's first line. */
+  min-height: 52px;
   transition: top .4s ease, transform .4s ease;
 }
 
@@ -70,6 +86,11 @@
   bottom: 0;
   color: var(--color-5);
   opacity: 0;
+  /* Text only, never needs its own interaction — without this, the
+     invisible-but-still-hit-testable box (opacity alone doesn't disable
+     pointer events) sat over the mobile expand button and ate its
+     clicks. */
+  pointer-events: none;
   transform: translateY(8px);
   transition: opacity .4s ease, transform .4s ease;
 }
@@ -77,6 +98,25 @@
 .card:hover .desc {
   opacity: .85;
   transform: translateY(0);
+}
+
+/* Mobile-only expand button (Figma node 2813:15405) — hidden on desktop,
+   where the caption itself is the absolutely-positioned/hover-animated
+   element and .captionRow is just a transparent wrapper around it. */
+.expandBtn {
+  display: none;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.expandBtn svg {
+  transition: transform .35s ease;
+}
+
+.cardExpanded .expandBtn svg {
+  transform: rotate(45deg);
 }
 
 @media (max-width: 1024px) {
@@ -90,11 +130,94 @@
     padding: 60px 24px;
   }
 
+  /* Horizontal swipe/scroll row instead of a stacked single column — each
+     card shows most of its width with a peek of the next one to hint
+     there's more to scroll right into. */
   .grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    grid-template-columns: unset;
+    overflow-x: auto;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -24px;
+    padding: 0 24px;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
   }
 
   .heading {
     margin-bottom: 32px;
+  }
+
+  /* No hover on touch, so the caption just sits at rest — switch it from
+     the desktop absolute/hover-slide setup to a normal flex row shared
+     with the new expand button, bottom-anchored via .textWrap. */
+  .textWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  .captionRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .caption {
+    position: static;
+    top: auto;
+    transform: none;
+    min-height: 0;
+  }
+
+  .expandBtn {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  /* Tapping the expand button reveals the desc the same way desktop's
+     :hover does — same scrim darkening, same desc fade/slide values. */
+  .cardExpanded .scrim {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, .88) 0%,
+      rgba(0, 0, 0, .45) 25%,
+      rgba(0, 0, 0, .6) 50%,
+      rgba(0, 0, 0, .98) 100%
+    );
+  }
+
+  /* Desktop's .desc is absolute/bottom:0 because the caption slides out
+     of the way on hover first. On mobile the caption never moves — it's
+     already sitting at the bottom via .textWrap's justify-content, so an
+     absolutely-positioned desc would overlap it instead of stacking below
+     it in DOM order. Switch to normal flow (grown via max-height, since a
+     visible-but-empty box would otherwise leave a gap while collapsed)
+     so it takes its place below .captionRow in the flex column instead. */
+  .desc {
+    position: static;
+    max-height: 0;
+    transform: none;
+    margin-top: 0;
+    overflow: hidden;
+    transition: max-height .4s ease, opacity .3s ease, margin-top .4s ease;
+  }
+
+  .cardExpanded .desc {
+    max-height: 200px;
+    opacity: .85;
+    margin-top: 12px;
   }
 }

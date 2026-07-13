@@ -9,15 +9,30 @@
   overflow: hidden;
 }
 
+/* Desktop: full-bleed background behind the title/desc — nested inside
+   .content (between the h1 and p in the DOM) but pinned to cover the
+   whole section via inset:0, with heading/desc raised above it. On mobile
+   this switches to a normal in-flow block (see media query) so the image
+   renders as its own element between the title and description instead. */
+.bgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .bg {
   object-fit: contain;
   object-position: center 70%;
   pointer-events: none;
 }
 
+/* Deliberately not position: relative — .bgWrap's absolute inset:0 needs
+   to resolve against .section (the whole banner) even though it's
+   nested inside .content in the DOM, not against .content's own
+   (text-sized) box. .heading/.desc carry their own position/z-index to
+   sit above it regardless. */
 .content {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,12 +41,16 @@
 }
 
 .heading {
+  position: relative;
+  z-index: 1;
   color: var(--color-3);
   text-align: center;
   max-width: 1000px;
 }
 
 .desc {
+  position: relative;
+  z-index: 1;
   color: var(--color-3);
   text-align: center;
   max-width: 658px;
@@ -41,12 +60,26 @@
 @media (max-width: 768px) {
   .section {
     height: auto;
-    min-height: 820px;
+    min-height: unset;
     padding: 120px 24px 60px;
   }
 
+  /* In flow now, between the h1 and p (matches DOM order) instead of a
+     full-bleed background behind them — needs its own explicit height
+     since Image's fill requires a sized positioned ancestor. Breaks out
+     of .section's 24px side padding to run edge to edge, and sized up a
+     bit from its previous 260px. */
+  .bgWrap {
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    width: calc(100% + 48px);
+    margin: 0 -24px;
+    height: 300px;
+  }
+
   .bg {
-    object-position: center bottom;
+    object-position: center center;
   }
 
   .desc {

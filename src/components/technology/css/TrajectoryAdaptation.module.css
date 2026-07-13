@@ -29,12 +29,23 @@
   max-width: 876px;
 }
 
+/* Plain wrapper — sized by .diagramImageWrap's own aspect-ratio on
+   desktop (the only flow-contributing child, since .checklist is
+   absolute there). On mobile it becomes a flex column so the checklist
+   is a true sibling stacking below the image instead of a static-flow
+   child squeezed inside the image's own aspect-ratio box (which made it
+   grow to cover almost the whole box, hiding the image behind it). */
 .diagram {
   position: relative;
   width: 100%;
   max-width: 1300px;
-  aspect-ratio: 1445 / 1088;
   margin-top: 40px;
+}
+
+.diagramImageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1445 / 1088;
 }
 
 .diagramImage {
@@ -101,6 +112,8 @@
   }
 
   .diagram {
+    display: flex;
+    flex-direction: column;
     margin-top: 32px;
   }
 

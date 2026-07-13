@@ -283,6 +283,15 @@
     gap:32px;
   }
 
+  /* Desktop's centered variant (Technology page) runs the tag + heading
+     centered above both columns — on mobile it should read left-aligned
+     like the non-centered (Material Mobility) variant already does. */
+  .centeredHead {
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
   .textCol :global(.heading-2),
   .centeredHead :global(.heading-2) {
     width: 250px;

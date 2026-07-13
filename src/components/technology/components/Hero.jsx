@@ -4,16 +4,19 @@ import styles from '../css/Hero.module.css';
 export default function Hero() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <Image
-        src="/assets/technology-banner-bg.jpg"
-        alt="Virya autonomous mobile robot pulling a cart of goods in a warehouse"
-        fill
-        sizes="100vw"
-        priority
-        className={styles.bg}
-      />
       <div className={styles.content}>
-        <h1 className={`heading-2 ${styles.heading}`}>The Intelligence Behind Every Move</h1>
+        <h1 className={`heading-2 heading-2-md ${styles.heading}`}>The Intelligence Behind Every Move</h1>
+
+        <div className={styles.bgWrap}>
+          <Image
+            src="/assets/technology-banner-bg.jpg"
+            alt="Virya autonomous mobile robot pulling a cart of goods in a warehouse"
+            fill
+            sizes="100vw"
+            priority
+            className={styles.bg}
+          />
+        </div>
 
         <p className={`body-1 ${styles.desc}`}>
           Virya Autonomous Technologies builds full-stack autonomous systems engineered for the

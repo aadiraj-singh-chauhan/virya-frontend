@@ -12,7 +12,7 @@ export default function TrajectoryAdaptation() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className={styles.textCol}>
-        <h2 className={`heading-2 ${styles.heading}`}>Intelligent Trajectory Adaptation in Live Environments</h2>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Intelligent Trajectory Adaptation in Live Environments</h2>
         <p className={`body-1 ${styles.desc}`}>
           Virya&rsquo;s motion systems dynamically compute and adapt robot trajectories in real
           time, ensuring smooth and safe movement across active industrial environments. With
@@ -22,13 +22,18 @@ export default function TrajectoryAdaptation() {
       </div>
 
       <div className={styles.diagram}>
-        <Image
-          src="/assets/technology/tech-trajectory-bg.png"
-          alt="Diagram of an autonomous robot adapting its trajectory around obstacles"
-          fill
-          sizes="(max-width: 768px) 100vw, 1300px"
-          className={styles.diagramImage}
-        />
+        <div className={styles.diagramImageWrap}>
+          <Image
+            src="/assets/technology/tech-trajectory-bg.png"
+            alt="Diagram of an autonomous robot adapting its trajectory around obstacles"
+            fill
+            sizes="(max-width: 768px) 100vw, 1300px"
+            className={styles.diagramImage}
+          />
+
+          <div className={styles.fadeTop} aria-hidden="true" />
+          <div className={styles.fadeBottom} aria-hidden="true" />
+        </div>
 
         <div className={styles.checklist}>
           {CHECKLIST.map((item) => (
@@ -38,9 +43,6 @@ export default function TrajectoryAdaptation() {
             </div>
           ))}
         </div>
-
-        <div className={styles.fadeTop} aria-hidden="true" />
-        <div className={styles.fadeBottom} aria-hidden="true" />
       </div>
     </section>
   );

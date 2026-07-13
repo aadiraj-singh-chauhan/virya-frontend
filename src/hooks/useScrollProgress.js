@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 const PIN_STYLE = {
   before: { position: 'absolute', top: 0, left: 0, right: 0 },
-  after: { position: 'absolute', bottom: 0, left: 0, right: 0 },
 };
 
 // Drives a scroll-jacked "pin until an animation finishes" effect: while the
@@ -33,16 +32,39 @@ export function useScrollProgress() {
         ? stickyRef.current.getBoundingClientRect().height
         : window.innerHeight - headerHeight;
       const rect = track.getBoundingClientRect();
-      const total = rect.height - stickyHeight;
 
-      if (total <= 0 || rect.top > headerHeight) {
+      // Anchor progress to how far the page has actually been scrolled, not
+      // to rect.top vs headerHeight directly — a track flush against the
+      // very top of the document (e.g. the page's first section) has
+      // rect.top <= headerHeight from the initial, unscrolled paint, which
+      // would otherwise read as "already partway pinned" and start the
+      // reveal with a jump before the user has scrolled at all.
+      //
+      // `deficit` is how much of the normal "scroll up until the track top
+      // meets the header" runway doesn't exist because the track starts
+      // too close to (or at) the very top of the document. That missing
+      // runway is subtracted from `total` (so progress still hits exactly
+      // 0→1 across the scroll the user can actually perform) and added
+      // back into the 'after' resting position (so unpinning lines up with
+      // the fixed panel's on-screen position instead of snapping).
+      const trackAbsoluteTop = rect.top + window.scrollY;
+      const deficit = Math.max(0, headerHeight - trackAbsoluteTop);
+      const total = rect.height - stickyHeight - deficit;
+      const pinStartScrollY = Math.max(0, trackAbsoluteTop - headerHeight);
+      const pinEndScrollY = pinStartScrollY + total;
+
+      if (total <= 0 || (deficit === 0 && window.scrollY <= pinStartScrollY)) {
         setPinStyle((prev) => (prev === PIN_STYLE.before ? prev : PIN_STYLE.before));
         setProgress(0);
         return;
       }
 
-      if (rect.bottom < headerHeight + stickyHeight) {
-        setPinStyle((prev) => (prev === PIN_STYLE.after ? prev : PIN_STYLE.after));
+      if (window.scrollY >= pinEndScrollY) {
+        setPinStyle((prev) => {
+          const top = total + deficit;
+          if (prev.position === 'absolute' && prev.top === top) return prev;
+          return { position: 'absolute', top, left: 0, right: 0 };
+        });
         setProgress(1);
         return;
       }
@@ -58,7 +80,7 @@ export function useScrollProgress() {
         }
         return { position: 'fixed', top: headerHeight, left: rect.left, width: rect.width };
       });
-      setProgress(Math.min(1, Math.max(0, (headerHeight - rect.top) / total)));
+      setProgress(Math.min(1, Math.max(0, (window.scrollY - pinStartScrollY) / total)));
     };
 
     const onScroll = () => {

@@ -1,45 +1,73 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/FeatureCardGrid.module.css';
 
 export default function FeatureCardGrid({ heading, cards }) {
+  // Mobile-only — desktop reveals the desc on :hover, but touch devices
+  // have no hover, so the expand button toggles the same reveal via a
+  // tap instead. Single index (not per-card) since only one card's desc
+  // needs to be open at a time.
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 ${styles.heading}`}>{heading}</h2>
+      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>{heading}</h2>
 
       <div className={styles.grid}>
-        {cards.map((card) => (
-          <div key={card.image} className={styles.card}>
-            <Image
-              src={card.image}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, 25vw"
-              style={card.objectPosition ? { objectPosition: card.objectPosition } : undefined}
-              className={styles.image}
-            />
-            {card.overlayImage && (
+        {cards.map((card, index) => {
+          const isExpanded = expandedIndex === index;
+
+          return (
+            <div key={card.image} className={`${styles.card} ${isExpanded ? styles.cardExpanded : ''}`}>
               <Image
-                src={card.overlayImage}
+                src={card.image}
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 25vw"
-                style={card.overlayObjectPosition ? { objectPosition: card.overlayObjectPosition } : undefined}
+                style={card.objectPosition ? { objectPosition: card.objectPosition } : undefined}
                 className={styles.image}
               />
-            )}
+              {card.overlayImage && (
+                <Image
+                  src={card.overlayImage}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  style={card.overlayObjectPosition ? { objectPosition: card.overlayObjectPosition } : undefined}
+                  className={styles.image}
+                />
+              )}
 
-            {card.caption && (
-              <>
-                <div className={styles.scrim} aria-hidden="true" />
+              {card.caption && (
+                <>
+                  <div className={styles.scrim} aria-hidden="true" />
 
-                <div className={styles.textWrap}>
-                  <p className={`label-1 ${styles.caption}`}>{card.caption}</p>
-                  {card.desc && <p className={`body-2 ${styles.desc}`}>{card.desc}</p>}
-                </div>
-              </>
-            )}
-          </div>
-        ))}
+                  <div className={styles.textWrap}>
+                    <div className={styles.captionRow}>
+                      <p className={`label-1 label-1-md ${styles.caption}`}>{card.caption}</p>
+
+                      <button
+                        type="button"
+                        className={styles.expandBtn}
+                        aria-expanded={isExpanded}
+                        aria-label={isExpanded ? 'Hide details' : 'Show details'}
+                        onClick={() => setExpandedIndex((prev) => (prev === index ? null : index))}
+                      >
+                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                          <circle cx="15" cy="15" r="15" fill="#F43D00" />
+                          <path d="M15 8V22M8 15H22" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                    </div>
+                    {card.desc && <p className={`body-2 ${styles.desc}`}>{card.desc}</p>}
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
