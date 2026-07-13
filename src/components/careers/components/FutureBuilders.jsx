@@ -50,17 +50,15 @@ export default function FutureBuilders() {
             <p className={`body-1 ${styles.cardDesc}`}>{value.desc}</p>
           </div>
         </div>
-        <div className={styles.footer}>
-          <span className={styles.divider} aria-hidden="true" />
-          <div className={styles.navWrap}>
-            <NavButtons
-              onPrev={() => go(-1)}
-              onNext={() => go(1)}
-              prevLabel="Previous value"
-              nextLabel="Next value"
-            />
-          </div>
+        <div className={styles.navWrap}>
+          <NavButtons
+            onPrev={() => go(-1)}
+            onNext={() => go(1)}
+            prevLabel="Previous value"
+            nextLabel="Next value"
+          />
         </div>
+        <span className={styles.divider} aria-hidden="true" />
       </div>
     </section>
   );
