@@ -71,28 +71,30 @@
   margin-top: 20px;
 }
 
-.divider {
-  display: block;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.3);
+/* Figma (node 1399:6491): divider and nav buttons sit side by side on the
+   same row — was previously stacked (buttons pinned to the card's
+   top-right corner on desktop, or below the divider on mobile). */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 24px;
   margin-top: 22px;
 }
 
+.divider {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
 .navWrap {
-  position: absolute;
-  right: 47px;
-  top: 51px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 1024px) {
   .card {
     left: 40px;
     bottom: 40px;
-  }
-
-  .navWrap {
-    position: static;
-    margin-top: 24px;
   }
 }
 
