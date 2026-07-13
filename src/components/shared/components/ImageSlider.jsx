@@ -2,162 +2,177 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import styles from '../css/ImageSlider.module.css';
 
-const CARD_WIDTH = 517;
-const GAP = 12;
-const SPACER = 58; // matches .track::before, the left-indent spacer
+const SPRING = { type: 'spring', stiffness: 300, damping: 30 };
+const AUTOPLAY_INTERVAL = 3000;
+// How much of the release velocity to project forward before picking the
+// nearest card — this is what gives the "keeps momentum, then snaps"
+// feel instead of always snapping to whatever card is nearest at the
+// instant your finger/cursor lifts.
+const VELOCITY_PROJECTION = 0.15;
 
-// Shared infinite-loop image slider — same drag/wheel/cursor-follow-button
-// mechanics used by the homepage's Industries slider and People Mobility's
-// "Where it works" slider.
-export default function ImageSlider({ slides, cardAspectRatio = '517 / 288' }) {
-  const items = [...slides, ...slides, ...slides];
+function ArrowIcon({ flipped = false }) {
+  return (
+    <svg
+      width="14"
+      height="12"
+      viewBox="0 0 14 12"
+      fill="none"
+      aria-hidden="true"
+      style={{ transform: flipped ? 'rotate(180deg)' : 'none' }}
+    >
+      <path
+        d="M0.5 6H13.5M13.5 6L8 1M13.5 6L8 11"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// Shared drag/spring image slider — same mechanics used by the homepage's
+// Industries slider, amr10's Industries slider, and careers' TeamGallery.
+// `autoplay` and `arrows` default to a plain arrow-driven slider; careers'
+// TeamGallery opts into autoplay with the arrows hidden instead.
+export default function ImageSlider({ slides, cardAspectRatio = '517 / 288', autoplay = false, arrows = true }) {
+  const viewportRef = useRef(null);
   const trackRef = useRef(null);
-  const wrapperRef = useRef(null);
-  const moveByRef = useRef(() => {});
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const cardStepRef = useRef(0);
+  const indexRef = useRef(0);
+  const x = useMotionValue(0);
+
+  const [index, setIndex] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [isLeftSide, setIsLeftSide] = useState(false);
 
-  const scrollNext = () => {
-    moveByRef.current(CARD_WIDTH + GAP);
+  indexRef.current = index;
+
+  const goTo = (nextIndex) => {
+    const clamped = Math.max(0, Math.min(nextIndex, slides.length - 1));
+    const rawTarget = -clamped * cardStepRef.current;
+    const target = Math.max(-maxScroll, Math.min(0, rawTarget));
+    setIndex(clamped);
+    animate(x, target, SPRING);
   };
 
-  const scrollPrev = () => {
-    moveByRef.current(-(CARD_WIDTH + GAP));
-  };
-
-  const handleSliderClick = () => {
-    if (isLeftSide) scrollPrev();
-    else scrollNext();
-  };
-
-  const handleMouseMove = (e) => {
-    const bounds = wrapperRef.current.getBoundingClientRect();
-    setCursorPos({ x: e.clientX - bounds.left, y: e.clientY - bounds.top });
-    setIsLeftSide(e.clientX - bounds.left < bounds.width / 2);
-  };
-
-  // The track renders `slides` tripled; we sit in the middle copy and silently
-  // snap back by one copy-width whenever the eased scroll drifts into a buffer
-  // copy, so the three sets read as one endless loop in either direction.
+  // Card width/gap and the track's total scrollable distance both change
+  // across breakpoints (1 card visible on mobile, ~3 on desktop) purely
+  // via CSS, so this measures the real DOM instead of hardcoding numbers
+  // per breakpoint.
   useEffect(() => {
+    const viewport = viewportRef.current;
     const track = trackRef.current;
-    if (!track) return;
+    if (!viewport || !track) return undefined;
 
-    const setWidth = slides.length * (CARD_WIDTH + GAP);
-    const lowerBound = SPACER + setWidth;
-    const upperBound = SPACER + setWidth * 2;
-    track.scrollLeft = lowerBound;
+    const measure = () => {
+      const firstCard = track.children[0];
+      if (!firstCard) return;
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const trackStyles = getComputedStyle(track);
+      const gap = parseFloat(trackStyles.columnGap || trackStyles.gap || '0') || 0;
+      cardStepRef.current = cardWidth + gap;
 
-    let target = lowerBound;
-    let rafId = null;
+      const nextMaxScroll = Math.max(0, track.scrollWidth - viewport.getBoundingClientRect().width);
+      setMaxScroll(nextMaxScroll);
 
-    const wrapIfNeeded = () => {
-      if (track.scrollLeft < lowerBound) {
-        track.scrollLeft += setWidth;
-        target += setWidth;
-      } else if (track.scrollLeft >= upperBound) {
-        track.scrollLeft -= setWidth;
-        target -= setWidth;
-      }
+      // Re-settle at the current index's position so a resize (e.g.
+      // desktop → mobile card width) doesn't leave the track misaligned.
+      const target = Math.max(-nextMaxScroll, Math.min(0, -indexRef.current * cardStepRef.current));
+      x.set(target);
     };
 
-    const ease = () => {
-      wrapIfNeeded();
-      const current = track.scrollLeft;
-      const diff = target - current;
-      if (Math.abs(diff) < 0.5) {
-        track.scrollLeft = target;
-        rafId = null;
-        wrapIfNeeded();
-        return;
-      }
-      track.scrollLeft = current + diff * 0.15;
-      rafId = requestAnimationFrame(ease);
-    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(viewport);
+    return () => ro.disconnect();
+  }, [slides, x]);
 
-    const moveBy = (delta) => {
-      if (!rafId) target = track.scrollLeft;
-      const max = track.scrollWidth - track.clientWidth;
-      target = Math.min(Math.max(target + delta, 0), max);
-      if (!rafId) rafId = requestAnimationFrame(ease);
-    };
-    moveByRef.current = moveBy;
+  useEffect(() => {
+    if (!autoplay || isDragging || isHovering) return undefined;
+    const id = setInterval(() => {
+      setIndex((i) => {
+        const next = (i + 1) % slides.length;
+        const target = Math.max(-maxScroll, Math.min(0, -next * cardStepRef.current));
+        animate(x, target, SPRING);
+        return next;
+      });
+    }, AUTOPLAY_INTERVAL);
+    return () => clearInterval(id);
+  }, [autoplay, isDragging, isHovering, maxScroll, slides.length, x]);
 
-    const handleWheel = (e) => {
-      // Only hijack genuinely horizontal gestures (trackpad two-finger swipe).
-      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-      e.preventDefault();
-      moveBy(e.deltaX);
-    };
-
-    track.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      track.removeEventListener('wheel', handleWheel);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [slides]);
+  const handleDragEnd = (event, info) => {
+    setIsDragging(false);
+    const step = cardStepRef.current || 1;
+    const projected = x.get() + info.velocity.x * VELOCITY_PROJECTION;
+    goTo(Math.round(-projected / step));
+  };
 
   return (
     <div
       className={styles.sliderWrapper}
-      ref={wrapperRef}
-      role="button"
-      tabIndex={0}
-      aria-label={isLeftSide ? 'Previous' : 'Next'}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      onMouseMove={handleMouseMove}
-      onClick={handleSliderClick}
-      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleSliderClick()}
     >
-      <div className={styles.track} ref={trackRef}>
-        {items.map((item, i) => (
-          <div key={i} className={styles.card} style={{ aspectRatio: cardAspectRatio }}>
-            <Image
-              src={item.src}
-              alt={item.alt || ''}
-              fill
-              sizes="(max-width: 768px) 100vw, 517px"
-              className={styles.cardImage}
-            />
-            <div className={styles.cardOverlay} aria-hidden="true" />
-            {item.label && (
-              <div className={styles.labelWrap}>
-                <p className="label-1">{item.label}</p>
-              </div>
-            )}
-          </div>
-        ))}
+      <div className={styles.viewport} ref={viewportRef}>
+        <motion.div
+          className={styles.track}
+          ref={trackRef}
+          style={{ x, touchAction: 'pan-y', cursor: isDragging ? 'grabbing' : 'grab' }}
+          drag="x"
+          dragConstraints={{ left: -maxScroll, right: 0 }}
+          dragElastic={0.12}
+          dragMomentum={false}
+          onDragStart={() => setIsDragging(true)}
+          onDragEnd={handleDragEnd}
+        >
+          {slides.map((item, i) => (
+            <div key={i} className={styles.card} style={{ aspectRatio: cardAspectRatio }}>
+              <Image
+                src={item.src}
+                alt={item.alt || ''}
+                fill
+                sizes="(max-width: 768px) 100vw, 517px"
+                className={styles.cardImage}
+                draggable={false}
+              />
+              <div className={styles.cardOverlay} aria-hidden="true" />
+              {item.label && (
+                <div className={styles.labelWrap}>
+                  <p className="label-1">{item.label}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </motion.div>
       </div>
 
-      <div
-        className={styles.nextBtn}
-        aria-hidden="true"
-        style={{
-          opacity: isHovering ? 1 : 0,
-          transform: `translate3d(${cursorPos.x}px, ${cursorPos.y}px, 0) translate(-50%, -50%) scale(${isHovering ? 1 : 0.4})`,
-        }}
-      >
-        <svg
-          width="14"
-          height="12"
-          viewBox="0 0 14 12"
-          fill="none"
-          aria-hidden="true"
-          style={{ transform: isLeftSide ? 'rotate(180deg)' : 'none' }}
-        >
-          <path
-            d="M0.5 6H13.5M13.5 6L8 1M13.5 6L8 11"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
+      {arrows && (
+        <div className={styles.navPair}>
+          <button
+            type="button"
+            className={styles.navBtn}
+            onClick={() => goTo(index - 1)}
+            disabled={index <= 0}
+            aria-label="Previous"
+          >
+            <ArrowIcon flipped />
+          </button>
+          <button
+            type="button"
+            className={styles.navBtn}
+            onClick={() => goTo(index + 1)}
+            disabled={index >= slides.length - 1}
+            aria-label="Next"
+          >
+            <ArrowIcon />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

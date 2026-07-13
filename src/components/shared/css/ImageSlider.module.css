@@ -1,27 +1,28 @@
 .sliderWrapper {
-  position: relative;
-  cursor: none;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Clips the track to the visible area — the track itself is moved purely
+   via transform (framer-motion's drag="x" + x motion value), not native
+   scrolling, so this is what actually hides the off-screen cards. */
+.viewport {
+  overflow: hidden;
 }
 
 .track {
   display: flex;
   gap: 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  width: max-content;
 }
 
-/* Reliable left indent — padding-left on overflow containers is suppressed
-   by overflow-x: hidden on html/body, so we use a flex spacer instead.
-   Width is 58px because the 12px gap adds the remaining 12px → 70px total. */
+/* Left indent before the first card. Width is 58px because the 12px gap
+   adds the remaining 12px → 70px total. */
 .track::before {
   content: "";
   flex-shrink: 0;
   width: 58px;
-}
-
-.track::-webkit-scrollbar {
-  display: none;
 }
 
 /* ── Card ─────────────────────────────────────────────────────────────────── */
@@ -70,46 +71,49 @@
   font-size: 16px;
 }
 
-/* ── Next button ─────────────────────────────────────────────────────────── */
+/* ── Prev/next buttons ────────────────────────────────────────────────────── */
 
-/* Follows the cursor while hovering the slider, standing in for the pointer itself */
-.nextBtn {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 42px;
-  height: 42px;
-  background: var(--color-2);
+.navPair {
+  display: flex;
+  gap: 12px;
+  padding-left: 58px;
+}
+
+.navBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   border: none;
+  background: var(--color-2);
+  color: var(--color-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  pointer-events: none;
-  z-index: 2;
-  transform-origin: center;
-  transition: opacity 0.3s ease, transform 0.15s ease-out, background 0.2s ease;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 
-.sliderWrapper:hover .nextBtn {
+.navBtn:hover:not(:disabled) {
   background: var(--color-1);
+  color: var(--color-5);
+}
+
+.navBtn:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 @media (max-width: 768px) {
-  .track {
-    scroll-padding-left: 24px;
-  }
-
   .track::before {
     width: 4px;
+  }
+
+  .navPair {
+    padding-left: 4px;
   }
 
   .card {
     max-width: 400px;
     height: 320px;
-  }
-
-  .nextBtn {
-    display: none;
   }
 }
