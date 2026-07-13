@@ -1,10 +1,10 @@
-import GridPatternBg from './GridPatternBg';
+import MissionPatternBg from './MissionPatternBg';
 import styles from '../css/Mission.module.css';
 
 export default function Mission() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <GridPatternBg className={styles.pattern} />
+      <MissionPatternBg className={styles.pattern} />
       <div className={styles.backdrop} aria-hidden="true" />
 
       <div className={styles.content}>

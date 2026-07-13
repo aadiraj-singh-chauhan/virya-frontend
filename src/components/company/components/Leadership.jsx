@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import GridPatternBg from './GridPatternBg';
+import LeadershipPatternBg from './LeadershipPatternBg';
 import styles from '../css/Leadership.module.css';
 
 const TEAM = [
@@ -12,7 +12,7 @@ const TEAM = [
 export default function Leadership() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <GridPatternBg className={styles.pattern} />
+      <LeadershipPatternBg className={styles.pattern} />
 
       <div className={styles.content}>
         <h2 className={`heading-2 heading-2-md ${styles.heading}`}>

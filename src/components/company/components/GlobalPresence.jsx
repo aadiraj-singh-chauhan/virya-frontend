@@ -88,13 +88,15 @@ function WorldMap() {
         {MARKERS.map((m, i) => (
           <div
             key={m.name}
-            className={`${styles.marker} ${i === activeIndex ? styles.active : ''}`}
+            className={`${styles.marker} ${i === activeIndex ? styles.active : ''} ${
+              m.name === 'India' ? styles.pinned : ''
+            }`}
             style={{ left: pct(m.x, MAP_W), top: pct(m.y, MAP_H) }}
           >
             <span className={styles.markerDot} aria-hidden="true" />
             <span className={styles.tooltip}>
               <span className={styles.tooltipDot} aria-hidden="true" />
-              <span className={styles.tooltipLabel}>{m.name}</span>
+              <span className={`label-3-md ${styles.tooltipLabel}`}>{m.name}</span>
             </span>
           </div>
         ))}
@@ -145,7 +147,7 @@ const StatCard = memo(function StatCard({ value, label }) {
 
   return (
     <div ref={ref} className={styles.stat}>
-      <p className="headin-3 heading-1-md">{count}{suffix}</p>
+      <p className={`headin-3 heading-1-md ${styles.statValue}`}>{count}{suffix}</p>
       <p className={`${styles.statLabel} label-3 label-1-md`}>{label}</p>
     </div>
   );

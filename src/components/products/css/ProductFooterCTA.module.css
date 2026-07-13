@@ -8,6 +8,15 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Company page swaps the circuit pattern for a flat fill instead — .container
+   shares the same background so there's no visible seam between it and
+   the section behind it. */
+.noPattern,
+.noPattern .container {
+  background: var(--color-7, #FBF3E7);
 }
 
 /* ── Circuit pattern background ───────────────────────────────────────────── */
@@ -43,6 +52,18 @@
   gap: 33px;
   text-align: center;
   height: 100%;
+}
+
+/* ── Divider between the two CTA blocks ───────────────────────────────────── */
+
+.divider {
+  display: block;
+  align-self: center;
+  width: 1px;
+  height: 80px;
+  background: #000;
+  opacity: 0.1;
+  flex-shrink: 0;
 }
 
 /* ── Heading ──────────────────────────────────────────────────────────────── */

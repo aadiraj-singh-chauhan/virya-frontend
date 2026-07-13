@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import styles from '../css/CoreValues.module.css';
 
 const VALUES = [
@@ -23,13 +22,14 @@ const VALUES = [
 export default function CoreValues() {
   return (
     <section className={styles.section} data-header-theme="dark">
-      <Image
-        src="/assets/company/company-core-values-bg.png"
-        alt=""
-        fill
-        sizes="100vw"
-        aria-hidden="true"
+      <video
         className={styles.bg}
+        src="/assets/pwu-cta-bg.webm"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
       />
 
       <div className={styles.content}>

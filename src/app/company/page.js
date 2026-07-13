@@ -25,7 +25,7 @@ export default function Company() {
       <GroupCompanies />
       <Leadership />
       <GlobalPresence />
-      <ProductFooterCTA />
+      <ProductFooterCTA pattern={false} />
     </main>
   );
 }

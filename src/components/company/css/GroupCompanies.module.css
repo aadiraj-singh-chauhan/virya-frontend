@@ -89,9 +89,28 @@
     padding: 24px 24px 60px;
   }
 
+  /* Touch has no hover to pause the desktop marquee, so it just ran
+     forever with zero manual control — swap it for native swipe/scroll
+     instead, matching the FeatureCardGrid mobile pattern. */
+  .outer {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .outer::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track {
+    animation: none;
+    scroll-snap-type: x mandatory;
+  }
+
   .card {
     /* 1 card per slide on mobile */
     width: calc(100vw - 48px);
     padding: 28px 24px;
+    scroll-snap-align: start;
   }
 }
