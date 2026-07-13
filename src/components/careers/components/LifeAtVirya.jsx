@@ -7,7 +7,7 @@ export default function LifeAtVirya() {
       <TestimonialsPatternBg className={styles.pattern} />
 
       <div className={styles.card}>
-        <h2 className={`heading-2 ${styles.heading}`}>Life at VIRYA</h2>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Life at VIRYA</h2>
         <p className={styles.quote}>
           &ldquo;dolor sit amet, consectetur adipiscing elit, sed do tempor incididunt ut labore
           et dolore magna aliqua. Sed ut perspiciatis unde omnis iste natus error sit voluptatem,
