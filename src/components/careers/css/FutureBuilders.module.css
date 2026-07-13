@@ -4,6 +4,16 @@
   overflow: hidden;
 }
 
+.mediaCardWrap {
+  position: absolute;
+  inset: 0;
+}
+
+.imageWrap {
+  position: absolute;
+  inset: 0;
+}
+
 .image {
   object-fit: cover;
 }
@@ -39,6 +49,18 @@
   backdrop-filter: blur(25px);
   border: 0.2px solid var(--color-5);
 }
+
+.corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--color-1);
+}
+
+.cornerTL { top: -3px; left: -3px; }
+.cornerTR { top: -3px; right: -3px; }
+.cornerBL { bottom: -3px; left: -3px; }
+.cornerBR { bottom: -3px; right: -3px; }
 
 .cardTextWrap {
   position: relative;
@@ -81,10 +103,17 @@
 }
 
 .divider {
+  position: relative;
   display: block;
   margin-top: 22px;
   height: 1px;
   background: rgba(255, 255, 255, 0.3);
+}
+
+/* Desktop's divider is a plain rule — the progress segment (mobile only,
+   see below) stays hidden here. */
+.progress {
+  display: none;
 }
 
 @media (max-width: 1024px) {
@@ -101,26 +130,69 @@
     justify-content: flex-end;
     margin-top: 24px;
   }
+
+  /* Figma (node 2944:6915): the mobile divider is a progress track — a
+     faint full-width line with an orange segment marking how far through
+     VALUES the active card is, instead of desktop's plain rule. */
+  .progress {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--color-1);
+    transition: width 0.3s ease;
+  }
 }
 
 @media (max-width: 768px) {
+  /* Bring the heading above the image and the card below it instead of
+     overlaying both on a full-bleed background, per Figma (node 2944:6915)
+     — the heading renders on the page background, then a shared dark
+     panel (mediaCardWrap) holds the image and the card together, so the
+     card overlaps the image's fade-to-black rather than sitting on a gap
+     of page background. */
   .section {
     height: auto;
-    padding-bottom: 40px;
   }
 
   .heading {
     margin: 60px 24px 0;
     font-size: 32px;
+    text-align: center;
+    color: var(--color-3);
+  }
+
+  .mediaCardWrap {
+    position: relative;
+    inset: auto;
+    margin-top: 32px;
+    background: var(--color-3);
+    padding-bottom: 40px;
+  }
+
+  .imageWrap {
+    position: relative;
+    inset: auto;
+    height: 240px;
+  }
+
+  /* Fades the image to solid black toward its bottom edge so it blends
+     into mediaCardWrap's black background instead of cutting off sharply
+     right where the card begins. */
+  .gradient {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000 100%);
   }
 
   .card {
     position: relative;
     left: auto;
     bottom: auto;
-    margin: 40px 24px 0;
+    margin: 20px 24px 0;
     padding: 32px 24px;
     width: auto;
     max-width: none;
+    background: var(--color-3);
+    backdrop-filter: none;
   }
 }

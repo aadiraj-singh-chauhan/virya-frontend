@@ -32,33 +32,46 @@ export default function FutureBuilders() {
 
   return (
     <section className={styles.section} data-header-theme="dark">
-      <Image
-        src="/assets/careers/careers-future-builders.png"
-        alt="Engineers reviewing robotics hardware in a lab"
-        fill
-        sizes="100vw"
-        className={styles.image}
-      />
-      <div className={styles.gradient} aria-hidden="true" />
-
       <h2 className={styles.heading}>Looking for Those Who Can Build the Future</h2>
 
-      <div className={styles.card}>
-        <div className={styles.cardTextWrap}>
-          <div key={active} className={styles.cardText} style={{ '--dir': direction }}>
-            <p className={`title-1 ${styles.cardTitle}`}>{value.title}</p>
-            <p className={`body-1 ${styles.cardDesc}`}>{value.desc}</p>
-          </div>
-        </div>
-        <div className={styles.navWrap}>
-          <NavButtons
-            onPrev={() => go(-1)}
-            onNext={() => go(1)}
-            prevLabel="Previous value"
-            nextLabel="Next value"
+      <div className={styles.mediaCardWrap}>
+        <div className={styles.imageWrap}>
+          <Image
+            src="/assets/careers/careers-future-builders.png"
+            alt="Engineers reviewing robotics hardware in a lab"
+            fill
+            sizes="100vw"
+            className={styles.image}
           />
+          <div className={styles.gradient} aria-hidden="true" />
         </div>
-        <span className={styles.divider} aria-hidden="true" />
+
+        <div className={styles.card}>
+          <span className={`${styles.corner} ${styles.cornerTL}`} aria-hidden="true" />
+          <span className={`${styles.corner} ${styles.cornerTR}`} aria-hidden="true" />
+          <span className={`${styles.corner} ${styles.cornerBL}`} aria-hidden="true" />
+          <span className={`${styles.corner} ${styles.cornerBR}`} aria-hidden="true" />
+          <div className={styles.cardTextWrap}>
+            <div key={active} className={styles.cardText} style={{ '--dir': direction }}>
+              <p className={`title-1 ${styles.cardTitle}`}>{value.title}</p>
+              <p className={`body-1 body-1-md ${styles.cardDesc}`}>{value.desc}</p>
+            </div>
+          </div>
+          <div className={styles.navWrap}>
+            <NavButtons
+              onPrev={() => go(-1)}
+              onNext={() => go(1)}
+              prevLabel="Previous value"
+              nextLabel="Next value"
+            />
+          </div>
+          <span className={styles.divider} aria-hidden="true">
+            <span
+              className={styles.progress}
+              style={{ width: `${((active + 1) / VALUES.length) * 100}%` }}
+            />
+          </span>
+        </div>
       </div>
     </section>
   );
