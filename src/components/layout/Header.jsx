@@ -38,6 +38,7 @@ function getLogoY() {
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState('dark'); // dark bg on first load
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -58,6 +59,12 @@ export default function Header() {
         }
       }
       if (matched) setTheme(matched.dataset.headerTheme);
+
+      // Mobile-only — .headerScrolled's solid background is scoped to the
+      // same breakpoint in CSS, but data-theme also drives the desktop nav
+      // pill's colors, so forcing it here has to stay mobile-only too or
+      // it'd override desktop's per-section theme switching.
+      setScrolled(window.scrollY > 20 && window.innerWidth <= 768);
     };
 
     const onScroll = () => {
@@ -74,7 +81,10 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className={styles.header} data-theme={open ? 'light' : theme}>
+    <header
+      className={`${styles.header} ${scrolled ? styles.headerScrolled : ''}`}
+      data-theme={open ? 'light' : scrolled ? 'dark' : theme}
+    >
       <div className={`container ${styles.inner}`}>
 
         {/* ── Logo — both variants stacked; CSS cross-fades on data-theme ────── */}

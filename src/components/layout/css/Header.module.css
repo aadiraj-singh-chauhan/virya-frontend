@@ -6,6 +6,7 @@
   right: 0;
   z-index: 100;
   background: transparent;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .inner {
@@ -362,5 +363,15 @@ button.mobileNavLink {
 
   .mobileNav {
     display: flex;
+  }
+
+  /* Header stays transparent at the top of the page, matching the hero
+     behind it — but once scrolled, the page content underneath needs a
+     backdrop for legibility. Matches the desktop nav pill's frosted-glass
+     dark variant (.nav::before under data-theme="dark") rather than a
+     flat fill, since scrolled also forces data-theme to "dark" above. */
+  .headerScrolled {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(15px);
   }
 }
