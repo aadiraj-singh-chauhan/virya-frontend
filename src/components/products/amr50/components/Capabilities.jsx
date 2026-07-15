@@ -45,7 +45,7 @@ const FEATURES = [
 // diagram (dots calibrated to it) and a plain fleet photo (no dots).
 const VIEWS = [
   { id: 'diagram', label: 'AMR 50', thumb: '/assets/product-amr50.webp', image: '/assets/amr50-intelligent.png', showDots: true },
-  { id: 'fleet', label: 'AMR 50', thumb: '/assets/amr50-fleet-view.png', image: '/assets/amr50-fleet-view.png', showDots: false },
+  { id: 'fleet', label: 'AMR 51', thumb: '/assets/amr50-fleet-view.png', image: '/assets/amr50-fleet-view.png', showDots: false },
 ];
 
 const TECH_CARDS = [
@@ -66,15 +66,8 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseEnter={play}
       onMouseLeave={reset}
     >
-      <div className={styles.labelRow}>
-        <p className={`${styles.featureLabel} title-2 title-2-md`}>
-          <span className={styles.labelHidden}>{feature.label}</span>
-          <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
-        </p>
-      </div>
-
-      <div className={styles.expandable}>
-        <div className={styles.expandableInner}>
+      <div className={styles.imageExpandable}>
+        <div className={styles.imageExpandableInner}>
           <div className={styles.detailImage}>
             <Image
               src={feature.image}
@@ -84,6 +77,18 @@ function FeatureItem({ feature, active, onClick }) {
               className={styles.detailImg}
             />
           </div>
+        </div>
+      </div>
+
+      <div className={styles.labelRow}>
+        <p className={`${styles.featureLabel} title-2 title-2-md`}>
+          <span className={styles.labelHidden}>{feature.label}</span>
+          <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
+        </p>
+      </div>
+
+      <div className={styles.expandable}>
+        <div className={styles.expandableInner}>
           <div className={styles.detailContent}>
             <p className={`body-2 body-1-md ${styles.featureDesc}`}>{feature.description}</p>
           </div>
@@ -95,7 +100,6 @@ function FeatureItem({ feature, active, onClick }) {
 
 export default function Capabilities() {
   const [active, setActive] = useState(0);
-  const [activeTech, setActiveTech] = useState(-1);
   const [activeView, setActiveView] = useState(0);
   const activeFeature = FEATURES[active];
   const view = VIEWS[activeView];
@@ -206,52 +210,29 @@ export default function Capabilities() {
       </div>
 
       <div className={styles.techGrid}>
-  {TECH_CARDS.map((card, index) => (
-    <div
-      key={card.id}
-      className={`${styles.techCard} ${
-        activeTech === index ? styles.techCardActive : ""
-      }`}
-    >
-      <button
-        type="button"
-        className={styles.techCardHeader}
-        onClick={() =>
-          setActiveTech(activeTech === index ? -1 : index)
-        }
-      >
-        <div className={styles.techIconWrap}>
-          <Image
-            src={card.icon}
-            alt=""
-            width={50}
-            height={50}
-          />
-        </div>
+        {TECH_CARDS.map((card) => (
+          <div key={card.id} className={styles.techCard}>
+            <div className={styles.techCardHeader}>
+              <div className={styles.techIconWrap}>
+                <Image
+                  src={card.icon}
+                  alt=""
+                  width={50}
+                  height={50}
+                />
+              </div>
 
-        <p className={`${styles.techCardTitle} title-2 title-2-md`}>
-          {card.title}
-        </p>
+              <p className={`${styles.techCardTitle} title-2 title-2-md`}>
+                {card.title}
+              </p>
+            </div>
 
-        <span className={styles.techArrow}>
-          {activeTech === index ? "−" : "+"}
-        </span>
-      </button>
-
-      <div
-        className={`${styles.techContent} ${
-          activeTech === index
-            ? styles.techContentOpen
-            : ""
-        }`}
-      >
-        <p className={`body-1 body-1-md ${styles.techCardDesc}`}>
-          {card.description}
-        </p>
+            <p className={`body-1 body-1-md ${styles.techCardDesc}`}>
+              {card.description}
+            </p>
+          </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
 
       </div>
     </section>

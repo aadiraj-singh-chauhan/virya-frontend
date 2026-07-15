@@ -58,6 +58,14 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseEnter={play}
       onMouseLeave={reset}
     >
+      <div className={styles.imageExpandable}>
+        <div className={styles.imageExpandableInner}>
+          <div className={styles.detailImage}>
+            <Image src={feature.image} alt={feature.label} fill sizes="328px" className={styles.detailImg} />
+          </div>
+        </div>
+      </div>
+
       <div className={styles.labelRow}>
         <p className={`${styles.featureLabel} title-2 title-2-md`}>
           <span className={styles.labelHidden}>{feature.label}</span>
@@ -67,9 +75,6 @@ function FeatureItem({ feature, active, onClick }) {
 
       <div className={styles.expandable}>
         <div className={styles.expandableInner}>
-          <div className={styles.detailImage}>
-            <Image src={feature.image} alt={feature.label} fill sizes="328px" className={styles.detailImg} />
-          </div>
           <div className={styles.detailContent}>
             <p className={`body-2 body-1-md ${styles.featureDesc}`}>{feature.description}</p>
           </div>
@@ -81,7 +86,6 @@ function FeatureItem({ feature, active, onClick }) {
 
 export default function Capabilities() {
   const [active, setActive] = useState(0);
-  const [activeTech, setActiveTech] = useState(-1);
   const activeFeature = FEATURES[active];
   return (
     <section className={styles.section} data-header-theme="light">
@@ -150,52 +154,29 @@ export default function Capabilities() {
       </div>
 
       <div className={styles.techGrid}>
-  {TECH_CARDS.map((card, index) => (
-    <div
-      key={card.id}
-      className={`${styles.techCard} ${
-        activeTech === index ? styles.techCardActive : ""
-      }`}
-    >
-      <button
-        type="button"
-        className={styles.techCardHeader}
-        onClick={() =>
-          setActiveTech(activeTech === index ? -1 : index)
-        }
-      >
-        <div className={styles.techIconWrap}>
-          <Image
-            src={card.icon}
-            alt=""
-            width={50}
-            height={50}
-          />
-        </div>
+        {TECH_CARDS.map((card) => (
+          <div key={card.id} className={styles.techCard}>
+            <div className={styles.techCardHeader}>
+              <div className={styles.techIconWrap}>
+                <Image
+                  src={card.icon}
+                  alt=""
+                  width={50}
+                  height={50}
+                />
+              </div>
 
-        <p className={`${styles.techCardTitle} title-2 title-2-md`}>
-          {card.title}
-        </p>
+              <p className={`${styles.techCardTitle} title-2 title-2-md`}>
+                {card.title}
+              </p>
+            </div>
 
-        <span className={styles.techArrow}>
-          {activeTech === index ? "−" : "+"}
-        </span>
-      </button>
-
-      <div
-        className={`${styles.techContent} ${
-          activeTech === index
-            ? styles.techContentOpen
-            : ""
-        }`}
-      >
-        <p className={`body-1 body-1-md ${styles.techCardDesc}`}>
-          {card.description}
-        </p>
+            <p className={`body-1 body-1-md ${styles.techCardDesc}`}>
+              {card.description}
+            </p>
+          </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
 
       </div>
     </section>
