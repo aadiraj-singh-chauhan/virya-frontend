@@ -27,11 +27,17 @@ export default function Leadership() {
                   alt={member.name}
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
-                  className={`${styles.photo}`}
+                  className={`${styles.photo} ${member.photo.includes('team-member-1') ? styles.cropA : styles.cropB}`}
                 />
-                <span className={styles.linkedin} aria-hidden="true">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.linkedin}
+                  aria-label={`${member.name} on LinkedIn`}
+                >
                   <LinkedInIcon />
-                </span>
+                </a>
               </div>
               <p className={`label-3-md ${styles.name}`}>{member.name}</p>
               <p className={`label-3-md ${styles.role}`}>{member.role}</p>

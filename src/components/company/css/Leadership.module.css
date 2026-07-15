@@ -51,6 +51,29 @@
   object-fit: cover;
 }
 
+/* Figma (node 1399:5998) hand-tunes each photo's crop/scale/offset rather
+   than a plain centered object-fit: cover — the two placeholder source
+   photos have different native framing, so a uniform crop doesn't match.
+   !important is needed to win over next/image's own inline fill styles
+   (position/inset/width/height), which a className alone can't override. */
+.cropA {
+  width: 148.47% !important;
+  height: 148.37% !important;
+  left: -23.5% !important;
+  top: 4.4% !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+.cropB {
+  width: 89.63% !important;
+  height: 115.61% !important;
+  left: 5.17% !important;
+  top: -5.29% !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
 .linkedin {
   position: absolute;
   right: 30px;

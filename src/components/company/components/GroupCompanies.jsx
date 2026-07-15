@@ -1,5 +1,13 @@
+'use client';
+
 import Image from 'next/image';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import '@splidejs/splide/css/core';
 import styles from '../css/GroupCompanies.module.css';
+
+// Matches the previous hand-rolled marquee's pace (36s per full loop).
+const AUTO_SCROLL_SPEED = 0.6; // px/frame
 
 const COMPANIES = [
   {
@@ -47,10 +55,20 @@ const ALLIANCES = [
   },
 ];
 
-function GroupRow({ title, items }) {
-  // Track is duplicated so the marquee can loop seamlessly at translateX(-50%).
-  const track = [...items, ...items];
+// Splide handles the seamless loop, drag/swipe (desktop and touch alike),
+// and the auto-scroll marquee itself — no more hand-duplicated track or
+// CSS keyframe animation.
+const SPLIDE_OPTIONS = {
+  type: 'loop',
+  autoWidth: true,
+  gap: '20px',
+  arrows: false,
+  pagination: false,
+  drag: true,
+  autoScroll: { speed: AUTO_SCROLL_SPEED, autoStart: true, pauseOnHover: false, pauseOnFocus: false },
+};
 
+function GroupRow({ title, items }) {
   return (
     <div className={styles.group}>
       <div className={styles.groupTitle}>
@@ -58,22 +76,23 @@ function GroupRow({ title, items }) {
         <p className={`title-2-md ${styles.groupTitleText}`}>{title}</p>
       </div>
       <div className={styles.outer}>
-        <div className={styles.track}>
-          {track.map((item, i) => (
-            <div key={`${title}-${item.name}-${i}`} className={styles.card}>
-              <Image
-                src={item.logo}
-                alt={i < items.length ? item.name : ''}
-                aria-hidden={i < items.length ? undefined : true}
-                width={220}
-                height={60}
-                className={styles.logo}
-                draggable={false}
-              />
-              <p className="body-1">{item.body}</p>
-            </div>
+        <Splide options={SPLIDE_OPTIONS} extensions={{ AutoScroll }} aria-label={title} className={styles.splide}>
+          {items.map((item) => (
+            <SplideSlide key={item.logo}>
+              <div className={styles.card}>
+                <Image
+                  src={item.logo}
+                  alt={item.name}
+                  width={220}
+                  height={60}
+                  className={styles.logo}
+                  draggable={false}
+                />
+                <p className="body-1">{item.body}</p>
+              </div>
+            </SplideSlide>
           ))}
-        </div>
+        </Splide>
       </div>
     </div>
   );

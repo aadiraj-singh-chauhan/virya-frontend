@@ -39,23 +39,15 @@
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  overflow: hidden;
 }
 
-.track {
-  display: flex;
-  gap: 20px;
-  width: max-content;
-  animation: groupMarquee 36s linear infinite;
+/* Splide's own .splide__track already clips + owns drag/loop/autoplay. */
+.splide :global(.splide__track) {
+  cursor: grab;
 }
 
-.track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes groupMarquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.splide :global(.splide.is-dragging .splide__track) {
+  cursor: grabbing;
 }
 
 .card {
@@ -89,28 +81,9 @@
     padding: 24px 24px 60px;
   }
 
-  /* Touch has no hover to pause the desktop marquee, so it just ran
-     forever with zero manual control — swap it for native swipe/scroll
-     instead, matching the FeatureCardGrid mobile pattern. */
-  .outer {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .outer::-webkit-scrollbar {
-    display: none;
-  }
-
-  .track {
-    animation: none;
-    scroll-snap-type: x mandatory;
-  }
-
   .card {
     /* 1 card per slide on mobile */
     width: calc(100vw - 48px);
     padding: 28px 24px;
-    scroll-snap-align: start;
   }
 }
