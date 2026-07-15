@@ -60,12 +60,23 @@ export default function VideoSection() {
         </p>
 
         <div className={styles.features}>
-          {FEATURES.map(f => (
-            <div key={f} className={styles.featureItem}>
-              <span className={styles.bullet} aria-hidden="true" />
-              <span className="label-1">{f}</span>
-            </div>
-          ))}
+          {/* Duplicated on mobile only, where the track auto-scrolls in a
+              loop — translating by exactly -50% lands back on an identical
+              copy, so the loop reads as seamless instead of jumping. */}
+          <div className={styles.featuresTrack}>
+            {FEATURES.map(f => (
+              <div key={f} className={styles.featureItem}>
+                <span className={styles.bullet} aria-hidden="true" />
+                <span className="label-1">{f}</span>
+              </div>
+            ))}
+            {FEATURES.map(f => (
+              <div key={`d-${f}`} className={`${styles.featureItem} ${styles.featureItemDuplicate}`} aria-hidden="true">
+                <span className={styles.bullet} aria-hidden="true" />
+                <span className="label-1">{f}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className={styles.videoWrap}>

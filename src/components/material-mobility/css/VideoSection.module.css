@@ -20,6 +20,18 @@
   margin-bottom: 60px;
 }
 
+/* display:contents on desktop keeps the duplicated items (added for the
+   mobile marquee loop) as direct flex children of .features so
+   justify-content: space-between still applies to the original set only;
+   .featureItemDuplicate hides the duplicate set on desktop. */
+.featuresTrack {
+  display: contents;
+}
+
+.featureItem.featureItemDuplicate {
+  display: none;
+}
+
 .featureItem {
   display: flex;
   align-items: center;
@@ -31,6 +43,11 @@
   height: 6px;
   background: var(--color-1);
   flex-shrink: 0;
+}
+
+@keyframes featuresMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* ── Video container ──────────────────────────────────────────────────────── */
@@ -85,7 +102,7 @@
 @media (max-width: 1024px) {
 
   .section {
-    padding: 80px 0;
+    padding: 60px 0;
   }
 
   .heading {
@@ -107,7 +124,7 @@
 @media (max-width: 767px) {
 
   .section {
-    padding: 90px 0 60px;
+    padding: 60px 0 60px;
   }
 
   .heading {
@@ -116,25 +133,31 @@
     text-align: center;
   }
 
-  /* Feature pills slide horizontally instead of wrapping/squeezing */
-
+  /* Auto-scrolling loop — features never wrap, no manual swipe needed. The
+     mask fades the edges instead of a hard clip. */
   .features {
     display: flex;
     justify-content: flex-start;
-    gap: 24px;
     margin-bottom: 32px;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 0 20px;
-    margin-left: -20px;
-    margin-right: -20px;
-    width: calc(100% + 40px);
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 
-  .features::-webkit-scrollbar {
-    display: none;
+  .featuresTrack {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: max-content;
+    animation: featuresMarquee 16s linear infinite;
+  }
+
+  /* Duplicate set (hidden on desktop via .featureItem.featureItemDuplicate)
+     is needed here to make the loop seamless — re-show it. Matches that
+     selector's specificity so this override actually wins. */
+  .featureItem.featureItemDuplicate {
+    display: flex;
   }
 
   .featureItem {
@@ -172,7 +195,7 @@
 @media (max-width: 480px) {
 
   .section {
-    padding: 70px 0 20px;
+    padding: 20px 0 20px;
   }
 
   .heading {
@@ -180,8 +203,11 @@
   }
 
   .features {
-    gap: 16px;
     margin-bottom: 24px;
+  }
+
+  .featuresTrack {
+    gap: 16px;
   }
 
   .videoWrap {
