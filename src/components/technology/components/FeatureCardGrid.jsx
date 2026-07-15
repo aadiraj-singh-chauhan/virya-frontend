@@ -56,8 +56,12 @@ export default function FeatureCardGrid({ heading, cards }) {
                         onClick={() => setExpandedIndex((prev) => (prev === index ? null : index))}
                       >
                         <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                          <circle cx="15" cy="15" r="15" fill="#F43D00" />
-                          <path d="M15 8V22M8 15H22" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
+                          <rect width="30" height="30" rx="15" fill="#F43D00" />
+                          <rect width="1" height="1" transform="translate(14.5 14.5)" fill="white" />
+                          <rect width="7" height="1" transform="translate(16.5 14.5)" fill="white" />
+                          <rect width="7" height="1" transform="translate(6.5 14.5)" fill="white" />
+                          <rect width="1" height="7" transform="translate(14.5 6.5)" fill="white" />
+                          <rect width="1" height="7" transform="translate(14.5 16.5)" fill="white" />
                         </svg>
                       </button>
                     </div>

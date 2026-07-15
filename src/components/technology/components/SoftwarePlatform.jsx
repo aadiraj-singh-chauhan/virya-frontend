@@ -12,35 +12,37 @@ const FEATURES = [
 export default function SoftwarePlatform() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <div className={styles.visual}>
-        <Image
-          src="/assets/ftech-software.webp"
-          alt="Fleet management dashboard shown on a wall monitor and tablet in a warehouse"
-          fill
-          sizes="(max-width: 768px) 100vw, 629px"
-          className={styles.image}
-        />
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.headingGroup}>
-          <div className={styles.tag}>
-            <span className={styles.tagDot} aria-hidden="true" />
-            <span className="label-2">Software</span>
-          </div>
-
-          <h2 className={`title-1 ${styles.heading}`}>
-            Intelligent fleet orchestration and autonomous operations platform
-          </h2>
+      <div className={`container ${styles.inner}`}>
+        <div className={styles.visual}>
+          <Image
+            src="/assets/ftech-software.webp"
+            alt="Fleet management dashboard shown on a wall monitor and tablet in a warehouse"
+            fill
+            sizes="(max-width: 768px) 100vw, 629px"
+            className={styles.image}
+          />
         </div>
 
-        <div className={styles.features}>
-          {FEATURES.map((item) => (
-            <div key={item} className={styles.featureItem}>
-              <span className={styles.featureDot} aria-hidden="true" />
-              <span className="label-2">{item}</span>
+        <div className={styles.content}>
+          <div className={styles.headingGroup}>
+            <div className={styles.tag}>
+              <span className={styles.tagDot} aria-hidden="true" />
+              <span className="label-2">Software</span>
             </div>
-          ))}
+
+            <h2 className={`title-1 ${styles.heading}`}>
+              Intelligent fleet orchestration and autonomous operations platform
+            </h2>
+          </div>
+
+          <div className={styles.features}>
+            {FEATURES.map((item) => (
+              <div key={item} className={styles.featureItem}>
+                <span className={styles.featureDot} aria-hidden="true" />
+                <span className="label-2">{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
