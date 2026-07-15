@@ -196,6 +196,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  width: fit-content;
   background: var(--color-5);
   border-radius: 999px;
   padding: 5px 10px;
@@ -245,9 +246,14 @@
 
 /* ===========================
    TABLET
+   .textCol (560px) + .desktopImage (676px) are both flex-shrink: 0 at
+   desktop size, needing at least 1236px — .inner (inside .container,
+   width: 95%) drops below that around 1301px viewport width, so the
+   breakpoint has to trigger before then or the fixed-width columns
+   overflow instead of sharing the space. 1024px left a real gap.
 =========================== */
 
-@media (max-width:1024px){
+@media (max-width:1360px){
 
   .inner{
     gap:50px;
