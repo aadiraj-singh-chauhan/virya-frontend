@@ -12,7 +12,7 @@ export default function Hero() {
           <span className="label-2">Service & Training</span>
         </div>
 
-        <h1 className={`heading-2 ${styles.heading}`}>From Setup to Scale</h1>
+        <h1 className={`heading-2 heading-2-md ${styles.heading}`}>From Setup to Scale</h1>
 
         <p className={`body-1 ${styles.desc}`}>
           Support across deployment, integration, and team training ensuring consistent

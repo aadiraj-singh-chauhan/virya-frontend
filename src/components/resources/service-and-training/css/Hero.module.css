@@ -62,4 +62,9 @@
   .section {
     padding: 120px 24px 60px;
   }
+
+  .content {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

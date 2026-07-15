@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useScrollSteps } from '@/hooks/useScrollSteps';
 import styles from '../css/ServiceSteps.module.css';
 
 const STEPS = [
@@ -47,97 +47,44 @@ const STEPS = [
   },
 ];
 
-// Matches the .5s grid-template-rows transition on .bulletsWrap/.imageWrap
-// below — the scroll lock holds for exactly as long as that animation
-// takes to play out.
-const TRANSITION_MS = 550;
-
-// All four steps stay stacked and visible; only the one currently crossing
-// the vertical center of the viewport expands to show its image + bullets,
-// while the rest collapse down to just title + description. Scrolling
-// briefly locks each time a new step becomes active, so its expand/collapse
-// animation gets to finish playing before the user can scroll past it.
+// Desktop: same panel design as before (title/desc/bullets + image,
+// unchanged), pinned in one spot while a tall track scrolls underneath —
+// only the active step's panel is shown (others display:none via
+// .panelInactive), crossfading in as scroll advances. Same scroll-jack
+// mechanic as Ecosystem (material-mobility), via the shared useScrollSteps
+// hook.
+//
+// Mobile: static — the pin and scroll-jack are switched off entirely (see
+// the max-width:767px rules in ServiceSteps.module.css) and every step's
+// panel just renders in normal stacked document flow.
 export default function ServiceSteps() {
-  const [active, setActive] = useState(0);
-  const panelRefs = useRef([]);
-  const lockedRef = useRef(false);
-  const prevActiveRef = useRef(0);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const i = panelRefs.current.indexOf(entry.target);
-            if (i !== -1) setActive(i);
-          }
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
-    );
-
-    panelRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (active === prevActiveRef.current) return undefined;
-    prevActiveRef.current = active;
-
-    lockedRef.current = true;
-    const timer = setTimeout(() => { lockedRef.current = false; }, TRANSITION_MS);
-    return () => clearTimeout(timer);
-  }, [active]);
-
-  useEffect(() => {
-    const blockWhileLocked = (e) => {
-      if (lockedRef.current) e.preventDefault();
-    };
-    window.addEventListener('wheel', blockWhileLocked, { passive: false });
-    window.addEventListener('touchmove', blockWhileLocked, { passive: false });
-    return () => {
-      window.removeEventListener('wheel', blockWhileLocked);
-      window.removeEventListener('touchmove', blockWhileLocked);
-    };
-  }, []);
+  const { active, pinStyle, trackRef, stickyRef } = useScrollSteps(STEPS.length);
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <div className="container">
-        {STEPS.map((step, i) => {
-          const isActive = i === active;
-          return (
-            <div
-              key={step.title}
-              ref={(el) => { panelRefs.current[i] = el; }}
-              className={styles.panel}
-            >
-              <div className={styles.textCol}>
-                <h3 className={`title-1 ${styles.title}`}>{step.title}</h3>
-                <p className={`body-1 ${styles.desc}`}>{step.desc}</p>
+      <div className={styles.scrollTrack} ref={trackRef}>
+        <div className={styles.sticky} style={pinStyle} ref={stickyRef}>
+          <div className="container">
+            {STEPS.map((step, i) => (
+              <div
+                key={step.title}
+                className={`${styles.panel} ${i === active ? styles.panelActive : styles.panelInactive}`}
+              >
+                {/* Mobile-only bordered panel with corner markers, matching
+                    the imageBox treatment but around the whole step
+                    (heading/desc/image/bullets) — hidden on desktop, where
+                    the imageBox keeps its own border/corners instead. */}
+                <span className={styles.panelCorner} data-corner="tl" aria-hidden="true" />
+                <span className={styles.panelCorner} data-corner="tr" aria-hidden="true" />
+                <span className={styles.panelCorner} data-corner="bl" aria-hidden="true" />
+                <span className={styles.panelCorner} data-corner="br" aria-hidden="true" />
 
-                <div className={`${styles.bulletsWrap} ${isActive ? styles.bulletsWrapActive : ''}`}>
-                  <div className={styles.bulletsInner}>
-                    <div className={styles.bullets}>
-                      {step.bullets.map((b) => (
-                        <div key={b} className={styles.bullet}>
-                          <Image
-                            src="/assets/technology/tech-check-icon.svg"
-                            alt=""
-                            width={13}
-                            height={13}
-                            aria-hidden="true"
-                          />
-                          <span className="label-2">{b}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                <div className={styles.textCol}>
+                  <h3 className={`title-1 ${styles.title}`}>{step.title}</h3>
+                  <p className={`body-1 ${styles.desc}`}>{step.desc}</p>
                 </div>
-              </div>
 
-              <div className={`${styles.imageWrap} ${isActive ? styles.imageWrapActive : ''}`}>
-                <div className={styles.imageInner}>
+                <div className={styles.imageWrap}>
                   <div className={styles.imageBox}>
                     <Image
                       src={step.image}
@@ -150,10 +97,27 @@ export default function ServiceSteps() {
                     />
                   </div>
                 </div>
+
+                <div className={styles.bulletsWrap}>
+                  <div className={styles.bullets}>
+                    {step.bullets.map((b) => (
+                      <div key={b} className={styles.bullet}>
+                        <Image
+                          src="/assets/technology/tech-check-icon.svg"
+                          alt=""
+                          width={13}
+                          height={13}
+                          aria-hidden="true"
+                        />
+                        <span className="label-2">{b}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

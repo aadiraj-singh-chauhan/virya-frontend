@@ -1,36 +1,87 @@
 .section {
-  padding: 100px 0;
   background: var(--color-6);
 }
 
-.panel {
-  display: flex;
-  align-items: flex-start;
-  gap: 60px;
-  padding: 40px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+/* Tall runway that gives the scroll-jack effect room: while its top is
+   between 0 and -(height - 100vh), .sticky stays pinned and the active step
+   advances with scroll progress; once it scrolls past, the page continues
+   normally into the next section. Same mechanic as Ecosystem
+   (material-mobility), driven by the shared useScrollSteps hook. */
+.scrollTrack {
+  position: relative;
+  height: 700vh;
 }
 
-.panel:first-child {
-  border-top: none;
-  padding-top: 0;
+/* position/top/left/width are set inline (see ServiceSteps.jsx) since they
+   switch between 'before' (absolute, top of track), 'pinned' (fixed, tracks
+   the viewport) and 'after' (absolute, bottom of track). */
+.sticky {
+  height: calc(100vh - var(--header-height));
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* All four panels stay mounted; only the active one is shown (desktop) —
+   toggling .panelInactive's display:none off replays the animation below
+   each time a panel becomes active, giving the "next one stacks in behind"
+   crossfade without needing to remount anything. */
+/* Grid (not flex) so the image can span both text rows on desktop while
+   bulletsWrap — a sibling, not nested inside textCol — can still be
+   reordered independently of the image on mobile (heading/desc, then
+   image, then bullets), which plain flex `order` can't do across a nested
+   parent/child boundary. */
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 672px 1fr;
+  grid-template-areas:
+    "image text"
+    "image bullets";
+  column-gap: 60px;
+  align-items: start;
+}
+
+/* Mobile-only corner markers around the whole panel (see mobile rules
+   below) — hidden on desktop, where imageBox keeps its own border/corners
+   instead. */
+.panelCorner {
+  display: none;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--color-1);
+  z-index: 2;
+}
+
+.panelInactive {
+  display: none;
+}
+
+.panelActive {
+  animation: panelIn 0.4s ease both;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Text column ──────────────────────────────────────────────────────────── */
 
 .textCol {
-  flex: 1;
+  grid-area: text;
   max-width: 480px;
 }
 
 .title {
   color: var(--color-3);
-  opacity: 0.35;
-  transition: opacity 0.35s ease;
-}
-
-.panel:has(.imageWrapActive) .title {
-  opacity: 1;
 }
 
 .desc {
@@ -39,21 +90,9 @@
   opacity: 0.5;
 }
 
-/* Height-animated reveal via the 0fr/1fr grid-rows trick — no need to know
-   the bullets' rendered height up front. */
 .bulletsWrap {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s ease;
-}
-
-.bulletsWrapActive {
-  grid-template-rows: 1fr;
-}
-
-.bulletsInner {
-  overflow: hidden;
-  min-height: 0;
+  grid-area: bullets;
+  margin-top: 34px;
 }
 
 .bullets {
@@ -61,12 +100,11 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-  padding-top: 34px;
 }
 
 .bullet {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   padding: 5px 10px;
   background: var(--color-5);
@@ -77,20 +115,7 @@
 /* ── Image column ─────────────────────────────────────────────────────────── */
 
 .imageWrap {
-  order: -1;
-  flex: 0 0 672px;
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s ease;
-}
-
-.imageWrapActive {
-  grid-template-rows: 1fr;
-}
-
-.imageInner {
-  overflow: hidden;
-  min-height: 0;
+  grid-area: image;
 }
 
 .imageBox {
@@ -111,15 +136,15 @@
 }
 
 .imageBox::before {
-  top: 0;
-  left: 0;
-  box-shadow: 666px 0 0 var(--color-1);
+  top: -3px;
+  left: -3px;
+  box-shadow: 672px 0 0 var(--color-1);
 }
 
 .imageBox::after {
-  bottom: 0;
-  left: 0;
-  box-shadow: 666px 0 0 var(--color-1);
+  bottom: -3px;
+  left: -3px;
+  box-shadow: 672px 0 0 var(--color-1);
 }
 
 .image {
@@ -127,18 +152,96 @@
 }
 
 @media (max-width: 1024px) {
-  .panel {
-    flex-direction: column;
-    gap: 24px;
+  .sticky {
+    height: auto;
+    max-height: calc(100vh - var(--header-height));
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 40px 0;
   }
 
-  .imageWrap {
-    order: 0;
-    flex: none;
-    width: 100%;
+  .panel {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "text"
+      "image"
+      "bullets";
+    row-gap: 24px;
   }
 
   .textCol {
     max-width: 100%;
+  }
+
+  .bulletsWrap {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Static on mobile — no pin, no scroll-jack, no per-step animation. The
+     tall runway collapses back to normal content height and `position:
+     static` overrides the fixed/absolute inline pinStyle the hook still
+     computes (harmless since nothing here reads it visually anymore). */
+  .scrollTrack {
+    height: auto;
+  }
+
+  .sticky {
+    position: static !important;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 24px 0;
+  }
+
+  .panel {
+    display: grid !important;
+    margin-top: 24px;
+    padding: 16px;
+    border: 0.2px solid var(--color-3);
+  }
+
+  .panel:first-child {
+    margin-top: 0;
+  }
+
+  .panelActive {
+    animation: none;
+  }
+
+  .panelCorner {
+    display: block;
+  }
+
+  .panelCorner[data-corner="tl"] {
+    top: -3px;
+    left: -3px;
+  }
+
+  .panelCorner[data-corner="tr"] {
+    top: -3px;
+    right: -3px;
+  }
+
+  .panelCorner[data-corner="bl"] {
+    bottom: -3px;
+    left: -3px;
+  }
+
+  .panelCorner[data-corner="br"] {
+    bottom: -3px;
+    right: -3px;
+  }
+
+  /* The outer panel border/corners replace imageBox's own — avoids a
+     bordered box within a bordered box. */
+  .imageBox {
+    border: none;
+  }
+
+  .imageBox::before,
+  .imageBox::after {
+    content: none;
   }
 }
