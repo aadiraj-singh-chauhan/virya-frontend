@@ -22,7 +22,7 @@ export default function Industries() {
       <div className="container">
         <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Industries we cater to</h2>
       </div>
-      <ImageSlider slides={SLIDES} cardAspectRatio="517 / 288" />
+      <ImageSlider slides={SLIDES} cardAspectRatio="517 / 288" arrows="hover" />
     </section>
   );
 }
