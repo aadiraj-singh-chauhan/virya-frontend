@@ -63,14 +63,27 @@
 
 @media (max-width: 900px) {
   .section {
-    padding: 100px 0 40px;
+    padding: 100px 0 0;
+  }
+
+  .content {
+    gap: 28px;
   }
 
   .imageWrap {
-    position: static;
+    position: relative;
+    top: auto;
+    right: auto;
+    align-self: stretch;
     width: 100%;
     max-width: none;
-    height: 320px;
-    margin-top: 32px;
+    height: auto;
+    aspect-ratio: 760 / 504;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .subheading {
+    padding-top: 8px;
   }
 }

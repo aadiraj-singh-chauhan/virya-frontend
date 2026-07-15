@@ -15,18 +15,18 @@ export default function Hero() {
             Got plans? Let&rsquo;s turn them into something real
           </h1>
 
-          <p className={`title-1 ${styles.subheading}`}>Tell us whats on your mind</p>
-        </div>
-      </div>
+          <div className={styles.imageWrap}>
+            <Image
+              src="/assets/contact/contact-banner-bg.webp"
+              alt="Autonomous forklifts and trucks operating in a warehouse yard"
+              fill
+              sizes="(max-width: 1024px) 100vw, 760px"
+              className={styles.image}
+            />
+          </div>
 
-      <div className={styles.imageWrap}>
-        <Image
-          src="/assets/contact/contact-banner-bg.webp"
-          alt="Autonomous forklifts and trucks operating in a warehouse yard"
-          fill
-          sizes="(max-width: 1024px) 100vw, 760px"
-          className={styles.image}
-        />
+          <p className={`title-1 title-1-md ${styles.subheading}`}>Tell us whats on your mind</p>
+        </div>
       </div>
     </section>
   );

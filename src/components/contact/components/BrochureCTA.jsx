@@ -5,7 +5,7 @@ export default function BrochureCTA() {
   return (
     <section className={styles.section} data-header-theme="light">
       <div className={`container ${styles.container}`}>
-        <h2 className={`heading-2 ${styles.heading}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
           Every thing we do
           <br />
           at one place

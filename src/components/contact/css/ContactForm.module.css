@@ -78,6 +78,11 @@
   width: 100%;
 }
 
+.submit {
+  justify-content: center;
+  width: 100%;
+}
+
 /* ── Side info ────────────────────────────────────────────────────────────── */
 
 .sideInfo {
@@ -123,6 +128,11 @@
   color: var(--color-3);
   font-family: var(--font-primary);
   font-size: 15px;
+}
+
+.phoneIcon {
+  flex-shrink: 0;
+  color: var(--color-1);
 }
 
 .office {
@@ -178,5 +188,6 @@
 @media (max-width: 640px) {
   .section {
     padding: 40px 0;
+    border-top: none;
   }
 }

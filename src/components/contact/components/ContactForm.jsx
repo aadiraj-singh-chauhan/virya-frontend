@@ -71,7 +71,7 @@ export default function ContactForm() {
             />
           </div>
 
-          <Button type="submit" property1="Default" size="Button-2">Submit</Button>
+          <Button type="submit" property1="Default" size="Button-2" className={styles.submit}>Submit</Button>
         </form>
 
         <div className={styles.sideInfo}>
@@ -103,12 +103,10 @@ export default function ContactForm() {
 
 function PhoneIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className={styles.phoneIcon}>
       <path
-        d="M4 2h3l2 5-2.5 1.5a11 11 0 0 0 5 5L13 11l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 2 4a2 2 0 0 1 2-2Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
+        d="M13.5843 10.2676C13.4632 11.1885 13.0109 12.0338 12.312 12.6457C11.6131 13.2575 10.7154 13.594 9.7866 13.5923C4.39038 13.5923 6.14968e-06 9.20198 6.14968e-06 3.80576C-0.00165892 2.87691 0.334848 1.97922 0.946677 1.28034C1.55851 0.581463 2.40382 0.1292 3.32473 0.00801796C3.5576 -0.0204169 3.79343 0.0272254 3.997 0.143833C4.20058 0.260441 4.36098 0.439759 4.45426 0.65502L5.88963 3.85945V3.8676C5.96105 4.03238 5.99055 4.21228 5.97548 4.39124C5.96042 4.5702 5.90127 4.74264 5.80332 4.89316C5.79108 4.91151 5.77817 4.9285 5.76458 4.94549L4.3496 6.6228C4.85864 7.65719 5.9406 8.72964 6.98858 9.24003L8.64279 7.83253C8.65903 7.81888 8.67605 7.80617 8.69376 7.79447C8.84416 7.69416 9.01719 7.63293 9.1972 7.61632C9.37722 7.59971 9.55853 7.62823 9.72475 7.69933L9.73358 7.7034L12.9353 9.13809C13.1509 9.23104 13.3307 9.3913 13.4477 9.59491C13.5647 9.79851 13.6126 10.0345 13.5843 10.2676Z"
+        fill="currentColor"
       />
     </svg>
   );
