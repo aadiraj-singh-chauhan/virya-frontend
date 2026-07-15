@@ -7,6 +7,7 @@ const ITEMS = [
   {
     id: 'localization',
     title: 'High-Precision Localization',
+    titleLines: ['High-Precision', 'Localization'],
     description:
       'Centimetre-level accuracy using multi-sensor fusion — LiDAR, IMU, and visual odometry — so the vehicle always knows exactly where it is.',
     image: '/assets/pm-indoor-operation.png',
@@ -14,6 +15,7 @@ const ITEMS = [
   {
     id: 'path-planning',
     title: 'Real-Time Path Planning',
+    titleLines: ['Real-Time Path', 'Planning'],
     description:
       'Dynamic route computation that reacts to obstacles, traffic, and changing layouts without stopping or waiting for a remote update.',
     image: '/assets/pm-indoor-operation.png',
@@ -21,6 +23,7 @@ const ITEMS = [
   {
     id: 'indoor-outdoor',
     title: 'Indoor–Outdoor Operation',
+    titleLines: ['Indoor–Outdoor', 'Operation'],
     description:
       'Lorem ipsum dolor sit amet consectetur. Viverra suscipit ut aliquet eu vestibulum mattis amet. In fermentum lobortis sed risus nibh erat arcu.',
     image: '/assets/pm-indoor-operation.png',
@@ -28,6 +31,7 @@ const ITEMS = [
   {
     id: 'navigation',
     title: 'Environment-Aware Navigation',
+    titleLines: ['Environment-Aware', 'Navigation'],
     description:
       'Continuous perception of people, vehicles, and infrastructure lets the system make safe, context-aware decisions at every moment.',
     image: '/assets/pm-indoor-operation.png',
@@ -35,6 +39,7 @@ const ITEMS = [
   {
     id: 'fleet',
     title: 'Fleet Coordination',
+    titleLines: ['Fleet', 'Coordination'],
     description:
       'Centralised orchestration assigns tasks, resolves conflicts, and optimises throughput across an entire fleet from a single interface.',
     image: '/assets/pm-indoor-operation.png',
@@ -42,6 +47,7 @@ const ITEMS = [
   {
     id: 'control',
     title: 'Hybrid Control Modes',
+    titleLines: ['Hybrid Control', 'Modes'],
     description:
       'Seamlessly switch between fully autonomous, semi-autonomous, and manual operation to match the needs of any environment or workflow.',
     image: '/assets/pm-indoor-operation.png',
@@ -66,7 +72,10 @@ export default function IntelligentCore() {
             >
               <div className={styles.rowInner}>
                 <div className={styles.rowHeader}>
-                  <p className="title-1 title-1-md">{item.title}</p>
+                  <p className={`title-1 title-1-md ${styles.rowTitle}`}>
+                    {item.titleLines[0]}
+                    <br className={styles.titleBreak} /> {item.titleLines[1]}
+                  </p>
                   <span className={`${styles.rowIcon} ${activeId === item.id ? styles.rowIconOpen : ''}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
                       <rect x="11.8633" y="10.0095" width="1.11238" height="7.41587" transform="rotate(-90 11.8633 10.0095)" fill="#F43D00"/>

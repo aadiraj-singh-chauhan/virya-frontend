@@ -31,7 +31,7 @@
   justify-content: center;
   padding-left: 0;
   padding-right: 0;
-  transition: padding-left 0.4s ease, padding-right 0.4s ease;
+  transition: padding-left 0.4s ease, padding-right 0.4s ease, padding-top 0.4s ease, padding-bottom 0.4s ease;
 }
 
 .row:hover .rowInner {
@@ -100,6 +100,10 @@
   transition: transform 0.35s ease;
 }
 
+.titleBreak {
+  display: none;
+}
+
 /* ── Mobile accordion (≤ 767px) ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {
@@ -109,8 +113,12 @@
     margin-bottom: 24px;
   }
 
+  /* Padding instead of a flex gap — this is the row's own box, so once
+     rowOpen adds a background it's already colored in, and rowOpen doesn't
+     need to bump it up separately (that used to shift the header down). */
   .row {
     height: auto;
+    padding-top: 15px;
     cursor: pointer;
     border-bottom: none;
   }
@@ -121,22 +129,38 @@
 
   .rowInner {
     height: auto;
-    padding: 24px 16px;
+    padding: 0 0 14px;
     justify-content: flex-start;
     border-bottom: 0.2px solid var(--color-3);
   }
 
   /* Reset desktop hover padding on touch — matches the permanent mobile padding above */
   .row:hover .rowInner {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Bleed the open row's background past the .container edges to the full
+     viewport width — 2.5vw matches .container's own inset (width: 95%), so
+     re-padding rowInner by that amount keeps the content aligned with the
+     closed rows above/below it, which stay inside .container. */
+  .row.rowOpen {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 
   .row.rowOpen .rowInner {
-    padding-bottom: 0;
+    padding-bottom: 20px;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
   }
 
   .rowIcon {
+    display: block;
+  }
+
+  .titleBreak {
     display: block;
   }
 
@@ -175,9 +199,9 @@
 
   /* Show desc for explicitly opened rows — same specificity, later order wins */
   .row.rowOpen .rowDesc {
-    opacity: 1;
+    opacity: 0.5;
     max-height: 200px;
-    margin-top: 12px;
+    margin-top: 20px;
   }
 
   /* Image: switch to in-flow layout on mobile */
@@ -204,6 +228,6 @@
   .row.rowOpen .rowImage {
     max-height: 260px;
     opacity: 1;
-    margin-top: 16px;
+    margin-top: 20px;
   }
 }
