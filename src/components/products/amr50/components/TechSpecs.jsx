@@ -5,8 +5,8 @@ import DownloadBrochureButton from '@/components/ui/DownloadBrochureButton';
 import styles from '../css/TechSpecs.module.css';
 
 const TABS = [
-  { label: 'AMR 50', blueprint: '/assets/amr50-blueprint.svg' },
-  { label: 'AMR 51', blueprint: '/assets/amr51-blueprint.svg' },
+  { label: 'AMR 50', blueprint: '/assets/amr50-blueprint.svg', blueprintMob: '/assets/product-specification-amr50-mob.svg' },
+  { label: 'AMR 51', blueprint: '/assets/amr51-blueprint.svg', blueprintMob: '/assets/amr51-blueprint-mob.png' },
 ];
 
 const SPECS = [
@@ -52,8 +52,8 @@ export default function TechSpecs() {
 
         {/* Mobile */}
         <Image
-          src="/assets/product-specification-amr50-mob.svg"
-          alt="AMR50 product blueprint"
+          src={TABS[activeTab].blueprintMob}
+          alt={`${TABS[activeTab].label} product blueprint`}
           width={274}
           height={669}
           className={`${styles.blueprintImage} ${styles.blueprintMobile}`}

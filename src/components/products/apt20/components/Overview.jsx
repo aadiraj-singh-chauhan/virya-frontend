@@ -50,7 +50,7 @@ export default function Overview() {
           {STATS.map((s) => (
             <div key={s.label} className={styles.statItem}>
               <p className="label-2 label-2-md">{s.label}</p>
-              <p className={`${styles.statValue} label-1 heading-2-md`}>{s.value}</p>
+              <p className={`${styles.statValue} heading-2 heading-2-md`}>{s.value}</p>
               {s.sub && <p className={`${styles.statSub}`}>{s.sub}</p>}
             </div>
           ))}
