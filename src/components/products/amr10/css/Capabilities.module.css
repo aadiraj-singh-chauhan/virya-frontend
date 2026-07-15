@@ -168,6 +168,25 @@
   padding-bottom: 28px;
 }
 
+/* ── Image (own grid trick, split out so it can sit above/below the label
+   independently of the description) ──────────────────────────────────────── */
+
+.imageExpandable {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.featureItemActive .imageExpandable {
+  grid-template-rows: 1fr;
+}
+
+.imageExpandableInner {
+  overflow: hidden;
+  padding: 0 10px;
+  transition: padding-top 0.35s ease;
+}
+
 /* ── Detail image ─────────────────────────────────────────────────────────── */
 
 .detailImage {
@@ -309,18 +328,36 @@
     .expandableInner {
       padding: 0 16px 0;
     }
-  
+
     .featureItemActive .expandableInner {
       padding-bottom: 24px;
     }
-  
+
+    .imageExpandableInner {
+      padding: 0 16px;
+    }
+
+    .featureItemActive .imageExpandableInner {
+      padding-top: 16px;
+    }
+
     .detailImage {
       height: 180px;
-      margin: 0 -16px;
-      width: calc(100% + 32px);
     }
-  
+
     .detailContent {
       padding: 16px 0 0;
+    }
+
+    .imageExpandable {
+      order: 1;
+    }
+
+    .labelRow {
+      order: 2;
+    }
+
+    .expandable {
+      order: 3;
     }
   }

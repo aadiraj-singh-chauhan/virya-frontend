@@ -50,17 +50,9 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseEnter={play}
       onMouseLeave={reset}
     >
-      {/* Label row — always visible */}
-      <div className={styles.labelRow}>
-        <p className={`${styles.featureLabel} title-2 title-2-md`}>
-          <span className={styles.labelHidden}>{feature.label}</span>
-          <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
-        </p>
-      </div>
-
-      {/* Expandable area — grid-template-rows animates 0fr → 1fr */}
-      <div className={styles.expandable}>
-        <div className={styles.expandableInner}>
+      {/* Image — grid-template-rows animates 0fr → 1fr, same as description below */}
+      <div className={styles.imageExpandable}>
+        <div className={styles.imageExpandableInner}>
           <div className={styles.detailImage}>
             <Image
               src={feature.image}
@@ -70,6 +62,20 @@ function FeatureItem({ feature, active, onClick }) {
               className={styles.detailImg}
             />
           </div>
+        </div>
+      </div>
+
+      {/* Label row — always visible */}
+      <div className={styles.labelRow}>
+        <p className={`${styles.featureLabel} title-2 title-2-md`}>
+          <span className={styles.labelHidden}>{feature.label}</span>
+          <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
+        </p>
+      </div>
+
+      {/* Description — grid-template-rows animates 0fr → 1fr */}
+      <div className={styles.expandable}>
+        <div className={styles.expandableInner}>
           <div className={styles.detailContent}>
             <p className={`body-2 body-1-md ${styles.featureDesc}`}>{feature.description}</p>
           </div>
