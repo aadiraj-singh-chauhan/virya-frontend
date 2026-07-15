@@ -168,6 +168,20 @@
   max-width: 200px;
 }
 
+/* Mobile-only auto-scrolling marquee (Splide) — hidden on desktop, where
+   .metricsRow above is a plain static row. */
+.metricsRowMobile {
+  display: none;
+}
+
+.metricsRowMobile :global(.splide__track) {
+  cursor: grab;
+}
+
+.metricsRowMobile :global(.splide.is-dragging .splide__track) {
+  cursor: grabbing;
+}
+
 .trustedBy {
   width: 100%;
 }
@@ -250,42 +264,23 @@
     max-width: 100%;
   }
 
-  /* Metrics now scroll/slide horizontally, peeking the next card.
-     Breaks out of .taglineSection's side padding to go edge-to-edge.
-     Note: a scrollable flex row silently trims its own leading
-     margin/padding once content overflows, so the left inset is a real
-     spacer flex item (::before) instead — margin/padding on the first
-     card itself gets ignored by the browser here. */
- .metricsRow {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding: 0;
-    gap: 16px;
-    margin-top: 180px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  /* flex gap already adds 16px against the adjacent card, so the spacer
-     itself only needs to make up the remaining 8px for a 24px total inset */
-  .metricsRow::before,
-  .metricsRow::after {
-    content: '';
-    flex: 0 0 8px;
-  }
-
-  .metricsRow::-webkit-scrollbar {
+  /* Metrics now auto-scroll (Splide) instead of the plain static desktop
+     row, peeking the next card. Breaks out of .taglineSection's side
+     padding to go edge-to-edge. */
+  .metricsRow {
     display: none;
   }
 
+  .metricsRowMobile {
+    display: block;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 180px;
+  }
+
   .metricCard {
-    flex: 0 0 auto;
-    width: 85%;
+    width: 85vw;
     min-height: 100px;
     padding: 16px 22px;
     gap: 12px;

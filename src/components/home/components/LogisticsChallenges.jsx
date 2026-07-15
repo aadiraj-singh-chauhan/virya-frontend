@@ -40,7 +40,7 @@ export default function LogisticsChallenges() {
         src="/assets/logistics-challenges-bg.webp"
         alt=""
         fill
-        sizes="100vw"
+        sizes="(max-width: 768px) 0px, 100vw"
         className={`${styles.bgImage} ${styles.bgImageDesktop}`}
         aria-hidden="true"
       />

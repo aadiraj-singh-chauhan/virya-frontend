@@ -57,6 +57,12 @@
   overflow: hidden;
 }
 
+.featuredImageWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .featuredBg {
   position: absolute;
   inset: 0;

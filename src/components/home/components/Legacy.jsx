@@ -2,9 +2,25 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import '@splidejs/splide/css/core';
 import Button from '@/components/ui/Button';
 import LogoSlider from './LogoSlider';
 import styles from '../css/Legacy.module.css';
+
+// Mobile-only marquee — desktop's metricsRow is a plain static 3-up row
+// (see .metricsRowMobile / .metricsRow display toggle in the CSS).
+const METRICS_SPLIDE_OPTIONS = {
+  type: 'loop',
+  autoWidth: true,
+  gap: '16px',
+  padding: { left: '8px', right: '8px' },
+  arrows: false,
+  pagination: false,
+  drag: true,
+  autoScroll: { speed: 0.9, autoStart: true, pauseOnHover: false, pauseOnFocus: false },
+};
 
 const CARDS = [
   {
@@ -128,6 +144,16 @@ export default function Legacy() {
               {METRICS.map(({ value, label }) => (
                 <MetricCard key={value} value={value} label={label} />
               ))}
+            </div>
+
+            <div className={styles.metricsRowMobile}>
+              <Splide options={METRICS_SPLIDE_OPTIONS} extensions={{ AutoScroll }} aria-label="Legacy metrics">
+                {METRICS.map(({ value, label }) => (
+                  <SplideSlide key={value}>
+                    <MetricCard value={value} label={label} />
+                  </SplideSlide>
+                ))}
+              </Splide>
             </div>
           </div>
           <div className={styles.trustedBy}>
