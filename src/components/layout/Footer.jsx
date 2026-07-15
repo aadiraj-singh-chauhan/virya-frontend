@@ -82,8 +82,18 @@ export default function Footer() {
         </div>
 
         <div className={styles.brand}>
-          <div className={styles.brandLeft}>
-            <Image src="/assets/logo-light.svg" alt="Virya" width={142} height={50} className={styles.logo} />
+          <Image src="/assets/logo-light.svg" alt="Virya" width={142} height={50} className={styles.logo} />
+
+          {/* On desktop this unwraps (display: contents) so .socials sits
+              directly next to the logo, matching the current design; on
+              mobile it becomes a real column pairing policies with the
+              socials row, per Figma (node 2813:15400) — the policy links
+              there sit with the socials, not down by the copyright. */}
+          <div className={styles.mobileLinksGroup}>
+            <div className={styles.policiesMobile}>
+              <a href="/privacy" className={styles.policyLink}>Privacy Policy</a>
+              <a href="/cookies" className={styles.policyLink}>Cookie policy</a>
+            </div>
             <div className={styles.socials}>
               <a href="https://instagram.com" aria-label="Instagram">
                 <Image src="/assets/icon-instagram.svg" alt="" width={20} height={20} className={styles.socialIcon} />

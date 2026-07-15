@@ -78,14 +78,15 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 32px;
   padding-bottom: 44px;
 }
 
-.brandLeft {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+/* Desktop: unwrapped, so .socials sits directly in the .brand row next to
+   the logo (current design). Mobile redefines this as a real column that
+   pairs the policy links with the socials row instead — see Footer.jsx. */
+.mobileLinksGroup {
+  display: contents;
 }
 
 .logo {
@@ -97,6 +98,10 @@
   display: flex;
   align-items: center;
   gap: 24px;
+}
+
+.policiesMobile {
+  display: none;
 }
 
 .socialIcon {
@@ -119,6 +124,7 @@
 
 .divider {
   object-fit: cover;
+  object-position: center;
 }
 
 /* ── Bottom bar ───────────────────────────────────────────────────────────── */
@@ -164,9 +170,38 @@
     width: 100%;
   }
 
+  /* Figma (node 2813:15400) pairs the 5 nav columns two-per-row instead of
+     stacking them full-width: Material Mobility spans the full row, then
+     People mobility/R&D platform pair up, then Resources/Company pair up.
+     Reordered via nth-child so the underlying NAV array (and desktop's
+     flat 5-column row) doesn't need to change. */
   .nav {
-    flex-direction: column;
-    gap: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 30px;
+  }
+
+  .navCol {
+    gap: 10px;
+  }
+
+  .navCol:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+
+  .navCol:nth-child(4) {
+    order: 2;
+  }
+
+  /* Material Mobility's own link list splits into two columns on mobile —
+     AMR10/AMR50 stacked on the left, APT20 alone on the right. */
+  .navCol:nth-child(1) .navList {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    column-gap: 16px;
+    row-gap: 5px;
   }
 
   .brand {
@@ -176,21 +211,42 @@
     padding-bottom: 32px;
   }
 
-  .brandLeft {
+  .mobileLinksGroup {
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .policiesMobile {
+    display: flex;
+    gap: 40px;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  /* Superseded by .policiesMobile, which sits with the socials row instead
+     of down here with the copyright — see Footer.jsx. */
+  .policies {
+    display: none;
+  }
+
+  /* The divider asset is ~47:1 (wide gradient stripe + wordmark) — at a
+     fixed 33px height on a narrow viewport, a centered object-fit: cover
+     crop lands on the plain gradient and crops the wordmark out entirely.
+     Zoom into the right portion instead, sized so the full wordmark plus
+     its trailing rule are always in frame. */
+  .dividerWrap {
+    height: auto;
+    aspect-ratio: 18 / 1;
+  }
+
+  .divider {
+    object-position: right center;
   }
 
   .bottomBar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
     padding-bottom: 48px;
-  }
-
-  .policies {
-    flex-direction: column;
-    gap: 12px;
   }
 }
