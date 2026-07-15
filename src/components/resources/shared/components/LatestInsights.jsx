@@ -25,21 +25,30 @@ const POSTS = [
 export default function LatestInsights() {
   const { display, play, reset } = useScramble('Explore more');
 
+  // Rendered twice: once inside .header (desktop position, next to the
+  // heading) and once below the grid (mobile only, toggled via display so
+  // only one copy is ever visible/focusable at a time) — same pattern as
+  // Voices.jsx's person/nav, since the two layouts place it in genuinely
+  // different spots rather than just reordering the same box.
+  const exploreLink = (
+    <a href="/resources/blogs" className={styles.exploreLink} onMouseEnter={play} onMouseLeave={reset}>
+      <span className={styles.linkText}>
+        <span className={styles.textOriginal}>Explore more</span>
+        <span className={styles.textDisplay} aria-hidden="true">{display || 'Explore more'}</span>
+      </span>
+      <svg width="13" height="11" viewBox="0 0 12.5 10.056" fill="none" aria-hidden="true">
+        <path d="M0 5.028L12.5 5.028" stroke="currentColor" />
+        <path d="M6 0L8 0L12.5 5.028L8 10.056L6 10.056" stroke="currentColor" />
+      </svg>
+    </a>
+  );
+
   return (
     <section className={styles.section} data-header-theme="light">
       <div className="container">
         <div className={styles.header}>
-          <h2 className={`heading-2 ${styles.heading}`}>Latest from Insights</h2>
-          <a href="/resources/blogs" className={styles.exploreLink} onMouseEnter={play} onMouseLeave={reset}>
-            <span className={styles.linkText}>
-              <span className={styles.textOriginal}>Explore more</span>
-              <span className={styles.textDisplay} aria-hidden="true">{display || 'Explore more'}</span>
-            </span>
-            <svg width="13" height="11" viewBox="0 0 12.5 10.056" fill="none" aria-hidden="true">
-              <path d="M0 5.028L12.5 5.028" stroke="currentColor" />
-              <path d="M6 0L8 0L12.5 5.028L8 10.056L6 10.056" stroke="currentColor" />
-            </svg>
-          </a>
+          <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Latest from Insights</h2>
+          <div className={styles.desktopOnly}>{exploreLink}</div>
         </div>
 
         <div className={styles.grid}>
@@ -50,7 +59,7 @@ export default function LatestInsights() {
                   src={post.image}
                   alt={post.title}
                   fill
-                  sizes="(max-width: 900px) 100vw, 444px"
+                  sizes="(max-width: 900px) 82vw, 444px"
                   className={styles.image}
                 />
               </div>
@@ -63,6 +72,8 @@ export default function LatestInsights() {
             </div>
           ))}
         </div>
+
+        <div className={styles.mobileOnly}>{exploreLink}</div>
       </div>
     </section>
   );

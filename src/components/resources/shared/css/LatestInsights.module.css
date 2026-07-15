@@ -1,5 +1,5 @@
 .section {
-  padding: 100px 0;
+  padding: 0 0 100px;
   background: var(--color-6);
 }
 
@@ -89,14 +89,45 @@
   color: var(--color-3);
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+/* exploreLink renders twice (see LatestInsights.jsx) — once in .header
+   for desktop, once below the grid for mobile — since the two layouts put
+   it in different spots rather than just reordering the same box. */
+.mobileOnly {
+  display: none;
+}
 
+@media (max-width: 900px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  /* Horizontally scrollable row instead of stacking — cards keep their
+     desktop-ish width so they read as swipeable "pages" rather than
+     shrinking to the viewport. */
+  .grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card {
+    flex: 0 0 82%;
+    max-width: 340px;
+    scroll-snap-align: start;
   }
 }

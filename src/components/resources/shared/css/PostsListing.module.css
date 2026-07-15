@@ -31,7 +31,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 58px;
   width: 404px;
 }
 
@@ -41,6 +40,10 @@
 
 .featuredText p {
   color: var(--color-3);
+  margin-bottom: 58px;
+  font-size: 20px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 /* ── Tags (shared by featured + grid cards) ──────────────────────────────── */
@@ -69,12 +72,14 @@
 
 .tabs {
   display: flex;
-  gap: 40px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   margin-bottom: 50px;
 }
 
 .tab {
+  flex: 0 0 232px;
+  display: flex;
+  justify-content: center;
   border: none;
   background: none;
   cursor: pointer;
@@ -88,7 +93,7 @@
 
 .tabActive {
   opacity: 1;
-  border-bottom-color: var(--color-1);
+  border-bottom-color: var(--color-3);
 }
 
 /* ── Grid ─────────────────────────────────────────────────────────────────── */
@@ -162,6 +167,13 @@
     gap: 24px;
   }
 
+  .featuredText p {
+    margin-bottom: 0;
+    font-size: 16px;
+    line-height: 1.4;
+    letter-spacing: 0em;
+  }
+
   .grid {
     grid-template-columns: 1fr;
     row-gap: 30px;
@@ -178,7 +190,12 @@
   }
 
   .tabs {
+    justify-content: space-between;
     gap: 24px;
     margin-bottom: 32px;
+  }
+
+  .tab {
+    flex: 0 0 auto;
   }
 }
