@@ -19,27 +19,11 @@
   overflow: hidden;
 }
 
-.image {
-  object-fit: cover;
-}
-
-.tint {
-  position: absolute;
-  inset: 0;
-  background: var(--color-2);
-  mix-blend-mode: overlay;
-}
-
 .heading {
   position: relative;
   z-index: 1;
   max-width: 444px;
-  font-family: var(--font-primary);
-  font-size: 50px;
-  font-weight: 400;
-  line-height: 1.1;
-  text-transform: uppercase;
-  color: var(--color-5);
+  color: var(--color-3);
 }
 
 .desc {
@@ -50,7 +34,8 @@
   font-family: var(--font-primary);
   font-size: 15px;
   line-height: 1.4;
-  color: var(--color-5);
+  color: var(--color-3);
+  opacity: 0.6;
 }
 
 .form {
@@ -70,6 +55,11 @@
   width: 100%;
 }
 
+.submit {
+  justify-content: center;
+  width: 100%;
+}
+
 @media (max-width: 1024px) {
   .inner {
     flex-direction: column;
@@ -79,7 +69,12 @@
   .visual {
     flex: none;
     width: 100%;
-    height: 380px;
+    height: auto;
+    padding: 40px 0 0;
+  }
+
+  .desc {
+    margin-top: 20px;
   }
 
   .form {

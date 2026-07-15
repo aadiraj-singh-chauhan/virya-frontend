@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import FormField from '@/components/shared/components/FormField';
 import styles from '../css/PartnerCTAForm.module.css';
@@ -15,17 +14,7 @@ export default function PartnerCTAForm() {
       <div className="container">
         <div className={styles.inner}>
           <div className={styles.visual}>
-            <Image
-              src="/assets/resources/partners/cta-form-bg.png"
-              alt=""
-              fill
-              sizes="(max-width: 900px) 100vw, 560px"
-              aria-hidden="true"
-              className={styles.image}
-            />
-            <div className={styles.tint} aria-hidden="true" />
-
-            <h2 className={styles.heading}>Collaborate beyond conventional automation</h2>
+            <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Collaborate beyond conventional automation</h2>
             <p className={styles.desc}>
               Don&rsquo;t see the right role? Submit your details below and we&rsquo;ll reach out
               when a suitable opportunity opens.
@@ -47,7 +36,7 @@ export default function PartnerCTAForm() {
               />
             </div>
 
-            <Button type="submit" property1="Default" size="Button-2">Submit</Button>
+            <Button type="submit" property1="Default" size="Button-2" className={styles.submit}>Submit</Button>
           </form>
         </div>
       </div>

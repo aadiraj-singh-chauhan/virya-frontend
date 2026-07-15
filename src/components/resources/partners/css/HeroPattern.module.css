@@ -5,19 +5,20 @@
   100% { transform: translateY(var(--travel-distance)); opacity: 0; }
 }
 
-.pulseLeft,
-.pulseRight {
+.pulse1,
+.pulse2 {
   will-change: transform, opacity;
 }
 
-/* Dash rides the long vertical run of its path; --travel-distance is clamped
-   so the pulse never drifts past where that run actually ends. */
-.pulseLeft { --travel-distance: 350px; animation: travelY 4s linear infinite; animation-delay: -1s; }
-.pulseRight { --travel-distance: 190px; animation: travelY 4.6s linear infinite; animation-delay: -2.3s; }
+/* Each dash rides the long vertical run of its own path — 160 user-units
+   long in both cases — with slightly different durations/delays so the two
+   don't pulse in lockstep. */
+.pulse1 { --travel-distance: 160px; animation: travelY 4s linear infinite; animation-delay: -1s; }
+.pulse2 { --travel-distance: 160px; animation: travelY 4.6s linear infinite; animation-delay: -2.3s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .pulseLeft,
-  .pulseRight {
+  .pulse1,
+  .pulse2 {
     animation: none;
   }
 }

@@ -8,23 +8,14 @@
   overflow: hidden;
 }
 
-.vectorLeft,
-.vectorRight {
+.pattern {
   position: absolute;
-  top: 60px;
-  width: 320px;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: auto;
   opacity: 0.5;
   pointer-events: none;
-}
-
-.vectorLeft {
-  left: -180px;
-}
-
-.vectorRight {
-  right: -180px;
-  transform: scaleX(-1);
 }
 
 .content {
@@ -62,27 +53,12 @@
   opacity: 0.5;
 }
 
-.targetDot {
-  display: block;
-  width: 18px;
-  height: 18px;
-  margin-top: 18px;
-  border-radius: 50%;
-  background: var(--color-1);
-  box-shadow: 0 0 0 6px rgba(244, 61, 0, 0.2);
-}
-
 .button {
-  margin-top: 12px;
+  margin-top: 32px;
 }
 
 @media (max-width: 768px) {
   .section {
     padding: 120px 24px 60px;
-  }
-
-  .vectorLeft,
-  .vectorRight {
-    width: 200px;
   }
 }

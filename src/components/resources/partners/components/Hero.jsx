@@ -1,12 +1,11 @@
 import Button from '@/components/ui/Button';
-import { HeroPatternLeft, HeroPatternRight } from './HeroPattern';
+import HeroPattern from './HeroPattern';
 import styles from '../css/Hero.module.css';
 
 export default function Hero() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <HeroPatternLeft className={styles.vectorLeft} />
-      <HeroPatternRight className={styles.vectorRight} />
+      <HeroPattern className={styles.pattern} />
 
       <div className={styles.content}>
         <div className={styles.tag}>
@@ -14,7 +13,7 @@ export default function Hero() {
           <span className="label-2">Partners</span>
         </div>
 
-        <h1 className={`heading-2 ${styles.heading}`}>
+        <h1 className={`heading-2 heading-2-md ${styles.heading}`}>
           Our Network
           <br />
           of Trusted Partners
@@ -24,8 +23,6 @@ export default function Hero() {
           Collaborating across technology, infrastructure, and research to build reliable,
           scalable systems.
         </p>
-
-        <span className={styles.targetDot} aria-hidden="true" />
 
         <Button property1="Default" size="Button-2" href="#become-a-partner" className={styles.button}>
           Be a partner
