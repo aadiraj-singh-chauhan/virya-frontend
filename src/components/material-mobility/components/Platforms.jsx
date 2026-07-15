@@ -48,7 +48,7 @@ export default function Platforms() {
                 <p className={`body-1 ${styles.description}`}>{platform.description}</p>
                 <div className={styles.explore}>
                   <Button property1="Default" href={`/products/${platform.id}`}>
-                    Explore {platform.name}
+                    {`Explore ${platform.name}`}
                   </Button>
                 </div>
               </div>

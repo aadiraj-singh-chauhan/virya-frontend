@@ -53,7 +53,7 @@ export default function RelatedProducts() {
                 <p className={`body-1 ${styles.desc}`}>{p.description}</p>
                 <div className={styles.explore}>
                   <Button property1="Default" size="Button-1" href={`/products/${p.id}`}>
-                    Explore {p.name}
+                    {`Explore ${p.name}`}
                   </Button>
                 </div>
               </div>
