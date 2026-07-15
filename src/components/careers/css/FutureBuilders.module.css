@@ -110,10 +110,17 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* Desktop's divider is a plain rule — the progress segment (mobile only,
-   see below) stays hidden here. */
+/* Progress track — a faint full-width line with an orange segment marking
+   how far through VALUES the active card is. Same behavior at every
+   breakpoint (was previously mobile-only, matching Figma node 2944:6915). */
 .progress {
-  display: none;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--color-1);
+  transition: width 0.3s ease;
 }
 
 @media (max-width: 1024px) {
@@ -129,19 +136,6 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 24px;
-  }
-
-  /* Figma (node 2944:6915): the mobile divider is a progress track — a
-     faint full-width line with an orange segment marking how far through
-     VALUES the active card is, instead of desktop's plain rule. */
-  .progress {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: var(--color-1);
-    transition: width 0.3s ease;
   }
 }
 
