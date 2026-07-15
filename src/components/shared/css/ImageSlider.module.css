@@ -5,30 +5,23 @@
   gap: 24px;
 }
 
-/* Clips the track to the visible area — the track itself is moved purely
-   via transform (framer-motion's drag="x" + x motion value), not native
-   scrolling, so this is what actually hides the off-screen cards. */
+/* Splide's own .splide__track already clips + owns drag/loop/autoplay —
+   this just gives the cursor-following arrow (position: absolute) a
+   positioning context. */
 .viewport {
   position: relative;
-  overflow: hidden;
 }
 
 .cursorArrowsMode .viewport {
   cursor: pointer;
 }
 
-.track {
-  display: flex;
-  gap: 12px;
-  width: max-content;
+.viewport :global(.splide__track) {
+  cursor: grab;
 }
 
-/* Left indent before the first card. Width is 58px because the 12px gap
-   adds the remaining 12px → 70px total. */
-.track::before {
-  content: "";
-  flex-shrink: 0;
-  width: 58px;
+.viewport :global(.splide.is-dragging .splide__track) {
+  cursor: grabbing;
 }
 
 /* ── Card ─────────────────────────────────────────────────────────────────── */
@@ -85,6 +78,12 @@
   padding-left: 58px;
 }
 
+/* Static mobile fallback for cursorArrows mode — hidden on desktop, where
+   the cursor-following arrow (.cursorArrow) is used instead. */
+.navPairMobile {
+  display: none;
+}
+
 .navBtn {
   width: 42px;
   height: 42px;
@@ -139,16 +138,31 @@
 }
 
 @media (max-width: 768px) {
-  .track::before {
-    width: 4px;
+  .navPair {
+    display: none;
   }
 
-  .navPair {
-    padding-left: 4px;
+  /* JS only ever shows this via mousemove/mouseenter — real touch never
+     fires those, but hybrid devices (trackpad, iOS's synthetic mouse
+     events after a tap) can. Force it off so the static pair below is
+     always the only nav control on mobile. */
+  .cursorArrow {
+    display: none;
+  }
+
+  /* Under the slider, right-aligned — the cursor arrow can't appear on
+     touch, so this is the only nav affordance on mobile. The slider itself
+     bleeds full-bleed to the screen edge (so slides can peek off-screen),
+     but the arrows shouldn't follow that bleed — inset them to match the
+     page's usual mobile content padding instead. */
+  .navPair.navPairMobile {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 24px 0 0;
   }
 
   .card {
-    max-width: 400px;
-    height: 320px;
+    max-width: var(--mobile-card-width, 400px);
+    height: var(--mobile-card-height, 320px);
   }
 }
