@@ -8,18 +8,43 @@ import styles from '../css/ContactForm.module.css';
 
 const REASONS = ['Sales and deployment', 'Partnerships & Collaboration', 'Service & Training'];
 
+// CID (10029747371914808982 = hex 0x8b30d21849e3ce96) opens the exact same
+// "Virya Autonomous Technologies Pvt Ltd" business listing as the embed
+// below, not just a generic coordinate pin.
+const MAP_EXTERNAL_URL = 'https://www.google.com/maps?cid=10029747371914808982';
+
 function MapLink() {
   const label = 'Locate us on map';
   const { display, play, reset } = useScramble(label);
 
   return (
-    <a href="https://maps.google.com" className={styles.mapLink} onMouseEnter={play} onMouseLeave={reset}>
-      <span className={styles.mapLinkText}>
-        <span className={styles.textOriginal}>{label}</span>
-        <span className={styles.textDisplay} aria-hidden="true">{display || label}</span>
-      </span>
-      <ArrowIcon />
-    </a>
+    <div className={styles.mapBlock}>
+      <div className={styles.mapEmbedWrap}>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4113.268153589137!2d77.6939804!3d12.818586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6d3376024173%3A0x8b30d21849e3ce96!2sVirya%20Autonomous%20Technologies%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1784122958880!5m2!1sen!2sin"
+          className={styles.mapEmbed}
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+          title="Virya Autonomous Technologies — office location"
+        />
+      </div>
+      <a
+        href={MAP_EXTERNAL_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.mapLink}
+        onMouseEnter={play}
+        onMouseLeave={reset}
+      >
+        <span className={styles.mapLinkText}>
+          <span className={styles.textOriginal}>{label}</span>
+          <span className={styles.textDisplay} aria-hidden="true">{display || label}</span>
+        </span>
+        <ArrowIcon />
+      </a>
+    </div>
   );
 }
 
