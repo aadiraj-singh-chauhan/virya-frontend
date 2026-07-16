@@ -40,7 +40,7 @@ export default function AutonomousLab() {
       <div className={styles.right}>
         <div className={styles.media} ref={mediaRef}>
           <Image
-            src="/assets/rd-autonomous-lab.png"
+            src="/assets/rd-autonomous-lab.webp"
             alt="Engineer working on an autonomous lab platform"
             fill
             sizes="(max-width: 767px) 100vw, 66vw"

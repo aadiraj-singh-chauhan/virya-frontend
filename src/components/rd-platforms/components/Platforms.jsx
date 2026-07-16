@@ -20,7 +20,7 @@ const PLATFORMS = [
     title: 'Mini Robot Sensor Platform',
     expandedTitle: 'Mini Robot Sensor Platform',
     thumb: '/assets/rd-platforms-dbw-thumb.webp',
-    image: '/assets/mini-robot-sensor-platform.png',
+    image: '/assets/mini-robot-sensor-platform.webp',
   },
   {
     title: 'Sensor Carts',
@@ -31,26 +31,26 @@ const PLATFORMS = [
   {
     title: 'AMR10 Dev Platform',
     expandedTitle: 'AMR10 Dev Platform',
-    thumb: '/assets/amr10-dev-platform-sketch.png',
-    image: '/assets/amr10-dev-platform.png',
+    thumb: '/assets/amr10-dev-platform-sketch.webp',
+    image: '/assets/amr10-dev-platform.webp',
   },
   {
     title: '4-Seater Skateboard Platform',
     expandedTitle: '4-Seater Skateboard Platform',
-    thumb: '/assets/4-seater-skateboard-platform-sketch.png',
-    image: '/assets/4-seater-skateboard-platform.png',
+    thumb: '/assets/4-seater-skateboard-platform-sketch.webp',
+    image: '/assets/4-seater-skateboard-platform.webp',
   },
   {
     title: 'APM for R&D',
     expandedTitle: 'APM for R&D',
-    thumb: '/assets/apm-for-R&D-sketch.png',
-    image: '/assets/apm-for-R&D.png',
+    thumb: '/assets/apm-for-R&D-sketch.webp',
+    image: '/assets/apm-for-R&D.webp',
   },
   {
     title: 'DBW Buggy for R&D',
     expandedTitle: 'DBW Buggy for R&D',
-    thumb: '/assets/dbw-buggy-R&D-sketch.png',
-    image: '/assets/dbw-buggy-R&D.png',
+    thumb: '/assets/dbw-buggy-R&D-sketch.webp',
+    image: '/assets/dbw-buggy-R&D.webp',
   },
 ];
 
