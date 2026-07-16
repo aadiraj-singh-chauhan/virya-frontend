@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useScramble } from '@/hooks/useScramble';
 import Button from '@/components/ui/Button';
 import FooterGlow from './FooterGlow';
@@ -21,12 +22,12 @@ const NAV = [
   },
   {
     title: 'R&D platform',
-    links: [{ label: 'DBW', href: '/products/dbw' }],
+    links: [{ label: 'DBW', href: '/rd-platforms' }],
   },
   {
     title: 'Company',
     links: [
-      { label: 'About us', href: '/about' },
+      { label: 'About us', href: '/company' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact us', href: '/contact' },
     ],
@@ -45,12 +46,12 @@ const NAV = [
 function NavLink({ href, children }) {
   const { display, play, reset } = useScramble(children);
   return (
-    <a href={href} onMouseEnter={play} onMouseLeave={reset}>
+    <Link href={href} onMouseEnter={play} onMouseLeave={reset}>
       <span className={styles.linkText}>
         <span className={styles.textOriginal}>{children}</span>
         <span className={styles.textDisplay} aria-hidden="true">{display || children}</span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -91,18 +92,18 @@ export default function Footer() {
               there sit with the socials, not down by the copyright. */}
           <div className={styles.mobileLinksGroup}>
             <div className={styles.policiesMobile}>
-              <a href="/privacy" className={styles.policyLink}>Privacy Policy</a>
-              <a href="/cookies" className={styles.policyLink}>Cookie policy</a>
+              <Link href="/privacy" className={styles.policyLink}>Privacy Policy</Link>
+              <Link href="/cookies" className={styles.policyLink}>Cookie policy</Link>
             </div>
             <div className={styles.socials}>
-              <a href="https://instagram.com" aria-label="Instagram">
-                <Image src="/assets/icon-instagram.svg" alt="" width={20} height={20} className={styles.socialIcon} />
+              <a href="https://www.instagram.com/virya.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <Image src="/assets/icon-instagram.svg" alt="" width={20} height={20} className={`${styles.socialIcon} ${styles.socialIconInstagram}`} />
               </a>
-              <a href="https://linkedin.com" aria-label="LinkedIn">
-                <Image src="/assets/icon-linkedin.svg" alt="" width={20} height={20} className={styles.socialIcon} />
+              <a href="https://www.linkedin.com/company/virya-ai/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <Image src="/assets/icon-linkedin.svg" alt="" width={17} height={17} className={styles.socialIcon} />
               </a>
-              <a href="https://youtube.com" aria-label="YouTube">
-                <Image src="/assets/icon-youtube.svg" alt="" width={20} height={20} className={styles.socialIcon} />
+              <a href="http://youtube.com/watch?si=UT81BiqTgyFKQjY0&v=n_GGMQRWhtk&feature=youtu.be" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <Image src="/assets/icon-youtube.svg" alt="" width={24} height={17} className={styles.socialIcon} />
               </a>
             </div>
           </div>

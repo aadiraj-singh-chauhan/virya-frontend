@@ -104,12 +104,26 @@
   display: none;
 }
 
+/* Height-matched, not a fixed square box — the source SVGs have different
+   native aspect ratios (Instagram/LinkedIn are square, YouTube is a wider
+   rectangle), so forcing all three into the same width x height box let
+   object-fit: contain letterbox YouTube's icon and made it read smaller
+   than the other two despite an identical bounding box. Width comes from
+   each Image's own explicit width/height props (matching its real aspect
+   ratio) instead. */
 .socialIcon {
   display: block;
-  width: 20px;
   height: 20px;
-  object-fit: contain;
+  width: auto;
   filter: brightness(0) invert(1);
+}
+
+/* Instagram's glyph (thin ring + dot) has more internal padding baked into
+   its source SVG than LinkedIn/YouTube's bolder marks, so at the same
+   bounding-box height it reads visually smaller — nudged up slightly to
+   balance. */
+.socialIconInstagram {
+  height: 23px;
 }
 
 /* ── Divider ──────────────────────────────────────────────────────────────── */
