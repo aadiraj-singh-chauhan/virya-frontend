@@ -22,7 +22,7 @@ export default function EventBanner() {
               <p className="body-1 body-1-md">
                 Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
               </p>
-              <Button href="/events/apt20" property1="Default" size="Button-2">Learn more</Button>
+              <Button href="/products/apt20" property1="Default" size="Button-2">Learn more</Button>
             </div>
             <div className={styles.imageWrap}>
               <Image

@@ -51,10 +51,10 @@ export default function Hero() {
           </div>
 
           <div className={`label-1 label-1-md ${styles.cta}`}>
-            <Button href="/solutions/material-mobility" property1="Variant3" size="Button-2">
+            <Button href="/material-mobility" property1="Variant3" size="Button-2">
               Explore material mobility
             </Button>
-            <Button href="/solutions/people-mobility" property1="Variant3" size="Button-2">
+            <Button href="/people-mobility" property1="Variant3" size="Button-2">
               Explore people mobility
             </Button>
           </div>

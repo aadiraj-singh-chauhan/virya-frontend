@@ -26,7 +26,7 @@ export default function LatestFromVirya() {
 
         <div className={styles.header}>
           <h2 className={`heading-2 heading-2-md ${styles.headingText}`}>Latest from Virya</h2>
-          <a href="/resources" className={`label-2 ${styles.exploreLink}`} onMouseEnter={play} onMouseLeave={reset}>
+          <a href="/resources/blogs" className={`label-2 ${styles.exploreLink}`} onMouseEnter={play} onMouseLeave={reset}>
             <span className={styles.linkText}>
               <span className={styles.textOriginal}>Explore more</span>
               <span className={styles.textDisplay} aria-hidden="true">{display || 'Explore more'}</span>
