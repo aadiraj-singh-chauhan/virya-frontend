@@ -13,8 +13,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  max-width: 1372px;
-  margin: 0 auto;
 }
 
 .card {
@@ -41,8 +39,6 @@
   transition: background .4s ease;
 }
 
-/* Caption moves to the top and desc fades in over a wider area on hover —
-   darken further so both stay readable against the image underneath. */
 .card:hover .scrim {
   background: linear-gradient(
     to bottom,
@@ -65,11 +61,6 @@
   top: 100%;
   transform: translateY(-100%);
   color: var(--color-5);
-  /* Reserve 2 lines (label-1's 18px / 1.4 line-height) so translateY(-100%)
-     resolves to the same fixed offset for every card regardless of
-     whether its title wraps to 1 or 2 lines — otherwise a 1-line card's
-     caption box was shorter, so translateY(-100%) landed less far up and
-     its first line sat lower than a 2-line card's first line. */
   min-height: 52px;
   transition: top .4s ease, transform .4s ease;
 }
@@ -86,10 +77,6 @@
   bottom: 0;
   color: var(--color-5);
   opacity: 0;
-  /* Text only, never needs its own interaction — without this, the
-     invisible-but-still-hit-testable box (opacity alone doesn't disable
-     pointer events) sat over the mobile expand button and ate its
-     clicks. */
   pointer-events: none;
   transform: translateY(8px);
   transition: opacity .4s ease, transform .4s ease;
@@ -100,9 +87,6 @@
   transform: translateY(0);
 }
 
-/* Mobile-only expand button (Figma node 2813:15405) — hidden on desktop,
-   where the caption itself is the absolutely-positioned/hover-animated
-   element and .captionRow is just a transparent wrapper around it. */
 .expandBtn {
   display: none;
   border: none;
@@ -130,9 +114,6 @@
     padding: 60px 0 0;
   }
 
-  /* Horizontal swipe/scroll row instead of a stacked single column — each
-     card shows most of its width with a peek of the next one to hint
-     there's more to scroll right into. */
   .grid {
     display: flex;
     grid-template-columns: unset;
@@ -140,13 +121,11 @@
     gap: 16px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 
-  /* Scroll containers collapse start-side padding (it's excluded from the
-     scrollable area in Chromium/WebKit), so a plain padding-left wouldn't
-     show — a real spacer flex item reserves the inset instead. The grid's
-     own 16px gap also lands between this spacer and the first card, so the
-     margin here offsets that to land on a true 12px inset. */
   .grid::before {
     content: '';
     flex: 0 0 0;
@@ -165,9 +144,6 @@
     margin-bottom: 32px;
   }
 
-  /* No hover on touch, so the caption just sits at rest — switch it from
-     the desktop absolute/hover-slide setup to a normal flex row shared
-     with the new expand button, bottom-anchored via .textWrap. */
   .textWrap {
     display: flex;
     flex-direction: column;
@@ -194,8 +170,6 @@
     flex-shrink: 0;
   }
 
-  /* Tapping the expand button reveals the desc the same way desktop's
-     :hover does — same scrim darkening, same desc fade/slide values. */
   .cardExpanded .scrim {
     background: linear-gradient(
       to bottom,
@@ -206,13 +180,6 @@
     );
   }
 
-  /* Desktop's .desc is absolute/bottom:0 because the caption slides out
-     of the way on hover first. On mobile the caption never moves — it's
-     already sitting at the bottom via .textWrap's justify-content, so an
-     absolutely-positioned desc would overlap it instead of stacking below
-     it in DOM order. Switch to normal flow (grown via max-height, since a
-     visible-but-empty box would otherwise leave a gap while collapsed)
-     so it takes its place below .captionRow in the flex column instead. */
   .desc {
     position: static;
     max-height: 0;
