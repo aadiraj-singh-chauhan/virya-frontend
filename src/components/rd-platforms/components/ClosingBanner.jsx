@@ -6,7 +6,7 @@ export default function ClosingBanner() {
     <section className={styles.section} data-header-theme="light">
       <div className={styles.imageWrap}>
         <Image
-          src="/assets/rd-platforms-closing.webp"
+          src="/assets/rd-floor-operations.webp"
           alt="Automated warehouse floor with autonomous vehicles moving racks and containers"
           fill
           sizes="100vw"
