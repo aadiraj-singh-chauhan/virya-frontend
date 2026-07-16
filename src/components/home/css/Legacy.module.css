@@ -1,6 +1,7 @@
 .section {
   position: relative;
   overflow: hidden;
+  scroll-margin-top: var(--header-height);
 }
 
 /* ── Section-wide background ───────────────────────────────────────────────── */

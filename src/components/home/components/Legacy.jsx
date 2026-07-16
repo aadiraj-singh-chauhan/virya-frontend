@@ -75,7 +75,7 @@ export default function Legacy() {
   useEffect(() => () => clearTimeout(hoverTimerRef.current), []);
 
   return (
-    <section className={styles.section}>
+    <section id="legacy" className={styles.section}>
       <Image
         src="/assets/legacy-performs-bg.webp"
         alt=""

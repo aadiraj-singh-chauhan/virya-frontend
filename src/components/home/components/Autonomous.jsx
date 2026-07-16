@@ -1,6 +1,17 @@
+'use client';
+
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import styles from '../css/Autonomous.module.css';
+
+// Smooth-scrolls only this one in-page jump, scoped to this click — a global
+// `scroll-behavior: smooth` also animates Next.js's own scroll-to-top-on-
+// navigation (see home/components/Legacy.jsx). scrollIntoView() has no such
+// global side effect.
+function scrollToLegacy(e) {
+  e.preventDefault();
+  document.getElementById('legacy')?.scrollIntoView({ behavior: 'smooth' });
+}
 
 export default function Autonomous() {
   return (
@@ -21,7 +32,7 @@ export default function Autonomous() {
         <h2 className="heading-2 heading-2-md">
           Autonomous systems that fit the way your factory actually runs
         </h2>
-        <Button href="/solutions" property1="Default" size="Button-2">
+        <Button href="#legacy" onClick={scrollToLegacy} property1="Default" size="Button-2">
           Explore our solutions
         </Button>
       </div>
