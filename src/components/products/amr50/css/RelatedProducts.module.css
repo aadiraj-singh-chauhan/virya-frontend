@@ -2,7 +2,7 @@
 
 .section {
   background: var(--color-6);
-  padding: 100px 0;
+  padding: 100px 0 0;
 }
 
 .heading {
@@ -51,27 +51,7 @@
 
 /* ── Watermark ────────────────────────────────────────────────────────────── */
 
-.watermarkOrange {
-  position: absolute;
-  top: 31px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-family: var(--font-primary);
-  font-size: 90px;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: var(--color-1);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  z-index: 2;
-  transition: color 0.4s ease, opacity 0.4s ease;
-}
-
-.watermarkDim {
+.watermark {
   position: absolute;
   top: 31px;
   left: 0;
@@ -92,8 +72,7 @@
   transition: color 0.4s ease, opacity 0.4s ease;
 }
 
-.card:hover .watermarkOrange,
-.card:hover .watermarkDim {
+.card:hover .watermark {
   color: var(--color-2);
   opacity: 1;
 }
@@ -162,7 +141,7 @@
 @media (max-width: 767px) {
 
   .section {
-    padding: 0 0 60px;
+    padding: 60px 0 0;
   }
 
   .heading {
@@ -182,8 +161,7 @@
     height: 440px;
   }
 
-  .watermarkOrange,
-  .watermarkDim {
+  .watermark {
     top: 18px;
     font-size: 56px;
   }
@@ -222,8 +200,7 @@
     height: 380px;
   }
 
-  .watermarkOrange,
-  .watermarkDim {
+  .watermark {
     font-size: 42px;
     top: 16px;
   }

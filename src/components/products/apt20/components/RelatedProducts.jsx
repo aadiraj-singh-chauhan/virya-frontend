@@ -9,7 +9,6 @@ const PRODUCTS = [
     bg: '/assets/mm-amr-bg.webp',
     robot: '/assets/mm-amr10.webp',
     description: 'Compact autonomous mobile robot designed for 1-ton towing capacity in confined manufacturing environments',
-    watermark: styles.watermarkOrange,
   },
   {
     id: 'amr50',
@@ -17,7 +16,6 @@ const PRODUCTS = [
     bg: '/assets/mm-amr-bg.webp',
     robot: '/assets/mm-amr50.webp',
     description: 'Rugged and powerful autonomous mobile robot designed for 5-ton towing capacity with indoor and outdoor capability',
-    watermark: styles.watermarkDim,
   },
 ];
 
@@ -35,7 +33,7 @@ export default function RelatedProducts() {
               </div>
 
               <div className={styles.gradient} aria-hidden="true" />
-              <p className={p.watermark} aria-hidden="true">{p.name}</p>
+              <p className={styles.watermark} aria-hidden="true">{p.name}</p>
 
               <div className={styles.robotWrap}>
                 <Image src={p.robot} alt={p.name} fill sizes="(max-width: 768px) 100vw, 50vw" className={styles.robotImage} />

@@ -9,7 +9,6 @@ const PRODUCTS = [
     bg: '/assets/mm-amr-bg.webp',
     robot: '/assets/mm-amr50.webp',
     description: 'Rugged and powerful autonomous mobile robot designed for 5-ton towing capacity with indoor and outdoor capability',
-    watermark: styles.watermarkOrange,
   },
   {
     id: 'apt20',
@@ -17,7 +16,6 @@ const PRODUCTS = [
     bg: '/assets/mm-amr-bg.webp',
     robot: '/assets/mm-apt20.webp',
     description: 'Autonomous pallet truck designed for 2-ton lifting capacity, offering seamless manual and autonomous hybrid modes',
-    watermark: styles.watermarkDim,
   },
 ];
 
@@ -36,7 +34,7 @@ export default function RelatedProducts() {
               </div>
 
               <div className={styles.gradient} aria-hidden="true" />
-              <p className={p.watermark} aria-hidden="true">{p.name}</p>
+              <p className={styles.watermark} aria-hidden="true">{p.name}</p>
 
               {/* Robot render */}
               <div className={styles.robotWrap}>
