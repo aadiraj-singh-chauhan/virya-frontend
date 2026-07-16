@@ -28,7 +28,13 @@ export default function Gallery() {
           Lorem ipsum dolor sit amet consectetur. Risus tristique tellus ullamcorper arcu nec convallis libero. Tincidunt risus in sapien urna donec morbi aliquam ac. Tempus sed id sem mi nullam. A placerat posuere vulputate lacinia quis morbi lobortis feugiat est. Vestibulum arcu egestas pellentesque
         </p>
 
-        <Button property1="Variant2" size="Button-1" href="#">Know more about us</Button>
+        <Button
+          property1="Variant2"
+          size="Button-1"
+          href="/company"
+        >
+          Know more about us
+        </Button>
       </div>
     </section>
   );
