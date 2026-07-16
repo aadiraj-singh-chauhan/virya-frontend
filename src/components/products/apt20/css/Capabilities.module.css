@@ -206,6 +206,7 @@
 }
 
 .featureDesc {
+  color: var(--color-3);
   opacity: 0.5;
 }
 
