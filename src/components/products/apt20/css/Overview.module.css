@@ -7,6 +7,19 @@
   background: var(--color-6);
 }
 
+/* Banner→Overview gap. Desktop only — topPart is a fixed-height (572px),
+   overflow:hidden box with its heading/stats absolutely positioned inside
+   it, so padding can't be added there without pushing that content out of
+   the box; padding-top on this flex-column wrapper instead pushes the
+   whole topPart block down without touching its internals. Scoped to
+   desktop (>1150px) so it doesn't stack with topPart's own tablet/mobile
+   padding-top, which carries the gap at those breakpoints instead. */
+@media (min-width: 1151px) {
+  .section {
+    padding-top: 100px;
+  }
+}
+
 /* ── Top part ─────────────────────────────────────────────────────────────── */
 
 .topPart {
@@ -170,7 +183,7 @@
 @media (max-width: 767px) {
   .topPart {
     height: auto;
-    padding: 40px 20px 32px;
+    padding: 60px 20px 32px;
     overflow: visible;
   }
 

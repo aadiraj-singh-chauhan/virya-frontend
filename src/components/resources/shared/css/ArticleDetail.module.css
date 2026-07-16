@@ -1,5 +1,5 @@
 .section {
-  padding: 140px 0 55px;
+  padding: 140px 0 0;
   background: var(--color-6, #FDF8F5);
 }
 
@@ -204,7 +204,7 @@
 
 .relatedSection {
   background: var(--color-7, #FBF3E7);
-  padding: 75px 0;
+  padding: 100px 0;
 }
 
 .relatedHeader {
@@ -303,10 +303,10 @@
 
 @media (max-width: 767px) {
   .section {
-    padding: 110px 0 40px;
+    padding: 110px 0 0;
   }
 
   .relatedSection {
-    padding: 50px 0;
+    padding: 60px 0;
   }
 }

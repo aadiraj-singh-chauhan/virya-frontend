@@ -1,5 +1,6 @@
 .section {
   background: var(--color-6);
+  padding-bottom: 100px;
 }
 
 /* Tall runway that gives the scroll-jack effect room: while its top is
@@ -179,6 +180,10 @@
 }
 
 @media (max-width: 767px) {
+  .section {
+    padding-bottom: 60px;
+  }
+
   /* Static on mobile — no pin, no scroll-jack, no per-step animation. The
      tall runway collapses back to normal content height and `position:
      static` overrides the fixed/absolute inline pinStyle the hook still

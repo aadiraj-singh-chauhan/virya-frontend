@@ -1,5 +1,5 @@
 .section {
-  padding: 100px 0 40px;
+  padding: 100px 0 0;
   background: var(--color-6);
 }
 
@@ -124,7 +124,7 @@
 @media (max-width: 767px) {
 
   .section {
-    padding: 60px 0 60px;
+    padding: 60px 0 0;
   }
 
   .heading {

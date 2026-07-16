@@ -2,7 +2,7 @@
 
 .section {
   background: var(--color-6);
-  padding: 80px 0 0;
+  padding: 100px 0 0;
   overflow: hidden;
 }
 
@@ -399,7 +399,7 @@
 
    @media (max-width: 767px) {
     .section {
-      padding: 40px 0 0;
+      padding: 60px 0 0;
     }
   
     .header {

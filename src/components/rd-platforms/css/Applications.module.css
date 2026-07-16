@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   background: var(--color-6, #FDF8F5);
-  padding: 110px 0;
+  padding: 100px 0 0;
 }
 
 /* Decorative blueprint-grid background, shared with the Banner section —
@@ -139,7 +139,7 @@
 
 @media (max-width: 767px) {
   .section {
-    padding: 70px 0;
+    padding: 60px 0 0;
   }
 
   .inner {

@@ -1,6 +1,6 @@
 .section {
   background: var(--color-6, #FDF8F5);
-  padding: 0 35px 80px;
+  padding: 100px 35px 0;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -56,6 +56,10 @@
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
+  .section {
+    padding: 60px 35px 0;
+  }
+
   .images {
     overflow-x: auto;
     flex-wrap: nowrap;

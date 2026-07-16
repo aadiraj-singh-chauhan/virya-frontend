@@ -1,5 +1,5 @@
 .section {
-  padding: 44px 0 45px;
+  padding: 100px 0;
   background: var(--color-6);
 }
 
@@ -17,76 +17,25 @@
   background: var(--color-5);
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* ── Left: text content ───────────────────────────────────────────────────── */
 
+/* Stretched to the card's full height and space-between (not centered as a
+   block) so the button always sits the same distance from the bottom
+   regardless of how many lines the title wraps to — title lengths differ
+   enough between cards that centering the whole block misaligned the two
+   buttons. */
 .info {
   position: relative;
   z-index: 1;
   flex-shrink: 0;
   width: 307px;
-  padding-left: 39px;
+  padding: 30px 0 30px 39px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-}
-
-/* title-1 handles typography; no extra overrides needed */
-.title {
-  max-width: 260px;
-}
-
-/* ── Right: product image ─────────────────────────────────────────────────── */
-
-/* Fixed identical box for both images so they render at the same size */
-.imageWrap {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 280px;
-  height: 220px;
-}
-
-.image {
-  object-fit: contain;
-  object-position: center;
-}
-.section {
-  padding: 44px 0 45px;
-  background: var(--color-6);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-/* ── Card ─────────────────────────────────────────────────────────────────── */
-
-.card {
-  position: relative;
-  height: 216px;
-  background: var(--color-5);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-
-/* ── Left: text content ───────────────────────────────────────────────────── */
-
-.info {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  width: 307px;
-  padding-left: 39px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  justify-content: space-between;
 }
 
 /* title-1 handles typography; no extra overrides needed */
@@ -118,7 +67,7 @@
 
 @media (max-width: 767px) {
   .section {
-    padding: 30px 0 0;
+    padding: 60px 0;
   }
 
   .grid {
@@ -137,8 +86,9 @@
   .info {
     order: 2;
     width: 100%;
-    padding-left: 0;
+    padding: 0;
     align-items: center;
+    justify-content: flex-start;
     gap: 20px;
   }
 
