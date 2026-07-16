@@ -147,36 +147,61 @@ export default function Header() {
 
 function MobileNavItem({ href, label, items, onNavigate }) {
   const [expanded, setExpanded] = useState(false);
+  const { display, play, reset } = useScramble(label.toUpperCase());
 
   if (!items) {
     return (
-      <Link href={href} className={styles.mobileNavLink} onClick={onNavigate}>
-        <span className="label-2">{label}</span>
-      </Link>
+      <div className={styles.mobileNavItem}>
+        <Link href={href} className={styles.mobileNavLink} onClick={onNavigate} onMouseEnter={play} onMouseLeave={reset}>
+          <span className={`title-1-md ${styles.navLinkText}`}>
+            <span className={styles.navLinkOriginal}>{label}</span>
+            <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
+          </span>
+        </Link>
+        <div className={styles.mobileDivider} />
+      </div>
     );
   }
 
   return (
-    <div className={styles.mobileNavGroup}>
+    <div className={styles.mobileNavItem}>
       <button
         type="button"
         className={styles.mobileNavLink}
         onClick={() => setExpanded((e) => !e)}
         aria-expanded={expanded}
+        onMouseEnter={play}
+        onMouseLeave={reset}
       >
-        <span className="label-2">{label}</span>
+        <span className={`title-1-md ${styles.navLinkText}`}>
+          <span className={styles.navLinkOriginal}>{label}</span>
+          <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
+        </span>
         <Chevron className={`${styles.mobileChevron} ${expanded ? styles.mobileChevronOpen : ''}`} />
       </button>
+      <div className={styles.mobileDivider} />
       <div className={`${styles.mobileSubList} ${expanded ? styles.mobileSubListOpen : ''}`}>
         <div className={styles.mobileSubListInner}>
           {items.map((item) => (
-            <Link key={item.href} href={item.href} className={styles.mobileSubLink} onClick={onNavigate}>
-              <span className="label-2">{item.label}</span>
-            </Link>
+            <MobileSubLink key={item.href} href={item.href} label={item.label} onNavigate={onNavigate} />
           ))}
+          <div className={styles.mobileDivider} />
         </div>
       </div>
     </div>
+  );
+}
+
+function MobileSubLink({ href, label, onNavigate }) {
+  const { display, play, reset } = useScramble(label.toUpperCase());
+
+  return (
+    <Link href={href} className={styles.mobileSubLink} onClick={onNavigate} onMouseEnter={play} onMouseLeave={reset}>
+      <span className={`title-2-md ${styles.navLinkText}`}>
+        <span className={styles.navLinkOriginal}>{label}</span>
+        <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
+      </span>
+    </Link>
   );
 }
 
