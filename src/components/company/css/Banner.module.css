@@ -18,9 +18,12 @@
 
 .content {
   position: absolute;
-  left: 70px;
-  right: 70px;
+  left: 0;
+  right: 0;
   bottom: 260px;
+}
+
+.inner {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -70,9 +73,12 @@
   }
 
   .content {
-    left: 24px;
-    right: 24px;
+    left: 0;
+    right: 0;
     bottom: 90px;
+  }
+
+  .inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;

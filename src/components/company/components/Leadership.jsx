@@ -14,35 +14,37 @@ export default function Leadership() {
     <section className={styles.section} data-header-theme="light">
       <LeadershipPatternBg className={styles.pattern} />
 
-      <div className={styles.content}>
-        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
-          Leadership Driving Industrial Operations Excellence
-        </h2>
-        <div className={styles.grid}>
-          {TEAM.map((member, i) => (
-            <article key={i} className={styles.card}>
-              <div className={styles.photoWrap}>
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  className={`${styles.photo} ${member.photo.includes('team-member-1') ? styles.cropA : styles.cropB}`}
-                />
-                <a
-                  href="https://linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.linkedin}
-                  aria-label={`${member.name} on LinkedIn`}
-                >
-                  <LinkedInIcon />
-                </a>
-              </div>
-              <p className={`label-3-md ${styles.name}`}>{member.name}</p>
-              <p className={`label-3-md ${styles.role}`}>{member.role}</p>
-            </article>
-          ))}
+      <div className="container">
+        <div className={styles.content}>
+          <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
+            Leadership Driving Industrial Operations Excellence
+          </h2>
+          <div className={styles.grid}>
+            {TEAM.map((member, i) => (
+              <article key={i} className={styles.card}>
+                <div className={styles.photoWrap}>
+                  <Image
+                    src={member.photo}
+                    alt={member.name}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className={`${styles.photo} ${member.photo.includes('team-member-1') ? styles.cropA : styles.cropB}`}
+                  />
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.linkedin}
+                    aria-label={`${member.name} on LinkedIn`}
+                  >
+                    <LinkedInIcon />
+                  </a>
+                </div>
+                <p className={`label-3-md ${styles.name}`}>{member.name}</p>
+                <p className={`label-3-md ${styles.role}`}>{member.role}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

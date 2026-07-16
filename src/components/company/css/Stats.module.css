@@ -3,7 +3,6 @@
   position: relative;
   margin-top: -137px;
   z-index: 2;
-  padding: 0 70px;
 }
 
 .row {
@@ -81,7 +80,6 @@
 @media (max-width: 768px) {
   .section {
     margin-top: -60px;
-    padding: 0;
   }
 
   .row {

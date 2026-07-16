@@ -32,15 +32,17 @@ export default function CoreValues() {
         aria-hidden="true"
       />
 
-      <div className={styles.content}>
-        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Our Core Values</h2>
-        <div className={styles.grid}>
-          {VALUES.map((v) => (
-            <div key={v.title} className={styles.card}>
-              <p className="title-1 title-1-md">{v.title}</p>
-              <p className="body-1">{v.body}</p>
-            </div>
-          ))}
+      <div className="container">
+        <div className={styles.content}>
+          <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Our Core Values</h2>
+          <div className={styles.grid}>
+            {VALUES.map((v) => (
+              <div key={v.title} className={styles.card}>
+                <p className="title-1 title-1-md">{v.title}</p>
+                <p className="body-1">{v.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -101,8 +101,10 @@ function GroupRow({ title, items }) {
 export default function GroupCompanies() {
   return (
     <section id="group-companies" className={styles.section} data-header-theme="light">
-      <GroupRow title="Group Companies" items={COMPANIES} />
-      <GroupRow title="Group Alliances" items={ALLIANCES} />
+      <div className={`container ${styles.inner}`}>
+        <GroupRow title="Group Companies" items={COMPANIES} />
+        <GroupRow title="Group Alliances" items={ALLIANCES} />
+      </div>
     </section>
   );
 }

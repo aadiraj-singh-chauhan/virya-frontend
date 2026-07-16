@@ -51,14 +51,16 @@ function pct(value, total) {
 export default function GlobalPresence() {
   return (
     <section className={styles.section} data-header-theme="light">
-      <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Global presence</h2>
+      <div className={`container ${styles.inner}`}>
+        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Global presence</h2>
 
-      <WorldMap />
+        <WorldMap />
 
-      <div className={styles.stats}>
-        {STATS.map(({ value, label }) => (
-          <StatCard key={value} value={value} label={label} />
-        ))}
+        <div className={styles.stats}>
+          {STATS.map(({ value, label }) => (
+            <StatCard key={value} value={value} label={label} />
+          ))}
+        </div>
       </div>
     </section>
   );

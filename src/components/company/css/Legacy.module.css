@@ -1,6 +1,9 @@
 .section {
   background: var(--color-6);
-  padding: 100px 70px 0;
+  padding: 100px 0 0;
+}
+
+.inner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +34,10 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 60px 24px 0;
+    padding: 60px 0 0;
+  }
+
+  .inner {
     gap: 28px;
   }
 

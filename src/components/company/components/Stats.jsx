@@ -36,10 +36,12 @@ export default function Stats() {
   return (
     <section ref={sectionRef} className={styles.section} data-header-theme="light">
       {/* Desktop: static row */}
-      <div className={styles.row}>
-        {STATS.map(({ value, label }) => (
-          <StatCard key={value} value={value} label={label} counting={counting} />
-        ))}
+      <div className="container">
+        <div className={styles.row}>
+          {STATS.map(({ value, label }) => (
+            <StatCard key={value} value={value} label={label} counting={counting} />
+          ))}
+        </div>
       </div>
 
       {/* Mobile: continuous auto-scrolling slider */}

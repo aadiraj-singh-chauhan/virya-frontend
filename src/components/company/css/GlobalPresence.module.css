@@ -1,11 +1,14 @@
 .section {
   background: var(--color-7);
-  padding: 100px 70px 60px;
+  padding: 100px 0 0;
+  overflow: hidden;
+}
+
+.inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 35px;
-  overflow: hidden;
 }
 
 .heading {
@@ -126,7 +129,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 60px 24px 40px;
+    padding: 60px 0 0;
   }
 
   .stats {
