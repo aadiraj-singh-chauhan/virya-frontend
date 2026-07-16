@@ -9,11 +9,6 @@
   overflow: hidden;
 }
 
-/* Desktop: full-bleed background behind the title/desc — nested inside
-   .content (between the h1 and p in the DOM) but pinned to cover the
-   whole section via inset:0, with heading/desc raised above it. On mobile
-   this switches to a normal in-flow block (see media query) so the image
-   renders as its own element between the title and description instead. */
 .bgWrap {
   position: absolute;
   inset: 0;
@@ -27,11 +22,12 @@
   pointer-events: none;
 }
 
-/* Deliberately not position: relative — .bgWrap's absolute inset:0 needs
-   to resolve against .section (the whole banner) even though it's
-   nested inside .content in the DOM, not against .content's own
-   (text-sized) box. .heading/.desc carry their own position/z-index to
-   sit above it regardless. */
+@media (min-width: 1636px) {
+  .bg {
+    object-fit: cover;
+  }
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -64,11 +60,6 @@
     padding: 120px 24px 0;
   }
 
-  /* In flow now, between the h1 and p (matches DOM order) instead of a
-     full-bleed background behind them — needs its own explicit height
-     since Image's fill requires a sized positioned ancestor. Breaks out
-     of .section's 24px side padding to run edge to edge, and sized up a
-     bit from its previous 260px. */
   .bgWrap {
     position: relative;
     inset: auto;
