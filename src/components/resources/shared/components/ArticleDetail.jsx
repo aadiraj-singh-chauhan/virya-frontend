@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '../css/ArticleDetail.module.css';
 
 function ShareIcons() {
@@ -26,12 +27,12 @@ export default function ArticleDetail({ backHref, backLabel, post, related }) {
       <div className={styles.section} data-header-theme="light">
         <div className="container">
           <div className={styles.layout}>
-            <a href={backHref} className={styles.backLink}>
+            <Link href={backHref} className={styles.backLink}>
               <svg width="5" height="9" viewBox="0 0 5.06066 8.70711" fill="none" aria-hidden="true">
                 <path d="M4.70711 0.353553L0.707107 4.35355L4.70711 8.35355" stroke="currentColor" />
               </svg>
               <span>{backLabel}</span>
-            </a>
+            </Link>
 
             <div className={styles.main}>
               <div className={styles.article}>
@@ -87,12 +88,12 @@ export default function ArticleDetail({ backHref, backLabel, post, related }) {
                 <p className="body-1">{post.section3.body}</p>
               </div>
 
-              <a href={backHref} className={styles.exploreLink}>
+              <Link href={backHref} className={styles.exploreLink}>
                 <span>{post.exploreLinkText}</span>
                 <svg width="16" height="13" viewBox="0 0 16 12.871" fill="none" aria-hidden="true">
                   <path d="M0 6.4355L16 6.4355M9 0.4355L15.5645 6.4355L9 12.4355" stroke="currentColor" strokeWidth="1" />
                 </svg>
-              </a>
+              </Link>
 
               <ShareRow />
             </div>
@@ -104,18 +105,18 @@ export default function ArticleDetail({ backHref, backLabel, post, related }) {
         <div className="container">
           <div className={styles.relatedHeader}>
             <h2 className={styles.subheading}>Here are a few more similar articles</h2>
-            <a href={backHref} className={styles.readMoreLink}>
+            <Link href={backHref} className={styles.readMoreLink}>
               <span className="label-2 label-1-md">Read more</span>
               <svg width="13" height="11" viewBox="0 0 12.758 10.056" fill="none" aria-hidden="true">
                 <path d="M0 5.028L12.5 5.028" stroke="currentColor" />
                 <path d="M6 0L8 0L12.5 5.028L8 10.056L6 10.056" stroke="currentColor" />
               </svg>
-            </a>
+            </Link>
           </div>
 
           <div className={styles.relatedGrid}>
             {related.map((item) => (
-              <a key={item.slug} href={`${backHref}/${item.slug}`} className={styles.relatedCard}>
+              <Link key={item.slug} href={`${backHref}/${item.slug}`} className={styles.relatedCard}>
                 <div className={styles.relatedImageWrap}>
                   <Image src={item.image} alt={item.title} fill sizes="(max-width: 900px) 100vw, 444px" className={styles.relatedImage} />
                 </div>
@@ -125,7 +126,7 @@ export default function ArticleDetail({ backHref, backLabel, post, related }) {
                   ))}
                 </div>
                 <p className={styles.relatedTitle}>{item.title}</p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useScramble } from '@/hooks/useScramble';
 import styles from './css/Button.module.css';
 import '../../app/globals.css';
@@ -16,6 +17,7 @@ export default function Button({
   property1 = 'Default',
   size = 'Button-1',
   href,
+  target,
   onClick,
   className = '',
   icon = 'arrow',
@@ -25,13 +27,17 @@ export default function Button({
   const label = typeof children === 'string' ? children : '';
   const { display, play, reset } = useScramble(label);
 
-  const Tag = href && !disabled ? 'a' : 'button';
+  const isExternal = href && (/^([a-z]+:)?\/\//i.test(href) || href.startsWith('mailto:') || href.startsWith('tel:'));
+  const Tag = !href || disabled ? 'button' : isExternal || target === '_blank' ? 'a' : Link;
+  const isAnchor = Tag === 'button' ? false : isExternal || target === '_blank';
   const variantClass = styles[property1.replace('-', '_')];
   const sizeClass = property1 !== 'Button-3' ? styles[size.replace('-', '_')] : '';
 
   return (
     <Tag
       href={disabled ? undefined : href}
+      target={Tag !== 'button' ? target : undefined}
+      rel={isAnchor && target === '_blank' ? 'noopener noreferrer' : undefined}
       type={Tag === 'button' ? type : undefined}
       disabled={Tag === 'button' ? disabled : undefined}
       aria-disabled={disabled || undefined}
