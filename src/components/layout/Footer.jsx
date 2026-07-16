@@ -83,7 +83,15 @@ export default function Footer() {
         </div>
 
         <div className={styles.brand}>
-          <Image src="/assets/logo-light.svg" alt="Virya" width={142} height={50} className={styles.logo} />
+          <Link href="/" aria-label="Go to homepage">
+            <Image
+              src="/assets/logo-light.svg"
+              alt="Virya"
+              width={142}
+              height={50}
+              className={styles.logo}
+            />
+          </Link>
 
           <div className={styles.mobileLinksGroup}>
             <div className={styles.policiesMobile}>
