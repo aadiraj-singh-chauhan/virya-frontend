@@ -1,6 +1,6 @@
 .section {
   background: var(--color-6);
-  padding-top: 50px;
+  padding-top: 100px;
   overflow: hidden;
 }
 
@@ -23,7 +23,7 @@
 
 @media (max-width: 767px) {
   .section {
-    padding-top: 30px;
+    padding-top: 60px;
   }
 
   .header {

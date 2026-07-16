@@ -1,5 +1,10 @@
 .section {
   background: var(--color-6);
+  /* Features → IntelligentCore boundary: Features' bottom padding was
+     removed (see Features.module.css), so this section now carries the
+     standard section gap on its own top edge instead of relying on a
+     doubled contribution from both sides. */
+  padding-top: 100px;
 }
 
 .heading {
@@ -107,6 +112,10 @@
 /* ── Mobile accordion (≤ 767px) ───────────────────────────────────────────── */
 
 @media (max-width: 767px) {
+  .section {
+    padding-top: 60px;
+  }
+
   .heading {
     text-align: left;
     width: 250px;

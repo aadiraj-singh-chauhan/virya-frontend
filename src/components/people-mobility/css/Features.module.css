@@ -1,5 +1,5 @@
 .section {
-  padding: 100px 0;
+  padding: 100px 0 0;
   background: var(--color-6);
 }
 
@@ -73,30 +73,28 @@
   color: var(--color-6);
 }
 
-/* ── Responsive slider ────────────────────────────────────────────────────── */
+/* ── Mobile: continuous auto-scrolling marquee (Splide + AutoScroll) ────────
+   Same engine as the shared ImageSlider — real infinite loop, no reset jump
+   at the end. .card here is reused inside each SplideSlide, sized via
+   autoWidth on the Splide instance instead of the desktop grid's 1fr cols. */
+
+.splideWrapper :global(.splide__track) {
+  cursor: grab;
+}
+
+.splideWrapper :global(.splide.is-dragging .splide__track) {
+  cursor: grabbing;
+}
 
 @media (max-width: 767px) {
   .section {
-    padding: 64px 0;
-  }
-
-  .grid {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    padding-inline: 20px;
-  }
-
-  .grid::-webkit-scrollbar {
-    display: none;
+    padding: 60px 0 0;
   }
 
   .card {
-    flex: 0 0 70vw;
+    position: relative;
+    overflow: hidden;
+    width: 70vw;
     height: 320px;
-    scroll-snap-align: center;
   }
 }
