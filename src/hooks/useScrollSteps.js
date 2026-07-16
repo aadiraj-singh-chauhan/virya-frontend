@@ -105,5 +105,33 @@ export function useScrollSteps(stepCount) {
     return () => clearInterval(id);
   }, []);
 
-  return { active, setActive, pinStyle, trackRef, stickyRef };
+  // A manual click needs to move the real scroll offset, not just the
+  // visual `active` state — `update()` derives its target purely from the
+  // track's actual position on scroll, so leaving the page's real scrollY
+  // wherever it was (e.g. at the end of the track after scrolling to the
+  // last step) would either fight the click on the next scrub tick, or, if
+  // already past the pin range, unpin straight into the next section on the
+  // very next scroll instead of walking back through the steps.
+  const setActiveManual = (index) => {
+    const track = trackRef.current;
+    if (track) {
+      const headerHeight = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+      ) || 0;
+      const stickyHeight = stickyRef.current
+        ? stickyRef.current.getBoundingClientRect().height
+        : window.innerHeight - headerHeight;
+      const rect = track.getBoundingClientRect();
+      const total = rect.height - stickyHeight;
+      if (total > 0) {
+        const trackAbsoluteTop = window.scrollY + rect.top;
+        const progress = (index + 0.5) / stepCount;
+        window.scrollTo({ top: trackAbsoluteTop - headerHeight + progress * total });
+      }
+    }
+    targetRef.current = index;
+    setActive(index);
+  };
+
+  return { active, setActive: setActiveManual, pinStyle, trackRef, stickyRef };
 }
