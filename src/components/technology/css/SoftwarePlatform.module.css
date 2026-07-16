@@ -6,14 +6,13 @@
 .inner {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 77px;
   flex-wrap: wrap;
 }
 
 .visual {
   position: relative;
-  flex: 0 0 629px;
+  flex: 1 1 0;
   aspect-ratio: 629 / 429;
 }
 
@@ -22,8 +21,7 @@
 }
 
 .content {
-  flex: 1 1 480px;
-  max-width: 590px;
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   gap: 46px;
@@ -106,9 +104,6 @@
     flex-direction: column;
   }
 
-  /* Unwrap .content so headingGroup/visual/features become direct flex
-     children of .inner — lets the visual be reordered to sit between
-     them instead of always trailing after the whole content block. */
   .content {
     display: contents;
   }
