@@ -81,4 +81,12 @@
   .section {
     padding: 0 0 60px;
   }
+
+  .imageWrap{
+    height: 200px;
+  }
+
+  .bgImage{
+    object-fit: contain;
+  }
 }
