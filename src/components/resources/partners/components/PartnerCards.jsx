@@ -9,11 +9,8 @@ const PARTNERS = [
       'The company specializes in precision engineering, aerospace components, material handling systems, and electric mobility solutions.',
       'With global operations and customers across multiple countries, the group focuses on innovation, quality, and advanced manufacturing.',
     ],
-    bg: '/assets/resources/partners/auro-bg.png',
-    logo: '/assets/resources/partners/auro-logo.svg',
-    logoWidth: 464,
-    logoHeight: 124,
-    href: '#',
+    bg: '/assets/auro-alliance.jpg',
+    href: 'https://www.auroalliance.com/',
   },
   {
     name: 'siMA.ai',
@@ -21,11 +18,8 @@ const PARTNERS = [
       'The company specializes in precision engineering, aerospace components, material handling systems, and electric mobility solutions.',
       'With global operations and customers across multiple countries, the group focuses on innovation, quality, and advanced manufacturing.',
     ],
-    bg: '/assets/resources/partners/sima-bg.png',
-    logo: '/assets/resources/partners/sima-logo.svg',
-    logoWidth: 262,
-    logoHeight: 64,
-    href: '#',
+    bg: '/assets/sima-ai.jpg',
+    href: 'https://sima.ai/',
   },
 ];
 
@@ -41,14 +35,7 @@ export default function PartnerCards() {
               <span className={`${styles.corner} ${styles.cornerBL}`} aria-hidden="true" />
               <span className={`${styles.corner} ${styles.cornerBR}`} aria-hidden="true" />
               <div className={styles.imageWrap}>
-                <Image src={p.bg} alt="" fill sizes="672px" className={styles.bgImage} />
-                <Image
-                  src={p.logo}
-                  alt={p.name}
-                  width={p.logoWidth}
-                  height={p.logoHeight}
-                  className={styles.logo}
-                />
+                <Image src={p.bg} alt={p.name} fill sizes="672px" className={styles.bgImage} />
               </div>
 
               <div className={styles.textWrap}>
@@ -58,7 +45,7 @@ export default function PartnerCards() {
                 </p>
               </div>
 
-              <Button property1="Variant2" size="Button-1" href={p.href} className={styles.button}>
+              <Button property1="Variant2" size="Button-1" href={p.href} target="_blank" className={styles.button}>
                 Visit website
               </Button>
             </div>

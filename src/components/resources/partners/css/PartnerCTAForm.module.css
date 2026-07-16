@@ -1,6 +1,7 @@
 .section {
   padding: 0 0 100px;
   background: var(--color-6);
+  scroll-margin-top: var(--header-height);
 }
 
 .inner {
@@ -57,7 +58,7 @@
 
 .submit {
   justify-content: center;
-  width: 100%;
+  width: fit-content;
 }
 
 @media (max-width: 1024px) {
@@ -79,5 +80,15 @@
 
   .form {
     max-width: 100%;
+  }
+
+  .submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 0 0 60px;
   }
 }

@@ -96,6 +96,12 @@
   display: none;
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 0 0 60px;
+  }
+}
+
 @media (max-width: 900px) {
   .header {
     flex-direction: column;

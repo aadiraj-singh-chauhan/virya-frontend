@@ -46,16 +46,6 @@
 
 .bgImage {
   object-fit: cover;
-  opacity: 0.6;
-}
-
-.logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 72%;
-  height: auto;
 }
 
 .textWrap {
@@ -88,5 +78,11 @@
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 0 0 60px;
   }
 }
