@@ -1,17 +1,18 @@
-import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import styles from '../css/Hero.module.css';
 
 export default function Hero() {
   return (
     <section className={styles.section} data-header-theme="dark">
-      <Image
-        src="/assets/homepage-banner.webp"
-        alt="Virya homepage banner"
-        fill
-        priority
-        sizes="100vw"
+      <video
         className={styles.banner}
+        src="/assets/hp-banner.webm"
+        poster="/assets/homepage-banner.webp"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-label="Virya homepage banner"
       />
 
       <div className={styles.content}>
