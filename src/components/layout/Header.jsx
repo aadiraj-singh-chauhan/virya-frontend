@@ -272,20 +272,20 @@ function Chevron({ className }) {
 function Hamburger({ open }) {
   return (
     <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
       fill="none"
       aria-hidden="true"
       className={`${styles.hamburger} ${open ? styles.hamburgerOpen : ''}`}
     >
-      <rect width="32" height="32" fill="var(--color-5)" />
+      <rect className={styles.hamburgerBg} width="36" height="36" />
       <line className={`${styles.hamburgerLine} ${styles.hamburgerLineTop}`}
-        x1="5.85" y1="9.5" x2="25.85" y2="9.5" stroke="var(--color-3)" strokeWidth="2" strokeLinejoin="round"/>
+        x1="7" y1="11" x2="29" y2="11" strokeWidth="2" strokeLinejoin="round"/>
       <line className={`${styles.hamburgerLine} ${styles.hamburgerLineMiddle}`}
-        x1="5.85" y1="16.5" x2="25.85" y2="16.5" stroke="var(--color-3)" strokeWidth="2" strokeLinejoin="round"/>
+        x1="7" y1="18" x2="29" y2="18" strokeWidth="2" strokeLinejoin="round"/>
       <line className={`${styles.hamburgerLine} ${styles.hamburgerLineBottom}`}
-        x1="5.85" y1="23.5" x2="25.85" y2="23.5" stroke="var(--color-3)" strokeWidth="2" strokeLinejoin="round"/>
+        x1="7" y1="25" x2="29" y2="25" strokeWidth="2" strokeLinejoin="round"/>
     </svg>
   );
 }
