@@ -342,6 +342,12 @@ button.mobileNavLink {
   padding: 28px 0;
 }
 
+.mobileCta > a,
+.mobileCta > button {
+  width: 100%;
+  justify-content: center;
+}
+
 /* ── Responsive ────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .inner {
