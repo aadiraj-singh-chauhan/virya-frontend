@@ -1,6 +1,4 @@
-/* ─── Font family tokens ─────────────────────────────────────────────────────
-   Loaded via next/font in layout.js — use these vars in components.
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ── Font family tokens ──────────────────────────────────────────────────── */
 :root {
   --font-primary: var(--font-space-grotesk), sans-serif;
   --font-accent: var(--font-chakra-petch), sans-serif;
@@ -12,7 +10,7 @@
 @media (max-width: 768px) {
   :root {
     --header-height: 64px;
-    --logo-y: 72px; /* strip (40px) + half header (32px) */
+    --logo-y: 72px;
   }
 
   .heading-0 {
@@ -32,10 +30,7 @@
   }
 }
 
-/* ─── Text style classes ─────────────────────────────────────────────────────
-   Source: Figma › Styles and elements → Text styles
-   Usage: <h1 class="heading-1">, <p class="body-1">, <span class="label-2">
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ── Text style classes ──────────────────────────────────────────────────── */
 
 .heading-0 {
   font-family: var(--font-primary);
@@ -134,7 +129,6 @@
   letter-spacing: 0em;
 }
 
-/* Source: Figma › Styles and elements → Text styles → Mobile */
 @media (max-width: 768px) {
   .heading-1 {
     font-size: 40px;
@@ -239,9 +233,7 @@
   }
 }
 
-/* ─── Color tokens ───────────────────────────────────────────────────────────
-   Source: Figma › Modes → colors → selections
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ── Color tokens ────────────────────────────────────────────────────────── */
 :root {
   --color-1: #f43d00;
   --color-2: #f94a01;
@@ -252,7 +244,6 @@
   --color-7: #fbf3e7;
   --color-8: #fff1dd;
 
-  /* Gradient tokens — Figma › Modes → colors → selections */
   --gradient-1: conic-gradient(from 0deg, #666666, #ff4000, #666666);
   --gradient-2: linear-gradient(to bottom, #fbf3e7, transparent);
   --gradient-3: linear-gradient(to bottom, #ff4000, transparent);

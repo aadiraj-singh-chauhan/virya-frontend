@@ -127,8 +127,6 @@
   opacity: 1;
 }
 
-/* Chevron — hidden on desktop, shown on mobile in place of the arrow link.
-   Dashed-cross "+" glyph that rotates into an "×" when the panel opens. */
 .chevron {
   display: none;
   align-items: center;
@@ -246,11 +244,6 @@
 
 /* ===========================
    TABLET
-   .textCol (560px) + .desktopImage (676px) are both flex-shrink: 0 at
-   desktop size, needing at least 1236px — .inner (inside .container,
-   width: 95%) drops below that around 1301px viewport width, so the
-   breakpoint has to trigger before then or the fixed-width columns
-   overflow instead of sharing the space. 1024px left a real gap.
 =========================== */
 
 @media (max-width:1360px){
@@ -289,9 +282,6 @@
     gap:32px;
   }
 
-  /* Desktop's centered variant (Technology page) runs the tag + heading
-     centered above both columns — on mobile it should read left-aligned
-     like the non-centered (Material Mobility) variant already does. */
   .centeredHead {
     align-items: flex-start;
     text-align: left;
@@ -313,8 +303,6 @@
     border-bottom:1px solid rgba(0,0,0,.1);
   }
 
-  /* Arrow link is desktop-only; chevron takes over as the mobile
-     accordion's open/close indicator. */
   .arrow{
     display:none;
   }
@@ -323,15 +311,11 @@
     display:flex;
   }
 
-  /* Mobile rows read as plain black text regardless of desktop's
-     active/dim state — only the +/× icon carries color here. */
   .tabActive,
   .tabDim {
     color: var(--color-3);
     opacity: 1;
   }
-
-  /* Hide desktop content */
 
   .tabDesc{
     display:none;
@@ -340,8 +324,6 @@
   .desktopImage{
     display:none;
   }
-
-  /* Mobile accordion — smooth slide + fade */
 
   .mobileContent{
     display:flex;

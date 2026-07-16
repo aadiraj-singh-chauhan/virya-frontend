@@ -1,4 +1,3 @@
-// Shared decorative line-grid background — used behind Mission and Leadership sections.
 export default function GridPatternBg({ className }) {
   return (
     <svg
@@ -29,7 +28,6 @@ export default function GridPatternBg({ className }) {
 
       <circle cx="1360" cy="240" r="80" stroke="black" strokeOpacity="0.2" strokeWidth="0.5" />
 
-      {/* Accent ticks — small orange marks with a faded gradient tail */}
       <g>
         <rect x="1363" y="399" width="20" height="3" fill="#F43D00" />
         <rect x="1383" y="399" width="20" height="3" fill="url(#companyGridPaint0)" />

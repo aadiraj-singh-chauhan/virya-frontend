@@ -7,13 +7,6 @@
   background: var(--color-6);
 }
 
-/* Banner→Overview gap. Desktop only — topPart is a fixed-height (572px),
-   overflow:hidden box with its heading/stats absolutely positioned inside
-   it, so padding can't be added there without pushing that content out of
-   the box; padding-top on this flex-column wrapper instead pushes the
-   whole topPart block down without touching its internals. Scoped to
-   desktop (>1150px) so it doesn't stack with topPart's own tablet/mobile
-   padding-top, which carries the gap at those breakpoints instead. */
 @media (min-width: 1151px) {
   .section {
     padding-top: 100px;
@@ -37,7 +30,6 @@
   pointer-events: none;
 }
 
-/* White rectangle that masks the pattern behind the content */
 .contentBg {
   position: absolute;
   top: 123px;
@@ -121,20 +113,7 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   TABLET
-   .heading (831px), .contentBg (975px) and .imagePart (1140px, flex-shrink:0)
-   are all fixed-width with no handling between this and the 767px mobile
-   breakpoint, so they overflow past the viewport and get clipped anywhere
-   below ~1150px. heading/stats are position:absolute in the desktop layout,
-   which only works because .topPart has a fixed height (572px) to position
-   against — switching that to height:auto would collapse .topPart to ~0
-   (absolutely-positioned children don't contribute to parent height) and
-   the content would overlap the section above. So, same as the mobile
-   breakpoint below, switch heading/stats to normal document flow instead of
-   trying to patch the absolute positioning, and let .topPart's height
-   derive from that flow naturally.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Tablet ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 1150px) and (min-width: 768px) {
   .topPart {
@@ -181,10 +160,7 @@
   }
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Left-aligned stacked layout: paragraph → stats list → full-width image
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .topPart {
@@ -197,13 +173,6 @@
     display: none;
   }
 
-  /* position:relative (not static) so these stay in the "positioned" paint
-     layer above .pattern/.contentBg — a position:static sibling always
-     paints below positioned ones regardless of DOM order, which is why the
-     pattern was showing through (or, briefly, why .contentBg's absolute
-     box was painting over and hiding this text). left/top are reset since
-     the desktop rule's left:50%/top:Npx would otherwise apply as relative
-     offsets once position isn't static, shoving the text sideways. */
   .heading {
     position: relative;
     top: auto;
@@ -241,7 +210,7 @@
   }
 
   .imagePart {
-    width: calc(100% - 40px); /* 20px padding on each side */
+    width: calc(100% - 40px);
     margin: 8px auto 0;
     height: auto;
     aspect-ratio: 16 / 9;

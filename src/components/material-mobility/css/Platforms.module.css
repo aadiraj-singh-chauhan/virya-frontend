@@ -25,7 +25,6 @@
   cursor: pointer;
 }
 
-/* Cream-to-transparent gradient overlaid at top of every card */
 .gradient {
   position: absolute;
   inset: 0;
@@ -58,7 +57,6 @@
 
 /* ── Robot image ──────────────────────────────────────────────────────────── */
 
-/* Fixed bounds so every robot renders at the same visual size */
 .imageWrap {
   position: absolute;
   top: 60px;
@@ -73,7 +71,6 @@
   object-position: center center;
 }
 
-/* AMR10's photo reads larger than its neighbors — nudge it down slightly */
 .imageSmaller {
   transform: scale(0.9);
 }
@@ -94,7 +91,6 @@
 .description {
   text-align: center;
   padding: 0 51px;
-  /* lock to 3 lines of body-1 so all cards are equal height */
   height: calc(3 * 1.4 * 16px);
   overflow: hidden;
   transition:
@@ -180,10 +176,6 @@
     height: 420px;
   }
 
-  /* No hover on touch — name always colored/visible */
-
-  /* Mobile */
-
 .name {
   top: 20px;
   color: var(--color-3);
@@ -200,8 +192,6 @@
   .bottom {
     bottom: 20px;
   }
-
-  /* No hover on touch — description hidden, button always shown */
 
   .description {
     display: none;

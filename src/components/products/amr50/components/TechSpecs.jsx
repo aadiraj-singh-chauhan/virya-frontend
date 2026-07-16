@@ -26,8 +26,6 @@ export default function TechSpecs() {
 
       <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
 
-      {/* Tab switcher — swaps the desktop blueprint below. Spec values stay
-          AMR50's since no separate AMR51 spec sheet exists yet. */}
       <div className={styles.tabBar}>
         {TABS.map((tab, i) => (
           <button
@@ -41,7 +39,6 @@ export default function TechSpecs() {
       </div>
 
       <div className={styles.blueprint}>
-        {/* Desktop */}
         <Image
           src={TABS[activeTab].blueprint}
           alt={`${TABS[activeTab].label} product blueprint showing front, side and rear views with dimensions`}
@@ -50,7 +47,6 @@ export default function TechSpecs() {
           className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}
         />
 
-        {/* Mobile */}
         <Image
           src={TABS[activeTab].blueprintMob}
           alt={`${TABS[activeTab].label} product blueprint`}
@@ -60,7 +56,6 @@ export default function TechSpecs() {
         />
       </div>
 
-      {/* Spec cards */}
       <div className={styles.grid}>
         {SPECS.map((s) => (
           <div key={s.label} className={styles.card}>

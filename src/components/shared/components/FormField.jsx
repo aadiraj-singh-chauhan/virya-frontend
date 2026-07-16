@@ -1,8 +1,5 @@
 import styles from '../css/FormField.module.css';
 
-// Floating-label form field — label sits inline until the field has a value,
-// then disappears via the `:not(:placeholder-shown)` trick. Shared by the
-// brochure download modal and the Contact page form.
 export default function FormField({ idPrefix, name, label, type = 'text', required = true }) {
   const id = `${idPrefix}-${name}`;
   const isTextarea = type === 'textarea';

@@ -5,9 +5,6 @@
   gap: 24px;
 }
 
-/* Splide's own .splide__track already clips + owns drag/loop/autoplay —
-   this just gives the cursor-following arrow (position: absolute) a
-   positioning context. */
 .viewport {
   position: relative;
 }
@@ -37,7 +34,6 @@
   object-fit: cover;
 }
 
-/* Dark gradient at the bottom of each card */
 .cardOverlay {
   position: absolute;
   inset: 0;
@@ -48,7 +44,6 @@
   );
 }
 
-/* Frosted-glass label pill */
 .labelWrap {
   position: absolute;
   left: 20px;
@@ -78,8 +73,6 @@
   padding-left: 58px;
 }
 
-/* Static mobile fallback for cursorArrows mode — hidden on desktop, where
-   the cursor-following arrow (.cursorArrow) is used instead. */
 .navPairMobile {
   display: none;
 }
@@ -108,9 +101,6 @@
   transform: rotate(180deg);
 }
 
-/* Cursor-following single arrow (TeamGallery's marquee, homepage
-   Industries): one icon tracks the pointer over the track, flips to point
-   the other way over the left half, and only shows up while hovering. */
 .cursorArrow {
   position: absolute;
   top: 0;
@@ -142,19 +132,10 @@
     display: none;
   }
 
-  /* JS only ever shows this via mousemove/mouseenter — real touch never
-     fires those, but hybrid devices (trackpad, iOS's synthetic mouse
-     events after a tap) can. Force it off so the static pair below is
-     always the only nav control on mobile. */
   .cursorArrow {
     display: none;
   }
 
-  /* Under the slider, right-aligned — the cursor arrow can't appear on
-     touch, so this is the only nav affordance on mobile. The slider itself
-     bleeds full-bleed to the screen edge (so slides can peek off-screen),
-     but the arrows shouldn't follow that bleed — inset them to match the
-     page's usual mobile content padding instead. */
   .navPair.navPairMobile {
     display: flex;
     justify-content: flex-end;

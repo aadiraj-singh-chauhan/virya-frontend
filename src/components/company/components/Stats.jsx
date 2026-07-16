@@ -35,7 +35,6 @@ export default function Stats() {
 
   return (
     <section ref={sectionRef} className={styles.section} data-header-theme="light">
-      {/* Desktop: static row */}
       <div className="container">
         <div className={styles.row}>
           {STATS.map(({ value, label }) => (
@@ -44,7 +43,6 @@ export default function Stats() {
         </div>
       </div>
 
-      {/* Mobile: continuous auto-scrolling slider */}
       <div className={styles.slider}>
         <div className={styles.track}>
           {LOOPED.map(({ value, label }, i) => (

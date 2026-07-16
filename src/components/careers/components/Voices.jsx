@@ -29,27 +29,20 @@ const TESTIMONIALS = [
 
 export default function Voices() {
   const [active, setActive] = useState(0);
-  const [outgoing, setOutgoing] = useState(null); // index sliding out, or null once settled
+  const [outgoing, setOutgoing] = useState(null);
   const [direction, setDirection] = useState(1);
   const testimonial = TESTIMONIALS[active];
   const outgoingTestimonial = outgoing !== null ? TESTIMONIALS[outgoing] : null;
 
   const go = (delta) => {
-    if (outgoing !== null) return; // ignore clicks mid-transition
+    if (outgoing !== null) return;
     setOutgoing(active);
     setDirection(delta);
     setActive((i) => (i + delta + TESTIMONIALS.length) % TESTIMONIALS.length);
   };
 
-  // Fires when the incoming (always-rendered) slide's animation ends —
-  // drops the outgoing slide so it stops being mounted/animated.
   const handleSettled = () => setOutgoing(null);
 
-  // Rendered twice: once inside .testimonial (desktop position, absolute
-  // within that block) and once after .photoWrap (mobile only, toggled via
-  // display so only one copy is ever visible/focusable at a time) — the
-  // desktop position depends on testimonial's own box, which isn't a fixed
-  // offset from .photoWrap, so it can't just be reordered with one copy.
   const personAndNav = (
     <>
       <div key={`person-${active}`} className={styles.person} style={{ '--dir': direction }}>

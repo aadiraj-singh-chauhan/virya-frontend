@@ -1,9 +1,5 @@
 .section {
   background: var(--color-6);
-  /* Features → IntelligentCore boundary: Features' bottom padding was
-     removed (see Features.module.css), so this section now carries the
-     standard section gap on its own top edge instead of relying on a
-     doubled contribution from both sides. */
   padding-top: 100px;
 }
 
@@ -122,9 +118,6 @@
     margin-bottom: 24px;
   }
 
-  /* Padding instead of a flex gap — this is the row's own box, so once
-     rowOpen adds a background it's already colored in, and rowOpen doesn't
-     need to bump it up separately (that used to shift the header down). */
   .row {
     height: auto;
     padding-top: 15px;
@@ -143,16 +136,11 @@
     border-bottom: 0.2px solid var(--color-3);
   }
 
-  /* Reset desktop hover padding on touch — matches the permanent mobile padding above */
   .row:hover .rowInner {
     padding-left: 0;
     padding-right: 0;
   }
 
-  /* Bleed the open row's background past the .container edges to the full
-     viewport width — 2.5vw matches .container's own inset (width: 95%), so
-     re-padding rowInner by that amount keeps the content aligned with the
-     closed rows above/below it, which stay inside .container. */
   .row.rowOpen {
     width: 100vw;
     margin-left: calc(50% - 50vw);
@@ -177,18 +165,15 @@
     transform: rotate(45deg);
   }
 
-  /* Reset hover expansion on touch devices */
   .row:hover {
     height: auto;
     background: var(--color-6);
   }
 
-  /* Open row gets the expanded background */
   .row.rowOpen {
     background: var(--color-8);
   }
 
-  /* Description: hidden by default on mobile */
   .rowDesc {
     opacity: 0;
     max-height: 0;
@@ -198,7 +183,6 @@
     transition: opacity 0.3s ease, max-height 0.4s ease, margin-top 0.3s ease;
   }
 
-  /* Prevent desktop hover rule from showing desc on touch */
   .row:hover .rowDesc {
     opacity: 0;
     max-height: 0;
@@ -206,14 +190,12 @@
     margin-top: 0;
   }
 
-  /* Show desc for explicitly opened rows — same specificity, later order wins */
   .row.rowOpen .rowDesc {
     opacity: 0.5;
     max-height: 200px;
     margin-top: 20px;
   }
 
-  /* Image: switch to in-flow layout on mobile */
   .rowImage {
     position: relative;
     right: auto;
@@ -227,13 +209,11 @@
     transition: max-height 0.4s ease, opacity 0.3s ease 0.1s, margin-top 0.3s ease;
   }
 
-  /* Prevent desktop hover rule from showing image on touch */
   .row:hover .rowImage {
     opacity: 0;
     max-height: 0;
   }
 
-  /* Show image for explicitly opened rows — same specificity, later order wins */
   .row.rowOpen .rowImage {
     max-height: 260px;
     opacity: 1;

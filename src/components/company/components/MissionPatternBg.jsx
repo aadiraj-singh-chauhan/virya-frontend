@@ -1,8 +1,5 @@
 import pulseStyles from '../css/MissionPatternBg.module.css';
 
-// Figma node 1399-5279 — dedicated to Mission (viewBox matches its own
-// 703px min-height exactly, unlike the shared GridPatternBg's 721 which is
-// tuned for Leadership instead).
 export default function MissionPatternBg({ className, animate = true }) {
   return (
     <svg

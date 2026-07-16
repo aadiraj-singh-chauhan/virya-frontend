@@ -1,7 +1,4 @@
-/* ── Section / pin track ──────────────────────────────────────────────────────
-   The banner stays pinned (position: fixed, driven by useScrollProgress)
-   while the clip-path reveal plays out across the scrollTrack's extra
-   height, then unpins and the page continues scrolling normally. */
+/* ── Section / pin track ──────────────────────────────────────────────────── */
 .section {
   position: relative;
 }
@@ -11,20 +8,13 @@
   height: 200vh;
 }
 
-/* position/top/left/width are set inline (see Banner.jsx) since they switch
-   between 'before' (absolute, top of track), 'pinned' (fixed, tracks the
-   viewport) and 'after' (absolute, bottom of track). */
 .sticky {
-  /* Match rd-platform-background.webp's native ratio so object-fit: cover
-     needs zero cropping — the image fills the section exactly, edge to edge. */
   aspect-ratio: 3024 / 1589;
   background: var(--color-6, #FDF8F5);
   overflow: hidden;
 }
 
-/* ── Blueprint grid (static — animation disabled via animate={false}) ───────
-   Sits behind the vehicle image (z-index 0 vs the image's 1), not above it,
-   so the grid is correctly hidden behind the image's opaque vehicle pixels. */
+/* ── Blueprint grid ───────────────────────────────────────────────────────── */
 .patternBg {
   position: absolute;
   inset: 0;
@@ -54,7 +44,7 @@
   opacity: 0.5;
 }
 
-/* ── Vehicle lineup banner — full-section background, content sits on top ─── */
+/* ── Vehicle lineup banner ────────────────────────────────────────────────── */
 .imageWrap {
   position: absolute;
   inset: 0;
@@ -75,13 +65,6 @@
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
-  /* scrollTrack = sticky height (380px) + a 64px allowance matching
-     --header-height (the banner starts flush against the top of the page,
-     so useScrollProgress reserves that much of the track to keep the pin
-     math continuous — see the `deficit` comment there) + a ~380px
-     scroll-jack runway for the reveal itself. Keeping the runway short
-     (not a tall 140vh track under a much shorter pinned box) avoids a long
-     stretch of dead page-background showing beneath the pinned panel. */
   .scrollTrack {
     height: 824px;
   }
@@ -107,10 +90,6 @@
     bottom: 0;
     left: 0;
     right: 0;
-    /* rd-platform-background.webp's vehicle lineup sits in roughly the
-       bottom half of a 1.88:1 image — at full mobile width that band is
-       naturally ~120px tall. Sizing the box close to that keeps `cover`
-       from having to zoom in and crop the sides to fill a taller box. */
     height: 140px;
   }
 

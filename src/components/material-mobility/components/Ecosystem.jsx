@@ -130,7 +130,6 @@ export default function Ecosystem() {
                 </div>
               </div>
   
-              {/* Right Image */}
               <div className={styles.imageBox}>
                 <EcosystemPatternBg className={styles.pattern} />
   

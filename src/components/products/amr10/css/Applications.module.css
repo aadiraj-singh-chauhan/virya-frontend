@@ -83,11 +83,7 @@
   height: auto;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Full-width stacked blueprint, single-column spec list with static
-   (non-absolute) label/value pairs, full-width button
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .section {

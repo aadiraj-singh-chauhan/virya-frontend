@@ -1,21 +1,12 @@
 .section {
   background: var(--color-6);
-  padding-bottom: 100px;
 }
 
-/* Tall runway that gives the scroll-jack effect room: while its top is
-   between 0 and -(height - 100vh), .sticky stays pinned and the active step
-   advances with scroll progress; once it scrolls past, the page continues
-   normally into the next section. Same mechanic as Ecosystem
-   (material-mobility), driven by the shared useScrollSteps hook. */
 .scrollTrack {
   position: relative;
   height: 700vh;
 }
 
-/* position/top/left/width are set inline (see ServiceSteps.jsx) since they
-   switch between 'before' (absolute, top of track), 'pinned' (fixed, tracks
-   the viewport) and 'after' (absolute, bottom of track). */
 .sticky {
   height: calc(100vh - var(--header-height));
   display: flex;
@@ -23,15 +14,6 @@
   overflow: hidden;
 }
 
-/* All four panels stay mounted; only the active one is shown (desktop) —
-   toggling .panelInactive's display:none off replays the animation below
-   each time a panel becomes active, giving the "next one stacks in behind"
-   crossfade without needing to remount anything. */
-/* Grid (not flex) so the image can span both text rows on desktop while
-   bulletsWrap — a sibling, not nested inside textCol — can still be
-   reordered independently of the image on mobile (heading/desc, then
-   image, then bullets), which plain flex `order` can't do across a nested
-   parent/child boundary. */
 .panel {
   position: relative;
   display: grid;
@@ -43,9 +25,6 @@
   align-items: start;
 }
 
-/* Mobile-only corner markers around the whole panel (see mobile rules
-   below) — hidden on desktop, where imageBox keeps its own border/corners
-   instead. */
 .panelCorner {
   display: none;
   position: absolute;
@@ -184,10 +163,6 @@
     padding-bottom: 60px;
   }
 
-  /* Static on mobile — no pin, no scroll-jack, no per-step animation. The
-     tall runway collapses back to normal content height and `position:
-     static` overrides the fixed/absolute inline pinStyle the hook still
-     computes (harmless since nothing here reads it visually anymore). */
   .scrollTrack {
     height: auto;
   }
@@ -239,8 +214,6 @@
     right: -3px;
   }
 
-  /* The outer panel border/corners replace imageBox's own — avoids a
-     bordered box within a bordered box. */
   .imageBox {
     border: none;
   }

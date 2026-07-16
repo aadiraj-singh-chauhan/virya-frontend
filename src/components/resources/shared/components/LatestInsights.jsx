@@ -25,11 +25,6 @@ const POSTS = [
 export default function LatestInsights() {
   const { display, play, reset } = useScramble('Explore more');
 
-  // Rendered twice: once inside .header (desktop position, next to the
-  // heading) and once below the grid (mobile only, toggled via display so
-  // only one copy is ever visible/focusable at a time) — same pattern as
-  // Voices.jsx's person/nav, since the two layouts place it in genuinely
-  // different spots rather than just reordering the same box.
   const exploreLink = (
     <a href="/resources/blogs" className={styles.exploreLink} onMouseEnter={play} onMouseLeave={reset}>
       <span className={styles.linkText}>

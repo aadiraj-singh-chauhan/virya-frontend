@@ -17,10 +17,6 @@
   padding: 19px;
   border: 0.2px solid var(--color-3);
   position: relative;
-  /* Grid tracks default to min-width:auto, so a child that can't shrink
-     below its own content size (the button, or a long word in .desc)
-     forces the whole track wider than the grid column — this was the
-     actual cause of the card overflowing on mobile. */
   min-width: 0;
 }
 

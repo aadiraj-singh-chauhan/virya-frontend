@@ -4,9 +4,6 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/Capabilities.module.css';
 
-// Dot coordinates below are pixel positions on the 879x579 desktop imageArea;
-// converted to percentages at render time so they track the image correctly
-// as imageArea shrinks (flex-shrink) on smaller viewports.
 const IMAGE_WIDTH = 879;
 const IMAGE_HEIGHT = 579;
 

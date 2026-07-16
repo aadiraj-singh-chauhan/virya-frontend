@@ -21,8 +21,6 @@
   width: 100%;
 }
 
-/* Full-bleed — breaks out of the section's own 35px padding and the site's
-   container width to span the full viewport, edge to edge. */
 .images {
   display: flex;
   align-items: center;
@@ -66,7 +64,6 @@
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    /* pull out of section padding so images bleed edge-to-edge */
     margin-left: -35px;
     margin-right: -35px;
     padding-left: 35px;

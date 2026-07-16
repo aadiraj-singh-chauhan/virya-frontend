@@ -5,8 +5,6 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/CapabilityTabs.module.css';
 
-// The whole row is one click target (not just the label text) — clicking
-// anywhere across the label/arrow/chevron switches the tab.
 function TabRow({ label, active, expanded, onClick }) {
   const { display, play, reset } = useScramble(label);
 
@@ -50,19 +48,8 @@ function TabRow({ label, active, expanded, onClick }) {
   );
 }
 
-// Shared by Material Mobility's "Designed for How Materials Move" and the
-// Technology page's "Redundant Localization Across All Facility Layouts" —
-// both use the exact same tab labels, descriptions and checklist copy.
-//
-// `centered` mirrors a layout difference between the two Figma designs:
-// Material Mobility's heading sits left-aligned inside the text column,
-// while Technology's tag + heading run full-width and centered above both
-// columns.
 export default function CapabilityTabs({ heading, intro, tag, tabs, centered = false }) {
   const [active, setActive] = useState(0);
-  // Separate from `active` (which always points at the desktop image/labels)
-  // so the mobile accordion panel can be toggled fully closed — tapping the
-  // open tab again collapses it without losing the desktop selection.
   const [mobileActive, setMobileActive] = useState(null);
 
   const handleTabClick = (index) => {
@@ -108,7 +95,6 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
                       onClick={() => handleTabClick(index)}
                     />
 
-                    {/* Desktop description */}
                     <p
                       className={`body-1 ${styles.tabDesc} ${
                         active === index
@@ -119,7 +105,6 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
                       {tab.desc}
                     </p>
 
-                    {/* Mobile accordion */}
                     <div
                       className={`${styles.mobileContent} ${isOpen ? styles.mobileContentOpen : ''}`}
                       aria-hidden={!isOpen}
@@ -162,7 +147,6 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
             </div>
           </div>
 
-          {/* Desktop Image */}
           <div className={styles.desktopImage}>
 
             {tag && !centered && (

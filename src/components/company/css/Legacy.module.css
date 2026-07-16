@@ -24,10 +24,6 @@
 .description {
   max-width: 1100px;
   opacity: 0.75;
-  /* Figma (node 1399:5987) specs this paragraph at 30px/1.2 in normal
-     sentence case — .title-1 gives the right 30px/400-weight metrics but
-     also brings its uppercase transform and 1.1 line-height, neither of
-     which apply here. */
   text-transform: none;
   line-height: 1.2;
 }
@@ -46,8 +42,6 @@
     height: 160px;
   }
 
-  /* Mobile already gets the right line-height from body-1-md (140%) —
-     don't let the desktop 1.2 override above leak in here. */
   .description {
     line-height: 1.4;
   }

@@ -136,7 +136,7 @@
   flex-direction: column;
 }
 
-/* ── Label row — always 60px tall ─────────────────────────────────────────── */
+/* ── Label row ────────────────────────────────────────────────────────────── */
 
 .labelRow {
   height: 60px;
@@ -146,7 +146,7 @@
   flex-shrink: 0;
 }
 
-/* ── Expandable area — grid trick animates height to auto ─────────────────── */
+/* ── Expandable area ──────────────────────────────────────────────────────── */
 
 .expandable {
   display: grid;
@@ -168,8 +168,7 @@
   padding-bottom: 28px;
 }
 
-/* ── Image (own grid trick, split out so it can sit above/below the label
-   independently of the description) ──────────────────────────────────────── */
+/* ── Image ────────────────────────────────────────────────────────────────── */
 
 .imageExpandable {
   display: grid;
@@ -212,7 +211,7 @@
   opacity: 0.5;
 }
 
-/* ── Feature label (width-lock scramble pattern) ──────────────────────────── */
+/* ── Feature label ────────────────────────────────────────────────────────── */
 
 .featureLabel {
   position: relative;
@@ -232,21 +231,7 @@
 }
 
 
-/* ══════════════════════════════════════════════════════════════════════════
-   TABLET
-   imageArea (879px) + panel's 165px margin-left + panel (328px) sum to
-   1372px, which overflows any viewport under that and gets clipped by
-   .section's overflow:hidden — the robot image ends up pinned to the left
-   with the accordion panel pushed off-screen. imageArea shrinks from its
-   designed 879px only as much as needed to fit (flex-shrink instead of
-   flex-grow so it doesn't stretch past its design size), the 165px margin
-   is replaced by a contentRow gap, and justify-content: center balances
-   the row as a block. aspect-ratio keeps imageArea's box proportions
-   locked to the source image (879:579) as it shrinks, so the dots/pill —
-   positioned in JSX as percentages of that same 879x579 reference — track
-   the image correctly instead of drifting, and can stay visible instead
-   of being hidden.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Tablet ───────────────────────────────────────────────────────────────── */
 
    @media (max-width: 1372px) and (min-width: 768px) {
     .section {
@@ -274,11 +259,7 @@
     }
   }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Stacked layout: header → full-width robot image → accordion panel full
-   width below, first item expanded by default
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
    @media (max-width: 767px) {
     .section {
@@ -301,9 +282,6 @@
       gap: 24px;
     }
   
-    /* Robot image area — aspect-ratio (not a fixed height) keeps it
-       proportional to the 879x579 reference so the percentage-positioned
-       dots/pill below still land in the right place instead of drifting. */
     .imageArea {
       flex: none;
       width: 100%;
@@ -311,7 +289,6 @@
       aspect-ratio: 879 / 579;
     }
 
-    /* Feature accordion panel */
     .panel {
       flex: none;
       width: 100%;

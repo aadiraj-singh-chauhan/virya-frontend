@@ -4,9 +4,6 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/Capabilities.module.css';
 
-// Dot coordinates below are pixel positions on the 600x568 desktop imageArea;
-// converted to percentages at render time so they track the image correctly
-// as imageArea resizes (flex-shrink/flex-grow) on smaller/larger viewports.
 const IMAGE_WIDTH = 600;
 const IMAGE_HEIGHT = 568;
 
@@ -41,8 +38,6 @@ const FEATURES = [
   },
 ];
 
-// Side-tab view switcher — swaps the hero image between the annotated
-// diagram (dots calibrated to it) and a plain fleet photo (no dots).
 const VIEWS = [
   { id: 'diagram', label: 'AMR 50', thumb: '/assets/product-amr50.webp', image: '/assets/amr50-intelligent.png', showDots: true },
   { id: 'fleet', label: 'AMR 51', thumb: '/assets/amr50-fleet-view.png', image: '/assets/amr50-fleet-view.png', showDots: false },
@@ -120,7 +115,6 @@ export default function Capabilities() {
       {/* ── Content row ── */}
       <div className={styles.contentRow}>
 
-        {/* Desktop side tab — swaps the hero image below */}
         <div className={styles.thumbnailPanel}>
           {VIEWS.map((v, i) => (
             <button
@@ -137,7 +131,6 @@ export default function Capabilities() {
           ))}
         </div>
 
-        {/* Mobile tab bar — same view switcher */}
         <div className={styles.mobileTabs}>
           <div className={styles.tabBar}>
             {VIEWS.map((v, i) => (
@@ -153,7 +146,6 @@ export default function Capabilities() {
           </div>
         </div>
 
-        {/* Robot image with dots */}
         <div className={styles.imageArea}>
           <div className={styles.robotWrap}>
             <Image
@@ -195,7 +187,6 @@ export default function Capabilities() {
           )}
         </div>
 
-        {/* Feature accordion panel */}
         <div className={styles.panel}>
           {FEATURES.map((f, i) => (
             <FeatureItem

@@ -5,9 +5,6 @@
   padding: 100px 0 0;
 }
 
-/* Decorative blueprint-grid background, shared with the Banner section —
-   faded in from the edges so it doesn't hard-cut against the flat cream
-   background of the sections above/below. */
 .patternBg {
   position: absolute;
   inset: 0;
@@ -85,17 +82,7 @@
   background: var(--color-1);
 }
 
-/* ── Tablet/laptop (768px – 1503px) ───────────────────────────────────────────
-   Title (580px) + gap (60px) + two nowrap-pill columns (~724px) need
-   ~1504px of available width to sit on one row — measured, not assumed.
-   Figma's own reference frame is 1513px wide, i.e. just above that
-   threshold, so the cutoff here must stay at 1503px.
-   Rather than capping .title at one small fixed width (which forced the
-   heading into 5-6 lines even when there was plenty of room, e.g. at
-   1366/1440px), .title now flexes to fill whatever space is actually
-   left over after the columns claim their (reduced, wrap-capable)
-   width — so the heading only shrinks as much as each specific
-   viewport requires. */
+/* ── Tablet/laptop (768px – 1503px) ──────────────────────────────────────── */
 
 @media (max-width: 1503px) and (min-width: 768px) {
   .section {
@@ -106,9 +93,6 @@
     gap: 30px;
   }
 
-  /* calc(50% - 15px), not a plain 50%: .inner's 30px gap sits on top of
-     each item's flex-basis rather than being subtracted from it, so two
-     literal 50% items overflow the row by exactly the gap width and wrap. */
   .title {
     flex: 1 1 calc(50% - 15px);
     max-width: none;
@@ -147,9 +131,6 @@
     align-items: flex-start;
     justify-content: flex-start;
     gap: 30px;
-    /* Figma (node 1496:30220): a solid card matching the section's own
-       background masks the decorative grid pattern behind the title/pills
-       instead of letting it show through the whole section. */
     background: var(--color-6);
     padding: 40px 20px;
   }

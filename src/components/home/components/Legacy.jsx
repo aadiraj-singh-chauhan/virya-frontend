@@ -9,8 +9,6 @@ import Button from '@/components/ui/Button';
 import LogoSlider from './LogoSlider';
 import styles from '../css/Legacy.module.css';
 
-// Mobile-only marquee — desktop's metricsRow is a plain static 3-up row
-// (see .metricsRowMobile / .metricsRow display toggle in the CSS).
 const METRICS_SPLIDE_OPTIONS = {
   type: 'loop',
   autoWidth: true,
@@ -64,9 +62,6 @@ export default function Legacy() {
   const [activeIndex, setActiveIndex] = useState(0);
   const hoverTimerRef = useRef(null);
 
-  // Debounced so a quick sweep of the cursor across all three cards doesn't
-  // restart the width transition mid-flight for each one in turn — only a
-  // deliberate pause on a card commits the expand.
   const handleCardHover = (i) => {
     clearTimeout(hoverTimerRef.current);
     hoverTimerRef.current = setTimeout(() => setActiveIndex(i), HOVER_DELAY_MS);

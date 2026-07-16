@@ -37,13 +37,12 @@
 }
 
 .bgMobility {
-  margin-top: -0.18em; /* pull tight against "PEOPLE" — matches Figma overlap */
+  margin-top: -0.18em;
   color: #e1dcda;
 }
 
 /* ── Vehicle image ────────────────────────────────────────────────────────── */
 
-/* Image sits in front of watermark text, behind gradient + content */
 .imageWrap {
   position: absolute;
   top: 90px;
@@ -59,13 +58,6 @@
   object-position: center top;
 }
 
-/* Fixed 851px box height + the image's own fixed aspect ratio means contain
-   starts leaving growing blank margins on wide screens once the box's own
-   aspect ratio (viewport width / 851) overtakes the image's (~1.75:1) —
-   around 1492px wide. Past that point switch to cover: the image has ~600px
-   of transparent padding above the vehicles (verified against the source
-   asset), so cropping from the top fills the box edge-to-edge without
-   touching the vehicles themselves, up to very large widths. */
 @media (min-width: 1600px) {
   .image {
     object-fit: cover;
@@ -105,10 +97,6 @@
   gap: 30px;
 }
 
-/* display:contents on desktop keeps the duplicated bullets (added for the
-   mobile marquee loop) as direct flex children of .bullets so the 30px gap
-   still applies between them; .bulletDuplicate hides the duplicate set so
-   desktop shows the original 3 bullets once, centered, un-animated. */
 .bulletsTrack {
   display: contents;
 }
@@ -164,8 +152,6 @@
     width: 100%;
   }
 
-  /* cover fills the container — landscape image scales to container height,
-     cropping left/right edges while keeping vehicles fully tall */
   .image {
     object-fit: cover;
     object-position: 20% top;
@@ -180,8 +166,6 @@
     gap: 20px;
   }
 
-  /* Auto-scrolling loop — bullets never wrap, no manual swipe needed. The
-     mask fades the edges instead of a hard clip. */
   .bullets {
     width: 100%;
     overflow: hidden;
@@ -197,9 +181,6 @@
     animation: bulletsMarquee 10s linear infinite;
   }
 
-  /* Duplicate set (hidden on desktop via .bullet.bulletDuplicate) is needed
-     here to make the loop seamless — re-show it. Matches that selector's
-     specificity so this override actually wins. */
   .bullet.bulletDuplicate {
     display: flex;
   }

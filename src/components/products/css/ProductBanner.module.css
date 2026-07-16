@@ -67,11 +67,7 @@
   object-fit: contain;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Smaller watermark tucked behind image, tag + image + button stacked,
-   full-width dark button pinned near bottom
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .section {

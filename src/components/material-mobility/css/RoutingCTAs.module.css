@@ -22,11 +22,6 @@
 
 /* ── Left: text content ───────────────────────────────────────────────────── */
 
-/* Stretched to the card's full height and space-between (not centered as a
-   block) so the button always sits the same distance from the bottom
-   regardless of how many lines the title wraps to — title lengths differ
-   enough between cards that centering the whole block misaligned the two
-   buttons. */
 .info {
   position: relative;
   z-index: 1;
@@ -38,14 +33,12 @@
   justify-content: space-between;
 }
 
-/* title-1 handles typography; no extra overrides needed */
 .title {
   max-width: 260px;
 }
 
 /* ── Right: product image ─────────────────────────────────────────────────── */
 
-/* Fixed identical box for both images so they render at the same size */
 .imageWrap {
   position: absolute;
   right: 0;
@@ -60,10 +53,7 @@
   object-position: center;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Stacked cards: image on top, title centered below, button centered below title
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .section {

@@ -58,11 +58,7 @@
   opacity: 0.5;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE
-   Single column, compact rows. Every card is static and always shows its
-   description — no expand/collapse.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .section {

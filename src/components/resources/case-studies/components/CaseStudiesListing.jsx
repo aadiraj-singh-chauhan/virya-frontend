@@ -3,9 +3,6 @@ import { POSTS } from '../data';
 
 const WITH_HREF = POSTS.map((post) => ({ ...post, href: `/resources/case-studies/${post.id}` }));
 
-// Same placeholder-repetition approach as BlogsListing — real case-study
-// copy/images don't exist beyond these 3 yet, so Load More pages through
-// this repeated set instead of being a no-op.
 const ALL_POSTS = [...WITH_HREF, ...WITH_HREF].map((post, i) => ({ ...post, key: `${post.id}-${i}` }));
 
 export default function CaseStudiesListing() {

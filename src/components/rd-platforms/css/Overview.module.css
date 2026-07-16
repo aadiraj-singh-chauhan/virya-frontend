@@ -24,12 +24,10 @@
   gap: 7px;
 }
 
-/* transparent wrapper on desktop — pills lay out as direct children of .pills */
 .pillsTrack {
   display: contents;
 }
 
-/* hide aria-hidden duplicates on desktop */
 .pill[aria-hidden='true'] {
   display: none;
 }

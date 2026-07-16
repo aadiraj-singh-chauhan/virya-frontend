@@ -89,9 +89,6 @@
   color: var(--color-3);
 }
 
-/* exploreLink renders twice (see LatestInsights.jsx) — once in .header
-   for desktop, once below the grid for mobile — since the two layouts put
-   it in different spots rather than just reordering the same box. */
 .mobileOnly {
   display: none;
 }
@@ -119,9 +116,6 @@
     margin-top: 32px;
   }
 
-  /* Horizontally scrollable row instead of stacking — cards keep their
-     desktop-ish width so they read as swipeable "pages" rather than
-     shrinking to the viewport. */
   .grid {
     display: flex;
     grid-template-columns: none;

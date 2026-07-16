@@ -10,13 +10,11 @@ const BULLETS = [
 export default function Banner() {
   return (
     <section className={styles.section} data-header-theme="light">
-      {/* Large watermark text — sits behind the vehicle image */}
       <h1 className={styles.bgText}>
         <span className={styles.bgPeople}>PEOPLE</span>
         <span className={styles.bgMobility}>MOBILITY</span>
       </h1>
 
-      {/* Vehicle image — layered on top of watermark text */}
       <div className={styles.imageWrap}>
         <Image
           src="/assets/people-mobility-banner-img.webp"
@@ -28,15 +26,10 @@ export default function Banner() {
         />
       </div>
 
-      {/* Gradient fade at bottom */}
       <div className={styles.gradient} aria-hidden="true" />
 
-      {/* Bullets + description */}
       <div className={styles.content}>
         <div className={styles.bullets}>
-          {/* Duplicated on mobile only, where the track auto-scrolls in a
-              loop — translating by exactly -50% lands back on an identical
-              copy, so the loop reads as seamless instead of jumping. */}
           <div className={styles.bulletsTrack}>
             {BULLETS.map((item) => (
               <div key={item} className={styles.bullet}>

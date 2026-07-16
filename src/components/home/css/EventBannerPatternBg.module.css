@@ -16,9 +16,6 @@
   will-change: transform, opacity;
 }
 
-/* Each dash rides a specific grid line; --travel-distance is clamped to the
-   pattern's own clipped frame so the pulse never drifts past where the line
-   it's tracing actually stops being visible. */
 .pulseA { --travel-distance: 306px; animation: travelY 2.8s linear infinite; animation-delay: -0.6s; }
 .pulseB { --travel-distance: -557px; animation: travelX 5s linear infinite; animation-delay: -2s; }
 

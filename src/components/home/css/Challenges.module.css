@@ -28,7 +28,6 @@
 .diagram {
   position: relative;
   width: 100%;
-  /* Maintain the 1512:511 design aspect ratio */
   aspect-ratio: 1512 / 511;
 }
 
@@ -58,7 +57,6 @@
   }
 
   .diagram {
-    /* Match the 1080:800 rwd video aspect ratio */
     aspect-ratio: 1080 / 800;
   }
 

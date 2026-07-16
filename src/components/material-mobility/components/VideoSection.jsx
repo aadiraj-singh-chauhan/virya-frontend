@@ -17,10 +17,6 @@ export default function VideoSection() {
   const [playing, setPlaying] = useState(true);
   const userPausedRef = useRef(false);
 
-  // Pause while scrolled out of view — otherwise this and Banner's video both
-  // decode at full res for the whole session regardless of scroll position,
-  // competing for the main thread/GPU during scroll. Respect an explicit
-  // manual pause (below) so scrolling back into view doesn't override it.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return undefined;
@@ -60,9 +56,6 @@ export default function VideoSection() {
         </p>
 
         <div className={styles.features}>
-          {/* Duplicated on mobile only, where the track auto-scrolls in a
-              loop — translating by exactly -50% lands back on an identical
-              copy, so the loop reads as seamless instead of jumping. */}
           <div className={styles.featuresTrack}>
             {FEATURES.map(f => (
               <div key={f} className={styles.featureItem}>

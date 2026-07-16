@@ -17,7 +17,6 @@ export default function VehicleSpecs() {
       </h2>
 
       <div className={styles.blueprintWrap}>
-        {/* Desktop */}
         <Image
           src="/assets/people-mobility-blueprint.svg"
           alt="APM vehicle — front, side, and rear views with dimensions"
@@ -26,7 +25,6 @@ export default function VehicleSpecs() {
           className={`${styles.blueprint} ${styles.blueprintDesktop}`}
         />
 
-        {/* Mobile */}
         <Image
           src="/assets/autonomous-mobility-mob.svg"
           alt="APM vehicle — front, side, and rear views with dimensions"

@@ -170,8 +170,7 @@
   padding-bottom: 28px;
 }
 
-/* ── Image (own grid trick, split out so it can sit above/below the label
-   independently of the description) ──────────────────────────────────────── */
+/* ── Image ────────────────────────────────────────────────────────────────── */
 
 .imageExpandable {
   display: grid;
@@ -295,14 +294,7 @@
   color: var(--color-5);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   TABLET
-   imageArea's flex-shrink + aspect-ratio (set in the base rule above) already
-   keep the row from overflowing at any width, so this block only needs to
-   handle presentation for the 768–1200px range: center the row as a block
-   with a tighter gap instead of desktop's left-anchored 88px inset, and trim
-   the section's padding.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Tablet ───────────────────────────────────────────────────────────────── */
 
    @media (max-width: 1200px) and (min-width: 768px) {
     .section {
@@ -327,11 +319,7 @@
     }
   }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Stacked layout: header → full-width robot image (dots/pill hidden) →
-   accordion panel full width below, first item expanded by default
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
    @media (max-width: 767px) {
     .section {
@@ -354,9 +342,6 @@
       gap: 24px;
     }
   
-    /* Robot image area — aspect-ratio (not a fixed height) keeps it proportional
-       to the 879x579 reference so the percentage-positioned dots/pill below
-       still land in the right place instead of drifting. */
     .imageArea {
       flex: none;
       width: 100%;
@@ -364,7 +349,6 @@
       aspect-ratio: 879 / 579;
     }
 
-    /* Feature accordion panel */
     .panel {
       flex: none;
       width: 100%;
@@ -429,8 +413,6 @@
     }
   }
 
-  /* Tech spec cards grid — tighter padding/icon size, single column. Every
-     card is static and always shows its description — no expand/collapse. */
   @media (max-width: 767px) {
     .techGrid {
       display: flex;

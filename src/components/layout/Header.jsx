@@ -37,7 +37,7 @@ function getLogoY() {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState('dark'); // dark bg on first load
+  const [theme, setTheme] = useState('dark');
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -45,10 +45,6 @@ export default function Header() {
     let raf;
 
     const update = () => {
-      // Theme detection. When sections overlap (e.g. a card grid pulled up
-      // over the section above it via a negative margin), the later one in
-      // DOM order is the one actually painted on top, so it should win —
-      // keep matching instead of stopping at the first hit.
       const sections = document.querySelectorAll('[data-header-theme]');
       const logoY = getLogoY();
       let matched;
@@ -60,10 +56,6 @@ export default function Header() {
       }
       if (matched) setTheme(matched.dataset.headerTheme);
 
-      // Mobile-only — .headerScrolled's solid background is scoped to the
-      // same breakpoint in CSS, but data-theme also drives the desktop nav
-      // pill's colors, so forcing it here has to stay mobile-only too or
-      // it'd override desktop's per-section theme switching.
       setScrolled(window.scrollY > 20 && window.innerWidth <= 768);
     };
 
@@ -87,14 +79,12 @@ export default function Header() {
     >
       <div className={`container ${styles.inner}`}>
 
-        {/* ── Logo — both variants stacked; CSS cross-fades on data-theme ────── */}
+        {/* ── Logo ─────────────────────────────────────────────────────────── */}
         <Link
           href="/"
           className={styles.logoLink}
           aria-label="Virya — Autonomous Technologies"
           onClick={() => {
-            // Same-route navigation is a no-op for next/link, so clicking the
-            // logo while already on "/" wouldn't otherwise scroll to top.
             if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         >

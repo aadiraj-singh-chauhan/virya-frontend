@@ -28,7 +28,6 @@ export default function RelatedProducts() {
         <div className={styles.row}>
           {PRODUCTS.map((p) => (
             <div key={p.id} className={styles.card}>
-              {/* Background environment image */}
               <div className={styles.bgWrap} aria-hidden="true">
                 <Image src={p.bg} alt="" fill sizes="(max-width: 768px) 100vw, 50vw" className={styles.bgImage} />
               </div>
@@ -36,7 +35,6 @@ export default function RelatedProducts() {
               <div className={styles.gradient} aria-hidden="true" />
               <p className={styles.watermark} aria-hidden="true">{p.name}</p>
 
-              {/* Robot render */}
               <div className={styles.robotWrap}>
                 <Image
                   src={p.robot}

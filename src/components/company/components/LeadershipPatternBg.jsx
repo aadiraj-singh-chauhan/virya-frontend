@@ -1,8 +1,5 @@
 import pulseStyles from '../css/LeadershipPatternBg.module.css';
 
-// Figma node 1399-6001 — dedicated to Leadership (viewBox 1511x801). Two
-// vertically-stacked tiles of the same grid pattern (each clipped to its
-// own band) since Leadership's section is taller than one 721px tile.
 export default function LeadershipPatternBg({ className, animate = true }) {
   return (
     <svg

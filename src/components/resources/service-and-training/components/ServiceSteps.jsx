@@ -47,16 +47,6 @@ const STEPS = [
   },
 ];
 
-// Desktop: same panel design as before (title/desc/bullets + image,
-// unchanged), pinned in one spot while a tall track scrolls underneath —
-// only the active step's panel is shown (others display:none via
-// .panelInactive), crossfading in as scroll advances. Same scroll-jack
-// mechanic as Ecosystem (material-mobility), via the shared useScrollSteps
-// hook.
-//
-// Mobile: static — the pin and scroll-jack are switched off entirely (see
-// the max-width:767px rules in ServiceSteps.module.css) and every step's
-// panel just renders in normal stacked document flow.
 export default function ServiceSteps() {
   const { active, pinStyle, trackRef, stickyRef } = useScrollSteps(STEPS.length);
 
@@ -70,10 +60,6 @@ export default function ServiceSteps() {
                 key={step.title}
                 className={`${styles.panel} ${i === active ? styles.panelActive : styles.panelInactive}`}
               >
-                {/* Mobile-only bordered panel with corner markers, matching
-                    the imageBox treatment but around the whole step
-                    (heading/desc/image/bullets) — hidden on desktop, where
-                    the imageBox keeps its own border/corners instead. */}
                 <span className={styles.panelCorner} data-corner="tl" aria-hidden="true" />
                 <span className={styles.panelCorner} data-corner="tr" aria-hidden="true" />
                 <span className={styles.panelCorner} data-corner="bl" aria-hidden="true" />

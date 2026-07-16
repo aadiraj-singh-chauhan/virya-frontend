@@ -1,10 +1,6 @@
 import Image from 'next/image';
 import styles from '../css/Testimonials.module.css';
 
-// Dark (light-background) variants of the same partner logos used in the
-// homepage LogoSlider. Filenames keep their original casing exactly —
-// several are capitalized (Infosys, Kc, TDK) and this matters on
-// case-sensitive production filesystems even though local dev hides it.
 const LOGOS = [
   { file: 'bosch-dark.png', alt: 'Bosch' },
   { file: 'ceat-dark.png', alt: 'CEAT' },
@@ -31,8 +27,6 @@ const LOGOS = [
   { file: 'yokohama-dark.png', alt: 'Yokohama' },
 ];
 
-// Temporary placeholder logo until the real client asset is provided —
-// same as the homepage Testimonials section.
 function ProfileLogoPlaceholder({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="130" height="41" viewBox="0 0 130 41" fill="none" className={className}>
@@ -68,12 +62,6 @@ export default function Testimonials() {
 
       <div className={styles.logos}>
         <div className={styles.logosTrack}>
-          {/* loading="eager": this is a continuously auto-scrolling marquee,
-              not a user-scrolled list — logos further down the track still
-              scroll into view within seconds, so the default lazy-loading
-              (which waits for the browser to flag them as near-viewport)
-              left the tail-end logos rendering blank until their fetch
-              finally kicked in mid-scroll. */}
           {LOGOS.map(({ file, alt }) => (
             <Image
               key={file}

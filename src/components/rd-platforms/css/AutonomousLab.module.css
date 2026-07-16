@@ -16,10 +16,6 @@
   padding-top: 50px;
 }
 
-/* Left edge matches the shared .container's left inset (max(2.5vw, (100vw-1730px)/2)),
-   computed directly since .left itself is a fixed 516px box, not the viewport —
-   nesting the .container class here would resolve its percentage against 516px
-   instead of the viewport and misalign it. */
 .leftInner {
   display: flex;
   flex-direction: column;
@@ -45,10 +41,6 @@
   flex: 1;
 }
 
-/* Holds the image + overlay + controls specifically — kept separate from
-   .right so .features can sit outside this box (stacked below it on
-   mobile) without being clipped by the overflow:hidden that crops the
-   image. */
 .media {
   position: relative;
   width: 100%;
@@ -108,7 +100,6 @@
   gap: 8px;
 }
 
-/* Decorative — no click behavior, so it shouldn't look clickable */
 .controlBtn {
   position: relative;
   width: 38px;
@@ -161,10 +152,6 @@
   }
 
   .right {
-    /* Base .right has flex: 1 (flex-basis: 0%), which overrides the height
-       set on .media below in the flex sizing algorithm — .section's height
-       is auto on mobile, so there's no free space to flex-grow into and
-       the box (and the image + controls it contains) collapsed to 0px. */
     flex: none;
   }
 
@@ -172,9 +159,6 @@
     height: 420px;
   }
 
-  /* Figma mobile design (node 1496:29949): feature pills move out from
-     over the image into their own stacked list below it, instead of the
-     desktop's absolute overlay in the image's bottom-left corner. */
   .features {
     position: static;
     padding: 20px;

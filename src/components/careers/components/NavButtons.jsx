@@ -9,8 +9,6 @@ function ArrowIcon() {
   );
 }
 
-// Prev/next control pair — circle + square buttons — shared by the Future
-// Builders and Voices sections on the Careers page.
 export default function NavButtons({ onPrev, onNext, prevLabel = 'Previous', nextLabel = 'Next' }) {
   return (
     <div className={styles.pair}>

@@ -18,7 +18,6 @@ export default function TechSpecs() {
       <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
 
       <div className={styles.blueprint}>
-        {/* Desktop */}
         <Image
           src="/assets/apt20-blueprint.svg"
           alt="APT20 product blueprint showing front, side and rear views with dimensions"
@@ -27,7 +26,6 @@ export default function TechSpecs() {
           className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}
         />
 
-        {/* Mobile */}
         <Image
           src="/assets/product-specification-apt20-mob.svg"
           alt="APT20 product blueprint"

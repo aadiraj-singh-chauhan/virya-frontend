@@ -81,7 +81,6 @@
   max-height: 120px;
 }
 
-/* Chevron — hidden on desktop, shown on mobile */
 .chevron {
   display: none;
   align-items: center;
@@ -238,13 +237,9 @@
     border-bottom:1px solid rgba(0,0,0,.1);
   }
 
-  /* Show chevron on mobile */
-
   .chevron{
     display:flex;
   }
-
-  /* Hide desktop-only content */
 
   .tabDesc{
     display:none;
@@ -253,8 +248,6 @@
   .desktopImage{
     display:none;
   }
-
-  /* Mobile accordion — smooth slide + fade */
 
   .mobileContent{
     display:flex;

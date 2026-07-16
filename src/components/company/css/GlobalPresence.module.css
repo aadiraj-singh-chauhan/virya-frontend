@@ -1,6 +1,6 @@
 .section {
   background: var(--color-7);
-  padding: 100px 0 0;
+  padding: 100px 0;
   overflow: hidden;
 }
 
@@ -138,10 +138,6 @@
   }
 
   .stat {
-    /* flex: 1 1 200px's 200px basis is a main-axis size — width in
-       desktop's row layout, but height once .stats switches to a column
-       here, reserving a fixed 200px-tall box per stat regardless of
-       content and blowing the gap between them way out. */
     flex: 0 0 auto;
     border-left: none;
     padding-left: 0;
@@ -156,39 +152,22 @@
     padding-top: 0;
   }
 
-  /* Fixed width so the label column starts at the same X regardless of
-     digit count ("13+" vs "108+") instead of each row's label sliding
-     left/right based on its own number's natural width. */
   .statValue {
     width: 130px;
     flex-shrink: 0;
   }
 
-  /* Figma (node 1496:30802): the map container itself is ~the same aspect
-     ratio as desktop (1127:615) — what actually differs on mobile is that
-     it bleeds full-width past the section's side padding (Figma has it
-     positioned partially off-canvas) instead of sitting inset like the
-     rest of the content, making it noticeably bigger/more legible. */
-  /* 140vw (not transform: scale) so .mapFade and the heading gap — both
-     sized/laid out relative to .mapWrap's real box — grow along with the
-     visual size instead of a transform silently detaching them from it.
-     .section's overflow: hidden clips the excess on both sides. */
   .mapWrap {
     width: 140vw;
     margin-left: calc(50% - 70vw);
     margin-right: calc(50% - 70vw);
   }
 
-  /* Scaling .map up scales the dots right along with it — shrink the base
-     size so they don't end up looking oversized/chunky once zoomed. */
   .markerDot {
     width: 3px;
     height: 3px;
   }
 
-  /* The 2s marker-cycling tooltip is too small/cluttered to read at this
-     size — only India (the one Figma singles out with a permanent
-     labeled badge) stays visible; the other markers are just plain dots. */
   .marker.active:not(.pinned) .tooltip {
     opacity: 0;
     visibility: hidden;
@@ -199,7 +178,6 @@
     visibility: visible;
   }
 
-  /* Figma's badge sits beside the marker, not above it. */
   .pinned .tooltip {
     left: calc(100% + 4px);
     bottom: auto;

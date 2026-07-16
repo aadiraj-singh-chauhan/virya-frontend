@@ -10,9 +10,6 @@
   will-change: transform, opacity;
 }
 
-/* Each dash rides the long vertical run of its own path — 160 user-units
-   long in both cases — with slightly different durations/delays so the two
-   don't pulse in lockstep. */
 .pulse1 { --travel-distance: 160px; animation: travelY 4s linear infinite; animation-delay: -1s; }
 .pulse2 { --travel-distance: 160px; animation: travelY 4.6s linear infinite; animation-delay: -2.3s; }
 

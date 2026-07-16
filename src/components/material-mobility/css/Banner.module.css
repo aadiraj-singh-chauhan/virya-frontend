@@ -1,13 +1,6 @@
 .section {
   position: relative;
   overflow: hidden;
-  /* Everything inside (subtitle, decorative text, images) is positioned with
-     fixed px offsets matching a 773px-tall Figma frame, inside .inner which
-     itself adds a (header-height - 20px) top offset — height:100vh let the
-     subtitle's top fall past the section's bottom edge and get clipped by
-     overflow:hidden. The extra 30px here (773 -> 803) gives the two-line
-     subtitle (top:745px) room to breathe below the MOBILITY watermark
-     without its second line getting clipped. */
   height: calc(803px + var(--header-height) - 20px);
   background: var(--color-6);
 }
@@ -64,8 +57,6 @@
   pointer-events: none;
 }
 
-/* Fades the video into the next section's background color so there's no
-   hard cut at the section boundary. */
 .bottomFade {
   position: absolute;
   left: 0;
@@ -119,9 +110,6 @@
 
   }
 
-  /* Decorative text sits behind the image again.
-     Font sizes scaled down so both words fit within the viewport width
-     instead of overflowing/getting clipped on either side. */
   .textMaterial {
     position: absolute;
     left: 50%;
@@ -142,7 +130,6 @@
     z-index: 0;
   }
 
-  /* Only the center image shows on mobile — overlaid on top of the text */
   .images {
     position: relative;
     left: auto;

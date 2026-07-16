@@ -4,7 +4,6 @@ import { memo, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from '../css/GlobalPresence.module.css';
 
-// Marker coordinates lifted from the Figma map artwork (1127 × 615 box)
 const MAP_W = 1127;
 const MAP_H = 615;
 
@@ -66,7 +65,6 @@ export default function GlobalPresence() {
   );
 }
 
-// Isolated so its own 2s interval re-render never touches the stats subtree.
 function WorldMap() {
   const [activeIndex, setActiveIndex] = useState(0);
 

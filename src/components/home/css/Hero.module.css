@@ -22,7 +22,6 @@
   object-fit: cover;
 }
 
-/* Full-width content layer */
 .content {
   position: absolute;
   inset: 0;
@@ -34,7 +33,6 @@
   padding-bottom: 18vh;
 }
 
-/* Heading sits in the right half */
 .heading {
   color: var(--color-5);
   margin-left: 45%;

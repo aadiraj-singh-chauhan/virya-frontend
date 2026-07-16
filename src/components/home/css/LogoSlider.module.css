@@ -20,8 +20,6 @@
   animation: marquee 63s linear infinite;
 }
 
-/* Width is calculated so exactly 6 logos fill the slider's visible area.
-   The container above is 95vw (max 1730px), so each logo = (container - 5 gaps) / 6. */
 .logo {
   flex-shrink: 0;
   width: calc((min(95vw, 1730px) - 5 * 60px) / 6);
@@ -41,7 +39,6 @@
     gap: 40px;
   }
 
-  /* Only 2 logos fill the visible width on mobile, so each renders much bigger */
   .logo {
     width: calc((min(95vw, 1730px) - 1 * 40px) / 2);
   }

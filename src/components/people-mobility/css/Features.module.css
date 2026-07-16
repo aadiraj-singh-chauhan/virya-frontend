@@ -73,10 +73,7 @@
   color: var(--color-6);
 }
 
-/* ── Mobile: continuous auto-scrolling marquee (Splide + AutoScroll) ────────
-   Same engine as the shared ImageSlider — real infinite loop, no reset jump
-   at the end. .card here is reused inside each SplideSlide, sized via
-   autoWidth on the Splide instance instead of the desktop grid's 1fr cols. */
+/* ── Mobile: continuous auto-scrolling marquee (Splide + AutoScroll) ──────── */
 
 .splideWrapper :global(.splide__track) {
   cursor: grab;

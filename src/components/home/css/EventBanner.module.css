@@ -28,10 +28,6 @@
   pointer-events: none;
 }
 
-/* Four corner dots, centered on the card's actual border corners (half in,
-   half out) — hosted on the non-clipping .card wrapper, not .cardInner,
-   so they aren't cut off by .cardInner's overflow: hidden.
-   ::before handles the left column, ::after the right. */
 .card::before,
 .card::after {
   content: "";
@@ -86,8 +82,6 @@
   z-index: 1;
 }
 
-/* display: contents so the wrapper doesn't interfere with .image's own
-   absolute positioning on desktop; mobile below turns it into a real box. */
 .imageWrap {
   display: contents;
 }
@@ -104,17 +98,10 @@
     background: var(--color-6);
   }
 
-  /* The 0.182px desktop border reads fine against a plain image/pattern
-     background, but on mobile .content sits flush against it with its own
-     backdrop-filter: blur — that blur washes the hairline out completely. */
   .cardInner {
     border-width: 1px;
   }
 
-  /* .cardInner is now height: auto on mobile, so the desktop box-shadow
-     trick (which offsets by a fixed 436px) can't place the bottom dot.
-     Use top/bottom insets instead — they track whatever height the
-     stacked image+content actually end up with. */
   .card::before,
   .card::after {
     top: -4px;

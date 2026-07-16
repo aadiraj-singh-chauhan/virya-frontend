@@ -40,7 +40,7 @@
   height: 568px;
 }
 
-/* ── Left thumbnail panel (desktop) — view switcher for imageArea below ───── */
+/* ── Left thumbnail panel ─────────────────────────────────────────────────── */
 
 .thumbnailPanel {
   flex: 0 0 127px;
@@ -90,7 +90,6 @@
   color: var(--color-5);
 }
 
-/* Mobile tab bar — same view switcher, hidden until the mobile breakpoint */
 .mobileTabs {
   display: none;
 }
@@ -197,11 +196,6 @@
 
 /* ── Feature accordion panel (right) ─────────────────────────────────────── */
 
-/* max-width is lower here than APT20/AMR10's 600px cap on purpose: this
-   product's imageArea is only 600px (vs their 879px), so the same 600px
-   cap let the panel grow as wide as the image itself, inverting the
-   intended hierarchy (image dominant, panel a narrower sidebar). Keep this
-   proportional to imageArea rather than copying the other products' value. */
 .panel {
   flex: 1 1 328px;
   max-width: 420px;
@@ -250,8 +244,7 @@
   padding-bottom: 28px;
 }
 
-/* ── Image (own grid trick, split out so it can sit above/below the label
-   independently of the description) ──────────────────────────────────────── */
+/* ── Image ────────────────────────────────────────────────────────────────── */
 
 .imageExpandable {
   display: grid;
@@ -347,20 +340,7 @@
   opacity: 0.5;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   TABLET
-   imageArea + panel are fixed-width and sum to 928px, which overflows any
-   viewport under ~1000px and gets clipped by .section's overflow:hidden —
-   the robot image ends up pinned to the left with the accordion panel
-   pushed off-screen. imageArea shrinks from its designed 600px only as
-   much as needed to fit (flex-shrink instead of flex-grow so it doesn't
-   stretch past its design size), and justify-content: center balances the
-   row as a block. aspect-ratio keeps imageArea's box proportions locked to
-   the source image (600:568) as it shrinks, so the dots/pill — positioned
-   in JSX as percentages of that same 600x568 reference — track the image
-   correctly instead of drifting, and can stay visible instead of being
-   hidden.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Tablet ───────────────────────────────────────────────────────────────── */
 
    @media (max-width: 1124px) and (min-width: 768px) {
     .section {
@@ -391,11 +371,7 @@
     }
   }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE (matches provided screenshot)
-   Stacked layout: header → full-width robot image → accordion panel full
-   width below, first item expanded by default
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
    @media (max-width: 767px) {
     .section {
@@ -431,9 +407,6 @@
       width: 100%;
     }
 
-    /* Robot image area — aspect-ratio (not a fixed height) keeps it
-       proportional to the 600x568 reference so the percentage-positioned
-       dots/pill below still land in the right place instead of drifting. */
     .imageArea {
       flex: none;
       width: 100%;
@@ -441,7 +414,6 @@
       aspect-ratio: 600 / 568;
     }
 
-    /* Feature accordion panel */
     .panel {
       flex: none;
       width: 100%;
@@ -492,8 +464,6 @@
     }
   }
 
-  /* Tech spec cards grid — tighter padding/icon size, single column. Every
-     card is static and always shows its description — no expand/collapse. */
   @media (max-width: 767px) {
     .techGrid {
       display: flex;

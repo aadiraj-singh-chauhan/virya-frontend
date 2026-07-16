@@ -2,18 +2,11 @@
   background: var(--color-6);
 }
 
-/* Tall runway that gives the scroll-jack effect room: while its top is
-   between 0 and -(height - 100vh), .sticky stays pinned and the active step
-   advances with scroll progress; once it scrolls past, the page continues
-   normally into the next section. */
 .scrollTrack {
   position: relative;
   height: 700vh;
 }
 
-/* position/top/left/width are set inline (see Ecosystem.jsx) since they
-   switch between 'before' (absolute, top of track), 'pinned' (fixed, tracks
-   the viewport) and 'after' (absolute, bottom of track). */
 .sticky {
   height: calc(100vh - var(--header-height));
   display: flex;
@@ -88,7 +81,6 @@
   opacity: 1;
 }
 
-/* Step title — activated by scroll progress, not click */
 .stepTitle {
   position: relative;
   flex: 1;
@@ -107,7 +99,6 @@
   opacity: 0.2;
 }
 
-/* Width-lock scramble */
 .textOriginal {
   visibility: hidden;
 }
@@ -126,7 +117,6 @@
   border: 0.2px solid var(--color-3);
 }
 
-/* 4 orange corner dots via 2 pseudo-elements */
 .imageBox::before,
 .imageBox::after {
   content: "";
@@ -268,9 +258,6 @@
     padding: 60px 0 0;
   }
 
-  /* Same scroll-jacked pin as desktop, just a shorter runway — the
-     accordion's content is more compact than desktop's side-by-side panel,
-     and 700vh left a huge empty scroll gap before any content appeared. */
   .scrollTrack {
     height: 300vh;
   }
@@ -295,8 +282,6 @@
   .stepsContainer {
     gap: 32px;
   }
-
-  /* Force each step to stack vertically: head → desc → image */
 
   .stepItem {
     display: flex;
@@ -357,8 +342,6 @@
   .mobileImage {
     object-fit: cover;
   }
-
-  /* Hide desktop shared image box */
 
   .imageBox {
     display: none;

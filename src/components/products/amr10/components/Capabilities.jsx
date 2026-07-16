@@ -4,9 +4,6 @@ import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/Capabilities.module.css';
 
-// Dot coordinates below are pixel positions on the 879x579 desktop imageArea;
-// converted to percentages at render time so they track the image correctly
-// as imageArea resizes (flex-shrink/flex-grow) on smaller/larger viewports.
 const IMAGE_WIDTH = 879;
 const IMAGE_HEIGHT = 579;
 
@@ -50,7 +47,6 @@ function FeatureItem({ feature, active, onClick }) {
       onMouseEnter={play}
       onMouseLeave={reset}
     >
-      {/* Image — grid-template-rows animates 0fr → 1fr, same as description below */}
       <div className={styles.imageExpandable}>
         <div className={styles.imageExpandableInner}>
           <div className={styles.detailImage}>
@@ -65,7 +61,6 @@ function FeatureItem({ feature, active, onClick }) {
         </div>
       </div>
 
-      {/* Label row — always visible */}
       <div className={styles.labelRow}>
         <p className={`${styles.featureLabel} title-2 title-2-md`}>
           <span className={styles.labelHidden}>{feature.label}</span>
@@ -73,7 +68,6 @@ function FeatureItem({ feature, active, onClick }) {
         </p>
       </div>
 
-      {/* Description — grid-template-rows animates 0fr → 1fr */}
       <div className={styles.expandable}>
         <div className={styles.expandableInner}>
           <div className={styles.detailContent}>
@@ -105,7 +99,6 @@ export default function Capabilities() {
       {/* ── Content row ── */}
       <div className={styles.contentRow}>
 
-        {/* Robot image with dots */}
         <div className={styles.imageArea}>
           <div className={styles.robotWrap}>
             <Image
@@ -117,7 +110,6 @@ export default function Capabilities() {
             />
           </div>
 
-          {/* Annotation dots */}
           {FEATURES.map((f, i) => (
             <button
               key={f.id}
@@ -132,7 +124,6 @@ export default function Capabilities() {
             </button>
           ))}
 
-          {/* Active label pill */}
           <div
             className={styles.pill}
             style={{
@@ -147,7 +138,6 @@ export default function Capabilities() {
           </div>
         </div>
 
-        {/* Feature accordion panel */}
         <div className={styles.panel}>
           {FEATURES.map((f, i) => (
             <FeatureItem

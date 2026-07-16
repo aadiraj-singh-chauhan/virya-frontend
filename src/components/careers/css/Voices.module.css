@@ -30,9 +30,6 @@
   object-position: top;
 }
 
-/* Stack-of-cards feel: the front card lifts, tilts and tosses away while
-   the next one — sitting smaller/lower behind it — rises and springs into
-   the front position, rather than both sliding sideways in the same plane. */
 .photoIn,
 .photoOut {
   position: absolute;
@@ -68,8 +65,6 @@
   overflow: hidden;
 }
 
-/* dir=1 (Next): incoming enters from the right and slides left into place,
-   outgoing exits further left. dir=-1 (Previous) mirrors it. */
 @keyframes stackIn {
   from {
     transform: translateX(calc(var(--dir, 1) * 40px)) scale(0.9) rotate(calc(var(--dir, 1) * 3deg));
@@ -149,11 +144,6 @@
   bottom: 60px;
 }
 
-/* person/navWrap render twice — once inside .testimonial (desktop, where
-   their absolute positioning is anchored) and once here after .photoWrap
-   (mobile only). Desktop's position depends on testimonial's own box,
-   which isn't a fixed offset from photoWrap, so a single copy moved with
-   `order` can't serve both layouts. */
 .mobileOnly {
   display: none;
 }

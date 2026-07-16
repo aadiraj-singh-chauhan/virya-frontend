@@ -51,7 +51,6 @@
   color: var(--color-3);
 }
 
-/* Profile row */
 .profile {
   display: flex;
   align-items: center;
@@ -64,7 +63,6 @@
   flex-shrink: 0;
 }
 
-/* Show/hide logo variants — desktop keeps original, mobile gets the new asset */
 .profileLogoMobile {
   display: none;
 }
@@ -83,7 +81,6 @@
   gap: 5px;
 }
 
-/* Dim the role line */
 .profileText p:last-child {
   opacity: 0.7;
 }

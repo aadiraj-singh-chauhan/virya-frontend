@@ -6,9 +6,6 @@ import styles from '../css/Banner.module.css';
 export default function Banner() {
   const videoRef = useRef(null);
 
-  // Pause while scrolled out of view — this and VideoSection's video would
-  // otherwise both decode at full res for the whole session regardless of
-  // scroll position, competing for the main thread/GPU during scroll.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return undefined;

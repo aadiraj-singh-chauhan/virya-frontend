@@ -20,10 +20,6 @@
   margin-bottom: 60px;
 }
 
-/* display:contents on desktop keeps the duplicated items (added for the
-   mobile marquee loop) as direct flex children of .features so
-   justify-content: space-between still applies to the original set only;
-   .featureItemDuplicate hides the duplicate set on desktop. */
 .featuresTrack {
   display: contents;
 }
@@ -133,8 +129,6 @@
     text-align: center;
   }
 
-  /* Auto-scrolling loop — features never wrap, no manual swipe needed. The
-     mask fades the edges instead of a hard clip. */
   .features {
     display: flex;
     justify-content: flex-start;
@@ -153,9 +147,6 @@
     animation: featuresMarquee 16s linear infinite;
   }
 
-  /* Duplicate set (hidden on desktop via .featureItem.featureItemDuplicate)
-     is needed here to make the loop seamless — re-show it. Matches that
-     selector's specificity so this override actually wins. */
   .featureItem.featureItemDuplicate {
     display: flex;
   }
@@ -164,8 +155,6 @@
     flex: 0 0 auto;
     white-space: nowrap;
   }
-
-  /* Video slides full width, same treatment as features */
 
   .videoWrap {
     width: 100%;

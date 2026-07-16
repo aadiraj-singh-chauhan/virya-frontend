@@ -8,17 +8,6 @@ import styles from '../css/PostsListing.module.css';
 const INITIAL_VISIBLE = 6;
 const PAGE_SIZE = 3;
 
-/**
- * Shared "posts grid" layout used by /resources/blogs and
- * /resources/case-studies: heading, featured post, optional filter tabs,
- * paginated grid.
- *
- * @param heading      page heading
- * @param featured     { image, tags, text, ctaLabel, ctaHref }
- * @param posts        [{ key, image, tags, title }]
- * @param tabs         optional [{ id, label, match(post) => bool }] — first
- *                     entry is treated as the "show everything" tab
- */
 export default function PostsListing({ heading, featured, posts, tabs }) {
   const [activeTab, setActiveTab] = useState(tabs?.[0]?.id);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);

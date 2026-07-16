@@ -56,7 +56,6 @@
   overflow: hidden;
 }
 
-/* Image is wider/taller than the frame — centered and clipped */
 .imageWrap {
   position: absolute;
   top: 50%;
@@ -90,14 +89,7 @@
   transform: translate(-50%, -50%);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   MOBILE
-   These were the actual intended mobile values, but a previous edit ("Added
-   rwd to people mobility css pages") applied them directly to the base
-   rules above instead of scoping them to a breakpoint, and left this media
-   query empty — shrinking the video to mobile size at every viewport,
-   including desktop. Moved here where they belong.
-   ══════════════════════════════════════════════════════════════════════════ */
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 767px) {
   .section {

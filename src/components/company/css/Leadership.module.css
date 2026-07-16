@@ -1,7 +1,7 @@
 .section {
   position: relative;
   background: var(--color-6);
-  padding: 100px 0 0;
+  padding: 100px 0;
   overflow: hidden;
 }
 
@@ -51,11 +51,6 @@
   object-fit: cover;
 }
 
-/* Figma (node 1399:5998) hand-tunes each photo's crop/scale/offset rather
-   than a plain centered object-fit: cover — the two placeholder source
-   photos have different native framing, so a uniform crop doesn't match.
-   !important is needed to win over next/image's own inline fill styles
-   (position/inset/width/height), which a className alone can't override. */
 .cropA {
   width: 148.47% !important;
   height: 148.37% !important;

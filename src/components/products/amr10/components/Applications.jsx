@@ -17,9 +17,7 @@ export default function Applications() {
 
       <h2 className={`heading-2 heading-2-md ${styles.title}`}>Product Specifications</h2>
 
-      {/* Blueprint diagram */}
       <div className={styles.blueprint}>
-        {/* Desktop */}
         <Image
           src="/assets/amr10-blueprint.svg"
           alt="AMR10 product blueprint showing front, side and rear views with dimensions"
@@ -28,7 +26,6 @@ export default function Applications() {
           className={`${styles.blueprintImage} ${styles.blueprintDesktop}`}
         />
 
-        {/* Mobile */}
         <Image
           src="/assets/product-specification-mob.svg"
           alt="AMR10 product blueprint"
@@ -38,7 +35,6 @@ export default function Applications() {
         />
       </div>
 
-      {/* Spec cards */}
       <div className={styles.grid}>
         {SPECS.map((s) => (
           <div key={s.label} className={styles.card}>

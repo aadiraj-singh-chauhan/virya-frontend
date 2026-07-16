@@ -6,7 +6,6 @@ import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import '@splidejs/splide/css/core';
 import styles from '../css/GroupCompanies.module.css';
 
-// Matches the previous hand-rolled marquee's pace (36s per full loop).
 const AUTO_SCROLL_SPEED = 0.6; // px/frame
 
 const COMPANIES = [
@@ -55,9 +54,6 @@ const ALLIANCES = [
   },
 ];
 
-// Splide handles the seamless loop, drag/swipe (desktop and touch alike),
-// and the auto-scroll marquee itself — no more hand-duplicated track or
-// CSS keyframe animation.
 const SPLIDE_OPTIONS = {
   type: 'loop',
   autoWidth: true,

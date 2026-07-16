@@ -38,7 +38,6 @@ export default function ProductOverview() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      {/* Decorative grid pattern */}
       <Image
         src="/assets/pm-pattern.svg"
         alt=""
@@ -48,7 +47,6 @@ export default function ProductOverview() {
         aria-hidden="true"
       />
 
-      {/* Content */}
       <div className={styles.content}>
         <div className={styles.header}>
           <h2 className="heading-2 heading-2-md">
@@ -77,7 +75,6 @@ export default function ProductOverview() {
             <div className={styles.overlay} />
           </div>
 
-          {/* Center button — click to view fullscreen */}
           <FullscreenToggle onClick={handlePlay} className={styles.playCenter} />
         </div>
       </div>

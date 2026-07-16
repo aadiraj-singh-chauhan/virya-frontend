@@ -26,7 +26,6 @@
   pointer-events: none;
 }
 
-/* Cream fade blends the cards into the dark background below */
 .gradientTop {
   position: absolute;
   top: 0;
@@ -64,7 +63,6 @@
   border-right: none;
 }
 
-/* Proportional widths — 676:348:348 ratio, always fills the container */
 .cardExpanded {
   width: calc(676 / 1372 * 100%);
 }
@@ -121,7 +119,6 @@
 }
 
 /* ── Legacy / metrics section ──────────────────────────────────────────────── */
-/* 642px total offset = 571px cards + 71px gap (matches Figma pt-642 on bg div) */
 .contentSection {
   margin-top: 71px;
   padding-bottom: 32px;
@@ -169,8 +166,6 @@
   max-width: 200px;
 }
 
-/* Mobile-only auto-scrolling marquee (Splide) — hidden on desktop, where
-   .metricsRow above is a plain static row. */
 .metricsRowMobile {
   display: none;
 }
@@ -194,9 +189,6 @@
 
   .bgImageMobile {
     display: block;
-    /* Cards (3 x 420px stacked) + contentSection's 48px margin-top sit above the
-       dark area — start the photo there instead of stretching it across the
-       cards too, which was forcing an extreme, unrecognizable crop. */
     top: 1308px;
     height: calc(100% - 1308px);
   }
@@ -209,7 +201,6 @@
     display: block;
   }
 
-  /* Cards break out of the container's side padding to go edge-to-edge */
   .cards {
     flex-direction: column;
     width: 100vw;
@@ -231,7 +222,6 @@
     height: 160px;
   }
 
-  /* contentSection also breaks out edge-to-edge — no side padding/border */
   .contentSection {
     position: relative;
     margin-top: 48px;
@@ -242,7 +232,6 @@
     padding-bottom: 48px;
   }
 
-  /* Cream fade so the cards above blend into the dark contentSection instead of a hard cut */
   .contentSection::before {
     content: '';
     position: absolute;
@@ -265,9 +254,6 @@
     max-width: 100%;
   }
 
-  /* Metrics now auto-scroll (Splide) instead of the plain static desktop
-     row, peeking the next card. Breaks out of .taglineSection's side
-     padding to go edge-to-edge. */
   .metricsRow {
     display: none;
   }

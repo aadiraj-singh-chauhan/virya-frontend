@@ -12,8 +12,7 @@ const CARDS = [
   { id: 'safe', video: '/assets/pm-dynamic-environments.mp4', label: 'Safe in dynamic environments' },
 ];
 
-// Matches ImageSlider's marquee speed.
-const AUTO_SCROLL_SPEED = 1; // px/frame
+const AUTO_SCROLL_SPEED = 1;
 
 function Card({ card }) {
   return (

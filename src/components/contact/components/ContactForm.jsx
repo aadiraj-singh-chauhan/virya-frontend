@@ -8,9 +8,6 @@ import styles from '../css/ContactForm.module.css';
 
 const REASONS = ['Sales and deployment', 'Partnerships & Collaboration', 'Service & Training'];
 
-// CID (10029747371914808982 = hex 0x8b30d21849e3ce96) opens the exact same
-// "Virya Autonomous Technologies Pvt Ltd" business listing as the embed
-// below, not just a generic coordinate pin.
 const MAP_EXTERNAL_URL = 'https://www.google.com/maps?cid=10029747371914808982';
 
 function MapLink() {

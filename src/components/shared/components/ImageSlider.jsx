@@ -7,16 +7,10 @@ import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import '@splidejs/splide/css/core';
 import styles from '../css/ImageSlider.module.css';
 
-// Matches the previous hand-rolled marquee's ~60px/sec at 60fps.
 const AUTO_SCROLL_SPEED = 1; // px/frame
 
-// How far the pointer may move between mousedown and click before it's
-// treated as a drag rather than a click — matches dragMinThreshold.mouse
-// below, so our own click/drag call agrees with Splide's.
 const CLICK_DRAG_TOLERANCE = 10; // px
 
-// Matches the square NavButtons arrow used elsewhere on the site (careers
-// Voices/FutureBuilders) so every prev/next control looks the same.
 function ArrowIcon() {
   return (
     <svg width="14" height="11" viewBox="0 0 13.81 11.109" fill="none" aria-hidden="true">
@@ -26,12 +20,6 @@ function ArrowIcon() {
   );
 }
 
-// Shared slider — built on Splide (drag/swipe, loop, autoplay marquee all
-// handled by the library) instead of a hand-rolled drag implementation.
-// `arrows` accepts true (a fixed prev/next pair below the track), false
-// (hidden), or 'hover' (a single arrow that follows the cursor over the
-// track, flips to point the other way over the left half, and shows/hides
-// with hover — used by TeamGallery and the homepage Industries slider).
 export default function ImageSlider({
   slides,
   cardAspectRatio = '517 / 288',
@@ -43,46 +31,18 @@ export default function ImageSlider({
   const fixedArrows = arrows === true;
   const cursorArrows = arrows === 'hover';
 
-  // With fewer than 4 slides, the real scrollable range is often shorter
-  // than the viewport, so a plain 'slide' type has nowhere to go — loop
-  // mode keeps prev/next feeling like a real carousel instead of stalling.
   const shouldLoop = autoplay || slides.length < 4;
 
   const splideRef = useRef(null);
   const arrowRef = useRef(null);
   const [index, setIndex] = useState(0);
-  // side/visible change rarely (only on enter/leave or crossing the
-  // midpoint), so they're fine as state. Position changes on every pixel
-  // of mouse movement — routing that through setState would re-render the
-  // whole tree (including <Splide>, a plain React.Component that redoes a
-  // DOM query in componentDidUpdate on every render) dozens of times a
-  // second, which is exactly what made hover/click feel janky. It's set
-  // directly on the DOM via arrowRef instead, bypassing React entirely.
   const [side, setSide] = useState('next');
   const [visible, setVisible] = useState(false);
-  // Where the pointer was on mousedown — handleViewportClick compares this
-  // against the click's own position to tell a real click from a drag that
-  // ended over the arrow. Splide's EVENT_DRAG (which onDrag/onDragged would
-  // report) fires unconditionally on the very first pointermove after
-  // mousedown regardless of dragMinThreshold, so it can't be used for this;
-  // measuring the actual distance ourselves is what lets a real click
-  // survive the couple of pixels of natural hand jitter.
   const downPosRef = useRef(null);
 
   const options = {
     type: shouldLoop ? 'loop' : 'slide',
-    // Splide's default clone count for loop+autoWidth is just `slides.length`
-    // — with only a handful of wide, autoWidth cards (every caller here has
-    // 3), that's barely enough clone width to cover one viewport on a
-    // typical desktop screen, and not enough on wider ones. Once the clones
-    // run out, Splide can't animate across the loop boundary and instantly
-    // snaps the track instead — most visible on the very first Prev click,
-    // since index 0 already sits at that boundary. A generous fixed multiple
-    // guarantees enough clone width regardless of viewport or slide count.
     clones: shouldLoop ? slides.length * 4 : undefined,
-    // Splide's default (400ms, cubic-bezier(0.25,1,0.5,1)) reads a bit
-    // abrupt for these wide autoWidth cards — slowing it down and easing
-    // both ends of the move makes the glide feel smoother without dragging.
     speed: 600,
     easing: 'cubic-bezier(0.45, 0, 0.15, 1)',
     autoWidth: true,
@@ -91,17 +51,7 @@ export default function ImageSlider({
     arrows: false,
     pagination: false,
     drag: true,
-    // Arrow-key navigation while the slider has focus — the standard,
-    // built-in equivalent of the role="button"/onKeyDown Enter-or-Space
-    // handling the pre-Splide custom sliders wired up by hand.
     keyboard: 'focused',
-    // Splide's default drag threshold is 0px for mouse (10px for touch) —
-    // any mouse movement at all during a click, even the couple of pixels
-    // of natural hand jitter, gets treated as a drag. Its own click
-    // handler then stops the click from ever reaching our onClick (bound
-    // higher up on .viewport), so the cursor-arrow click-to-navigate would
-    // silently fail on real mouse input almost every time. Matching touch's
-    // threshold gives mouse clicks the same forgiveness.
     dragMinThreshold: { mouse: 10, touch: 10 },
     autoScroll: autoplay
       ? { speed: AUTO_SCROLL_SPEED, autoStart: true, pauseOnHover: false, pauseOnFocus: false }
@@ -115,8 +65,6 @@ export default function ImageSlider({
 
   const go = (control) => splideRef.current?.go(control);
 
-  // Cursor-following single arrow: tracks the pointer within the viewport,
-  // pointing "prev" over the left half and "next" over the right half.
   const handlePointerMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const px = e.clientX - rect.left;
@@ -228,9 +176,6 @@ export default function ImageSlider({
         </div>
       )}
 
-      {/* Touch has no hover, so the cursor-following arrow never appears —
-          swap it for a static prev/next pair under the bottom-right of the
-          slider on mobile instead (desktop keeps the cursor arrow). */}
       {cursorArrows && (
         <div className={`${styles.navPair} ${styles.navPairMobile}`}>
           <button

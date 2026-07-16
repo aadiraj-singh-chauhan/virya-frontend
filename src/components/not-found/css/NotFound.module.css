@@ -131,7 +131,6 @@
   text-decoration: underline;
 }
 
-/* Width-lock scramble — matches Button.jsx's pattern */
 .linkText {
   position: relative;
   display: inline-block;

@@ -146,7 +146,6 @@
     padding: 60px 0;
   }
 
-  /* Unwrap .header so heading + link can be reordered independently */
   .header {
     display: contents;
     text-align: center;
@@ -162,14 +161,11 @@
     display: none;
   }
 
-  /* Unwrap .container so header's children + divider + grid + link
-     all become orderable flex items in one column */
   .section :global(.container) {
     display: flex;
     flex-direction: column;
   }
 
-  /* Horizontal slider — featured + items become one continuous scroll-snap row */
   .grid {
     order: 3;
     flex-direction: row;
@@ -186,14 +182,12 @@
     display: none;
   }
 
-  /* Explore link moves to the very end, below the whole slider, centered */
   .exploreLink {
     order: 4;
     margin-top: 24px;
     align-self: center;
   }
 
-  /* Featured slide: structured identically to .item — image wrap on top, text below */
   .featured {
     position: static;
     flex: 0 0 85%;
@@ -238,7 +232,6 @@
     color: var(--color-3);
   }
 
-  /* Unwrap .items so its two .item children become direct slides in .grid */
   .items {
     display: contents;
   }

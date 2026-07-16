@@ -1,7 +1,6 @@
 import TestimonialsPatternBg from './TestimonialsPatternBg';
 import styles from '../css/Testimonials.module.css';
 
-// Temporary placeholder logo until the real client asset is provided.
 function ProfileLogoPlaceholder({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="130" height="41" viewBox="0 0 130 41" fill="none" className={className}>

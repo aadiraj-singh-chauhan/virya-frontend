@@ -44,7 +44,6 @@
   margin-right: calc(50% - 50vw);
 }
 
-/* Splide's own .splide__track already clips + owns drag/loop/autoplay. */
 .splide :global(.splide__track) {
   cursor: grab;
 }
@@ -55,7 +54,6 @@
 
 .card {
   flex-shrink: 0;
-  /* 3 cards fill the viewport width at a time (2 gaps between them) */
   width: calc((100vw - 2 * 20px) / 3);
   min-height: 253px;
   background: var(--color-5);
@@ -85,7 +83,6 @@
   }
 
   .card {
-    /* 1 card per slide on mobile */
     width: calc(100vw - 48px);
     padding: 28px 24px;
   }

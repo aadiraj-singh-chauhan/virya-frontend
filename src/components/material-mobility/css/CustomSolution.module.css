@@ -2,11 +2,6 @@
   position: relative;
   background: var(--color-6);
   height: 600px;
-  /* Section has a fixed height (border-box), so padding-top can't create a
-     gap above it the way it does on auto-height sections — it would just
-     eat into the centered content area instead of pushing the box down.
-     margin-top is used here instead to match the 100px/60px section-gap
-     convention while preserving the panel's exact height. */
   display: flex;
   align-items: center;
   justify-content: center;

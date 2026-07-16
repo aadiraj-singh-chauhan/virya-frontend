@@ -2,7 +2,6 @@
   position: relative;
   background: var(--color-6);
   width: 100%;
-  /* Preserve the 1512×1562 design canvas ratio */
   aspect-ratio: 1512 / 1562;
   overflow: hidden;
 }
