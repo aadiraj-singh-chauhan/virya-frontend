@@ -71,6 +71,20 @@ export default function ImageSlider({
 
   const options = {
     type: shouldLoop ? 'loop' : 'slide',
+    // Splide's default clone count for loop+autoWidth is just `slides.length`
+    // — with only a handful of wide, autoWidth cards (every caller here has
+    // 3), that's barely enough clone width to cover one viewport on a
+    // typical desktop screen, and not enough on wider ones. Once the clones
+    // run out, Splide can't animate across the loop boundary and instantly
+    // snaps the track instead — most visible on the very first Prev click,
+    // since index 0 already sits at that boundary. A generous fixed multiple
+    // guarantees enough clone width regardless of viewport or slide count.
+    clones: shouldLoop ? slides.length * 4 : undefined,
+    // Splide's default (400ms, cubic-bezier(0.25,1,0.5,1)) reads a bit
+    // abrupt for these wide autoWidth cards — slowing it down and easing
+    // both ends of the move makes the glide feel smoother without dragging.
+    speed: 600,
+    easing: 'cubic-bezier(0.45, 0, 0.15, 1)',
     autoWidth: true,
     gap: '12px',
     padding: { left: '58px', right: 0 },

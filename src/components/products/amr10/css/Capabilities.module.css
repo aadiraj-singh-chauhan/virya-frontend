@@ -118,7 +118,7 @@
 .panel {
   flex: 1 1 328px;
   max-width: 600px;
-  margin-left: 165px;
+  margin-left: 100px;
   display: flex;
   flex-direction: column;
   gap: 10px;
