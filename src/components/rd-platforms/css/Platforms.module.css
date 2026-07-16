@@ -5,10 +5,11 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  --inset: max(2.5vw, calc((100vw - 1730px) / 2));
 }
 
 .title {
-  padding: 0 70px;
+  padding: 0 var(--inset);
 }
 
 /* ── Accordion list ───────────────────────────────────────────────────────── */
@@ -33,7 +34,7 @@
   gap: 20px;
   width: 100%;
   min-height: 175px;
-  padding: 43px 70px;
+  padding: 43px var(--inset);
   background: none;
   border: none;
   cursor: pointer;
@@ -46,14 +47,10 @@
   background: var(--color-6);
 }
 
-/* Shrunk when open — only at the bottom: padding-top matches the title's
-   centered offset in the 175px collapsed header (so it doesn't jump when
-   opening), padding-bottom is cut down since the hover thumbnail that
-   justified the tall collapsed height is hidden once open. */
 .rowOpen .header {
   background: var(--color-8);
   min-height: 0;
-  padding: 72.5px 70px 8px;
+  padding: 72.5px var(--inset) 8px;
 }
 
 .rowTitle {
@@ -103,12 +100,10 @@
 }
 
 /* ── Expanded panel ───────────────────────────────────────────────────────── */
-/* Always rendered; opened via max-height + opacity so it animates instead of
-   abruptly mounting/unmounting — matches CapabilityTabs' mobile accordion. */
 .panel {
   box-sizing: border-box;
   background: var(--color-8);
-  padding: 0 70px;
+  padding: 0 var(--inset);
   display: grid;
   grid-template-columns: 1fr 626px;
   column-gap: 40px;
@@ -124,7 +119,7 @@
 }
 
 .rowOpen .panel {
-  padding: 16px 70px 43px;
+  padding: 16px var(--inset) 43px;
   max-height: 900px;
   opacity: 1;
 }
@@ -134,7 +129,6 @@
   flex-direction: column;
 }
 
-/* Figma spec (node 1395:14631): 626×406.53px, object-fit cover. */
 .panelImageWrap {
   position: relative;
   aspect-ratio: 626 / 406.5;
@@ -149,8 +143,6 @@
   opacity: 0.5;
 }
 
-/* Figma spacing: ~49px between the description and the feature pills
-   (wider than the row-gap used elsewhere in this panel). */
 .features {
   display: flex;
   flex-direction: column;
@@ -194,25 +186,14 @@
     padding: 20px 24px;
   }
 
-  /* The base .rowOpen .header padding (72.5px 70px 8px) is tuned for the
-     175px-tall desktop collapsed header and was never overridden here, so
-     opening a row on mobile jumped to that desktop padding instead of
-     staying consistent with the 20px/24px collapsed padding above. */
   .rowOpen .header {
     padding: 20px 24px 8px;
   }
 
-  /* hide hover thumbnail on mobile */
   .thumbWrap {
     display: none;
   }
 
-  /* No hover on touch devices, so the scramble overlay never plays here —
-     drop it and show the plain title instead. It also sidesteps a real
-     layout bug: the longest titles don't fit on one line next to the
-     crosshair at this width, so the nowrap overlay was visually spilling
-     past its own box and rendering behind the icon. The plain text wraps
-     normally in flow, same as any other text. */
   .rowTitleDisplay {
     display: none;
   }
@@ -221,8 +202,6 @@
     visibility: visible;
   }
 
-  /* single-column panel: panelText (desc → features) stacks above the image,
-     following DOM order — no explicit order/grid-column overrides needed. */
   .panel {
     grid-template-columns: 1fr;
     padding: 0 24px;
