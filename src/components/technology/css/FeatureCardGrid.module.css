@@ -127,7 +127,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 60px 24px;
+    padding: 60px 0 0;
   }
 
   /* Horizontal swipe/scroll row instead of a stacked single column — each
@@ -138,11 +138,19 @@
     grid-template-columns: unset;
     overflow-x: auto;
     gap: 16px;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin: 0 -24px;
-    padding: 0 24px;
+  }
+
+  /* Scroll containers collapse start-side padding (it's excluded from the
+     scrollable area in Chromium/WebKit), so a plain padding-left wouldn't
+     show — a real spacer flex item reserves the inset instead. The grid's
+     own 16px gap also lands between this spacer and the first card, so the
+     margin here offsets that to land on a true 12px inset. */
+  .grid::before {
+    content: '';
+    flex: 0 0 0;
+    margin-right: -4px;
   }
 
   .grid::-webkit-scrollbar {
@@ -151,7 +159,6 @@
 
   .card {
     flex: 0 0 85%;
-    scroll-snap-align: start;
   }
 
   .heading {

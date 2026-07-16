@@ -61,7 +61,7 @@
   .section {
     height: auto;
     min-height: unset;
-    padding: 120px 24px 60px;
+    padding: 120px 24px 0;
   }
 
   /* In flow now, between the h1 and p (matches DOM order) instead of a

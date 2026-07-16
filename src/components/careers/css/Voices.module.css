@@ -2,8 +2,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 622px;
-  margin-bottom: 100px;
+  height: 722px;
+  padding-top: 100px;
   background: var(--color-6);
   overflow: hidden;
 }
@@ -229,8 +229,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 40px 24px;
-    margin-bottom: 60px;
+    padding: 60px 24px 0;
   }
 
   .testimonial {

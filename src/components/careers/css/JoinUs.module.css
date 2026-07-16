@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 346px;
+  height: 546px;
+  padding: 100px 0;
   background: var(--color-4);
   overflow: hidden;
 }

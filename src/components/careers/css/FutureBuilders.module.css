@@ -189,4 +189,16 @@
     background: var(--color-3);
     backdrop-filter: none;
   }
+
+  /* Desktop's fixed 130px height (sized for a 526px-wide desc column) clips
+     the description once the card narrows down to mobile width and the
+     text wraps to more lines — let it grow to fit instead. */
+  .cardTextWrap {
+    height: auto;
+    overflow: visible;
+  }
+
+  .cardDesc {
+    max-width: none;
+  }
 }
