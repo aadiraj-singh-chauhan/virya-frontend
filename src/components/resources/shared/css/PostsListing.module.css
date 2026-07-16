@@ -190,12 +190,10 @@
   }
 
   .tabs {
-    justify-content: space-between;
-    gap: 24px;
     margin-bottom: 32px;
   }
 
   .tab {
-    flex: 0 0 auto;
+    flex: 1;
   }
 }
