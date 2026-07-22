@@ -26,8 +26,8 @@
 
 .inner {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  gap: 50px;
 }
 
 /* ===========================
@@ -35,7 +35,7 @@
 =========================== */
 
 .textCol {
-  flex: 0 0 560px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -47,16 +47,16 @@
 }
 
 .tabs {
-  width: 381px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 .tabItem {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
 .tabRow {
@@ -114,6 +114,29 @@
 .tabDescVisible {
   opacity: .5;
   max-height: 120px;
+  margin-top: 13px;
+}
+
+.ctas {
+  display: flex;
+  gap: 16px;
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  max-height: 0;
+  transition: .35s;
+}
+
+.ctasVisible {
+  opacity: 1;
+  max-height: 60px;
+  margin-top: 44px;
+}
+
+.mobileCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .arrow {
@@ -248,14 +271,6 @@
 
 @media (max-width:1360px){
 
-  .inner{
-    gap:50px;
-  }
-
-  .textCol{
-    flex:1;
-  }
-
   .desktopImage{
     flex:1;
     height:420px;
@@ -318,6 +333,10 @@
   }
 
   .tabDesc{
+    display:none;
+  }
+
+  .ctas{
     display:none;
   }
 

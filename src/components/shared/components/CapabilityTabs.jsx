@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
+import Button from '@/components/ui/Button';
 import styles from '../css/CapabilityTabs.module.css';
 
 function TabRow({ label, active, expanded, onClick }) {
@@ -105,6 +106,25 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
                       {tab.desc}
                     </p>
 
+                    {tab.ctas && (
+                      <div
+                        className={`${styles.ctas} ${
+                          active === index ? styles.ctasVisible : ''
+                        }`}
+                      >
+                        {tab.ctas.map((cta) => (
+                          <Button
+                            key={cta.label}
+                            href={cta.href}
+                            property1="Variant2"
+                            size="Button-2"
+                          >
+                            {cta.label}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+
                     <div
                       className={`${styles.mobileContent} ${isOpen ? styles.mobileContentOpen : ''}`}
                       aria-hidden={!isOpen}
@@ -113,6 +133,21 @@ export default function CapabilityTabs({ heading, intro, tag, tabs, centered = f
                       <p className={`body-1-md ${styles.mobileDesc}`}>
                         {tab.desc}
                       </p>
+
+                      {tab.ctas && (
+                        <div className={styles.mobileCtas}>
+                          {tab.ctas.map((cta) => (
+                            <Button
+                              key={cta.label}
+                              href={cta.href}
+                              property1="Variant2"
+                              size="Button-2"
+                            >
+                              {cta.label}
+                            </Button>
+                          ))}
+                        </div>
+                      )}
 
                       <div className={styles.mobileLabels}>
                         {tab.labels.map((item) => (

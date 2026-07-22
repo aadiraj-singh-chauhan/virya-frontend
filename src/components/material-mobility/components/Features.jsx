@@ -11,6 +11,10 @@ const TABS = [
       'Multi-load handling',
       'Fleet-based coordination',
     ],
+    ctas: [
+      { label: 'Explore AMR10', href: '/products/amr10' },
+      { label: 'Explore AMR50', href: '/products/amr50' },
+    ],
   },
   {
     label: 'Lifting',
@@ -22,16 +26,8 @@ const TABS = [
       'Safe vertical transport',
       'Automated stacking',
     ],
-  },
-  {
-    label: 'Tunnelling',
-    desc: 'Navigating tight spaces and confined environments with ease.',
-    image: '/assets/mm-feature-tugging.webp',
-    labels: [
-      'Narrow aisle navigation',
-      'Compact footprint',
-      'Obstacle detection',
-      'High maneuverability',
+    ctas: [
+      { label: 'Explore APT20', href: '/products/apt20' },
     ],
   },
 ];
