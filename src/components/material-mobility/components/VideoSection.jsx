@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import VideoPlayToggle from '@/components/products/VideoPlayToggle';
+import FullscreenToggle from '@/components/shared/components/FullscreenToggle';
 import styles from '../css/VideoSection.module.css';
 
 const FEATURES = [
@@ -15,6 +16,7 @@ const FEATURES = [
 export default function VideoSection() {
   const videoRef = useRef(null);
   const [playing, setPlaying] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const userPausedRef = useRef(false);
 
   useEffect(() => {
@@ -35,6 +37,18 @@ export default function VideoSection() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return undefined;
+
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === video);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -44,6 +58,18 @@ export default function VideoSection() {
     } else {
       userPausedRef.current = true;
       video.pause();
+    }
+  };
+
+  const enterFullscreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
     }
   };
 
@@ -82,12 +108,16 @@ export default function VideoSection() {
             loop
             muted
             playsInline
+            controls={isFullscreen}
             aria-label="Virya autonomous vehicle in warehouse"
             className={styles.videoFg}
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
           />
-          <VideoPlayToggle isPlaying={playing} onToggle={togglePlay} className={styles.playBtn} />
+          <div className={styles.controls}>
+            <VideoPlayToggle isPlaying={playing} onToggle={togglePlay} className={styles.playBtn} />
+            <FullscreenToggle onClick={enterFullscreen} className={styles.fullscreenBtn} />
+          </div>
         </div>
 
       </div>
