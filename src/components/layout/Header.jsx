@@ -15,17 +15,21 @@ const SOLUTION_ITEMS = [
 ];
 
 const RESOURCE_ITEMS = [
-  { label: 'Service & Training', href: '/resources/service-and-training' },
-  { label: 'Partners',           href: '/resources/partners'             },
+  { label: 'Services', href: '/resources/service-and-training' },
   { label: 'Blogs',              href: '/resources/blogs'                },
   { label: 'Case studies',       href: '/resources/case-studies'         },
+];
+
+const COMPANY_ITEMS = [
+  { label: 'About Us',  href: '/company'          },
+  { label: 'Partners',  href: '/company/partners' },
 ];
 
 const NAV_ITEMS = [
   { label: 'Solutions',  href: '/solutions',  items: SOLUTION_ITEMS },
   { label: 'Technology', href: '/technology' },
   { label: 'Resources',  href: '/resources',  items: RESOURCE_ITEMS },
-  { label: 'Company',    href: '/company'    },
+  { label: 'Company',    href: '/company',    items: COMPANY_ITEMS  },
   { label: 'Careers',    href: '/careers'    },
 ];
 

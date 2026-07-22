@@ -28,6 +28,7 @@ const NAV = [
     title: 'Company',
     links: [
       { label: 'About us', href: '/company' },
+      { label: 'Partners', href: '/company/partners' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact us', href: '/contact' },
     ],
@@ -35,8 +36,7 @@ const NAV = [
   {
     title: 'Resources',
     links: [
-      { label: 'Service & Training', href: '/resources/service-and-training' },
-      { label: 'Partners', href: '/resources/partners' },
+      { label: 'Services', href: '/resources/service-and-training' },
       { label: 'Blogs', href: '/resources/blogs' },
       { label: 'Case studies', href: '/resources/case-studies' },
     ],
