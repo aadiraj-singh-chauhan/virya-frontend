@@ -42,6 +42,7 @@ export default function Industries() {
           slides={SLIDES}
           cardAspectRatio="517 / 288"
           arrows="hover"
+          autoplay
           mobileCardWidth="85vw"
           mobileCardHeight="326px"
         />

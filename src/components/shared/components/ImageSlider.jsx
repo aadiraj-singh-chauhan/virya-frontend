@@ -1,13 +1,14 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import { EventInterface } from '@splidejs/splide';
 import '@splidejs/splide/css/core';
 import styles from '../css/ImageSlider.module.css';
 
 const AUTO_SCROLL_SPEED = 1; // px/frame
+const AUTO_SCROLL_HOVER_SPEED = 0.25; // px/frame, while a card is hovered
 
 const CLICK_DRAG_TOLERANCE = 10; // px
 
@@ -39,6 +40,73 @@ export default function ImageSlider({
   const [side, setSide] = useState('next');
   const [visible, setVisible] = useState(false);
   const downPosRef = useRef(null);
+  const hoverCountRef = useRef(0);
+  const speedRef = useRef(AUTO_SCROLL_SPEED);
+
+  const handleCardMouseEnter = () => {
+    hoverCountRef.current += 1;
+    speedRef.current = AUTO_SCROLL_HOVER_SPEED;
+  };
+
+  const handleCardMouseLeave = () => {
+    hoverCountRef.current = Math.max(0, hoverCountRef.current - 1);
+    if (hoverCountRef.current === 0) speedRef.current = AUTO_SCROLL_SPEED;
+  };
+
+  // Drives a constant, adjustable-speed autoscroll directly via Splide's Move
+  // component instead of the splide-extension-auto-scroll package. That
+  // extension only reacts to speed changes via `splide.options = {...}`,
+  // which broadcasts an app-wide "updated" event that remounts clones/arrows
+  // etc. — firing that on every card hover collided with in-flight `go()`
+  // click navigation and left the slider stuck or jumping backwards.
+  useEffect(() => {
+    if (!autoplay) return undefined;
+    const splide = splideRef.current?.splide;
+    if (!splide) return undefined;
+
+    const { Move, Controller, Direction, Slides } = splide.Components;
+    const { translate, getPosition, toIndex, getLimit } = Move;
+    const { setIndex: setSplideIndex, getIndex: getSplideIndex } = Controller;
+    const { orient } = Direction;
+    const { on, off } = EventInterface(splide);
+
+    let frameId;
+    let paused = false;
+
+    const step = () => {
+      if (!paused) {
+        const position = getPosition();
+        let destination = position + orient(speedRef.current);
+        if (splide.is('slide')) {
+          const a = getLimit(false);
+          const b = getLimit(true);
+          destination = Math.min(Math.max(destination, Math.min(a, b)), Math.max(a, b));
+        }
+        if (destination !== position) {
+          translate(destination);
+          const length = splide.length;
+          const nextIndex = (toIndex(destination) + length) % length;
+          if (nextIndex !== getSplideIndex()) {
+            setSplideIndex(nextIndex);
+            Slides.update();
+          }
+        }
+      }
+      frameId = requestAnimationFrame(step);
+    };
+
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; };
+
+    on(['move', 'drag', 'scroll'], pause);
+    on(['moved', 'dragged', 'scrolled'], resume);
+    frameId = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      off(['move', 'drag', 'scroll', 'moved', 'dragged', 'scrolled']);
+    };
+  }, [autoplay]);
 
   const options = {
     type: shouldLoop ? 'loop' : 'slide',
@@ -53,9 +121,6 @@ export default function ImageSlider({
     drag: true,
     keyboard: 'focused',
     dragMinThreshold: { mouse: 10, touch: 10 },
-    autoScroll: autoplay
-      ? { speed: AUTO_SCROLL_SPEED, autoStart: true, pauseOnHover: false, pauseOnFocus: false }
-      : undefined,
     breakpoints: {
       768: {
         padding: { left: '4px', right: 0 },
@@ -107,13 +172,17 @@ export default function ImageSlider({
         <Splide
           ref={splideRef}
           options={options}
-          extensions={autoplay ? { AutoScroll } : undefined}
           onMoved={(splide, newIndex) => setIndex(newIndex)}
           aria-label="Image slider"
         >
           {slides.map((item, i) => (
             <SplideSlide key={i}>
-              <div className={styles.card} style={{ aspectRatio: cardAspectRatio }}>
+              <div
+                className={styles.card}
+                style={{ aspectRatio: cardAspectRatio }}
+                onMouseEnter={autoplay ? handleCardMouseEnter : undefined}
+                onMouseLeave={autoplay ? handleCardMouseLeave : undefined}
+              >
                 <Image
                   src={item.src}
                   alt={item.alt || ''}
