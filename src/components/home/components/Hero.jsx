@@ -48,7 +48,6 @@ export default function Hero() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className={styles.scrollText}>See how that looks</span>
           </div>
 
           <div className={`label-1 label-1-md ${styles.cta}`}>
