@@ -1,7 +1,7 @@
 .section {
   position: relative;
   overflow: hidden;
-  height: calc(803px + var(--header-height) - 20px);
+  height: calc(843px + var(--header-height) - 20px);
   background: var(--color-6);
 }
 
@@ -74,7 +74,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 745px;
+  top: 785px;
   width: 378px;
   text-align: center;
   font-family: var(--font-primary);
