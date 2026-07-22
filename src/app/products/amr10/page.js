@@ -6,7 +6,6 @@ import Applications from '@/components/products/amr10/components/Applications';
 import Industries from '@/components/products/amr10/components/Industries';
 import RelatedProducts from '@/components/products/amr10/components/RelatedProducts';
 import CTA from '@/components/products/amr10/components/CTA';
-import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
 export const metadata = {
   title: 'AMR10 · Virya',
@@ -30,7 +29,6 @@ export default function AMR10() {
       <Industries />
       <RelatedProducts />
       <CTA />
-      <ProductFooterCTA />
     </main>
   );
 }

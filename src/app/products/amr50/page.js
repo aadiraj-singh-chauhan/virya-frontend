@@ -4,7 +4,6 @@ import Capabilities from '@/components/products/amr50/components/Capabilities';
 import TechSpecs from '@/components/products/amr50/components/TechSpecs';
 import Applications from '@/components/products/amr50/components/Applications';
 import RelatedProducts from '@/components/products/amr50/components/RelatedProducts';
-import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
 export const metadata = {
   title: 'AMR50 · Virya',
@@ -26,7 +25,6 @@ export default function AMR50() {
       <TechSpecs />
       <Applications />
       <RelatedProducts />
-      <ProductFooterCTA />
     </main>
   );
 }

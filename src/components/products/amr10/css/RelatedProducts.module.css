@@ -2,7 +2,7 @@
 
 .section {
   background: var(--color-6);
-  padding: 100px 0 0;
+  padding: 100px 0;
 }
 
 .heading {
@@ -142,7 +142,7 @@
 @media (max-width: 767px) {
 
   .section {
-    padding: 60px 0 0;
+    padding: 60px 0;
   }
 
   .heading {
