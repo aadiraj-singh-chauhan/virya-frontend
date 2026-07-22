@@ -1,6 +1,7 @@
 .section {
   position: relative;
-  height: 790px;
+  height: 632px;
+  background: var(--color-6);
   overflow: hidden;
 }
 
@@ -9,6 +10,8 @@
 .bg {
   position: absolute;
   inset: 0;
+  max-width: 1210px;
+  margin: 0 auto;
   z-index: 0;
 }
 

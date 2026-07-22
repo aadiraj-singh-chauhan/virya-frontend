@@ -1,7 +1,7 @@
 .section {
   position: relative;
   padding-top: 80px;
-  height: 940px;
+  aspect-ratio: 1440 / 940;
   background: var(--color-6);
   overflow: hidden;
 }
@@ -45,24 +45,17 @@
 
 .imageWrap {
   position: absolute;
-  top: 90px;
+  top: 9.57%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 851px;
+  aspect-ratio: 3026 / 1726;
   z-index: 2;
 }
 
 .image {
   object-fit: contain;
   object-position: center top;
-}
-
-@media (min-width: 1600px) {
-  .image {
-    object-fit: cover;
-    object-position: center bottom;
-  }
 }
 
 /* ── Bottom gradient fade ─────────────────────────────────────────────────── */

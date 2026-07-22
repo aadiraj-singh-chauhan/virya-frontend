@@ -29,7 +29,7 @@
 
 .card {
   position: relative;
-  height: 497px;
+  aspect-ratio: 1080 / 1350;
   overflow: hidden;
 }
 
@@ -92,6 +92,6 @@
     position: relative;
     overflow: hidden;
     width: 70vw;
-    height: 320px;
+    aspect-ratio: 1080 / 1350;
   }
 }
