@@ -93,8 +93,8 @@ export default function Header() {
           }}
         >
           <span className={styles.logoWrap}>
-            <Image src="/assets/logo-light.svg" fill alt="Virya" className={styles.logoLight} sizes="(max-width: 768px) 111px, 125px" />
-            <Image src="/assets/logo-dark.svg"  fill alt="" className={styles.logoDark} aria-hidden="true" sizes="(max-width: 768px) 111px, 125px" />
+            <Image src="/assets/logo-light.svg" fill alt="Virya" className={styles.logoLight} sizes="(max-width: 768px) 138px, 156px" />
+            <Image src="/assets/logo-dark.svg"  fill alt="" className={styles.logoDark} aria-hidden="true" sizes="(max-width: 768px) 138px, 156px" />
           </span>
         </Link>
 
