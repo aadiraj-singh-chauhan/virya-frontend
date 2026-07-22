@@ -1,7 +1,6 @@
 import styles from './page.module.css';
 import Hero from '@/components/home/components/Hero';
 import Challenges from '@/components/home/components/Challenges';
-import Autonomous from '@/components/home/components/Autonomous';
 import LogisticsChallenges from '@/components/home/components/LogisticsChallenges';
 import Legacy from '@/components/home/components/Legacy';
 import Testimonials from '@/components/home/components/Testimonials';
@@ -14,7 +13,6 @@ export default function Home() {
     <main className={styles.main}>
       <Hero />
       <Challenges />
-      <Autonomous />
       <LogisticsChallenges />
       <Legacy />
       <Testimonials />
