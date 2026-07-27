@@ -8,7 +8,7 @@ export default function CTA() {
     <section className={styles.section} data-header-theme="light">
       <div className={styles.bg}>
         <Image
-          src="/assets/pm-cta-bg.webp"
+          src="/assets/pm-bg-cta.webp"
           alt=""
           aria-hidden="true"
           fill

@@ -10,8 +10,6 @@
 .bg {
   position: absolute;
   inset: 0;
-  max-width: 1210px;
-  margin: 0 auto;
   z-index: 0;
 }
 

@@ -17,7 +17,7 @@ export default function Banner() {
 
       <div className={styles.imageWrap}>
         <Image
-          src="/assets/people-mobility-banner-img.webp"
+          src="/assets/pm-banner-background.webp"
           alt="People Mobility autonomous vehicles"
           fill
           sizes="100vw"
