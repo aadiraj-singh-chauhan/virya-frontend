@@ -27,7 +27,7 @@
 /* ── Title + description ──────────────────────────────────────────────────── */
 .content {
   position: absolute;
-  top: 90px;
+  top: 60px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
@@ -54,7 +54,7 @@
 .image {
   object-fit: cover;
   object-position: bottom center;
-  transform: translateY(-80px);
+  transform: translateY(20px);
 }
 
 .illustrationWrap {

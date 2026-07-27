@@ -23,7 +23,7 @@ export default function Banner() {
 
           <div className={styles.imageWrap}>
             <Image
-              src="/assets/rd-platform-background.webp"
+              src="/assets/r-d-platform-background.webp"
               alt="Virya R&D autonomous vehicle lineup"
               fill
               sizes="100vw"
@@ -37,7 +37,7 @@ export default function Banner() {
             style={{ clipPath: `inset(0 0 ${progress * 100}% 0)` }}
           >
             <Image
-              src="/assets/rd-platform-illustration.webp"
+              src="/assets/r-d-platform-illustration.webp"
               alt=""
               fill
               sizes="100vw"

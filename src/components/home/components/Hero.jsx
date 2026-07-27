@@ -1,19 +1,34 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import Button from '@/components/ui/Button';
 import styles from '../css/Hero.module.css';
 
 export default function Hero() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
+
   return (
     <section className={styles.section} data-header-theme="dark">
       <video
+        ref={videoRef}
         className={styles.banner}
-        src="/assets/hp-banner.webm"
         poster="/assets/homepage-banner.webp"
         autoPlay
         loop
         muted
         playsInline
         aria-label="Virya homepage banner"
-      />
+      >
+        <source src="/assets/hp-banner.webm" type="video/webm" />
+        <source src="/assets/hp-banner.mp4" type="video/mp4" />
+      </video>
 
       <div className={styles.content}>
         <div className="container">
