@@ -2,16 +2,36 @@
   background: var(--color-6);
 }
 
-.scrollTrack {
+/* ── Stack wrapper: one scroll "runway" per panel, stacked in flow ───────── */
+
+.stackWrapper {
   position: relative;
-  height: 700vh;
+  height: calc((100vh - var(--header-height)) * var(--panel-count));
 }
 
-.sticky {
+/* Fixed, clipped viewport region below the header. Panels are positioned
+   (via JS) relative to this box rather than the raw viewport — the
+   `transform` makes it the containing block for its `position: fixed`
+   panel children, and `overflow: hidden` clips anything that slides above
+   its top edge. Without this, a panel sliding away during release passes
+   behind the (transparent) header and its stale content bleeds through. */
+.stackStage {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.stackPanel {
+  width: 100%;
   height: calc(100vh - var(--header-height));
   display: flex;
   align-items: center;
-  overflow: hidden;
+  overflow-y: auto;
+  background: var(--color-6);
 }
 
 .panel {
@@ -23,6 +43,7 @@
     "image bullets";
   column-gap: 60px;
   align-items: start;
+  width: 100%;
 }
 
 .panelCorner {
@@ -32,25 +53,6 @@
   height: 6px;
   background: var(--color-1);
   z-index: 2;
-}
-
-.panelInactive {
-  display: none;
-}
-
-.panelActive {
-  animation: panelIn 0.4s ease both;
-}
-
-@keyframes panelIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* ── Text column ──────────────────────────────────────────────────────────── */
@@ -132,11 +134,8 @@
 }
 
 @media (max-width: 1024px) {
-  .sticky {
-    height: auto;
-    max-height: calc(100vh - var(--header-height));
+  .stackPanel {
     align-items: flex-start;
-    overflow-y: auto;
     padding: 40px 0;
   }
 
@@ -163,14 +162,18 @@
     padding-bottom: 60px;
   }
 
-  .scrollTrack {
+  .stackWrapper {
     height: auto;
   }
 
-  .sticky {
+  .stackStage {
+    position: static;
+    overflow: visible;
+  }
+
+  .stackPanel {
     position: static !important;
     height: auto;
-    max-height: none;
     overflow: visible;
     padding: 24px 0;
   }
@@ -182,12 +185,8 @@
     border: 0.2px solid var(--color-3);
   }
 
-  .panel:first-child {
+  .stackPanel:first-child .panel {
     margin-top: 0;
-  }
-
-  .panelActive {
-    animation: none;
   }
 
   .panelCorner {

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useScrollSteps } from '@/hooks/useScrollSteps';
+import { useStackReveal, getStackWrapperMultiplier } from '@/hooks/useStackReveal';
 import styles from '../css/ServiceSteps.module.css';
 
 const STEPS = [
@@ -48,61 +48,68 @@ const STEPS = [
 ];
 
 export default function ServiceSteps() {
-  const { active, pinStyle, trackRef, stickyRef } = useScrollSteps(STEPS.length);
+  const { wrapperRef, setPanelRef } = useStackReveal(STEPS.length);
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <div className={styles.scrollTrack} ref={trackRef}>
-        <div className={styles.sticky} style={pinStyle} ref={stickyRef}>
-          <div className="container">
-            {STEPS.map((step, i) => (
-              <div
-                key={step.title}
-                className={`${styles.panel} ${i === active ? styles.panelActive : styles.panelInactive}`}
-              >
-                <span className={styles.panelCorner} data-corner="tl" aria-hidden="true" />
-                <span className={styles.panelCorner} data-corner="tr" aria-hidden="true" />
-                <span className={styles.panelCorner} data-corner="bl" aria-hidden="true" />
-                <span className={styles.panelCorner} data-corner="br" aria-hidden="true" />
+      <div
+        className={styles.stackWrapper}
+        style={{ '--panel-count': getStackWrapperMultiplier(STEPS.length) }}
+        ref={wrapperRef}
+      >
+        <div className={styles.stackStage}>
+          {STEPS.map((step, i) => (
+            <div
+              key={step.title}
+              className={styles.stackPanel}
+              ref={setPanelRef(i)}
+            >
+              <div className="container">
+                <div className={styles.panel}>
+                  <span className={styles.panelCorner} data-corner="tl" aria-hidden="true" />
+                  <span className={styles.panelCorner} data-corner="tr" aria-hidden="true" />
+                  <span className={styles.panelCorner} data-corner="bl" aria-hidden="true" />
+                  <span className={styles.panelCorner} data-corner="br" aria-hidden="true" />
 
-                <div className={styles.textCol}>
-                  <h3 className={`title-1 ${styles.title}`}>{step.title}</h3>
-                  <p className={`body-1 ${styles.desc}`}>{step.desc}</p>
-                </div>
-
-                <div className={styles.imageWrap}>
-                  <div className={styles.imageBox}>
-                    <Image
-                      src={step.image}
-                      alt={step.title}
-                      fill
-                      sizes="672px"
-                      loading="eager"
-                      priority={i === 0}
-                      className={styles.image}
-                    />
+                  <div className={styles.textCol}>
+                    <h3 className={`title-1 ${styles.title}`}>{step.title}</h3>
+                    <p className={`body-1 ${styles.desc}`}>{step.desc}</p>
                   </div>
-                </div>
 
-                <div className={styles.bulletsWrap}>
-                  <div className={styles.bullets}>
-                    {step.bullets.map((b) => (
-                      <div key={b} className={styles.bullet}>
-                        <Image
-                          src="/assets/technology/tech-check-icon.svg"
-                          alt=""
-                          width={13}
-                          height={13}
-                          aria-hidden="true"
-                        />
-                        <span className="label-2">{b}</span>
-                      </div>
-                    ))}
+                  <div className={styles.imageWrap}>
+                    <div className={styles.imageBox}>
+                      <Image
+                        src={step.image}
+                        alt={step.title}
+                        fill
+                        sizes="672px"
+                        loading="eager"
+                        priority={i === 0}
+                        className={styles.image}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.bulletsWrap}>
+                    <div className={styles.bullets}>
+                      {step.bullets.map((b) => (
+                        <div key={b} className={styles.bullet}>
+                          <Image
+                            src="/assets/technology/tech-check-icon.svg"
+                            alt=""
+                            width={13}
+                            height={13}
+                            aria-hidden="true"
+                          />
+                          <span className="label-2">{b}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
