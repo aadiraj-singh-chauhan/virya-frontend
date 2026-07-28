@@ -125,7 +125,7 @@
   position: relative;
   flex: 1 0 600px;
   height: 568px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .robotWrap {
@@ -202,6 +202,28 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* Fleet panel — tighter spacing to fit 7 items in 568 px */
+.panelFleet {
+  gap: 6px;
+}
+
+.panelFleet .labelRow {
+  height: 40px;
+}
+
+.panelFleet .detailImage {
+  height: 132px;
+  align-self: stretch;
+}
+
+.panelFleet .detailContent {
+  padding: 13px 0 0;
+}
+
+.panelFleet .featureItemActive .expandableInner {
+  padding-bottom: 14px;
 }
 
 .featureItem {

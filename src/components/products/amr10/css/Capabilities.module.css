@@ -38,9 +38,9 @@
 
 .imageArea {
   position: relative;
-  flex: 1 0 879px;
+  flex: 1 1 879px;
   height: 579px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .robotWrap {
@@ -116,12 +116,35 @@
 /* ── Feature accordion panel (right) ─────────────────────────────────────── */
 
 .panel {
-  flex: 1 1 328px;
-  max-width: 600px;
+  flex: 0 0 420px;
+  max-width: 420px;
   margin-left: 100px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* Fleet panel — tighter spacing to fit 7 items in 568 px */
+.panelFleet {
+  gap: 6px;
+}
+
+.panelFleet .labelRow {
+  height: 40px;
+  padding: 0 10px;
+}
+
+.panelFleet .detailImage {
+  height: 132px;
+  align-self: stretch;
+}
+
+.panelFleet .detailContent {
+  padding: 13px 0 0;
+}
+
+.panelFleet .featureItemActive .expandableInner {
+  padding-bottom: 14px;
 }
 
 .featureItem {
@@ -217,6 +240,7 @@
 .featureLabel {
   position: relative;
   display: inline-block;
+  text-transform: uppercase;
   color: var(--color-3);
 }
 
