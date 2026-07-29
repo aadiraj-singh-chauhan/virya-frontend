@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button';
 import { useScramble } from '@/hooks/useScramble';
-import { getLenis, subscribeScroll } from '@/lib/lenis';
 import styles from './css/Header.module.css';
 
 const SOLUTION_ITEMS = [
@@ -70,9 +69,9 @@ export default function Header() {
     };
 
     update();
-    const unsubscribeScroll = subscribeScroll(onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      unsubscribeScroll();
+      window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(raf);
     };
   }, [pathname]);
@@ -90,10 +89,7 @@ export default function Header() {
           className={styles.logoLink}
           aria-label="Virya — Autonomous Technologies"
           onClick={() => {
-            if (pathname !== '/') return;
-            const lenis = getLenis();
-            if (lenis) lenis.scrollTo(0);
-            else window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
         >
           <span className={styles.logoWrap}>

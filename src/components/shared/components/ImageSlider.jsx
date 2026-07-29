@@ -164,7 +164,6 @@ export default function ImageSlider({
     >
       <div
         className={styles.viewport}
-        data-lenis-prevent
         onMouseMove={cursorArrows ? handlePointerMove : undefined}
         onMouseLeave={cursorArrows ? handlePointerLeave : undefined}
         onMouseDown={cursorArrows ? handlePointerDown : undefined}

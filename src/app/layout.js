@@ -1,7 +1,6 @@
 import { Space_Grotesk, Chakra_Petch } from "next/font/google";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import LenisProvider from "@/components/layout/LenisProvider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -28,7 +27,6 @@ export default function RootLayout({ children }) {
       className={`${spaceGrotesk.variable} ${chakraPetch.variable}`}
     >
       <body>
-        <LenisProvider />
         <Header />
         <div>{children}</div>
         <Footer />

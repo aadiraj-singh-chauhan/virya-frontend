@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { getLenis, subscribeScroll } from '@/lib/lenis';
 
 const PIN_STYLE = {
   before: { position: 'absolute', top: 0, left: 0, right: 0 },
@@ -84,10 +83,10 @@ export function useScrollSteps(stepCount) {
     };
 
     update();
-    const unsubscribeScroll = subscribeScroll(onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {
-      unsubscribeScroll();
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
     };
@@ -127,10 +126,7 @@ export function useScrollSteps(stepCount) {
       if (total > 0) {
         const trackAbsoluteTop = window.scrollY + rect.top;
         const progress = (index + 0.5) / stepCount;
-        const target = trackAbsoluteTop - headerHeight + progress * total;
-        const lenis = getLenis();
-        if (lenis) lenis.scrollTo(target, { immediate: true });
-        else window.scrollTo({ top: target });
+        window.scrollTo({ top: trackAbsoluteTop - headerHeight + progress * total });
       }
     }
     targetRef.current = index;

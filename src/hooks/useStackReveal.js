@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { subscribeScroll } from '@/lib/lenis';
 
 // Below this width the fixed-position stack mechanic is disabled and panels
 // render in normal static flow instead (mirrors useScrollSteps' mobile cutoff).
@@ -117,10 +116,10 @@ export function useStackReveal(count) {
     };
 
     update();
-    const unsubscribeScroll = subscribeScroll(onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {
-      unsubscribeScroll();
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
     };

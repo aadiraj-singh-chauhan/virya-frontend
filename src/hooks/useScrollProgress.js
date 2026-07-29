@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { subscribeScroll } from '@/lib/lenis';
 
 const PIN_STYLE = {
   before: { position: 'absolute', top: 0, left: 0, right: 0 },
@@ -90,10 +89,10 @@ export function useScrollProgress() {
     };
 
     update();
-    const unsubscribeScroll = subscribeScroll(onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {
-      unsubscribeScroll();
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       cancelAnimationFrame(raf);
     };
