@@ -26,7 +26,7 @@ export default function Banner() {
       <video
         ref={videoRef}
         className={styles.bannerVideo}
-        src="/assets/vat-mm-banner-animation.mp4"
+        src="/assets/material-mobility-bg-video.webm"
         autoPlay
         loop
         muted
