@@ -18,13 +18,15 @@ const BLOCKS = [
   },
 ];
 
-export default function ProductFooterCTA({ pattern = true }) {
+export default function ProductFooterCTA({ pattern = true, onlyConnect = false }) {
+  const blocks = onlyConnect ? BLOCKS.slice(0, 1) : BLOCKS;
+
   return (
     <section className={`${styles.section} ${pattern ? '' : styles.noPattern}`} data-header-theme="light">
       {pattern && <ProductFooterCTAPatternBg className={styles.pattern} />}
 
       <div className={styles.container}>
-        {BLOCKS.map((b, i) => (
+        {blocks.map((b, i) => (
           <Fragment key={b.href}>
             {i > 0 && <span className={styles.divider} aria-hidden="true" />}
             <div className={styles.block}>

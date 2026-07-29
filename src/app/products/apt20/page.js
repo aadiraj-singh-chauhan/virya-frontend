@@ -4,6 +4,7 @@ import Capabilities from '@/components/products/apt20/components/Capabilities';
 import TechSpecs from '@/components/products/apt20/components/TechSpecs';
 import Applications from '@/components/products/apt20/components/Applications';
 import RelatedProducts from '@/components/products/apt20/components/RelatedProducts';
+import ProductFooterCTA from '@/components/products/ProductFooterCTA';
 
 export const metadata = {
   title: 'APT20 · Virya',
@@ -25,6 +26,7 @@ export default function APT20() {
       <TechSpecs />
       <Applications />
       <RelatedProducts />
+      <ProductFooterCTA onlyConnect />
     </main>
   );
 }
