@@ -6,11 +6,6 @@
   overflow: hidden;
 }
 
-.inner {
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-}
 
 /* ── Header ───────────────────────────────────────────────────────────────── */
 
@@ -21,7 +16,7 @@
   gap: 12px;
   text-align: center;
   max-width: 856px;
-  margin: 0 auto;
+  margin: 0 auto 50px;
 }
 
 .subtitle {
@@ -32,13 +27,12 @@
 /* ── Content row ──────────────────────────────────────────────────────────── */
 
 .contentRow {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 75px;
+  position: relative;
   width: calc(100% - 88px);
   margin-left: 88px;
   height: 579px;
+  display: flex;
+  align-items: flex-start;
 }
 
 /* ── Robot image area (left) ──────────────────────────────────────────────── */
@@ -46,15 +40,17 @@
 .imageArea {
   position: relative;
   flex: 1 1 879px;
-  min-width: 0;
-  height: auto;
-  aspect-ratio: 879 / 579;
-  overflow: hidden;
+  height: 579px;
+  overflow: visible;
 }
 
 .robotWrap {
   position: absolute;
   inset: 0;
+  width: 107.17%;
+  height: 108.46%;
+  left: -4.32%;
+  top: -4.32%;
 }
 
 .robotImage {
@@ -119,15 +115,36 @@
   transition: left 0.3s ease, top 0.3s ease;
 }
 
-/* ── Feature accordion panel (right) ─────────────────────────────────────── */
-
 .panel {
-  flex: 1 1 328px;
-  max-width: 600px;
-  margin-top: 25.5px;
+  flex: 0 0 420px;
+  max-width: 420px;
+  margin-left: 100px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* Fleet panel — tighter spacing to fit 7 items in 568 px */
+.panelFleet {
+  gap: 6px;
+}
+
+.panelFleet .labelRow {
+  height: 40px;
+  padding: 0 10px;
+}
+
+.panelFleet .detailImage {
+  height: 132px;
+  align-self: stretch;
+}
+
+.panelFleet .detailContent {
+  padding: 13px 0 0;
+}
+
+.panelFleet .featureItemActive .expandableInner {
+  padding-bottom: 14px;
 }
 
 .featureItem {
@@ -213,6 +230,7 @@
 .featureLabel {
   position: relative;
   display: inline-block;
+  text-transform: uppercase;
   color: var(--color-3);
 }
 
@@ -233,6 +251,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  margin-top: 50px;
 }
 
 .techCard {
@@ -303,6 +322,9 @@
     }
 
     .contentRow {
+      position: relative;
+      display: flex;
+      flex-direction: row;
       width: 100%;
       margin-left: 0;
       height: auto;
@@ -311,10 +333,23 @@
     }
 
     .imageArea {
+      position: relative;
+      left: auto;
+      transform: none;
+      width: auto;
+      height: auto;
+      aspect-ratio: 879 / 579;
       flex: 0 1 879px;
+      z-index: 1;
+    }
+
+    .robotWrap {
+      transform: none;
     }
 
     .panel {
+      position: relative;
+      z-index: 2;
       flex: 0 0 328px;
       margin-top: 0;
     }
@@ -334,6 +369,8 @@
     }
   
     .contentRow {
+      position: relative;
+      display: flex;
       width: 100%;
       margin-left: 0;
       flex-direction: column;
@@ -344,13 +381,23 @@
     }
   
     .imageArea {
-      flex: none;
+      position: relative;
+      left: auto;
+      transform: none;
       width: 100%;
       height: auto;
       aspect-ratio: 879 / 579;
+      flex: none;
+      z-index: 1;
+    }
+
+    .robotWrap {
+      transform: none;
     }
 
     .panel {
+      position: relative;
+      z-index: 2;
       flex: none;
       width: 100%;
       margin-left: 0;
