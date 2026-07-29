@@ -243,19 +243,9 @@ function NavLink({ href, label, items, dropdown }) {
 }
 
 function DropdownItem({ label, href }) {
-  const { display, play, reset } = useScramble(label.toUpperCase());
-
   return (
-    <Link
-      href={href}
-      className={styles.dropdownLink}
-      onMouseEnter={play}
-      onMouseLeave={reset}
-    >
-      <span className={`label-2 ${styles.navLinkText}`}>
-        <span className={styles.navLinkOriginal}>{label}</span>
-        <span className={styles.navLinkDisplay} aria-hidden="true">{display}</span>
-      </span>
+    <Link href={href} className={styles.dropdownLink}>
+      <span className="label-2">{label}</span>
       <span className={styles.dropdownArrow} aria-hidden="true">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M3 11L11 3M11 3H5M11 3V9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
