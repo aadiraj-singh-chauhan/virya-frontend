@@ -122,10 +122,19 @@
 
 .explore {
   position: absolute;
+  width: 50%;
+  display: flex;
+  justify-content: center;
   opacity: 0;
   transform: translateY(-14px);
   transition: opacity 0.35s ease, transform 0.35s ease;
   pointer-events: none;
+}
+
+.explore a,
+.explore button {
+  width: 100%;
+  justify-content: center;
 }
 
 .card:hover .explore {
