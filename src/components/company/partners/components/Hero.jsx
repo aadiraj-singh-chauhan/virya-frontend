@@ -1,12 +1,17 @@
 'use client';
 
 import Button from '@/components/ui/Button';
+import { getLenis } from '@/lib/lenis';
 import HeroPattern from './HeroPattern';
 import styles from '../css/Hero.module.css';
 
 function scrollToBecomePartner(e) {
   e.preventDefault();
-  document.getElementById('become-a-partner')?.scrollIntoView({ behavior: 'smooth' });
+  const target = document.getElementById('become-a-partner');
+  if (!target) return;
+  const lenis = getLenis();
+  if (lenis) lenis.scrollTo(target);
+  else target.scrollIntoView({ behavior: 'smooth' });
 }
 
 export default function Hero() {

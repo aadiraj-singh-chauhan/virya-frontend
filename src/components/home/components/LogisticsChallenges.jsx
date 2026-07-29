@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useScramble } from "@/hooks/useScramble";
+import { getLenis } from "@/lib/lenis";
 import styles from "../css/LogisticsChallenges.module.css";
 
 const CARDS = [
@@ -31,7 +32,11 @@ export default function LogisticsChallenges() {
   const { display, play, reset } = useScramble("Skip this section");
 
   const handleSkip = () => {
-    sectionRef.current?.nextElementSibling?.scrollIntoView({ behavior: "smooth" });
+    const target = sectionRef.current?.nextElementSibling;
+    if (!target) return;
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(target);
+    else target.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
