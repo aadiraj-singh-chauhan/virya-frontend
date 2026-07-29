@@ -10,11 +10,15 @@
 }
 
 .cursorArrowsMode .viewport {
-  cursor: pointer;
+  cursor: none;
 }
 
 .viewport :global(.splide__track) {
   cursor: grab;
+}
+
+.cursorArrowsMode .viewport :global(.splide__track) {
+  cursor: none;
 }
 
 .viewport :global(.splide.is-dragging .splide__track) {
