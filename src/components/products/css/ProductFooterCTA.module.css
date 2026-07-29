@@ -33,7 +33,7 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  width: 1366px;
+  width: fit-content;
   height: 283px;
   background: var(--color-6);
 }

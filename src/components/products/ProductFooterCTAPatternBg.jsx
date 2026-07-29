@@ -70,15 +70,15 @@ export default function ProductFooterCTAPatternBg({ className }) {
           <stop stopColor="#FF4000" />
           <stop offset="1" stopColor="#FF4000" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="footerCtaPatternPaint1" x1="319.5" y1="341" x2="319.5" y2="361" gradientUnits="userSpaceOnUse">
+        <linearGradient id="footerCtaPatternPaint1" x1="320.5" y1="341" x2="320.5" y2="361" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF4000" />
           <stop offset="1" stopColor="#FF4000" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="footerCtaPatternPaint2" x1="100.5" y1="380" x2="100.5" y2="400" gradientUnits="userSpaceOnUse">
+        <linearGradient id="footerCtaPatternPaint2" x1="101.5" y1="380" x2="101.5" y2="400" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF4000" />
           <stop offset="1" stopColor="#FF4000" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id="footerCtaPatternPaint3" x1="280.5" y1="62" x2="280.5" y2="82" gradientUnits="userSpaceOnUse">
+        <linearGradient id="footerCtaPatternPaint3" x1="281.5" y1="62" x2="281.5" y2="82" gradientUnits="userSpaceOnUse">
           <stop stopColor="#FF4000" />
           <stop offset="1" stopColor="#FF4000" stopOpacity="0" />
         </linearGradient>
