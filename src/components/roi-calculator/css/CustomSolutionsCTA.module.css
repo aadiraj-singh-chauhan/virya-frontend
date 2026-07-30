@@ -1,0 +1,56 @@
+.section {
+  position: relative;
+  min-height: 603px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-6);
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 806px;
+  max-width: 90%;
+  height: 269px;
+  background: var(--color-6);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 29px;
+  max-width: 663px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-3);
+}
+
+.heading {
+  max-width: 663px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    min-height: 400px;
+    padding: 60px 0;
+  }
+
+  .backdrop {
+    height: 220px;
+  }
+}

@@ -1,0 +1,230 @@
+.section {
+  position: relative;
+  background: var(--color-6);
+  padding: 0 0 100px;
+}
+
+.wrap {
+  max-width: 1006px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--color-5);
+  padding: 0 50px;
+}
+
+/* ── Row ──────────────────────────────────────────────────────────────────── */
+
+.row {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 60px;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowStart {
+  align-items: flex-start;
+}
+
+.rowLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--color-3);
+}
+
+.rowDesc {
+  opacity: 0.6;
+  color: var(--color-3);
+}
+
+.rowControl {
+  color: var(--color-3);
+}
+
+/* ── Segmented toggle ─────────────────────────────────────────────────────── */
+
+.toggle {
+  display: flex;
+  height: 53px;
+  border: 0.2px solid var(--color-3);
+}
+
+.toggleOption {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-3);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.toggleActive {
+  background: var(--color-2);
+  color: var(--color-5);
+}
+
+/* ── Vehicle radio cards ──────────────────────────────────────────────────── */
+
+.vehicleOpts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.vehicleOption {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-3);
+}
+
+.radioBox {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-1);
+  background: var(--color-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.radioDot {
+  width: 9px;
+  height: 9px;
+  background: var(--color-2);
+  opacity: 0.2;
+}
+
+.radioActive .radioDot {
+  opacity: 1;
+}
+
+.vehicleText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.capacity {
+  opacity: 0.6;
+}
+
+/* ── Slider ───────────────────────────────────────────────────────────────── */
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sliderBound {
+  color: var(--color-3);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.sliderTrack {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-top: 28px;
+}
+
+.sliderValue {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  color: var(--color-3);
+  white-space: nowrap;
+}
+
+.range {
+  width: 100%;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(
+    to right,
+    var(--color-2) 0%,
+    var(--color-2) var(--fill),
+    rgba(0, 0, 0, 0.1) var(--fill),
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 9px;
+  height: 9px;
+  background: var(--color-2);
+  cursor: pointer;
+}
+
+.range::-moz-range-thumb {
+  width: 9px;
+  height: 9px;
+  border: none;
+  border-radius: 0;
+  background: var(--color-2);
+  cursor: pointer;
+}
+
+.range::-moz-range-track {
+  background: transparent;
+  height: 3px;
+}
+
+/* ── Details fields ───────────────────────────────────────────────────────── */
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submitRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: 32px 0;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .card {
+    padding: 0 24px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 28px 0;
+  }
+
+  .submitRow {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,29 @@
+@keyframes travelX {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(var(--travel-distance)); opacity: 0; }
+}
+
+@keyframes travelY {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(var(--travel-distance)); opacity: 0; }
+}
+
+.pulseA, .pulseB, .pulseC, .pulseD, .pulseE {
+  will-change: transform, opacity;
+}
+
+.pulseA { --travel-distance: -1200px; animation: travelX 7s linear infinite; animation-delay: -1s; }
+.pulseB { --travel-distance: 300px; animation: travelY 4s linear infinite; animation-delay: -0.5s; }
+.pulseC { --travel-distance: 1200px; animation: travelX 8s linear infinite; animation-delay: -3s; }
+.pulseD { --travel-distance: -180px; animation: travelY 4.5s linear infinite; animation-delay: -1.5s; }
+.pulseE { --travel-distance: 500px; animation: travelY 6.5s linear infinite; animation-delay: -4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulseA, .pulseB, .pulseC, .pulseD, .pulseE {
+    animation: none;
+  }
+}
