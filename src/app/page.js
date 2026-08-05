@@ -8,6 +8,11 @@ import Industries from '@/components/home/components/Industries';
 import EventBanner from '@/components/home/components/EventBanner';
 import LatestFromVirya from '@/components/home/components/LatestFromVirya';
 
+export const metadata = {
+  title: 'Virya · Autonomous Mobility for Smarter Operations',
+  description: 'Virya builds autonomous mobility platforms for material and people movement — engineered for real-world industrial and logistics operations.',
+};
+
 export default function Home() {
   return (
     <main className={styles.main}>
