@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import FormField from '@/components/shared/components/FormField';
 import { useScramble } from '@/hooks/useScramble';
@@ -16,17 +17,20 @@ function MapLink() {
 
   return (
     <div className={styles.mapBlock}>
-      <div className={styles.mapEmbedWrap}>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4113.268153589137!2d77.6939804!3d12.818586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6d3376024173%3A0x8b30d21849e3ce96!2sVirya%20Autonomous%20Technologies%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1784122958880!5m2!1sen!2sin"
+      <a
+        href={MAP_EXTERNAL_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.mapEmbedWrap}
+        aria-label="Open Virya Autonomous Technologies office location in Google Maps"
+      >
+        <Image
+          src="/assets/contact-map.jpg"
+          alt="Virya Autonomous Technologies — office location map"
+          fill
           className={styles.mapEmbed}
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-          title="Virya Autonomous Technologies — office location"
         />
-      </div>
+      </a>
       <a
         href={MAP_EXTERNAL_URL}
         target="_blank"
