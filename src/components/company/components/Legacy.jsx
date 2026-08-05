@@ -11,8 +11,8 @@ export default function Legacy() {
         <Image
           src="/assets/company/company-legacy-logo.png"
           alt="Maini Group"
-          width={278}
-          height={278}
+          width={230}
+          height={230}
           className={styles.logo}
         />
         <h2 className={`heading-2 heading-2-md ${styles.heading}`}>
@@ -20,7 +20,7 @@ export default function Legacy() {
           <br />
           Powering the Future of Mobility
         </h2>
-        <p className={`title-1 body-1-md ${styles.description}`}>
+        <p className={`label-3 label-3-md ${styles.description}`}>
           The company specializes in precision engineering, aerospace components, material
           handling systems, and electric mobility solutions. With global operations and
           customers across multiple countries, the group focuses on innovation, quality, and
