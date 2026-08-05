@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/LatestInsights.module.css';
 
@@ -26,7 +27,7 @@ export default function LatestInsights() {
   const { display, play, reset } = useScramble('Explore more');
 
   const exploreLink = (
-    <a href="/resources/blogs" className={styles.exploreLink} onMouseEnter={play} onMouseLeave={reset}>
+    <Link href="/resources/blogs" className={styles.exploreLink} onMouseEnter={play} onMouseLeave={reset}>
       <span className={styles.linkText}>
         <span className={styles.textOriginal}>Explore more</span>
         <span className={styles.textDisplay} aria-hidden="true">{display || 'Explore more'}</span>
@@ -35,7 +36,7 @@ export default function LatestInsights() {
         <path d="M0 5.028L12.5 5.028" stroke="currentColor" />
         <path d="M6 0L8 0L12.5 5.028L8 10.056L6 10.056" stroke="currentColor" />
       </svg>
-    </a>
+    </Link>
   );
 
   return (

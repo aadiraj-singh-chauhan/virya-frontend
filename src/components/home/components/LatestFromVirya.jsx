@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/LatestFromVirya.module.css';
 
@@ -26,7 +27,7 @@ export default function LatestFromVirya() {
 
         <div className={styles.header}>
           <h2 className={`heading-2 heading-2-md ${styles.headingText}`}>Latest from Virya</h2>
-          <a href="/resources/blogs" className={`label-2 ${styles.exploreLink}`} onMouseEnter={play} onMouseLeave={reset}>
+          <Link href="/resources/blogs" className={`label-2 ${styles.exploreLink}`} onMouseEnter={play} onMouseLeave={reset}>
             <span className={styles.linkText}>
               <span className={styles.textOriginal}>Explore more</span>
               <span className={styles.textDisplay} aria-hidden="true">{display || 'Explore more'}</span>
@@ -35,7 +36,7 @@ export default function LatestFromVirya() {
               <path d="M 0 5.028 L 12.5 5.028" stroke="currentColor" strokeWidth="1" />
               <path d="M 6 0 L 8 0 L 12.5 5.028 L 8 10.056 L 6 10.056" stroke="currentColor" strokeWidth="1" />
             </svg>
-          </a>
+          </Link>
         </div>
 
         <hr className={styles.divider} />
