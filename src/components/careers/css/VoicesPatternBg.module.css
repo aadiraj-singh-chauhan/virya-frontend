@@ -1,0 +1,27 @@
+.pulseA, .pulseB, .pulseC {
+  will-change: transform, opacity;
+}
+
+.pulseA { --travel-distance: 300px; animation: travelY 4s linear infinite; animation-delay: -0.5s; }
+.pulseB { --travel-distance: 1200px; animation: travelX 7s linear infinite; animation-delay: -1s; }
+.pulseC { --travel-distance: 900px; animation: travelX 8s linear infinite; animation-delay: -3s; }
+
+@keyframes travelX {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(var(--travel-distance)); opacity: 0; }
+}
+
+@keyframes travelY {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(var(--travel-distance)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulseA, .pulseB, .pulseC {
+    animation: none;
+  }
+}

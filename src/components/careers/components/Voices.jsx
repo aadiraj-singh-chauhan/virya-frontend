@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import TestimonialsPatternBg from '@/components/home/components/TestimonialsPatternBg';
+import VoicesPatternBg from './VoicesPatternBg';
 import NavButtons from './NavButtons';
 import styles from '../css/Voices.module.css';
 
@@ -63,7 +63,7 @@ export default function Voices() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <TestimonialsPatternBg className={styles.pattern} />
+      <VoicesPatternBg className={styles.pattern} />
 
       <div className={styles.photoWrap}>
         {outgoingTestimonial && (

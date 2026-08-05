@@ -2,8 +2,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 722px;
+  height: 822px;
   padding-top: 100px;
+  margin-bottom: 100px;
   background: var(--color-6);
   overflow: hidden;
 }
