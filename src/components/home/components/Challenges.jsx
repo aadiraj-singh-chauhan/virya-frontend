@@ -34,7 +34,7 @@ export default function Challenges() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
         />
         <video
@@ -45,7 +45,7 @@ export default function Challenges() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
         />
       </div>
