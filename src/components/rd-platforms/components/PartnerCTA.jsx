@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useScramble } from '@/hooks/useScramble';
 import styles from '../css/PartnerCTA.module.css';
 
@@ -10,14 +9,17 @@ export default function PartnerCTA() {
 
   return (
     <section className={styles.section} data-header-theme="light">
-      <Image
-        src="/assets/partner-with-us-bg.webp"
-        alt=""
-        fill
-        sizes="100vw"
-        className={styles.bgImage}
+      <video
+        className={styles.bgVideo}
+        poster="/assets/partner-with-us-bg.webp"
+        autoPlay
+        loop
+        muted
+        playsInline
         aria-hidden="true"
-      />
+      >
+        <source src="/assets/partner-with-us.mp4" type="video/mp4" />
+      </video>
 
       <div className={`container ${styles.inner}`}>
         <p className={`body-2 ${styles.desc}`}>
