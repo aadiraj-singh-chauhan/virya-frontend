@@ -1,3 +1,16 @@
+.pulseA, .pulseB {
+  will-change: transform, opacity;
+}
+
+.pulseA { --travel-distance: 306px; animation: travelY 2.8s linear infinite; animation-delay: -0.6s; }
+.pulseB { --travel-distance: -557px; animation: travelX 5s linear infinite; animation-delay: -2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulseA, .pulseB {
+    animation: none;
+  }
+}
+
 @keyframes travelX {
   0% { transform: translateX(0); opacity: 0; }
   8% { opacity: 1; }
@@ -10,17 +23,4 @@
   8% { opacity: 1; }
   88% { opacity: 1; }
   100% { transform: translateY(var(--travel-distance)); opacity: 0; }
-}
-
-.pulseA, .pulseB {
-  will-change: transform, opacity;
-}
-
-.pulseA { --travel-distance: 306px; animation: travelY 2.8s linear infinite; animation-delay: -0.6s; }
-.pulseB { --travel-distance: -557px; animation: travelX 5s linear infinite; animation-delay: -2s; }
-
-@media (prefers-reduced-motion: reduce) {
-  .pulseA, .pulseB {
-    animation: none;
-  }
 }

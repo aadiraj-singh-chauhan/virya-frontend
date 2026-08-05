@@ -289,3 +289,15 @@ a {
   width: 95%;
   margin: 0 auto;
 }
+
+/* ── Decorative-pattern pulse animation ──────────────────────────────────────
+   Every section's blueprint-grid PatternBg component (Hero/Banner/Mission/
+   Testimonials/etc.) rides a `travelX`/`travelY` keyframe pair for its
+   animated accent marks. Turbopack's CSS Modules scoping rewrites any
+   keyframe *name* referenced from an `animation` shorthand to a hashed local
+   identifier even when no matching `@keyframes` exists in that file — so a
+   single shared definition here doesn't reach them. Each PatternBg module
+   therefore keeps its own local copy of whichever of these two keyframes it
+   uses (identical shape, just copy-pasted) so the scoped reference and the
+   scoped definition end up hashed to the same name. Travel distance,
+   duration and delay stay tuned per pattern in its own CSS module. */

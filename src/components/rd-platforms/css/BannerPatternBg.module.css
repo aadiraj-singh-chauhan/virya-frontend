@@ -1,17 +1,3 @@
-@keyframes travelX {
-  0% { transform: translateX(0); opacity: 0; }
-  8% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { transform: translateX(var(--travel-distance)); opacity: 0; }
-}
-
-@keyframes travelY {
-  0% { transform: translateY(0); opacity: 0; }
-  8% { opacity: 1; }
-  88% { opacity: 1; }
-  100% { transform: translateY(var(--travel-distance)); opacity: 0; }
-}
-
 .pulseA, .pulseB, .pulseC, .pulseD, .pulseE, .pulseF, .pulseG {
   will-change: transform, opacity;
 }
@@ -28,4 +14,18 @@
   .pulseA, .pulseB, .pulseC, .pulseD, .pulseE, .pulseF, .pulseG {
     animation: none;
   }
+}
+
+@keyframes travelX {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(var(--travel-distance)); opacity: 0; }
+}
+
+@keyframes travelY {
+  0% { transform: translateY(0); opacity: 0; }
+  8% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(var(--travel-distance)); opacity: 0; }
 }
