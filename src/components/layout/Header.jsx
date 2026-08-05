@@ -26,9 +26,9 @@ const COMPANY_ITEMS = [
 ];
 
 const NAV_ITEMS = [
-  { label: 'Solutions',  href: '/solutions',  items: SOLUTION_ITEMS },
+  { label: 'Solutions',  href: SOLUTION_ITEMS[0].href,  items: SOLUTION_ITEMS },
   { label: 'Technology', href: '/technology' },
-  { label: 'Resources',  href: '/resources',  items: RESOURCE_ITEMS },
+  { label: 'Resources',  href: RESOURCE_ITEMS[0].href,  items: RESOURCE_ITEMS },
   { label: 'Company',    href: '/company',    items: COMPANY_ITEMS  },
   { label: 'Careers',    href: '/careers'    },
 ];
