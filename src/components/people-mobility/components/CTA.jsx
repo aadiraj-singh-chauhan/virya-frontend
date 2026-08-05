@@ -8,7 +8,7 @@ export default function CTA() {
     <section className={styles.section} data-header-theme="light">
       <div className={styles.bg}>
         <Image
-          src="/assets/pm-bg-cta.webp"
+          src="/assets/pm-bg-cta-desk.webp"
           alt=""
           aria-hidden="true"
           fill
@@ -16,7 +16,7 @@ export default function CTA() {
           className={`${styles.bgImage} ${styles.bgImageDesktop}`}
         />
         <Image
-          src="/assets/pm-cta-bg-mob.jpg"
+          src="/assets/pm-bg-cta-mob.jpg"
           alt=""
           aria-hidden="true"
           fill
