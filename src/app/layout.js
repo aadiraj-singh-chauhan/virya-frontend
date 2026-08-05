@@ -1,4 +1,5 @@
 import { Space_Grotesk, Chakra_Petch } from "next/font/google";
+import EventStrip from "@/components/layout/EventStrip";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
       className={`${spaceGrotesk.variable} ${chakraPetch.variable}`}
     >
       <body>
+        <EventStrip />
         <Header />
         <div>{children}</div>
         <Footer />
