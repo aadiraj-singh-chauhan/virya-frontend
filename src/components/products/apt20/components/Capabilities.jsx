@@ -1,10 +1,13 @@
 'use client';
-import { useState, useRef, useMemo, useEffect, Suspense } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, Html, OrbitControls } from '@react-three/drei';
+import { useGLTF, Environment, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { useScramble } from '@/hooks/useScramble';
+import { smoothstep, useHotspotMaterial, pickLocalPoint } from '@/components/products/shared/hotspotShader';
+import HotspotMarker from '@/components/products/shared/HotspotMarker';
+import CoordPicker from '@/components/products/shared/CoordPicker';
+import FeatureItem from '@/components/products/shared/FeatureItem';
 import styles from '../css/Capabilities.module.css';
 
 // ── Hotspot 3-D positions (local to model centre) ─────────────────────────────
@@ -25,69 +28,7 @@ const HOTSPOTS = [
   { id: 'feature-4', label: 'Adaptive Pallet Identification',          position: HOTSPOT_POSITIONS['feature-4'], visibilityDirection: [4.50, 0, -1], fadeRange: [-0.05, 0.25] },
 ];
 
-function smoothstep(edge0, edge1, x) {
-  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
-  return t * t * (3 - 2 * t);
-}
-
-const VERTEX_SHADER = /* glsl */`
-  attribute float instanceOpacity;
-  attribute float instanceRippleActive;
-  attribute float instanceSize;
-  varying  float vOpacity;
-  varying  float vRippleActive;
-  varying  vec2  vUv;
-
-  void main() {
-    vUv           = uv;
-    vOpacity      = instanceOpacity;
-    vRippleActive = instanceRippleActive;
-
-    vec4 worldPos = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
-    vec4 viewPos  = viewMatrix * worldPos;
-    viewPos.xy   += position.xy * instanceSize;
-    viewPos.z    += 0.004;
-
-    gl_Position = projectionMatrix * viewPos;
-  }
-`;
-
-const FRAGMENT_SHADER = /* glsl */`
-  uniform float time;
-  uniform vec3  hotspotColor;
-  varying float vOpacity;
-  varying float vRippleActive;
-  varying vec2  vUv;
-
-  void main() {
-    vec2  uv   = vUv * 2.0 - 1.0;
-    float dist = max(abs(uv.x), abs(uv.y));
-
-    float centre = 1.0 - smoothstep(0.12, 0.20, dist);
-
-    float speed = 0.6;
-    float p1    = fract(time * speed);
-    float r1    = p1 * 0.88;
-    float w     = 0.055;
-    float ring1 = smoothstep(r1 - w, r1, dist)
-                * (1.0 - smoothstep(r1, r1 + w * 0.35, dist))
-                * pow(1.0 - p1, 2.0);
-
-    float p2    = fract(time * speed + 0.5);
-    float r2    = p2 * 0.88;
-    float ring2 = smoothstep(r2 - w, r2, dist)
-                * (1.0 - smoothstep(r2, r2 + w * 0.35, dist))
-                * pow(1.0 - p2, 2.0);
-
-    float alpha = centre + (ring1 + ring2) * 0.72 * vRippleActive;
-    alpha      *= smoothstep(1.05, 0.88, dist);
-    alpha      *= vOpacity;
-
-    if (alpha < 0.005) discard;
-
-    gl_FragColor = vec4(hotspotColor, alpha);
-  }
-`;
+const BASE_DOT_SIZE = 0.28;
 
 function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) {
   const { scene } = useGLTF('/assets/apt20.glb');
@@ -118,37 +59,10 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
   const _camDir     = useRef(new THREE.Vector3());
   const _hotspotDir = useRef(new THREE.Vector3());
 
-  const _currentSizes = useRef(new Float32Array(HOTSPOTS.length).fill(0.28));
+  const _currentSizes = useRef(new Float32Array(HOTSPOTS.length).fill(BASE_DOT_SIZE));
   const _currentDims  = useRef(new Float32Array(HOTSPOTS.length).fill(1.0));
 
-  const BASE_DOT_SIZE = 0.28;
-
-  const { geometry, material, opacities, rippleActives, sizes } = useMemo(() => {
-    const geo  = new THREE.PlaneGeometry(1, 1);
-    const ops  = new Float32Array(HOTSPOTS.length).fill(1.0);
-    geo.setAttribute('instanceOpacity', new THREE.InstancedBufferAttribute(ops, 1));
-
-    const rips = new Float32Array(HOTSPOTS.length).fill(0.0);
-    geo.setAttribute('instanceRippleActive', new THREE.InstancedBufferAttribute(rips, 1));
-
-    const szs  = new Float32Array(HOTSPOTS.length).fill(0.28);
-    geo.setAttribute('instanceSize', new THREE.InstancedBufferAttribute(szs, 1));
-
-    const mat = new THREE.ShaderMaterial({
-      uniforms: {
-        time:         { value: 0 },
-        hotspotColor: { value: new THREE.Color('#F43D00') },
-      },
-      vertexShader:   VERTEX_SHADER,
-      fragmentShader: FRAGMENT_SHADER,
-      transparent:    true,
-      depthTest:      false,
-      depthWrite:     false,
-      side:           THREE.DoubleSide,
-    });
-
-    return { geometry: geo, material: mat, opacities: ops, rippleActives: rips, sizes: szs };
-  }, []);
+  const { geometry, material, opacities, rippleActives, sizes } = useHotspotMaterial(HOTSPOTS.length, BASE_DOT_SIZE);
 
   useEffect(() => {
     if (!scene || scene.userData.apt20Centered) return;
@@ -263,13 +177,7 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
   function handlePickClick(e) {
     if (!PICK_COORDS || !groupRef.current) return;
     e.stopPropagation();
-    const inv = new THREE.Matrix4().copy(groupRef.current.matrixWorld).invert();
-    const local = e.point.clone().applyMatrix4(inv);
-    onCoordPick && onCoordPick([
-      parseFloat(local.x.toFixed(2)),
-      parseFloat(local.y.toFixed(2)),
-      parseFloat(local.z.toFixed(2)),
-    ]);
+    onCoordPick && onCoordPick(pickLocalPoint(e, groupRef.current));
   }
 
   return (
@@ -306,63 +214,16 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
           : (externalHoveredId === hs.id || isActive);
 
         return (
-          <Html key={hs.id} position={hs.position} center zIndexRange={[100, 0]}>
-            <div style={{ position: 'relative' }}>
-              <div
-                ref={(el) => { hitRefs.current[i] = el; }}
-                style={{
-                  position:      'absolute',
-                  width:         '30px',
-                  height:        '30px',
-                  left:          '-15px',
-                  top:           '-15px',
-                  cursor:        'pointer',
-                  pointerEvents: 'none',
-                }}
-                onMouseEnter={() => { setHoveredId(hs.id); document.body.style.cursor = 'pointer'; }}
-                onMouseLeave={() => { setHoveredId(null); document.body.style.cursor = 'auto'; }}
-                onClick={() => onClick(hs.id)}
-              />
-              <div
-                ref={(el) => { labelRefs.current[i] = el; }}
-                style={{ position: 'relative', pointerEvents: 'none', opacity: 0 }}
-              >
-                <div style={{
-                  position:        'absolute',
-                  left:            '22px',
-                  top:             '0px',
-                  transform:       `translateY(-50%) translateX(${isNameplateVisible ? '0px' : '-8px'})`,
-                  backgroundColor: '#F43D00',
-                  color:           '#FFFFFF',
-                  height:          '38px',
-                  padding:         '0 16px',
-                  display:         'flex',
-                  alignItems:      'center',
-                  whiteSpace:      'nowrap',
-                  fontFamily:      'inherit',
-                  fontSize:        '12px',
-                  fontWeight:      500,
-                  letterSpacing:   '1.2px',
-                  boxShadow:       '0 4px 12px rgba(244,61,0,0.2)',
-                  pointerEvents:   'none',
-                  opacity:         isNameplateVisible ? 1 : 0,
-                  visibility:      isNameplateVisible ? 'visible' : 'hidden',
-                  transition:      'opacity 0.2s ease, transform 0.2s cubic-bezier(0.16,1,0.3,1), visibility 0.2s ease',
-                }}>
-                  <span>{hs.label}</span>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '12px' }}>
-                    <div style={{ width: '1px', height: '14px', backgroundColor: 'rgba(255,255,255,0.4)' }} />
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                      <line x1="0"  y1="8"  x2="6"  y2="8"  stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="10" y1="8"  x2="16" y2="8"  stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="8"  y1="0"  x2="8"  y2="6"  stroke="currentColor" strokeWidth="1.5" />
-                      <line x1="8"  y1="10" x2="8"  y2="16" stroke="currentColor" strokeWidth="1.5" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Html>
+          <HotspotMarker
+            key={hs.id}
+            hotspot={hs}
+            isNameplateVisible={isNameplateVisible}
+            hitRef={(el) => { hitRefs.current[i] = el; }}
+            labelRef={(el) => { labelRefs.current[i] = el; }}
+            onHoverStart={setHoveredId}
+            onHoverEnd={() => setHoveredId(null)}
+            onSelect={onClick}
+          />
         );
       })}
 
@@ -429,46 +290,10 @@ const TECH_CARDS = [
   { id: 'indoor-outdoor',    title: 'Indoor & Outdoor Operational Capability',  icon: '/assets/amr10-icon-indoor-outdoor.svg',   description: 'Solid rubber tyres and sealed electronics support operation across indoor floors and outdoor yard surfaces.' },
 ];
 
-function FeatureItem({ feature, active, onClick, onHoverStart, onHoverEnd }) {
-  const { display, play, reset } = useScramble(feature.label);
-  return (
-    <button
-      className={`${styles.featureItem} ${active ? styles.featureItemActive : ''}`}
-      onClick={onClick}
-      onMouseEnter={() => { play(); onHoverStart && onHoverStart(); }}
-      onMouseLeave={() => { reset(); onHoverEnd && onHoverEnd(); }}
-    >
-      <div className={styles.imageExpandable}>
-        <div className={styles.imageExpandableInner}>
-          <div className={styles.detailImage}>
-            <Image src={feature.image} alt={feature.label} fill sizes="328px" className={styles.detailImg} />
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.labelRow}>
-        <p className={`${styles.featureLabel} label-2`}>
-          <span className={styles.labelHidden}>{feature.label}</span>
-          <span className={styles.labelDisplay} aria-hidden="true">{display || feature.label}</span>
-        </p>
-      </div>
-
-      <div className={styles.expandable}>
-        <div className={styles.expandableInner}>
-          <div className={styles.detailContent}>
-            <p className={`body-2 ${styles.featureDesc}`}>{feature.description}</p>
-          </div>
-        </div>
-      </div>
-    </button>
-  );
-}
-
 export default function Capabilities() {
   const [active, setActive] = useState(0);
   const [panelHoveredId, setPanelHoveredId] = useState(null);
   const [pickedCoords, setPickedCoords] = useState([]);
-  const [pickerPos, setPickerPos] = useState({ x: 12, y: 12 });
   const activeFeatureId = `feature-${active + 1}`;
 
   function handleCoordPick(coord) {
@@ -476,15 +301,6 @@ export default function Capabilities() {
       const next = [...prev, coord];
       return next.length > 4 ? next.slice(-4) : next;
     });
-  }
-
-  function handlePickerDragStart(e) {
-    const startX = e.clientX - pickerPos.x;
-    const startY = e.clientY - pickerPos.y;
-    function onMove(ev) { setPickerPos({ x: ev.clientX - startX, y: ev.clientY - startY }); }
-    function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
   }
 
   return (
@@ -525,40 +341,13 @@ export default function Capabilities() {
           </div>
 
           {PICK_COORDS && (
-            <div
-              onMouseDown={handlePickerDragStart}
-              style={{
-                position: 'absolute', top: pickerPos.y, left: pickerPos.x, zIndex: 9999,
-                background: 'rgba(0,0,0,0.82)', color: '#fff',
-                padding: '14px 16px', fontFamily: 'monospace', fontSize: 12,
-                lineHeight: 1.7, borderRadius: 6, maxWidth: 340, pointerEvents: 'auto',
-                cursor: 'grab', userSelect: 'none',
-              }}
-            >
-              <div style={{ fontWeight: 700, marginBottom: 6, color: '#F43D00' }}>
-                COORD PICKER — click the model ({pickedCoords.length}/4 picked)
-              </div>
-              {['feature-1', 'feature-2', 'feature-3', 'feature-4'].map((id, i) => {
-                const c = pickedCoords[i];
-                return (
-                  <div key={id} style={{ color: c ? '#7effa0' : '#888' }}>
-                    {`'${id}': `}
-                    {c ? `[${c[0]}, ${c[1]}, ${c[2]}],` : '— not yet picked'}
-                  </div>
-                );
-              })}
-              {pickedCoords.length > 0 && (
-                <button
-                  onClick={() => setPickedCoords([])}
-                  style={{
-                    marginTop: 10, background: '#333', color: '#fff', border: '1px solid #555',
-                    padding: '4px 10px', borderRadius: 4, cursor: 'pointer', fontSize: 11,
-                  }}
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+            <CoordPicker
+              title="COORD PICKER"
+              hotspotIds={['feature-1', 'feature-2', 'feature-3', 'feature-4']}
+              picked={pickedCoords}
+              onClear={() => setPickedCoords([])}
+              draggable
+            />
           )}
         </div>
 
@@ -571,6 +360,7 @@ export default function Capabilities() {
               onClick={() => setActive(i)}
               onHoverStart={() => setPanelHoveredId(`feature-${i + 1}`)}
               onHoverEnd={() => setPanelHoveredId(null)}
+              styles={styles}
             />
           ))}
         </div>

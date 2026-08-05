@@ -1,38 +1,49 @@
 'use client';
-import { useState, useRef, useEffect, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, OrbitControls } from '@react-three/drei';
+import { useState, useRef, useEffect } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { useGLTF, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { smoothstep, useHotspotMaterial, pickLocalPoint } from '@/components/products/shared/hotspotShader';
 import HotspotMarker from '@/components/products/shared/HotspotMarker';
-import CoordPicker from '@/components/products/shared/CoordPicker';
-import FeatureItem from '@/components/products/shared/FeatureItem';
-import styles from '../css/Capabilities.module.css';
 
-// ── Hotspot 3-D positions (local to model centre) ─────────────────────────────
-const HOTSPOT_POSITIONS = {
-  'feature-1': [ 0.58,  0.32, -0.01],
-  'feature-2': [-0.67,  0.39,  0.02],
-  'feature-3': [ 0.25,  0.95,  0.00],
-  'feature-4': [-0.65,  0.17,  0.15],
+const FLEET_HOTSPOT_POSITIONS = {
+  'fleet-1': [ 0.53,  0.75,  0.30],
+  'fleet-2': [ 0.74,  0.34,  0.48],
+  'fleet-3': [-0.22,  0.31,  0.42],
+  'fleet-4': [-1.01,  0.30, -0.03],
+  'fleet-5': [-0.62,  0.99, -0.57],
+  'fleet-6': [-0.50,  1.29, -0.08],
+  'fleet-7': [-0.53,  2.08, -0.25],
 };
+
+// Show a marker only when its surface is nearly facing the camera.
+const FLEET_HOTSPOT_FADE_RANGE = [0.70, 0.90];
+const FLEET_HITCH_HIDDEN_VIEW_DIRECTION = new THREE.Vector3(-20.0, 0, 1).normalize();
 
 // ── Set to true to click the model and read exact 3-D coords ─────────────────
 // Rotate the model to the angle you want, click a spot, copy the output panel,
 // then flip back to false before committing.
-const PICK_COORDS = false;
+export const PICK_COORDS_FLEET = false;
 
-const HOTSPOTS = [
-  { id: 'feature-1', label: 'Customisable Hitching',  position: HOTSPOT_POSITIONS['feature-1'], fadeRange: [-0.40, 0.10], fadeRangeRight: [-0.60, -0.05] },
-  { id: 'feature-2', label: 'Low-Profile Hazard Sensing',  position: HOTSPOT_POSITIONS['feature-2'], fadeRange: [-0.30, 0.48], fadeRangeRight: [0.20, 0.48] },
-  { id: 'feature-3', label: '360° LiDAR Obstacle Detection', position: HOTSPOT_POSITIONS['feature-3'], fadeRange: [-0.55, 0.10], fadeRangeRight: [-0.75, -0.05] },
-  { id: 'feature-4', label: 'Compact Operating Footprint',  position: HOTSPOT_POSITIONS['feature-4'], fadeRange: [0.15, 0.60], fadeRangeRight: [0.70, 0.90] },
+export const FLEET_HOTSPOTS = [
+  { id: 'fleet-1', label: 'Autonomous Trolley Hitching',     position: FLEET_HOTSPOT_POSITIONS['fleet-1'], fadeRange: [0.20, 0.30],  panelIndex: 5 },
+  { id: 'fleet-2', label: 'Adaptive Hitch Configuration',    position: FLEET_HOTSPOT_POSITIONS['fleet-2'], fadeRange: [0.50, 0.95], fadeRangeRight: [-0.75, -0.05], panelIndex: 6 },
+  { id: 'fleet-3', label: 'Hot-Swap Battery System',         position: FLEET_HOTSPOT_POSITIONS['fleet-3'], fadeRange: [0.40, 0.60],  panelIndex: 4 },
+  { id: 'fleet-4', label: 'Low-Profile Hazard Sensing',      position: FLEET_HOTSPOT_POSITIONS['fleet-4'], fadeRange: [-0.40, 0.20], panelIndex: 2 },
+  { id: 'fleet-5', label: 'Operator Cabin',                  position: FLEET_HOTSPOT_POSITIONS['fleet-5'], fadeRange: [0.50, 0.65],  panelIndex: 1 },
+  { id: 'fleet-6', label: 'Dual-Mode Operation',             position: FLEET_HOTSPOT_POSITIONS['fleet-6'], visibilityDirection: [1.2, 0, -0.5], fadeRange: [-0.40, 0.20], panelIndex: 3 },
+  { id: 'fleet-7', label: '360° LiDAR Obstacle Detection',      position: FLEET_HOTSPOT_POSITIONS['fleet-7'], fadeRange: [-1.0, -0.99], panelIndex: 0 },
 ];
 
-const BASE_DOT_SIZE = 0.18;
+export const FLEET_PANEL_TO_HOTSPOT = Object.fromEntries(
+  FLEET_HOTSPOTS.map(hs => [hs.panelIndex ?? (parseInt(hs.id.replace('fleet-', ''), 10) - 1), hs.id])
+);
 
-function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) {
-  const { scene } = useGLTF('/assets/amr10.glb');
+const BASE_DOT_SIZE = 0.28;
+
+export default function FleetScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) {
+  const { scene } = useGLTF('/assets/amr51.glb');
+  const [scale, setScale] = useState(1);
 
   const groupRef  = useRef(null);
   const meshRef   = useRef(null);
@@ -60,20 +71,25 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
   const _camDir     = useRef(new THREE.Vector3());
   const _hotspotDir = useRef(new THREE.Vector3());
 
-  const _currentSizes = useRef(new Float32Array(HOTSPOTS.length).fill(BASE_DOT_SIZE));
-  const _currentDims  = useRef(new Float32Array(HOTSPOTS.length).fill(1.0));
+  const _currentSizes = useRef(new Float32Array(FLEET_HOTSPOTS.length).fill(BASE_DOT_SIZE));
+  const _currentDims  = useRef(new Float32Array(FLEET_HOTSPOTS.length).fill(1.0));
 
-  const { geometry, material, opacities, rippleActives, sizes } = useHotspotMaterial(HOTSPOTS.length, BASE_DOT_SIZE);
+  const { geometry, material, opacities, rippleActives, sizes } = useHotspotMaterial(FLEET_HOTSPOTS.length, BASE_DOT_SIZE);
 
   useEffect(() => {
-    if (!scene || scene.userData.isCentered) return;
-    scene.userData.isCentered = true;
-    scene.position.set(0, 0, 0);
+    if (!scene) return;
+    if (!scene.userData.isCentered) {
+      scene.userData.isCentered = true;
+      scene.position.set(0, 0, 0);
+      const box = new THREE.Box3().setFromObject(scene);
+      const center = box.getCenter(new THREE.Vector3());
+      // Preserve the GLB's vertical position; the parent group controls model height.
+      scene.position.set(-center.x, 0, -center.z);
+    }
     const box = new THREE.Box3().setFromObject(scene);
-    const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3());
-    // Keep the GLB horizontally centered, but let the parent group control height.
-    scene.position.set(-center.x, 0, -center.z);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    if (maxDim > 0) setScale(2.0 / maxDim);
 
     setHoverBox({
       size: [size.x * 1.35, size.y * 1.15, size.z * 1.35],
@@ -84,7 +100,7 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
   useEffect(() => {
     if (!meshRef.current) return;
     const dummy = new THREE.Object3D();
-    HOTSPOTS.forEach((hs, i) => {
+    FLEET_HOTSPOTS.forEach((hs, i) => {
       dummy.position.set(hs.position[0], hs.position[1], hs.position[2]);
       dummy.updateMatrix();
       meshRef.current.setMatrixAt(i, dummy.matrix);
@@ -104,7 +120,7 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
     // Smooth camera transition to horizontally focus on active feature hotspot
     if (isAnimatingRef.current && controlsRef.current) {
       const controls = controlsRef.current;
-      const activeHotspot = HOTSPOTS.find(hs => hs.id === activeFeature);
+      const activeHotspot = FLEET_HOTSPOTS.find(hs => hs.id === activeFeature);
       if (activeHotspot) {
         const fp = activeHotspot.visibilityDirection ?? activeHotspot.fadePosition ?? activeHotspot.position;
         const [hx, hy, hz] = fp;
@@ -134,19 +150,22 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
       }
     }
 
-    HOTSPOTS.forEach((hs, i) => {
+    FLEET_HOTSPOTS.forEach((hs, i) => {
       const fp = hs.fadePosition ?? hs.position;
       _hotspotDir.current.set(fp[0], fp[1], fp[2]).normalize();
 
       const dot = _hotspotDir.current.dot(_camDir.current);
-      let [fe0, fe1] = hs.fadeRange ?? [0.05, 0.22];
+      let [fe0, fe1] = hs.fadeRange ?? FLEET_HOTSPOT_FADE_RANGE;
       if (hs.fadeRangeRight) {
-        const camRelX  = camera.position.x - _groupPos.current.x;
+        const camRelX   = camera.position.x - _groupPos.current.x;
         const rightBias = Math.max(0, Math.min(1, camRelX / 0.4));
         fe0 = fe0 * (1 - rightBias) + hs.fadeRangeRight[0] * rightBias;
         fe1 = fe1 * (1 - rightBias) + hs.fadeRangeRight[1] * rightBias;
       }
-      const fade = smoothstep(fe0, fe1, dot);
+      const isFrontView = _camDir.current.dot(FLEET_HITCH_HIDDEN_VIEW_DIRECTION) > 0.20;
+      const fade = hs.id === 'fleet-6' && isFrontView
+        ? 0
+        : smoothstep(fe0, fe1, dot);
 
       const activeId     = hoveredId ?? externalHoveredId ?? activeFeature;
       const isThisActive = hs.id === activeId;
@@ -175,7 +194,7 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
   });
 
   function handlePickClick(e) {
-    if (!PICK_COORDS || !groupRef.current) return;
+    if (!PICK_COORDS_FLEET || !groupRef.current) return;
     e.stopPropagation();
     onCoordPick && onCoordPick(pickLocalPoint(e, groupRef.current));
   }
@@ -183,8 +202,9 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
   return (
     <group
       ref={groupRef}
-      position={[0, -0.4, 0]}
-      onClick={PICK_COORDS ? handlePickClick : undefined}
+      position={[0, -0.95, 0]}
+      scale={scale}
+      onClick={PICK_COORDS_FLEET ? handlePickClick : undefined}
     >
       <primitive
         object={scene}
@@ -201,12 +221,12 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
 
       <instancedMesh
         ref={meshRef}
-        args={[geometry, material, HOTSPOTS.length]}
+        args={[geometry, material, FLEET_HOTSPOTS.length]}
         renderOrder={1}
         frustumCulled={false}
       />
 
-      {HOTSPOTS.map((hs, i) => {
+      {FLEET_HOTSPOTS.map((hs, i) => {
         const isHovered  = hoveredId === hs.id;
         const isActive   = activeFeature === hs.id;
         const isNameplateVisible = hoveredId !== null
@@ -247,118 +267,5 @@ function RobotScene({ activeFeature, externalHoveredId, onClick, onCoordPick }) 
         }}
       />
     </group>
-  );
-}
-
-const FEATURES = [
-  {
-    id: '2d-lidar',
-    label: 'Customisable Hitching',
-    description: 'Every facility runs different trolleys. Our team manufactures custom hitch mechanisms tailored to your specific trolley design to integrate material handling assets without modifications',
-    image: '/assets/amr10-feature-detail.webp',
-    dot: { left: 614, top: 149 },
-  },
-  {
-    id: '3d-lidar',
-    label: 'Low-Profile Hazard Sensing',
-    description: 'Dedicated low-level sensors detect ground-level debris and obstructions that conventional detection systems routinely miss',
-    image: '/assets/amr10-feature-detail.webp',
-    dot: { left: 395, top: 15 },
-  },
-  {
-    id: 'wheelbase',
-    label: '360° LiDAR Obstacle Detection',
-    description: 'A full 3D LiDAR array continuously maps the environment, detecting obstacles across every angle and depth in real time.',
-    image: '/assets/amr10-feature-detail.webp',
-    dot: { left: 279, top: 215 },
-  },
-  {
-    id: 'axis-imu',
-    label: 'Compact Operating Footprint',
-    description: 'Engineered to operate efficiently in space-constrained environments. Its compact form factor allows it to navigate narrow aisles, tight corners, and high-traffic zones without compromising payload capacity or operational performance.',
-    image: '/assets/amr10-feature-detail.webp',
-    dot: { left: 171, top: 460 },
-  },
-];
-
-export default function Capabilities() {
-  const [active, setActive] = useState(0);
-  const [panelHoveredId, setPanelHoveredId] = useState(null);
-  const activeFeatureId = `feature-${active + 1}`;
-  const [pickedCoords, setPickedCoords] = useState([]);
-
-  function handleCoordPick(coord) {
-    setPickedCoords((prev) => {
-      const next = [...prev, coord];
-      return next.length > 4 ? next.slice(-4) : next;
-    });
-  }
-
-  return (
-    <section className={styles.section} data-header-theme="light">
-      <div className="container">
-
-      {/* ── Header ── */}
-      <div className={styles.header}>
-        <h2 className="heading-2 heading-2-md">Built on an Intelligent Core</h2>
-        <p className={`body-1 body-1-md ${styles.subtitle}`}>
-          Lorem ipsum dolor sit amet consectetur. Cursus sit diam pulvinar netus eget.
-          Neque cras eget quis sapien cursus. Lorem ultrices neque sed sapien mattis.
-        </p>
-      </div>
-
-      {/* ── Content row ── */}
-      <div className={styles.contentRow}>
-
-        <div className={styles.imageArea}>
-          <div className={styles.robotWrap}>
-            <Canvas
-              camera={{ position: [0, 0.5, 3.2], fov: 28 }}
-              style={{ width: '100%', height: '100%', overflow: 'visible' }}
-              dpr={[1, 2]}
-              gl={{ alpha: true, powerPreference: 'high-performance' }}
-            >
-              <ambientLight intensity={0.4} />
-              <directionalLight position={[5, 5, 5]} intensity={0.9} />
-              <directionalLight position={[-5, 3, -5]} intensity={0.25} />
-              <Suspense fallback={null}>
-                <RobotScene
-                  activeFeature={activeFeatureId}
-                  externalHoveredId={panelHoveredId}
-                  onClick={(id) => setActive(parseInt(id.replace('feature-', ''), 10) - 1)}
-                  onCoordPick={PICK_COORDS ? handleCoordPick : undefined}
-                />
-                <Environment preset="studio" background={false} environmentIntensity={0.3} />
-              </Suspense>
-            </Canvas>
-          </div>
-          {PICK_COORDS && (
-            <CoordPicker
-              title="COORD PICKER"
-              hotspotIds={['feature-1', 'feature-2', 'feature-3', 'feature-4']}
-              picked={pickedCoords}
-              onClear={() => setPickedCoords([])}
-            />
-          )}
-        </div>
-
-        <div className={`${styles.panel} ${styles.panelFleet}`}>
-          {FEATURES.map((f, i) => (
-            <FeatureItem
-              key={f.id}
-              feature={f}
-              active={active === i}
-              onClick={() => setActive(i)}
-              onHoverStart={() => setPanelHoveredId(`feature-${i + 1}`)}
-              onHoverEnd={() => setPanelHoveredId(null)}
-              styles={styles}
-            />
-          ))}
-        </div>
-
-      </div>
-
-      </div>
-    </section>
   );
 }
