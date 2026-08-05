@@ -26,52 +26,44 @@ export default function Hero() {
         playsInline
         aria-label="Virya homepage banner"
       >
-        <source src="/assets/hp-banner.webm" type="video/webm" />
-        <source src="/assets/hp-banner.mp4" type="video/mp4" />
+        <source src="/assets/homepage-banner.mp4" type="video/mp4" />
       </video>
 
       <div className={styles.content}>
         <div className="container">
-          <h1 className={`heading-1 heading-1-md ${styles.heading}`}>
-            Autonomous
-            <br />
-            mobility for
-            <br />
-            smarter
-            <br />
-            operations
-          </h1>
-        </div>
-
-        <div className={`container ${styles.bottom}`}>
-          <div className={styles.scrollHint}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                opacity="0.6"
-                d="M13.5 2.25H10.5C7.60051 2.25 5.25 4.60051 5.25 7.5V16.5C5.25 19.3995 7.60051 21.75 10.5 21.75H13.5C16.3995 21.75 18.75 19.3995 18.75 16.5V7.5C18.75 4.60051 16.3995 2.25 13.5 2.25Z"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                className={styles.scrollWheel}
-                d="M12 10.5V6"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <div className={styles.textBlock}>
+            <h1 className={`heading-1 heading-1-md ${styles.heading}`}>
+              Autonomous mobility for smarter operations
+            </h1>
+            <p className={`body-1 body-1-md ${styles.description}`}>
+              Lorem ipsum dolor sit amet consectetur. Magna id nascetur laoreet dui sem massa at
+              ullamcorper. Amet nunc velit rutrum diam tincidunt sapien. Egestas.
+            </p>
+            <div className={`label-1 label-1-md ${styles.cta}`}>
+              <Button href="/material-mobility" property1="Variant3" size="Button-2">
+                Explore material mobility
+              </Button>
+              <Button href="/people-mobility" property1="Variant3" size="Button-2">
+                Explore people mobility
+              </Button>
+            </div>
           </div>
 
-          <div className={`label-1 label-1-md ${styles.cta}`}>
-            <Button href="/material-mobility" property1="Variant3" size="Button-2">
-              Explore material mobility
-            </Button>
-            <Button href="/people-mobility" property1="Variant3" size="Button-2">
-              Explore people mobility
-            </Button>
+          <div className={styles.scrollHint} aria-hidden="true">
+            <svg width="20" height="24" viewBox="0 0 20.3423 24.2369" fill="none">
+              <path
+                className={styles.scrollChevronBack}
+                d="M0.92 11.1038L0.920003 14.7222L10.12 23.0022L19.4223 14.7222L19.4223 11.0286"
+                stroke="currentColor"
+                strokeWidth="1.84"
+              />
+              <path
+                className={styles.scrollChevronFront}
+                d="M0.92 0.075147L0.920003 3.69358L10.12 11.9736L19.4223 3.69358L19.4223 3.47323e-07"
+                stroke="currentColor"
+                strokeWidth="1.84"
+              />
+            </svg>
           </div>
         </div>
       </div>

@@ -27,45 +27,62 @@
   inset: 0;
   z-index: 2;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 50px;
+  align-items: flex-end;
   padding-bottom: 18vh;
 }
 
+.content :global(.container) {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 893px;
+  color: var(--color-5);
+}
+
 .heading {
-  color: var(--color-5);
-  margin-left: 45%;
+  margin: 0;
 }
 
-.bottom {
-  display: flex;
-  align-items: center;
-}
-
-.scrollHint {
-  flex: 0 0 45%;
-  display: flex;
-  align-items: center;
-  opacity: 0.4;
-  color: var(--color-5);
-}
-
-.scrollWheel {
-  animation: scrollDown 1.6s ease-in-out infinite;
-  transform-origin: center top;
-}
-
-@keyframes scrollDown {
-  0%   { transform: translateY(0);   opacity: 1; }
-  60%  { transform: translateY(5px); opacity: 1; }
-  100% { transform: translateY(5px); opacity: 0; }
+.description {
+  max-width: 611px;
 }
 
 .cta {
   display: flex;
-  gap: 16px;
+  gap: 20px;
+  align-items: center;
   flex-wrap: wrap;
+}
+
+.scrollHint {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-1);
+}
+
+.scrollChevronBack,
+.scrollChevronFront {
+  animation: scrollDown 1.6s ease-in-out infinite;
+}
+
+.scrollChevronFront {
+  animation-delay: -0.3s;
+}
+
+@keyframes scrollDown {
+  0%   { transform: translateY(0);   opacity: 1; }
+  60%  { transform: translateY(4px); opacity: 1; }
+  100% { transform: translateY(4px); opacity: 0.3; }
 }
 
 /* ── Mobile (Home-md) ──────────────────────────────────────────────────────── */
@@ -85,18 +102,18 @@
     text-align: left;
   }
 
-  .heading {
-    margin-left: 0;
+  .content :global(.container) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .textBlock {
+    max-width: 100%;
     width: 100%;
   }
 
-  .bottom {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .scrollHint {
-    display: none;
+  .description {
+    max-width: 100%;
   }
 
   .cta {
@@ -104,5 +121,9 @@
     align-items: flex-start;
     gap: 12px;
     width: 100%;
+  }
+
+  .scrollHint {
+    display: none;
   }
 }
