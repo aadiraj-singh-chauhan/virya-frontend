@@ -23,33 +23,27 @@ const PLATFORMS = [
     image: '/assets/mini-robot-sensor-platform.webp',
   },
   {
-    title: 'Sensor Carts',
-    expandedTitle: 'Sensor Carts',
-    thumb: '/assets/rd-platforms-dbw-thumb.webp',
-    image: '/assets/rd-platforms-dbw-sensor-carts.webp',
-  },
-  {
     title: 'AMR10 Dev Platform',
     expandedTitle: 'AMR10 Dev Platform',
-    thumb: '/assets/amr10-dev-platform-sketch.webp',
+    thumb: '/assets/sketch-amr10-dev-platform.png',
     image: '/assets/amr10-dev-platform.webp',
   },
   {
     title: '4-Seater Skateboard Platform',
     expandedTitle: '4-Seater Skateboard Platform',
-    thumb: '/assets/4-seater-skateboard-platform-sketch.webp',
+    thumb: '/assets/sketch-4-seater-skateboard-platform.png',
     image: '/assets/4-seater-skateboard-platform.webp',
   },
   {
     title: 'APM for R&D',
     expandedTitle: 'APM for R&D',
-    thumb: '/assets/apm-for-R&D-sketch.webp',
+    thumb: '/assets/sketch-apm-r&d.png',
     image: '/assets/apm-for-R&D.webp',
   },
   {
     title: 'DBW Buggy for R&D',
     expandedTitle: 'DBW Buggy for R&D',
-    thumb: '/assets/dbw-buggy-R&D-sketch.webp',
+    thumb: '/assets/sketch-dbw-buggy-r&d.png',
     image: '/assets/dbw-buggy-R&D.webp',
   },
 ];
