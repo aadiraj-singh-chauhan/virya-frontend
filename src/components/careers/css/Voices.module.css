@@ -1,9 +1,6 @@
 .section {
   position: relative;
-  display: flex;
-  align-items: center;
-  height: 822px;
-  padding-top: 100px;
+  padding: 100px 0 0;
   margin-bottom: 100px;
   background: var(--color-6);
   overflow: hidden;
@@ -17,24 +14,34 @@
   pointer-events: none;
 }
 
-.photoWrap {
+.inner {
   position: relative;
   z-index: 1;
-  flex: 0 0 457px;
-  height: 600px;
-  margin-left: 140px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  gap: 85px;
+}
+
+.photoWrap {
+  position: relative;
+  grid-column: span 5;
+  height: 500px;
+  background: var(--color-7);
   overflow: hidden;
 }
 
 .photo {
   object-fit: cover;
-  object-position: top;
 }
 
 .photoIn,
 .photoOut {
   position: absolute;
-  inset: 0;
+  left: 11.88%;
+  top: -12.57%;
+  width: 78.66%;
+  height: 112.57%;
   transform-origin: 50% 100%;
 }
 
@@ -48,10 +55,8 @@
 
 .testimonial {
   position: relative;
-  z-index: 1;
-  flex: 1;
-  max-width: 761px;
-  margin-left: 85px;
+  grid-column: span 7;
+  height: fit-content;
   padding: 60px 80px;
   background: var(--color-6);
 }
@@ -62,8 +67,6 @@
 
 .textWrap {
   position: relative;
-  height: 320px;
-  overflow: hidden;
 }
 
 @keyframes stackIn {
@@ -116,9 +119,6 @@
 }
 
 .person {
-  position: absolute;
-  left: 80px;
-  bottom: 60px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -139,10 +139,11 @@
   opacity: 0.6;
 }
 
-.navWrap {
-  position: absolute;
-  right: 80px;
-  bottom: 60px;
+.desktopOnly {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 40px;
 }
 
 .mobileOnly {
@@ -151,25 +152,26 @@
 
 @media (max-width: 1024px) {
   .section {
-    height: auto;
-    flex-direction: column;
-    padding: 60px 40px;
+    padding: 60px 0;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 40px;
   }
 
   .photoWrap {
+    grid-column: span 1;
     order: 2;
-    margin-left: 0;
-    margin-top: 0;
-    flex: 0 0 auto;
     width: 260px;
     height: 320px;
-    background: var(--color-6);
   }
 
   .testimonial {
+    grid-column: span 1;
     order: 1;
-    margin-left: 0;
-    max-width: none;
+    width: 100%;
     padding: 40px;
     text-align: center;
   }
@@ -182,8 +184,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: auto;
-    overflow: visible;
   }
 
   .quoteMark {
@@ -200,27 +200,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    order: 3;
     text-align: center;
-    background: var(--color-6);
-    padding: 24px;
+    margin-top: 40px;
   }
 
   .person {
-    position: static;
     align-items: center;
     margin-top: 24px;
   }
 
   .navWrap {
-    position: static;
     margin-top: 32px;
   }
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 60px 24px 0;
+    padding: 60px 0 0;
   }
 
   .testimonial {

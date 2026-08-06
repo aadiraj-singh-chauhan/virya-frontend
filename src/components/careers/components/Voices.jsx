@@ -65,48 +65,52 @@ export default function Voices() {
     <section className={styles.section} data-header-theme="light">
       <VoicesPatternBg className={styles.pattern} />
 
-      <div className={styles.photoWrap}>
-        {outgoingTestimonial && (
-          <div key={`photo-out-${outgoing}`} className={styles.photoOut} style={{ '--dir': direction }} aria-hidden="true">
-            <Image
-              src={outgoingTestimonial.photo}
-              alt=""
-              fill
-              sizes="(max-width: 1024px) 100vw, 457px"
-              className={styles.photo}
-            />
-          </div>
-        )}
-        <div key={`photo-${active}`} className={styles.photoIn} style={{ '--dir': direction }} onAnimationEnd={handleSettled}>
-          <Image
-            src={testimonial.photo}
-            alt={testimonial.name}
-            fill
-            sizes="(max-width: 1024px) 100vw, 457px"
-            className={styles.photo}
-          />
-        </div>
-      </div>
-
-      <div className={styles.testimonial}>
-        <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Voices from within</h2>
-
-        <div className={styles.textWrap}>
-          <span className={styles.quoteMark} aria-hidden="true">
-            <svg width="29" height="25" viewBox="0 0 29 25" fill="none">
-              <path
-                d="M0 0.000175476L6.72619 24.5464H12.4915L8.64795 0.000175476H0ZM16.073 0.000175476L22.7992 24.5464H28.5645L24.7209 0.000175476H16.073Z"
-                fill="currentColor"
+      <div className="container">
+        <div className={styles.inner}>
+          <div className={styles.photoWrap}>
+            {outgoingTestimonial && (
+              <div key={`photo-out-${outgoing}`} className={styles.photoOut} style={{ '--dir': direction }} aria-hidden="true">
+                <Image
+                  src={outgoingTestimonial.photo}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 457px"
+                  className={styles.photo}
+                />
+              </div>
+            )}
+            <div key={`photo-${active}`} className={styles.photoIn} style={{ '--dir': direction }} onAnimationEnd={handleSettled}>
+              <Image
+                src={testimonial.photo}
+                alt={testimonial.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 457px"
+                className={styles.photo}
               />
-            </svg>
-          </span>
-          <p className={styles.quote}>{testimonial.quote}</p>
+            </div>
+          </div>
+
+          <div className={styles.testimonial}>
+            <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Voices from within</h2>
+
+            <div className={styles.textWrap}>
+              <span className={styles.quoteMark} aria-hidden="true">
+                <svg width="29" height="25" viewBox="0 0 29 25" fill="none">
+                  <path
+                    d="M0 0.000175476L6.72619 24.5464H12.4915L8.64795 0.000175476H0ZM16.073 0.000175476L22.7992 24.5464H28.5645L24.7209 0.000175476H16.073Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <p className={styles.quote}>{testimonial.quote}</p>
+            </div>
+
+            <div className={styles.desktopOnly}>{personAndNav}</div>
+          </div>
         </div>
 
-        <div className={styles.desktopOnly}>{personAndNav}</div>
+        <div className={styles.mobileOnly}>{personAndNav}</div>
       </div>
-
-      <div className={styles.mobileOnly}>{personAndNav}</div>
     </section>
   );
 }
