@@ -28,7 +28,9 @@
 .diagram {
   position: relative;
   width: 100%;
-  aspect-ratio: 1512 / 511;
+  max-width: 1100px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
 }
 
 .video {

@@ -29,7 +29,7 @@ export default function Challenges() {
         <video
           ref={videoRef}
           className={`${styles.video} ${styles.videoDesktop}`}
-          src="/assets/warehouses-logistics.mp4"
+          src="/assets/hp-warehouses-logistics.mp4"
           autoPlay
           muted
           loop
