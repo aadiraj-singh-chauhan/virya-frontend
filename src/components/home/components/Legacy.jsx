@@ -27,8 +27,8 @@ const CARDS = [
     title: 'Autonomous movement for materials',
     cta: 'Explore material mobility',
     href: '/material-mobility',
-    image: '/assets/hp-material-mobility.jpg',
-    mobileImage: '/assets/hp-material-mobility-mob.jpg',
+    image: '/assets/material-mobility-hp.jpg',
+    mobileImage: '/assets/material-mobility-mob-hp.jpg',
   },
   {
     id: 'people',
@@ -36,8 +36,8 @@ const CARDS = [
     title: 'Smart mobility for people',
     cta: 'Explore people mobility',
     href: '/people-mobility',
-    image: '/assets/hp-people-mobility.jpg',
-    mobileImage: '/assets/hp-people-mobility-mob.jpg',
+    image: '/assets/people-mobility-hp.jpg',
+    mobileImage: '/assets/people-mobility-mob-hp.png',
   },
   {
     id: 'rnd',
@@ -45,8 +45,8 @@ const CARDS = [
     title: 'Platforms that drive innovation',
     cta: 'Explore R&D Platforms',
     href: '/rd-platforms',
-    image: '/assets/hp-r-and-d.jpg',
-    mobileImage: '/assets/hp-r-and-d-mob.jpg',
+    image: '/assets/R&D-hp.jpg',
+    mobileImage: '/assets/R&D-mob-hp.jpg',
   },
 ];
 
