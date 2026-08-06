@@ -2,7 +2,7 @@
 
 .section {
   background: var(--color-6);
-  padding: 100px 0;
+  padding: 100px 0 0;
 }
 
 .heading {
@@ -21,7 +21,7 @@
 
 .card {
   position: relative;
-  height: 588px;
+  height: 460px;
   overflow: hidden;
   background: var(--color-5);
   cursor: pointer;
@@ -53,18 +53,18 @@
 
 .watermark {
   position: absolute;
-  top: 31px;
+  top: 22px;
   left: 0;
   right: 0;
   text-align: center;
   font-family: var(--font-primary);
-  font-size: 90px;
+  font-size: 70px;
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--color-3);
-  opacity: 0.1;
+  opacity: 0.2;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -81,10 +81,11 @@
 
 .robotWrap {
   position: absolute;
-  top: 90px;
-  left: 20px;
-  right: 20px;
+  top: 1%;
+  left: 50%;
+  width: 75%;
   bottom: 100px;
+  transform: translateX(-50%);
   z-index: 2;
 }
 
@@ -150,7 +151,7 @@
 @media (max-width: 767px) {
 
   .section {
-    padding: 60px 0;
+    padding: 60px 0 0;
   }
 
   .heading {
@@ -167,19 +168,16 @@
   }
 
   .card {
-    height: 440px;
+    height: 380px;
   }
 
   .watermark {
-    top: 18px;
-    font-size: 56px;
+    top: 13px;
+    font-size: 46px;
   }
 
   .robotWrap {
-    top: 28px;
-    left: 4px;
-    right: 4px;
-    bottom: 46px;
+    bottom: 75px;
   }
 
   .bottom {
@@ -206,19 +204,12 @@
 @media (max-width: 480px) {
 
   .card {
-    height: 380px;
+    height: 320px;
   }
 
   .watermark {
-    font-size: 42px;
-    top: 16px;
-  }
-
-  .robotWrap {
-    top: 24px;
-    left: 2px;
-    right: 2px;
-    bottom: 42px;
+    font-size: 34px;
+    top: 10px;
   }
 
 }
