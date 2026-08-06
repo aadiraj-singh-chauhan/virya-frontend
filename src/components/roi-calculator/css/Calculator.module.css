@@ -206,6 +206,86 @@
   padding: 32px 0;
 }
 
+/* ── Results panel ────────────────────────────────────────────────────────── */
+
+.resultsPanel {
+  background: var(--color-3);
+  color: var(--color-5);
+  padding: 42px 50px 50px;
+}
+
+.resultsPanel > p:first-child {
+  color: var(--color-2);
+  margin-bottom: 25px;
+}
+
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 20px;
+}
+
+.resultCell {
+  padding: 38px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.resultCell:last-child {
+  border-right: none;
+}
+
+.resultCell p:first-child {
+  margin-bottom: 13px;
+}
+
+.resultCell p:nth-child(2) {
+  margin-bottom: 13px;
+  white-space: nowrap;
+}
+
+.resultCell:first-child p:nth-child(2),
+.resultCell:last-child p:nth-child(2) {
+  color: var(--color-1);
+}
+
+.resultCaption {
+  opacity: 0.4;
+}
+
+/* ── Zero state (before the first calculation) ───────────────────────────── */
+
+.zeroState .resultCell p:nth-child(2) {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.zeroState .resultCell:first-child p:nth-child(2),
+.zeroState .resultCell:last-child p:nth-child(2) {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── CTA row ──────────────────────────────────────────────────────────────── */
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  margin-bottom: 24px;
+}
+
+.muted {
+  opacity: 0.6;
+}
+
+/* ── Disclaimer ───────────────────────────────────────────────────────────── */
+
+.disclaimer {
+  background: var(--color-6);
+  color: var(--color-3);
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 25px;
+}
+
 /* ── Mobile ───────────────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
@@ -220,6 +300,37 @@
   }
 
   .submitRow {
+    justify-content: center;
+  }
+
+  .resultsPanel {
+    padding: 32px 24px;
+  }
+
+  .resultsGrid {
+    grid-template-columns: 1fr;
+    margin-bottom: 16px;
+  }
+
+  .resultCell {
+    padding: 24px 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .resultCell:last-child {
+    border-bottom: none;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .submitRow button,
+  .ctaRow button {
+    width: 100%;
     justify-content: center;
   }
 }

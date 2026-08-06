@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '@/components/ui/Button';
 import FormField from '@/components/shared/components/FormField';
-import { VEHICLES, runCalc } from '../lib/calculatorConfig';
+import { VEHICLES, runCalc, formatResults } from '../lib/calculatorConfig';
 import styles from '../css/Calculator.module.css';
 
 const OP_TYPES = [
@@ -79,6 +79,62 @@ function Slider({ value, min, max, onChange }) {
   );
 }
 
+function ResultsPanel({ result, onGetReport }) {
+  const formatted = result ? formatResults(result) : null;
+  const savingsText = formatted?.savingsText ?? '—';
+  const paybackText = formatted?.paybackText ?? '—';
+  const pctText = formatted?.pctText ?? '—';
+
+  return (
+    <div className={`${styles.resultsPanel} ${!result ? styles.zeroState : ''}`}>
+      <p className="label-2 label-1-md">Projected ROI — 7 year analysis</p>
+
+      <div className={styles.resultsGrid}>
+        <div className={styles.resultCell}>
+          <p className="label-2 label-1-md">Total Savings</p>
+          <p className="heading-2 heading-2-md">{savingsText}</p>
+          <span className={styles.resultCaption}>
+            <span className="label-2 label-1-md">over 7 years</span>
+          </span>
+        </div>
+        <div className={styles.resultCell}>
+          <p className="label-2 label-1-md">Payback Period</p>
+          <p className="heading-2 heading-2-md">{paybackText}</p>
+          <span className={styles.resultCaption}>
+            <span className="label-2 label-1-md">break-even point</span>
+          </span>
+        </div>
+        <div className={styles.resultCell}>
+          <p className="label-2 label-1-md">Cost Reduction</p>
+          <p className="heading-2 heading-2-md">{pctText}</p>
+          <span className={styles.resultCaption}>
+            <span className="label-2 label-1-md">vs manual operations</span>
+          </span>
+        </div>
+      </div>
+
+      <div className={styles.ctaRow}>
+        <Button type="button" property1="Default" onClick={onGetReport}>Get detailed report</Button>
+        <p className="body-2">
+          Want the full breakdown?{' '}
+          <span className={styles.muted}>Our team will walk you through a customised analysis within 24 hours.</span>
+        </p>
+      </div>
+
+      <div className={styles.disclaimer}>
+        <p className="body-2">
+          Note:{' '}
+          <span className={styles.muted}>
+            Results are estimated using industry-standard cost benchmarks for operator CTC, maintenance, AMC, and
+            spares. Final projections may vary based on your facility&apos;s specific parameters — contact us for a
+            tailored assessment.
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function Row({ label, desc, align, children }) {
   return (
     <div className={`${styles.row} ${align === 'start' ? styles.rowStart : ''}`}>
@@ -101,6 +157,10 @@ export default function Calculator() {
   const [fleet, setFleet] = useState(17);
   const [operators, setOperators] = useState(20);
   const [shifts, setShifts] = useState(1);
+  const detailsRef = useRef(null);
+  const resultsRef = useRef(null);
+
+  const [result, setResult] = useState(null);
 
   const vehicles = VEHICLES[opType] || [];
 
@@ -111,8 +171,12 @@ export default function Calculator() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const result = runCalc({ opType, vehicle, fleet, operators, shifts });
-    console.log('ROI calculation result', result);
+    setResult(runCalc({ opType, vehicle, fleet, operators, shifts }));
+    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const handleGetReport = () => {
+    detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return (
@@ -150,7 +214,7 @@ export default function Calculator() {
           </Row>
 
           <Row label="Enter your details" align="start">
-            <div className={styles.fields}>
+            <div className={styles.fields} ref={detailsRef}>
               <FormField idPrefix="roi" name="fullName" label="Enter your full name" />
               <FormField idPrefix="roi" name="companyName" label="Company name" />
               <FormField idPrefix="roi" name="companyEmail" label="Your company email" type="email" />
@@ -162,6 +226,10 @@ export default function Calculator() {
             <Button type="submit" property1="Default">Calculate ROI</Button>
           </div>
         </form>
+
+        <div ref={resultsRef}>
+          <ResultsPanel result={result} onGetReport={handleGetReport} />
+        </div>
       </div>
     </section>
   );

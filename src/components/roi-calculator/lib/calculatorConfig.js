@@ -107,3 +107,19 @@ export function runCalc({ opType, vehicle, fleet, operators, shifts }) {
 
   return { rows, manualTotal, amrTotal, savings, pct, paybackMonths, headcount };
 }
+
+/** Formats a runCalc() result into the display strings the results panel renders. */
+export function formatResults({ savings, pct, paybackMonths }) {
+  const savingsText = `₹${(savings / 1e7).toFixed(2)} Cr`;
+
+  let paybackText = `> ${SETTINGS.years} yr`;
+  if (paybackMonths !== null) {
+    const yr = Math.floor(paybackMonths / 12);
+    const mo = paybackMonths % 12;
+    paybackText = mo === 0 ? `${yr} yr` : `${yr} yr ${mo} mo`;
+  }
+
+  const pctText = `${Math.round(pct)}%`;
+
+  return { savingsText, paybackText, pctText };
+}
