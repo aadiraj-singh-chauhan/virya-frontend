@@ -1,6 +1,7 @@
 import styles from './page.module.css';
 import Hero from '@/components/company/partners/components/Hero';
 import PartnerCards from '@/components/company/partners/components/PartnerCards';
+import AcademicPartners from '@/components/company/partners/components/AcademicPartners';
 import LatestInsights from '@/components/resources/shared/components/LatestInsights';
 import PartnerCTAForm from '@/components/company/partners/components/PartnerCTAForm';
 
@@ -14,6 +15,7 @@ export default function CompanyPartners() {
     <main className={styles.main}>
       <Hero />
       <PartnerCards />
+      <AcademicPartners />
       <LatestInsights />
       <PartnerCTAForm />
     </main>
