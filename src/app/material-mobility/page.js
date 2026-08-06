@@ -19,9 +19,9 @@ export default function MaterialMobility() {
       <Banner />
       <VideoSection />
       <Features />
+      <Platforms />
       <Ecosystem />
       <Specs />
-      <Platforms />
       <CustomSolution />
       <RoutingCTAs />
     </main>

@@ -1,5 +1,5 @@
 .section {
-  padding: 0;
+  padding: 20px 0 60px;
   background: var(--color-6);
 }
 
@@ -20,7 +20,7 @@
 .card {
   position: relative;
   overflow: hidden;
-  background: var(--color-5) url('/assets/mm-amr-bg.webp') center / cover no-repeat;
+  background: var(--color-5) url('/assets/product-card-bg.png') center / cover no-repeat;
   height: 531px;
   cursor: pointer;
 }
