@@ -20,11 +20,22 @@
   overflow: hidden;
 }
 
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center;
+}
+
 .heading {
   position: relative;
   z-index: 1;
   max-width: 444px;
-  color: var(--color-3);
+  color: var(--color-5);
 }
 
 .desc {
@@ -35,8 +46,7 @@
   font-family: var(--font-primary);
   font-size: 15px;
   line-height: 1.4;
-  color: var(--color-3);
-  opacity: 0.6;
+  color: var(--color-5);
 }
 
 .form {
@@ -59,6 +69,8 @@
 .submit {
   justify-content: center;
   width: fit-content;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 @media (max-width: 1024px) {

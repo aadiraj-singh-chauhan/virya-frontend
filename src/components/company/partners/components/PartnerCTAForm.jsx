@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import FormField from '@/components/shared/components/FormField';
 import styles from '../css/PartnerCTAForm.module.css';
@@ -14,6 +15,16 @@ export default function PartnerCTAForm() {
       <div className="container">
         <div className={styles.inner}>
           <div className={styles.visual}>
+            <div className={styles.bg}>
+              <Image
+                src="/assets/partners-contact-bg.jpg"
+                alt=""
+                aria-hidden="true"
+                fill
+                sizes="560px"
+                className={styles.bgImage}
+              />
+            </div>
             <h2 className={`heading-2 heading-2-md ${styles.heading}`}>Collaborate beyond conventional automation</h2>
             <p className={styles.desc}>
               Don&rsquo;t see the right role? Submit your details below and we&rsquo;ll reach out
