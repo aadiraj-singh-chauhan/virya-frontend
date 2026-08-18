@@ -27,8 +27,8 @@ const S2_A_POS  = new THREE.Vector3(4.335, 4.669, 8.974);
 const S2_A_LOOK = new THREE.Vector3(-0.143, 0.185, -0.116);
 const S2_B_POS  = new THREE.Vector3(0.582, 4.454, 10.078);
 const S2_B_LOOK = new THREE.Vector3(0.081, 0.138, -0.114);
-const S2_C_POS  = new THREE.Vector3(0.081, 11.219, -0.114);
-const S2_C_LOOK = new THREE.Vector3(0.081, 0.138, -0.114);
+const S2_C_POS  = new THREE.Vector3(0.330, 10.850, 1.144);
+const S2_C_LOOK = new THREE.Vector3(0.329, 0.914, 0.015);
 
 // ── Exterior color palette ────────────────────────────────────────────────────
 const ROOF_COLOR   = new THREE.Color("#606063");
