@@ -17,16 +17,18 @@ const transitionState = {
 };
 
 // ── Scene 1 camera waypoints ──────────────────────────────────────────────────
-const S1_START_POS  = new THREE.Vector3(-6.689, 4.501, 3.753);
-const S1_START_LOOK = new THREE.Vector3(1.672, -0.874, -1.144);
+const S1_START_POS  = new THREE.Vector3(-8.731, 5.480, 4.225);
+const S1_START_LOOK = new THREE.Vector3(0.704, -0.433, -0.947);
 const S1_END_POS    = new THREE.Vector3(1.067, 1.118, -0.831);
 const S1_END_LOOK   = new THREE.Vector3(1.763, 0.305, -1.880);
 
-// ── Scene 2 camera waypoints ──────────────────────────────────────────────────
-const S2_START_POS  = new THREE.Vector3(2.399, 5.841, 9.532);
-const S2_START_LOOK = new THREE.Vector3(0.007, -0.481, -0.718);
-const S2_END_POS    = new THREE.Vector3(0.814, 11.915, 1.506);
-const S2_END_LOOK   = new THREE.Vector3(0.803, 0.989, -0.336);
+// ── Scene 2 camera waypoints (A → B → C) ─────────────────────────────────────
+const S2_A_POS  = new THREE.Vector3(4.335, 4.669, 8.974);
+const S2_A_LOOK = new THREE.Vector3(-0.143, 0.185, -0.116);
+const S2_B_POS  = new THREE.Vector3(0.582, 4.454, 10.078);
+const S2_B_LOOK = new THREE.Vector3(0.081, 0.138, -0.114);
+const S2_C_POS  = new THREE.Vector3(0.081, 11.219, -0.114);
+const S2_C_LOOK = new THREE.Vector3(0.081, 0.138, -0.114);
 
 // ── Exterior color palette ────────────────────────────────────────────────────
 const ROOF_COLOR   = new THREE.Color("#606063");
@@ -176,23 +178,38 @@ function Scene1Camera({ progressRef }) {
   return null;
 }
 
-// ── Scene 2 scroll camera ─────────────────────────────────────────────────────
+// ── Scene 2 scroll camera — A → B → C through 3 waypoints ────────────────────
 function Scene2Camera({ progressRef }) {
   const { camera } = useThree();
   const smoothed = useRef(0);
 
   useEffect(() => {
-    camera.position.copy(S2_START_POS);
-    camera.lookAt(S2_START_LOOK);
-    camera.updateProjectionMatrix();
+    smoothed.current = 0;
+    camera.position.copy(S2_A_POS);
+    camera.lookAt(S2_A_LOOK);
   }, [camera]);
 
   useFrame((_, delta) => {
     smoothed.current += (progressRef.current - smoothed.current) * (1 - Math.exp(-delta * 4));
     const t = smoothed.current;
-    const ease = t * t * (3 - 2 * t);
-    camera.position.lerpVectors(S2_START_POS, S2_END_POS, ease);
-    camera.lookAt(new THREE.Vector3().lerpVectors(S2_START_LOOK, S2_END_LOOK, ease));
+
+    let pos, look;
+    if (t <= 0.5) {
+      // First half: A → B
+      const seg = t * 2;
+      const ease = seg * seg * (3 - 2 * seg);
+      pos  = new THREE.Vector3().lerpVectors(S2_A_POS, S2_B_POS, ease);
+      look = new THREE.Vector3().lerpVectors(S2_A_LOOK, S2_B_LOOK, ease);
+    } else {
+      // Second half: B → C
+      const seg = (t - 0.5) * 2;
+      const ease = seg * seg * (3 - 2 * seg);
+      pos  = new THREE.Vector3().lerpVectors(S2_B_POS, S2_C_POS, ease);
+      look = new THREE.Vector3().lerpVectors(S2_B_LOOK, S2_C_LOOK, ease);
+    }
+
+    camera.position.copy(pos);
+    camera.lookAt(look);
   });
 
   return null;
@@ -310,7 +327,7 @@ export default function LogisticsChallenges() {
         <div className={styles.canvasWrapper}>
           <Canvas
             shadows={{ type: THREE.PCFShadowMap }}
-            camera={{ position: S1_START_POS.toArray(), fov: 35, near: 0.05 }}
+            camera={{ position: [-8.731, 5.480, 4.225], fov: 35, near: 0.05 }}
             dpr={[1, 2]}
             gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
             style={{ width: "100%", height: "100%" }}
