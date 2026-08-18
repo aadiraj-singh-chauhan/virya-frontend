@@ -413,11 +413,6 @@ export default function LogisticsChallenges() {
           )}
         </div>
 
-        <div className={styles.heading}>
-          <h2 className="heading-2 heading-2-md">
-            Every operation faces unique logistics challenges.
-          </h2>
-        </div>
 
         <button
           type="button"
