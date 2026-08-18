@@ -363,7 +363,7 @@ export default function LogisticsChallenges() {
 
         {/* Free cam toggle + HUD */}
         <div style={{
-          position: "absolute", top: 14, right: 14,
+          position: "absolute", top: 96, right: 14,
           display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end", zIndex: 10,
         }}>
           <button
