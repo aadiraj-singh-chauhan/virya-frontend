@@ -1,8 +1,8 @@
 .section {
   position: relative;
   width: 100%;
-  /* 300vh = 100vh visible + 200vh of scroll travel for the camera animation */
-  height: 300vh;
+  /* 600vh = 100vh visible + 500vh of scroll travel (scene 2 gets 400vh) */
+  height: 600vh;
   background: #F5F2ED;
   margin: 80px 0;
 }
