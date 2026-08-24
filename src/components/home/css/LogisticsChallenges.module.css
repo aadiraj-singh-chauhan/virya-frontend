@@ -1,8 +1,8 @@
 .section {
   position: relative;
   width: 100%;
-  /* 1100vh = 100vh visible + 1000vh of scroll travel; scene 4 added */
-  height: 1100vh;
+  /* 2400vh = 100vh visible + 2300vh of scroll travel; scene 4 gets 1100vh for ultra-slow smooth scroll */
+  height: 2400vh;
   background: #F5F2ED;
   margin: 80px 0;
 }

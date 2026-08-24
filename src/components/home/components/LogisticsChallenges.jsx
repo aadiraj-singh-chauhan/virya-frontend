@@ -216,19 +216,21 @@ const TROLL_X = -0.47;
 const TROLL_Z = 0.23;
 
 // ── Scene 3 AMR10 + Trolley (truck-trailer left-turn animation) ───────────────
-const S3_AMR10_X      = 0;
-const S3_AMR10_Z      = -3.5;
-const S3_AMR10_SCALE  = 1;
-const S3_TROLLEY_X    = 0;
-const S3_TROLLEY_Z    = -4.0;
-const S3_TROLLEY_SCALE = 1;
+const S3_AMR10_X      = 1.51;
+const S3_AMR10_Z      = -2.5;
+const S3_AMR10_SCALE   = 0.2;
+const S3_TROLLEY_X     = 1.1;
+const S3_TROLLEY_Z     = -2.5;
+const S3_TROLLEY_SCALE = 0.2;
 
-const S3_PATH_STRAIGHT  = 1.2;
-const S3_TURN_RADIUS    = 0.6;
-const S3_ARC_LENGTH     = S3_TURN_RADIUS * (Math.PI / 2);
+const S3_PATH_STRAIGHT  = 0.48;
+const S3_PATH_STRAIGHT2 = 1.0;
+const S3_TURN_RADIUS         = 0.12;
+const S3_TROLLEY_TURN_RADIUS  = 0.04;
+const S3_TROLLEY_PATH_STRAIGHT = 0.15;
+const S3_ARC_LENGTH          = S3_TURN_RADIUS * (Math.PI / 2);
 const S3_TRUCK_GAP      = 0.5;
-const S3_TOTAL_STRAIGHT = S3_TRUCK_GAP + S3_PATH_STRAIGHT;
-const S3_PATH_TOTAL     = S3_PATH_STRAIGHT + S3_ARC_LENGTH;
+const S3_PATH_TOTAL     = S3_PATH_STRAIGHT + S3_ARC_LENGTH + S3_PATH_STRAIGHT2;
 
 // ── Interior scene — factory floor + forklift + AMR10 + AMR10 Trolley ─────────
 const ANIM_DIST = 3; // units travelled by each model during scroll animation
@@ -396,42 +398,38 @@ useGLTF.preload("/assets/factory-interior.glb");
 useGLTF.preload("/assets/forklift.glb");
 useGLTF.preload("/assets/amr10.glb");
 useGLTF.preload("/assets/amr10-trolley.glb");
-useGLTF.preload("/assets/amr10-s3.glb");
-useGLTF.preload("/assets/trolley-s3.glb");
+useGLTF.preload("/assets/amr10-color.glb");
+useGLTF.preload("/assets/amr10-trolley-color.glb");
 
-// ── Scene 3 path — straight +Z then quarter-circle arc left (+Z → +X) ─────────
-// Seg 1: straight +Z  →  Arc: +Z → +X (left turn)
-function getS3PathState(d) {
-  const ox = S3_TROLLEY_X, oz = S3_TROLLEY_Z;
-  if (d <= 0) return { x: ox, z: oz, ry: 0 };
+// ── Scene 3 path — straight -X (left) → arc (-X → +Z) → straight +Z ────────────
+// r param lets the trolley use a smaller radius than the truck (real trailer off-tracking)
+function getS3PathState(d, ox = 0, oz = 0, r = S3_TURN_RADIUS, s = S3_PATH_STRAIGHT) {
+  const arcLen = r * (Math.PI / 2);
+  if (d <= 0) return { x: ox, z: oz, ry: -Math.PI / 2 };
 
-  if (d <= S3_TOTAL_STRAIGHT) {
-    return { x: ox, z: oz + d, ry: 0 };
+  if (d <= s) {
+    return { x: ox - d, z: oz, ry: -Math.PI / 2 };
   }
 
-  const r = S3_TURN_RADIUS;
-  const dA = d - S3_TOTAL_STRAIGHT;
-  if (dA <= S3_ARC_LENGTH) {
+  const dA = d - s;
+  if (dA <= arcLen) {
     const a = dA / r;
     return {
-      x: ox + r * (1 - Math.cos(a)),
-      z: oz + S3_TOTAL_STRAIGHT + r * Math.sin(a),
-      ry: a,
+      x: ox - s - r * Math.sin(a),
+      z: oz + r * (1 - Math.cos(a)),
+      ry: -Math.PI / 2 + a,
     };
   }
 
-  // Past arc end — stay at arc end position
-  return {
-    x: ox + r,
-    z: oz + S3_TOTAL_STRAIGHT + r,
-    ry: Math.PI / 2,
-  };
+  const dZ = d - s - arcLen;
+  return { x: ox - s - r, z: oz + r + dZ, ry: 0 };
 }
 
 // ── Scene 3 AMR10 (truck — leads the pair) ────────────────────────────────────
 function S3AMR10() {
-  const { scene } = useGLTF("/assets/amr10-s3.glb");
-  const groupRef = useRef(null);
+  const { scene } = useGLTF("/assets/amr10-color.glb");
+  const groupRef  = useRef(null);
+  const smoothedP = useRef(0);
   const [cloned, ctr, minY] = useMemo(() => {
     const c = scene.clone(true);
     const box = new THREE.Box3().setFromObject(c);
@@ -439,9 +437,10 @@ function S3AMR10() {
     c.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
     return [c, center, box.min.y];
   }, [scene]);
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return;
-    const { x, z, ry } = getS3PathState(s3AnimState.progress * S3_PATH_TOTAL + S3_TRUCK_GAP);
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
+    const { x, z, ry } = getS3PathState(getAMR10EasedDistance(smoothedP.current) + S4_TRUCK_GAP, S3_AMR10_X, S3_AMR10_Z);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
   });
@@ -458,8 +457,9 @@ function S3AMR10() {
 
 // ── Scene 3 Trolley (trailer — follows behind) ────────────────────────────────
 function S3Trolley() {
-  const { scene } = useGLTF("/assets/trolley-s3.glb");
-  const groupRef = useRef(null);
+  const { scene } = useGLTF("/assets/amr10-trolley-color.glb");
+  const groupRef  = useRef(null);
+  const smoothedP = useRef(0);
   const [cloned, ctr, minY] = useMemo(() => {
     const c = scene.clone(true);
     const box = new THREE.Box3().setFromObject(c);
@@ -467,9 +467,11 @@ function S3Trolley() {
     c.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
     return [c, center, box.min.y];
   }, [scene]);
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!groupRef.current) return;
-    const { x, z, ry } = getS3PathState(s3AnimState.progress * S3_PATH_TOTAL);
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
+    const d = Math.min(getAMR10EasedDistance(smoothedP.current), S4_TROLLEY_DROP);
+    const { x, z, ry } = getS3PathState(d, S3_TROLLEY_X, S3_TROLLEY_Z, S3_TROLLEY_TURN_RADIUS, S3_TROLLEY_PATH_STRAIGHT);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
   });
@@ -601,7 +603,7 @@ function AMR10Color() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s4AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 4));
+    smoothedP.current += (s4AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
     const { x, z, ry } = getS4PathState(getAMR10EasedDistance(smoothedP.current) + S4_TRUCK_GAP, S4_TROLLEY_X, S4_TROLLEY_Z);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
@@ -628,7 +630,7 @@ function AMR10TrolleyColor() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s4AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 4));
+    smoothedP.current += (s4AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
     const d = Math.min(getAMR10EasedDistance(smoothedP.current), S4_TROLLEY_DROP);
     const { x, z, ry } = getS4PathState(d, S4_TROLLEY_X, S4_TROLLEY_Z);
     groupRef.current.position.set(x, 0, z);
@@ -701,7 +703,7 @@ function AMR50Color() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s4Anim2State.progress - smoothedP.current) * (1 - Math.exp(-delta * 4));
+    smoothedP.current += (s4Anim2State.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
     const { x, z, ry } = getS4AMR50PathState(smoothedP.current * S4_AMR50_TOTAL);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
@@ -728,7 +730,7 @@ function AMR50TrolleyColor() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s4Anim2State.progress - smoothedP.current) * (1 - Math.exp(-delta * 4));
+    smoothedP.current += (s4Anim2State.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
     const d = smoothedP.current * S4_AMR50_TOTAL;
     const phase5Start = S4_AMR50_STRAIGHT + S4_AMR50_ARC_LEN + S4_AMR50_TURN_X + S4_AMR50_BACK;
     const offsetX = d > phase5Start ? Math.min(d - phase5Start, S4_AMR50_PULL) : 0;
@@ -889,22 +891,22 @@ export default function LogisticsChallenges() {
       const raw = Math.max(0, Math.min(1, -rect.top / scrollable));
 
       // Both refs always update; each clamps naturally at its boundary
-      progressRef.current   = Math.min(raw / 0.2, 1);
-      // Interior animation completes by raw=0.72 (before wipe2 starts)
-      s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.047) / (0.72 - 0.047)));
+      progressRef.current   = Math.min(raw / 0.12, 1);
+      // Interior animation completes by raw=0.38 (before wipe2 starts)
+      s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.03) / (0.38 - 0.03)));
 
       // Feed raw wipe targets — smoothing happens in tick loop
-      wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.47));
-      // wipe2: Scene 2 → Scene 3, raw 0.72 → 0.83
-      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.72) / 0.11));
-      // Scene 3 animation: raw 0.83 → 0.93 (~100 vh of scroll at 1100 vh section)
-      s3AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.83) / 0.10));
-      // wipe3: Scene 3 → Scene 4, raw 0.93 → 0.97
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.93) / 0.04));
-      // Scene 4 phase 1 — AMR10 L-path: raw 0.97 → 0.985
-      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.97) / 0.015));
-      // Scene 4 phase 2 — AMR50 slides -Z: raw 0.985 → 1.0
-      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.985) / 0.015));
+      wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.25));
+      // wipe2: Scene 2 → Scene 3, raw 0.38 → 0.44
+      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.38) / 0.06));
+      // Scene 3 animation: raw 0.44 → 0.52
+      s3AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.44) / 0.08));
+      // wipe3: Scene 3 → Scene 4, raw 0.52 → 0.60 (8% range for silky smooth wipe into scene 4)
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.52) / 0.08));
+      // Scene 4 phase 1 — AMR10 L-path: raw 0.60 → 0.80 (20% scroll travel for ultra-slow smooth motion)
+      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.60) / 0.20));
+      // Scene 4 phase 2 — AMR50 slides -Z: raw 0.80 → 1.0 (20% scroll travel for ultra-slow smooth motion)
+      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.80) / 0.20));
     });
 
     let stopped = false;
@@ -944,7 +946,7 @@ export default function LogisticsChallenges() {
 
       // wipe3: smooth + smootherstep
       wipe3SmoothRef.current += (wipe3TargetRef.current - wipe3SmoothRef.current)
-        * (1 - Math.exp(-delta * 5));
+        * (1 - Math.exp(-delta * 2.0));
       const t3 = wipe3SmoothRef.current;
       const wipe3P = t3 * t3 * t3 * (t3 * (t3 * 6 - 15) + 10);
 
