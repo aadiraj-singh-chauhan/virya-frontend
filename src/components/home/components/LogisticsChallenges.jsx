@@ -57,8 +57,10 @@ const S3_POS  = new THREE.Vector3(-0.706, 0.664, -2.571);
 const S3_LOOK = new THREE.Vector3(0.746, 0.110, -1.985);
 
 // ── Scene 4 camera waypoint ───────────────────────────────────────────────────
-const S4_POS  = new THREE.Vector3(-2.237, 4.529, 2.412);
-const S4_LOOK = new THREE.Vector3(0.072, 1.019, 0.460);
+const S4_POS   = new THREE.Vector3(-2.326, 3.085, 4.359);
+const S4_LOOK  = new THREE.Vector3(1.759, -3.562, -1.897);
+const S4_POS_B = new THREE.Vector3(2.435, 4.336, 4.555);
+const S4_LOOK_B = new THREE.Vector3(-0.973, -2.477, -1.923);
 
 // ── Scene 2 camera waypoints (A → B → C) ─────────────────────────────────────
 const S2_A_POS  = new THREE.Vector3(5.457, 4.542, 8.230);
@@ -747,10 +749,19 @@ function AMR50TrolleyColor() {
 // ── Scene 4 static camera ─────────────────────────────────────────────────────
 function Scene4Camera() {
   const { camera } = useThree();
+  const smoothed = useRef(0);
   useEffect(() => {
     camera.position.copy(S4_POS);
     camera.lookAt(S4_LOOK);
   }, [camera]);
+  useFrame((_, delta) => {
+    // Begin shifting to second angle during the last 25% of the AMR10 animation
+    const target = Math.max(0, Math.min(1, (s4AnimState.progress - 0.75) / 0.25));
+    smoothed.current += (target - smoothed.current) * (1 - Math.exp(-delta * 2.5));
+    const t = smoothed.current;
+    camera.position.lerpVectors(S4_POS, S4_POS_B, t);
+    camera.lookAt(new THREE.Vector3().lerpVectors(S4_LOOK, S4_LOOK_B, t));
+  });
   return null;
 }
 
