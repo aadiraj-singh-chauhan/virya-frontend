@@ -532,7 +532,7 @@ const S4_AMR50_ARC_R    = 0.6;
 const S4_AMR50_ARC_LEN  = S4_AMR50_ARC_R * (Math.PI / 2);
 const S4_AMR50_TURN_X   = 0.5;
 const S4_AMR50_BACK     = 1.8;
-const S4_AMR50_PULL     = 3.0;
+const S4_AMR50_PULL     = 5.5;
 const S4_AMR50_TOTAL    = S4_AMR50_STRAIGHT + S4_AMR50_ARC_LEN + S4_AMR50_TURN_X + S4_AMR50_BACK + S4_AMR50_PULL;
 
 // Path function: straight +Z → arc +Z→+X → short +X → arc +X→+Z → straight +Z.
@@ -993,12 +993,12 @@ export default function LogisticsChallenges() {
       wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.365) / 0.064));
       // Scene 4 phase 1 — AMR10 L-path
       s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.429) / 0.16));
-      // Scene 4 phase 2 — AMR50 slides
+      // Scene 4 phase 2 — AMR50 slides (continues through wipe4)
       s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.589) / 0.16));
-      // wipe4: Scene 4 → Scene 5
-      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.749) / 0.06));
+      // wipe4: Scene 4 → Scene 5 — starts while AMR50 is still mid-animation
+      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.680) / 0.06));
       // Scene 5
-      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.809) / 0.089));
+      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.740) / 0.089));
     });
 
     let stopped = false;
