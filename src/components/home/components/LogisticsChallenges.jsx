@@ -29,6 +29,9 @@ const s4AnimState  = { progress: 0 };
 // Phase 2: AMR50 slides -Z after AMR10 finishes
 const s4Anim2State = { progress: 0 };
 
+// ── Scene 5 animation state
+const s5AnimState = { progress: 0 };
+
 // ── Scene 4 L-path: truck moves 1.2 +Z → smooth arc → 0.5 +X ────────────────
 const S4_PATH_STRAIGHT  = 1.2;
 const S4_PATH_TURN_X    = 0.02;
@@ -41,7 +44,7 @@ const S4_TRUCK_GAP      = 0.5;                                   // trolley lags
 const S4_TOTAL_STRAIGHT = S4_TRUCK_GAP + S4_PATH_STRAIGHT;      // straight +Z from trolley origin
 // Progress 0→1 drives truck through the full path
 const S4_PATH_TOTAL     = S4_PATH_STRAIGHT + S4_ARC_LENGTH + S4_PATH_TURN_X + S4_ARC2_LENGTH + S4_PATH_STRAIGHT2;
-const S4_EXTRA_TOGETHER = 1.0;                                   // extra units both travel together
+const S4_EXTRA_TOGETHER = 2.0;                                   // extra units both travel together
 const S4_EXTRA_ALONE    = 1.0;                                   // extra units AMR10 travels alone after drop-off
 const S4_PATH_TOTAL_EXT = S4_PATH_TOTAL + S4_EXTRA_TOGETHER + S4_EXTRA_ALONE;
 const S4_TROLLEY_DROP   = S4_PATH_TOTAL + S4_EXTRA_TOGETHER;    // distance at which trolley stops
@@ -61,6 +64,12 @@ const S4_POS   = new THREE.Vector3(-2.326, 3.085, 4.359);
 const S4_LOOK  = new THREE.Vector3(1.759, -3.562, -1.897);
 const S4_POS_B = new THREE.Vector3(2.435, 4.336, 4.555);
 const S4_LOOK_B = new THREE.Vector3(-0.973, -2.477, -1.923);
+
+// ── Scene 5 camera waypoints (A → B sweep as scroll progresses) ──────────────
+const S5_POS_A  = new THREE.Vector3(5, 4, 6);
+const S5_LOOK_A = new THREE.Vector3(0, 0.4, 0);
+const S5_POS_B  = new THREE.Vector3(-1, 2.5, 5);
+const S5_LOOK_B = new THREE.Vector3(0, 0.4, 0);
 
 // ── Scene 2 camera waypoints (A → B → C) ─────────────────────────────────────
 const S2_A_POS  = new THREE.Vector3(5.457, 4.542, 8.230);
@@ -390,6 +399,8 @@ function InteriorScene({ progressRef, trackerRef }) {
   );
 }
 
+useGLTF.setDecoderPath("/draco/gltf/");
+useGLTF.preload("/assets/final-scene.glb");
 useGLTF.preload("/assets/factory-interior-2.glb");
 useGLTF.preload("/assets/amr10-color.glb");
 useGLTF.preload("/assets/amr10-trolley-color.glb");
@@ -646,6 +657,28 @@ function AMR10TrolleyColor() {
   );
 }
 
+// AMR50 easing: two slow zones — decelerate before reversing and before picking up trolley.
+// Each slow zone spans D_SLOW world units (centred on the transition) and uses SLOW_W of
+// total progress, leaving the rest for normal-speed travel. Math mirrors getAMR10EasedDistance.
+function getAMR50EasedDistance(p) {
+  const TOTAL  = S4_AMR50_TOTAL;
+  const TURN   = S4_AMR50_STRAIGHT + S4_AMR50_ARC_LEN + S4_AMR50_TURN_X;       // phase3→4 (start reverse)
+  const ATTACH = TURN + S4_AMR50_BACK;                                           // phase4→5 (pick up trolley)
+  const D_SLOW = 0.5;   // world-unit half-width of each slow zone (±0.25 around transition)
+  const SLOW_W = 0.12;  // fraction of total progress consumed by each slow zone
+  const V_NORMAL = (TOTAL - 2 * D_SLOW) / (1 - 2 * SLOW_W);
+  const V_MIN    = (3 * D_SLOW / SLOW_W - V_NORMAL) / 2;
+  // Integrate velocity profile inside a slow zone: v(t)=V_MIN+(V_NORMAL-V_MIN)*(2t-1)²
+  const slowDist = (t) => SLOW_W * (V_MIN * t + (V_NORMAL - V_MIN) * ((2 * t - 1) ** 3 + 1) / 6);
+  const d1s = TURN   - D_SLOW / 2;  const P1 = d1s / V_NORMAL;  const P1e = P1 + SLOW_W;
+  const d2s = ATTACH - D_SLOW / 2;  const P2 = P1e + (d2s - (d1s + D_SLOW)) / V_NORMAL;  const P2e = P2 + SLOW_W;
+  if (p <= P1)  return p * V_NORMAL;
+  if (p <= P1e) return d1s + slowDist((p - P1) / SLOW_W);
+  if (p <= P2)  return (d1s + D_SLOW) + (p - P1e) * V_NORMAL;
+  if (p <= P2e) return d2s + slowDist((p - P2) / SLOW_W);
+  return (d2s + D_SLOW) + (p - P2e) * V_NORMAL;
+}
+
 // Path: straight -Z → arc right (-Z→+X) → short +X → reverse -X → pull +X with trolley
 function getS4AMR50PathState(d) {
   const ox = S4_AMR50_X, oz = S4_AMR50_Z;
@@ -706,7 +739,7 @@ function AMR50Color() {
   useFrame((_, delta) => {
     if (!groupRef.current) return;
     smoothedP.current += (s4Anim2State.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
-    const { x, z, ry } = getS4AMR50PathState(smoothedP.current * S4_AMR50_TOTAL);
+    const { x, z, ry } = getS4AMR50PathState(getAMR50EasedDistance(smoothedP.current));
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
   });
@@ -733,7 +766,7 @@ function AMR50TrolleyColor() {
   useFrame((_, delta) => {
     if (!groupRef.current) return;
     smoothedP.current += (s4Anim2State.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
-    const d = smoothedP.current * S4_AMR50_TOTAL;
+    const d = getAMR50EasedDistance(smoothedP.current);
     const phase5Start = S4_AMR50_STRAIGHT + S4_AMR50_ARC_LEN + S4_AMR50_TURN_X + S4_AMR50_BACK;
     const offsetX = d > phase5Start ? Math.min(d - phase5Start, S4_AMR50_PULL) : 0;
     groupRef.current.position.set(S4_AMR50_TROLLEY_X + offsetX, 0, S4_AMR50_TROLLEY_Z);
@@ -763,6 +796,38 @@ function Scene4Camera() {
     camera.lookAt(new THREE.Vector3().lerpVectors(S4_LOOK, S4_LOOK_B, t));
   });
   return null;
+}
+
+// ── Scene 5 scroll camera — sweeps A → B as s5AnimState.progress goes 0 → 1 ──
+function Scene5Camera() {
+  const { camera } = useThree();
+  const smoothed = useRef(0);
+  useEffect(() => {
+    camera.position.copy(S5_POS_A);
+    camera.lookAt(S5_LOOK_A);
+  }, [camera]);
+  useFrame((_, delta) => {
+    smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
+    const t = smoothed.current;
+    const ease = t * t * (3 - 2 * t);
+    camera.position.lerpVectors(S5_POS_A, S5_POS_B, ease);
+    camera.lookAt(new THREE.Vector3().lerpVectors(S5_LOOK_A, S5_LOOK_B, ease));
+  });
+  return null;
+}
+
+// ── Scene 5 model — final-scene.glb (Draco-compressed) ───────────────────────
+function FinalScene() {
+  const { scene } = useGLTF("/assets/final-scene.glb");
+  const cloned = useMemo(() => {
+    const c = scene.clone(true);
+    const box = new THREE.Box3().setFromObject(c);
+    const center = box.getCenter(new THREE.Vector3());
+    c.position.set(-center.x, -box.min.y, -center.z);
+    c.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
+    return c;
+  }, [scene]);
+  return <primitive object={cloned} />;
 }
 
 // ── Scene 1 scroll camera ─────────────────────────────────────────────────────
@@ -862,12 +927,15 @@ export default function LogisticsChallenges() {
   const scene1WrapRef      = useRef(null);
   const scene2WrapRef      = useRef(null);
   const scene3WrapRef      = useRef(null);
+  const scene4WrapRef      = useRef(null);
   const wipeTargetRef      = useRef(0);
   const wipeSmoothRef      = useRef(0);
   const wipe2TargetRef     = useRef(0);
   const wipe2SmoothRef     = useRef(0);
   const wipe3TargetRef     = useRef(0);
   const wipe3SmoothRef     = useRef(0);
+  const wipe4TargetRef     = useRef(0);
+  const wipe4SmoothRef     = useRef(0);
   const lenisRef           = useRef(null);
   const amr10TrackerRef    = useRef(null);
   const [activeScene, setActiveScene] = useState(1);
@@ -875,6 +943,7 @@ export default function LogisticsChallenges() {
   const [freeCam1, setFreeCam1] = useState(false);
   const [freeCam3, setFreeCam3] = useState(false);
   const [freeCam4, setFreeCam4] = useState(false);
+  const [freeCam5, setFreeCam5] = useState(false);
   const posSpan    = useRef(null);
   const targetSpan = useRef(null);
   const posSpan1   = useRef(null);
@@ -883,6 +952,8 @@ export default function LogisticsChallenges() {
   const targetSpan3 = useRef(null);
   const posSpan4   = useRef(null);
   const targetSpan4 = useRef(null);
+  const posSpan5   = useRef(null);
+  const targetSpan5 = useRef(null);
   const { display, play, reset } = useScramble("Skip this section");
 
   useEffect(() => {
@@ -902,22 +973,27 @@ export default function LogisticsChallenges() {
       const raw = Math.max(0, Math.min(1, -rect.top / scrollable));
 
       // Both refs always update; each clamps naturally at its boundary
-      progressRef.current   = Math.min(raw / 0.12, 1);
-      // Interior animation completes by raw=0.38 (before wipe2 starts)
-      s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.03) / (0.38 - 0.03)));
+      // Note: all raw thresholds scaled by 0.8 vs original (section is 3000vh vs 2400vh — same absolute vh travel)
+      progressRef.current   = Math.min(raw / 0.096, 1);
+      // Interior animation completes by raw=0.304 (before wipe2 starts)
+      s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.024) / 0.28));
 
       // Feed raw wipe targets — smoothing happens in tick loop
-      wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.25));
-      // wipe2: Scene 2 → Scene 3, raw 0.38 → 0.44
-      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.38) / 0.06));
-      // Scene 3 animation: raw 0.44 → 0.52
-      s3AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.44) / 0.08));
-      // wipe3: Scene 3 → Scene 4, raw 0.52 → 0.60 (8% range for silky smooth wipe into scene 4)
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.52) / 0.08));
-      // Scene 4 phase 1 — AMR10 L-path: raw 0.60 → 0.80 (20% scroll travel for ultra-slow smooth motion)
-      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.60) / 0.20));
-      // Scene 4 phase 2 — AMR50 slides -Z: raw 0.80 → 1.0 (20% scroll travel for ultra-slow smooth motion)
-      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.80) / 0.20));
+      wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
+      // wipe2: Scene 2 → Scene 3
+      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.304) / 0.048));
+      // Scene 3 animation
+      s3AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.352) / 0.064));
+      // wipe3: Scene 3 → Scene 4
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.416) / 0.064));
+      // Scene 4 phase 1 — AMR10 L-path
+      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.48) / 0.16));
+      // Scene 4 phase 2 — AMR50 slides
+      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.64) / 0.16));
+      // wipe4: Scene 4 → Scene 5
+      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.80) / 0.06));
+      // Scene 5
+      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.86) / 0.14));
     });
 
     let stopped = false;
@@ -968,7 +1044,20 @@ export default function LogisticsChallenges() {
           `polygon(0% 0%, 100% 0%, 100% ${rightY3.toFixed(2)}%, 0% ${leftY3.toFixed(2)}%)`;
       }
 
-      const nextScene = wipeP < 0.5 ? 1 : (wipe2P < 0.5 ? 2 : (wipe3P < 0.5 ? 3 : 4));
+      // wipe4: smooth + smootherstep
+      wipe4SmoothRef.current += (wipe4TargetRef.current - wipe4SmoothRef.current)
+        * (1 - Math.exp(-delta * 2.0));
+      const t4 = wipe4SmoothRef.current;
+      const wipe4P = t4 * t4 * t4 * (t4 * (t4 * 6 - 15) + 10);
+
+      if (scene4WrapRef.current) {
+        const rightY4 = 105 - 145 * wipe4P;
+        const leftY4  = 130 - 140 * wipe4P;
+        scene4WrapRef.current.style.clipPath =
+          `polygon(0% 0%, 100% 0%, 100% ${rightY4.toFixed(2)}%, 0% ${leftY4.toFixed(2)}%)`;
+      }
+
+      const nextScene = wipeP < 0.5 ? 1 : (wipe2P < 0.5 ? 2 : (wipe3P < 0.5 ? 3 : (wipe4P < 0.5 ? 4 : 5)));
       s3AnimState.active = (nextScene === 3);
       if (nextScene !== activeSceneRef.current) {
         activeSceneRef.current = nextScene;
@@ -996,13 +1085,44 @@ export default function LogisticsChallenges() {
       <div className={styles.stickyWrapper}>
         <div className={styles.canvasWrapper}>
 
-          {/* ── Scene 4 — bottom layer, colored factory interior ──────────── */}
+          {/* ── Scene 5 — bottom layer, final scene ──────────────────────── */}
+          <Canvas
+            camera={{ position: [0, 4, 7], fov: 45, near: 0.05 }}
+            dpr={[1, 2]}
+            gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+          >
+            <color attach="background" args={["#F5F2ED"]} />
+            <ambientLight intensity={1.0} color="#FFF8F0" />
+            <directionalLight position={[10, 20, 10]} intensity={2.0} color="#FFF5E8"
+              castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
+              shadow-bias={-0.0004} />
+            <directionalLight position={[-10, 15, -10]} intensity={0.7} color="#F0EFEE" />
+            <directionalLight position={[0, -5, 5]} intensity={0.3} color="#EEF0F2" />
+            {freeCam5
+              ? <FreeCam posRef={posSpan5} targetRef={targetSpan5} />
+              : <Scene5Camera />
+            }
+            <Suspense fallback={null}>
+              <FinalScene />
+            </Suspense>
+          </Canvas>
+
+          {/* ── Scene 4 — clipped by wipe4 ────────────────────────────────── */}
+          <div
+            ref={scene4WrapRef}
+            style={{
+              position: "absolute", inset: 0,
+              clipPath: CLIP_FULL,
+              willChange: "clip-path",
+            }}
+          >
           <Canvas
             shadows={{ type: THREE.PCFShadowMap }}
             camera={{ position: [0, 2, 5], fov: 50, near: 0.05 }}
             dpr={[1, 2]}
             gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "100%" }}
           >
             <color attach="background" args={["#1a1a1a"]} />
             <ambientLight intensity={0.8} color="#FFF8F0" />
@@ -1022,6 +1142,7 @@ export default function LogisticsChallenges() {
               <AMR50TrolleyColor />
             </Suspense>
           </Canvas>
+          </div>
 
           {/* ── Scene 3 — clipped by wipe3 ────────────────────────────────── */}
           <div
@@ -1289,6 +1410,43 @@ export default function LogisticsChallenges() {
                 </div>
                 <div>pos &nbsp;&nbsp;: <span ref={posSpan3} style={{ color: "#f5c842" }} /></div>
                 <div>target: <span ref={targetSpan3} style={{ color: "#4ab0d9" }} /></div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Free cam toggle + HUD — scene 5 */}
+        {activeScene === 5 && (
+          <div style={{
+            position: "absolute", top: 96, right: 14,
+            display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end", zIndex: 10,
+          }}>
+            <button
+              onClick={() => setFreeCam5(f => !f)}
+              style={{
+                background: freeCam5 ? "#b08ac8" : "rgba(0,0,0,0.55)",
+                color: "#fff",
+                border: `1px solid ${freeCam5 ? "#b08ac8" : "rgba(255,255,255,0.18)"}`,
+                borderRadius: 4, padding: "5px 14px",
+                fontFamily: "system-ui, sans-serif", fontSize: 11,
+                letterSpacing: "0.12em", cursor: "pointer", userSelect: "none",
+              }}
+            >
+              {freeCam5 ? "STORY CAM" : "FREE CAM"}
+            </button>
+            {freeCam5 && (
+              <div style={{
+                background: "rgba(0,0,0,0.72)", color: "#e0e0e0",
+                fontFamily: "monospace", fontSize: 11,
+                padding: "10px 14px", borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.1)",
+                lineHeight: 2, minWidth: 270,
+              }}>
+                <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 9, letterSpacing: "0.14em", marginBottom: 4 }}>
+                  CAMERA POSITION (SCENE 5)
+                </div>
+                <div>pos &nbsp;&nbsp;: <span ref={posSpan5} style={{ color: "#f5c842" }} /></div>
+                <div>target: <span ref={targetSpan5} style={{ color: "#4ab0d9" }} /></div>
               </div>
             )}
           </div>
