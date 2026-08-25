@@ -237,8 +237,8 @@ const S3_TROLLEY_SCALE = 0.2;
 const S3_PATH_STRAIGHT  = 0.48;
 const S3_PATH_STRAIGHT2 = 1.0;
 const S3_TURN_RADIUS         = 0.12;
-const S3_TROLLEY_TURN_RADIUS  = 0.04;
-const S3_TROLLEY_PATH_STRAIGHT = 0.15;
+const S3_TROLLEY_TURN_RADIUS  = 0.12;
+const S3_TROLLEY_PATH_STRAIGHT = 0.07;
 const S3_ARC_LENGTH          = S3_TURN_RADIUS * (Math.PI / 2);
 const S3_TRUCK_GAP      = 0.5;
 const S3_PATH_TOTAL     = S3_PATH_STRAIGHT + S3_ARC_LENGTH + S3_PATH_STRAIGHT2;
@@ -957,6 +957,11 @@ export default function LogisticsChallenges() {
   const { display, play, reset } = useScramble("Skip this section");
 
   useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const lenis = new Lenis({
       duration: 2.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -982,18 +987,18 @@ export default function LogisticsChallenges() {
       wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
       // wipe2: Scene 2 → Scene 3
       wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.304) / 0.048));
-      // Scene 3 animation
-      s3AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.352) / 0.064));
-      // wipe3: Scene 3 → Scene 4
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.416) / 0.064));
+      // Scene 3 animation — clamped to wipe3 start so models freeze when wipe begins
+      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.365) - 0.352) / 0.08));
+      // wipe3: Scene 3 → Scene 4 (starts early, while Scene 3 models are mid-animation)
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.365) / 0.064));
       // Scene 4 phase 1 — AMR10 L-path
-      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.48) / 0.16));
+      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.429) / 0.16));
       // Scene 4 phase 2 — AMR50 slides
-      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.64) / 0.16));
+      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.589) / 0.16));
       // wipe4: Scene 4 → Scene 5
-      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.80) / 0.06));
+      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.749) / 0.06));
       // Scene 5
-      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.86) / 0.14));
+      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.809) / 0.089));
     });
 
     let stopped = false;
