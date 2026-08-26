@@ -1057,6 +1057,16 @@ export default function LogisticsChallenges() {
   const meterTextRef       = useRef(null);
   const card1ReadyRef      = useRef(false);
   const [card1Ready, setCard1Ready] = useState(false);
+  const [card1Mounted, setCard1Mounted] = useState(false);
+  const [card1Exiting, setCard1Exiting] = useState(false);
+  const card1TimerRef      = useRef(null);
+  const card1WrapperRef    = useRef(null);
+  const card2ReadyRef      = useRef(false);
+  const [card2Ready, setCard2Ready] = useState(false);
+  const [card2Mounted, setCard2Mounted] = useState(false);
+  const [card2Exiting, setCard2Exiting] = useState(false);
+  const card2TimerRef      = useRef(null);
+  const card2WrapperRef    = useRef(null);
   const [activeScene, setActiveScene] = useState(1);
   const [freeCam, setFreeCam]   = useState(false);
   const [freeCam1, setFreeCam1] = useState(false);
@@ -1138,10 +1148,17 @@ export default function LogisticsChallenges() {
       s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.676) / 0.089));
 
       // Card 1 reveal — show only after Scene 1 meter passes 0.125
-      const shouldShowCard1 = raw < 0.200 && (raw / 0.200) >= 0.125;
+      const shouldShowCard1 = raw >= 0.025 && raw < 0.215;
       if (shouldShowCard1 !== card1ReadyRef.current) {
         card1ReadyRef.current = shouldShowCard1;
         setCard1Ready(shouldShowCard1);
+      }
+
+      // Card 2 reveal — from Scene 1 meter 0.70 (raw 0.140) to Scene 2 meter 0.63 (raw 0.2555)
+      const shouldShowCard2 = raw >= 0.140 && raw < 0.2555;
+      if (shouldShowCard2 !== card2ReadyRef.current) {
+        card2ReadyRef.current = shouldShowCard2;
+        setCard2Ready(shouldShowCard2);
       }
 
       // Scene progress meter — 0→1 within whichever scene is currently dominant
@@ -1172,12 +1189,28 @@ export default function LogisticsChallenges() {
       const wipeP = t * t * t * (t * (t * 6 - 15) + 10);
       wipe1PRef.current = wipeP;
 
+      // Clip card1 with the exact same diagonal as the GLSL wipe shader
+      if (card1WrapperRef.current) {
+        const leftY  = Math.max(0, Math.min(100, (1.30 - 1.40 * wipeP) * 100));
+        const rightY = Math.max(0, Math.min(100, (1.05 - 1.45 * wipeP) * 100));
+        card1WrapperRef.current.style.clipPath =
+          `polygon(0% 0%, 100% 0%, 100% ${rightY.toFixed(1)}%, 0% ${leftY.toFixed(1)}%)`;
+      }
+
       // wipe2: smooth + smootherstep
       wipe2SmoothRef.current += (wipe2TargetRef.current - wipe2SmoothRef.current)
         * (1 - Math.exp(-delta * 5));
       const t2 = wipe2SmoothRef.current;
       const wipe2P = t2 * t2 * t2 * (t2 * (t2 * 6 - 15) + 10);
       wipe2PRef.current = wipe2P;
+
+      // Clip card2 with the same diagonal as wipe2
+      if (card2WrapperRef.current) {
+        const leftY2  = Math.max(0, Math.min(100, (1.30 - 1.40 * wipe2P) * 100));
+        const rightY2 = Math.max(0, Math.min(100, (1.05 - 1.45 * wipe2P) * 100));
+        card2WrapperRef.current.style.clipPath =
+          `polygon(0% 0%, 100% 0%, 100% ${rightY2.toFixed(1)}%, 0% ${leftY2.toFixed(1)}%)`;
+      }
 
       // wipe3: smooth + smootherstep
       wipe3SmoothRef.current += (wipe3TargetRef.current - wipe3SmoothRef.current)
@@ -1215,6 +1248,31 @@ export default function LogisticsChallenges() {
   const handleSkip = () => {
     sectionRef.current?.nextElementSibling?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (card1Ready) {
+      setCard1Mounted(true);
+      setCard1Exiting(false);
+    } else {
+      // Wipe-driven opacity already faded it to 0 — unmount immediately, no CSS exit needed
+      setCard1Mounted(false);
+      setCard1Exiting(false);
+    }
+  }, [card1Ready]);
+
+  useEffect(() => {
+    clearTimeout(card2TimerRef.current);
+    if (card2Ready) {
+      setCard2Mounted(true);
+      setCard2Exiting(false);
+    } else {
+      setCard2Exiting(true);
+      card2TimerRef.current = setTimeout(() => {
+        setCard2Mounted(false);
+        setCard2Exiting(false);
+      }, 1600);
+    }
+  }, [card2Ready]);
 
   return (
     <section ref={sectionRef} className={styles.section}>
@@ -1369,15 +1427,16 @@ export default function LogisticsChallenges() {
         </div>
 
         {/* ── Scene 1 card + meter ──────────────────────────────────────── */}
-        {activeScene === 1 && card1Ready && (
-          <div className={styles.featureCard} style={{
-            position: "absolute",
-            left: "5%",
-            top: "25%",
-            transform: "translateY(-50%)",
-            zIndex: 20,
-            pointerEvents: "none",
+        {card1Mounted && (
+          <div ref={card1WrapperRef} style={{
+            position: "absolute", inset: 0, zIndex: 20, pointerEvents: "none",
           }}>
+            <div className={styles.featureCard} style={{
+              position: "absolute",
+              left: "5%",
+              top: "25%",
+              transform: "translateY(-50%)",
+            }}>
             <div style={{
               background: "rgba(10,10,10,0.72)",
               color: "#ffffff",
@@ -1406,6 +1465,48 @@ export default function LogisticsChallenges() {
               <div style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.5)" }}>
                 Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
               </div>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Scene 2 card ──────────────────────────────────────────────── */}
+        {card2Mounted && (
+          <div ref={card2WrapperRef} style={{
+            position: "absolute", inset: 0, zIndex: 20, pointerEvents: "none",
+          }}>
+            <div className={card2Exiting ? styles.featureCardExit : styles.featureCard} style={{
+              position: "absolute",
+              left: "5%",
+              top: "25%",
+              transform: "translateY(-50%)",
+            }}>
+            <div style={{
+              background: "rgba(10,10,10,0.72)",
+              color: "#ffffff",
+              borderRadius: 6,
+              padding: "28px 32px 32px",
+              width: 380,
+              height: 240,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
+              fontFamily: "system-ui, sans-serif",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
+                <span style={{ fontSize: 9, letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
+                  AMR10 Operations
+                </span>
+              </div>
+              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.01em", marginBottom: 16 }}>
+                Intelligent Indoor<br />Navigation
+              </div>
+              <div style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.5)" }}>
+                Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
+              </div>
+            </div>
             </div>
           </div>
         )}
