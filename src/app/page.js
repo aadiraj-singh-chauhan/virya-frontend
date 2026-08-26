@@ -2,6 +2,7 @@ import styles from './page.module.css';
 import Hero from '@/components/home/components/Hero';
 import Challenges from '@/components/home/components/Challenges';
 import LogisticsChallenges from '@/components/home/components/LogisticsChallenges';
+import ModelPreloader from '@/components/home/components/ModelPreloader';
 import Legacy from '@/components/home/components/Legacy';
 import Testimonials from '@/components/home/components/Testimonials';
 import Industries from '@/components/home/components/Industries';
@@ -16,6 +17,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className={styles.main}>
+      <ModelPreloader />
       <Hero />
       <Challenges />
       <LogisticsChallenges />

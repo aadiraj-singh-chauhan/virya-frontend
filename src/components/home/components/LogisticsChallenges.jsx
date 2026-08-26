@@ -1,19 +1,13 @@
 "use client";
 
 import { useRef, useEffect, useState, Suspense, useMemo } from "react";
-import { Canvas, useThree, useFrame } from "@react-three/fiber";
+import { Canvas, useThree, useFrame, createPortal } from "@react-three/fiber";
 import { useGLTF, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import Lenis from "lenis";
 import Image from "next/image";
 import { useScramble } from "@/hooks/useScramble";
 import styles from "../css/LogisticsChallenges.module.css";
-
-// ── Diagonal wipe clip-path states ───────────────────────────────────────────
-// "/" edge at ~15° from horizontal; sweeps bottom → top
-// Scene 1 visible area = everything ABOVE the diagonal line
-const CLIP_FULL   = "polygon(0% 0%, 100% 0%, 100% 105%, 0% 130%)"; // diagonal below screen → full
-const CLIP_HIDDEN = "polygon(0% 0%, 100% 0%, 100% -40%, 0% -10%)"; // diagonal above screen → hidden
 
 // ── Scene 2 camera auto-state — set by InteriorScene, read by Scene2Camera ────
 const s2CamState = { autoToC: false };
@@ -404,17 +398,6 @@ function InteriorScene({ progressRef, trackerRef }) {
 }
 
 useGLTF.setDecoderPath("/draco/gltf/");
-useGLTF.preload("/assets/final-scene.glb");
-useGLTF.preload("/assets/factory-interior-2.glb");
-useGLTF.preload("/assets/amr10-color.glb");
-useGLTF.preload("/assets/amr10-trolley-color.glb");
-useGLTF.preload("/assets/amr50-color.glb");
-useGLTF.preload("/assets/amr50-trolley-color.glb");
-useGLTF.preload("/assets/exterior-scene.glb");
-useGLTF.preload("/assets/factory-interior.glb");
-useGLTF.preload("/assets/forklift.glb");
-useGLTF.preload("/assets/amr10.glb");
-useGLTF.preload("/assets/amr10-trolley.glb");
 useGLTF.preload("/assets/amr10-color.glb");
 useGLTF.preload("/assets/amr10-trolley-color.glb");
 
@@ -456,7 +439,7 @@ function S3AMR10() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 0.9));
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
     const { x, z, ry } = getS3PathState(getAMR10EasedDistance(smoothedP.current) + S4_TRUCK_GAP, S3_AMR10_X, S3_AMR10_Z);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
@@ -922,16 +905,104 @@ function FreeCam({ posRef, targetRef }) {
   return <OrbitControls ref={controlsRef} />;
 }
 
+// ── Wipe shaders ──────────────────────────────────────────────────────────────
+const WIPE_VERT = /* glsl */`
+attribute vec3 position;
+attribute vec2 uv;
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position.xy, 0.0, 1.0);
+}
+`;
+
+const WIPE_FRAG = /* glsl */`
+precision highp float;
+uniform sampler2D map;
+uniform float wipeP;
+uniform float clipped;
+varying vec2 vUv;
+void main() {
+  if (clipped > 0.5) {
+    float leftFrac  = 1.30 - 1.40 * wipeP;
+    float rightFrac = 1.05 - 1.45 * wipeP;
+    float threshold = 1.0 - mix(leftFrac, rightFrac, vUv.x);
+    if (vUv.y < threshold) discard;
+  }
+  gl_FragColor = texture2D(map, vUv);
+}
+`;
+
+// ── WipeQuad — fullscreen quad that samples an RT texture with optional wipe ──
+function WipeQuad({ rtRef, wipePRef, clipped, renderOrder }) {
+  const matRef = useRef();
+  useFrame(() => {
+    if (!matRef.current || !rtRef.current) return;
+    matRef.current.uniforms.map.value = rtRef.current.texture;
+    matRef.current.uniforms.wipeP.value = wipePRef ? wipePRef.current : 0;
+  });
+  return (
+    <mesh renderOrder={renderOrder} frustumCulled={false}>
+      <planeGeometry args={[2, 2]} />
+      <rawShaderMaterial
+        ref={matRef}
+        vertexShader={WIPE_VERT}
+        fragmentShader={WIPE_FRAG}
+        uniforms={{ map: { value: null }, wipeP: { value: 0 }, clipped: { value: clipped ? 1.0 : 0.0 } }}
+        depthTest={false}
+        depthWrite={false}
+      />
+    </mesh>
+  );
+}
+
+// ── RenderManager — renders each virtual scene into its own RT ────────────────
+function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs }) {
+  const { gl, size } = useThree();
+  useEffect(() => {
+    const w = Math.round(size.width  * window.devicePixelRatio);
+    const h = Math.round(size.height * window.devicePixelRatio);
+    rtRefs.forEach(ref => {
+      ref.current?.dispose();
+      ref.current = new THREE.WebGLRenderTarget(w, h, { depthBuffer: true, stencilBuffer: false });
+    });
+    cameras.forEach(cam => {
+      cam.aspect = size.width / size.height;
+      cam.updateProjectionMatrix();
+    });
+    return () => rtRefs.forEach(r => r.current?.dispose());
+  }, [size.width, size.height]);
+
+  useFrame(() => {
+    const [w1, w2, w3, w4] = wipePRefs.map(r => r.current);
+    // Only render scenes that are actually contributing to the composite this frame.
+    // At any moment at most 2 scenes are visible (active + the one being transitioned to).
+    const visible = [
+      w1 < 0.999,                    // S1: visible until fully wiped away
+      w1 > 0.001 && w2 < 0.999,      // S2: visible once S1 wipe starts, until S2 wipe ends
+      w2 > 0.001 && w3 < 0.999,      // S3
+      w3 > 0.001 && w4 < 0.999,      // S4
+      w4 > 0.001,                    // S5: bottom layer, shown when wipe4 begins
+    ];
+    const prev = gl.autoClear;
+    gl.autoClear = true;
+    for (let i = 0; i < sceneObjs.length; i++) {
+      if (!rtRefs[i].current || !visible[i]) continue;
+      gl.setRenderTarget(rtRefs[i].current);
+      gl.render(sceneObjs[i], cameras[i]);
+    }
+    gl.setRenderTarget(null);
+    gl.autoClear = prev;
+  }, -1);
+  return null;
+}
+
 // ── Section ───────────────────────────────────────────────────────────────────
 export default function LogisticsChallenges() {
   const sectionRef         = useRef(null);
   const progressRef        = useRef(0);
   const s2ProgressRef      = useRef(0);
   const activeSceneRef     = useRef(1);
-  const scene1WrapRef      = useRef(null);
-  const scene2WrapRef      = useRef(null);
-  const scene3WrapRef      = useRef(null);
-  const scene4WrapRef      = useRef(null);
   const wipeTargetRef      = useRef(0);
   const wipeSmoothRef      = useRef(0);
   const wipe2TargetRef     = useRef(0);
@@ -959,6 +1030,24 @@ export default function LogisticsChallenges() {
   const posSpan5   = useRef(null);
   const targetSpan5 = useRef(null);
   const { display, play, reset } = useScramble("Skip this section");
+
+  // ── Wipe progress refs (written by tick loop, read by WipeQuad in useFrame) ─
+  const wipe1PRef = useRef(0);
+  const wipe2PRef = useRef(0);
+  const wipe3PRef = useRef(0);
+  const wipe4PRef = useRef(0);
+
+  // ── Stable scene/camera objects ───────────────────────────────────────────
+  const [sceneObjs] = useState(() => Array.from({ length: 5 }, () => new THREE.Scene()));
+  const [cameras] = useState(() => [
+    Object.assign(new THREE.PerspectiveCamera(35, 1, 0.05, 1000), { name: 'cam1' }),
+    Object.assign(new THREE.PerspectiveCamera(35, 1, 0.05, 1000), { name: 'cam2' }),
+    Object.assign(new THREE.PerspectiveCamera(35, 1, 0.05, 1000), { name: 'cam3' }),
+    Object.assign(new THREE.PerspectiveCamera(50, 1, 0.05, 1000), { name: 'cam4' }),
+    Object.assign(new THREE.PerspectiveCamera(45, 1, 0.05, 1000), { name: 'cam5' }),
+  ]);
+  // Each element of rtRefs is a {current: null} object (mirrors useRef shape)
+  const rtRefs = useRef(Array.from({ length: 5 }, () => ({ current: null }))).current;
 
   useEffect(() => {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -1019,52 +1108,28 @@ export default function LogisticsChallenges() {
       // Smootherstep (6t⁵ − 15t⁴ + 10t³) for silky spatial easing
       const t = wipeSmoothRef.current;
       const wipeP = t * t * t * (t * (t * 6 - 15) + 10);
-
-      if (scene1WrapRef.current) {
-        const rightY = 105 - 145 * wipeP;
-        const leftY  = 130 - 140 * wipeP;
-        scene1WrapRef.current.style.clipPath =
-          `polygon(0% 0%, 100% 0%, 100% ${rightY.toFixed(2)}%, 0% ${leftY.toFixed(2)}%)`;
-      }
+      wipe1PRef.current = wipeP;
 
       // wipe2: smooth + smootherstep
       wipe2SmoothRef.current += (wipe2TargetRef.current - wipe2SmoothRef.current)
         * (1 - Math.exp(-delta * 5));
       const t2 = wipe2SmoothRef.current;
       const wipe2P = t2 * t2 * t2 * (t2 * (t2 * 6 - 15) + 10);
-
-      if (scene2WrapRef.current) {
-        const rightY2 = 105 - 145 * wipe2P;
-        const leftY2  = 130 - 140 * wipe2P;
-        scene2WrapRef.current.style.clipPath =
-          `polygon(0% 0%, 100% 0%, 100% ${rightY2.toFixed(2)}%, 0% ${leftY2.toFixed(2)}%)`;
-      }
+      wipe2PRef.current = wipe2P;
 
       // wipe3: smooth + smootherstep
       wipe3SmoothRef.current += (wipe3TargetRef.current - wipe3SmoothRef.current)
         * (1 - Math.exp(-delta * 2.0));
       const t3 = wipe3SmoothRef.current;
       const wipe3P = t3 * t3 * t3 * (t3 * (t3 * 6 - 15) + 10);
-
-      if (scene3WrapRef.current) {
-        const rightY3 = 105 - 145 * wipe3P;
-        const leftY3  = 130 - 140 * wipe3P;
-        scene3WrapRef.current.style.clipPath =
-          `polygon(0% 0%, 100% 0%, 100% ${rightY3.toFixed(2)}%, 0% ${leftY3.toFixed(2)}%)`;
-      }
+      wipe3PRef.current = wipe3P;
 
       // wipe4: smooth + smootherstep
       wipe4SmoothRef.current += (wipe4TargetRef.current - wipe4SmoothRef.current)
         * (1 - Math.exp(-delta * 2.0));
       const t4 = wipe4SmoothRef.current;
       const wipe4P = t4 * t4 * t4 * (t4 * (t4 * 6 - 15) + 10);
-
-      if (scene4WrapRef.current) {
-        const rightY4 = 105 - 145 * wipe4P;
-        const leftY4  = 130 - 140 * wipe4P;
-        scene4WrapRef.current.style.clipPath =
-          `polygon(0% 0%, 100% 0%, 100% ${rightY4.toFixed(2)}%, 0% ${leftY4.toFixed(2)}%)`;
-      }
+      wipe4PRef.current = wipe4P;
 
       const nextScene = wipeP < 0.5 ? 1 : (wipe2P < 0.5 ? 2 : (wipe3P < 0.5 ? 3 : (wipe4P < 0.5 ? 4 : 5)));
       s3AnimState.active = (nextScene === 3);
@@ -1094,173 +1159,151 @@ export default function LogisticsChallenges() {
       <div className={styles.stickyWrapper}>
         <div className={styles.canvasWrapper}>
 
-          {/* ── Scene 5 — bottom layer, final scene ──────────────────────── */}
+          {/* ── Single Canvas — all scenes composited via render targets ─── */}
           <Canvas
-            camera={{ position: [0, 4, 7], fov: 45, near: 0.05 }}
+            shadows={{ type: THREE.PCFShadowMap }}
             dpr={[1, 2]}
             gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
           >
-            <color attach="background" args={["#F5F2ED"]} />
-            <ambientLight intensity={1.0} color="#FFF8F0" />
-            <directionalLight position={[10, 20, 10]} intensity={2.0} color="#FFF5E8"
-              castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
-              shadow-bias={-0.0004} />
-            <directionalLight position={[-10, 15, -10]} intensity={0.7} color="#F0EFEE" />
-            <directionalLight position={[0, -5, 5]} intensity={0.3} color="#EEF0F2" />
-            {freeCam5
-              ? <FreeCam posRef={posSpan5} targetRef={targetSpan5} />
-              : <Scene5Camera />
-            }
-            <Suspense fallback={null}>
-              <FinalScene />
-            </Suspense>
+            {/* ── Virtual scene portals (index 0=S1, 1=S2, 2=S3, 3=S4, 4=S5) ── */}
+
+            {/* Scene 1 — exterior, daylight */}
+            {createPortal(
+              <>
+                <color attach="background" args={["#F5F2ED"]} />
+                <directionalLight position={[60, 90, 40]} intensity={1.8} color="#FFF8F2"
+                  castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
+                  shadow-camera-near={1} shadow-camera-far={700}
+                  shadow-camera-left={-130} shadow-camera-right={130}
+                  shadow-camera-top={130} shadow-camera-bottom={-130}
+                  shadow-radius={14} shadow-bias={-0.0004} />
+                <directionalLight position={[-50, 60, -35]} intensity={0.6} color="#F2F0EE" />
+                <ambientLight intensity={0.80} color="#FFF4EC" />
+                {freeCam1
+                  ? <FreeCam posRef={posSpan1} targetRef={targetSpan1} />
+                  : <Scene1Camera progressRef={progressRef} />
+                }
+                <Suspense fallback={null}>
+                  <GroundPlane />
+                  <ExteriorModel />
+                </Suspense>
+              </>,
+              sceneObjs[0],
+              { camera: cameras[0] }
+            )}
+
+            {/* Scene 2 — interior, dark */}
+            {createPortal(
+              <>
+                <color attach="background" args={["#0d0d0d"]} />
+                <ambientLight intensity={0.6} color="#FFF8F0" />
+                <directionalLight position={[0, 10, 0]} intensity={1.8} color="#FFF5E8"
+                  castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
+                  shadow-bias={-0.0004} />
+                <directionalLight position={[5, 4, 5]} intensity={0.7} color="#FFFAF5" />
+                <directionalLight position={[-5, 4, -5]} intensity={0.4} color="#F0EFEE" />
+                {freeCam
+                  ? <FreeCam posRef={posSpan} targetRef={targetSpan} />
+                  : <Scene2Camera progressRef={s2ProgressRef} />
+                }
+                <Suspense fallback={null}>
+                  <InteriorScene progressRef={s2ProgressRef} trackerRef={amr10TrackerRef} />
+                </Suspense>
+              </>,
+              sceneObjs[1],
+              { camera: cameras[1] }
+            )}
+
+            {/* Scene 3 — exterior with AMR pair */}
+            {createPortal(
+              <>
+                <color attach="background" args={["#F5F2ED"]} />
+                <directionalLight position={[60, 90, 40]} intensity={1.8} color="#FFF8F2"
+                  castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
+                  shadow-camera-near={1} shadow-camera-far={700}
+                  shadow-camera-left={-130} shadow-camera-right={130}
+                  shadow-camera-top={130} shadow-camera-bottom={-130}
+                  shadow-radius={14} shadow-bias={-0.0004} />
+                <directionalLight position={[-50, 60, -35]} intensity={0.6} color="#F2F0EE" />
+                <ambientLight intensity={0.80} color="#FFF4EC" />
+                {freeCam3
+                  ? <FreeCam posRef={posSpan3} targetRef={targetSpan3} />
+                  : <Scene3Camera />
+                }
+                <Suspense fallback={null}>
+                  <GroundPlane />
+                  <ExteriorModel />
+                  <S3AMR10 />
+                  <S3Trolley />
+                </Suspense>
+              </>,
+              sceneObjs[2],
+              { camera: cameras[2] }
+            )}
+
+            {/* Scene 4 — colored factory interior */}
+            {createPortal(
+              <>
+                <color attach="background" args={["#1a1a1a"]} />
+                <ambientLight intensity={0.8} color="#FFF8F0" />
+                <directionalLight position={[10, 20, 10]} intensity={1.5} color="#FFF5E8"
+                  castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
+                  shadow-bias={-0.0004} />
+                <directionalLight position={[-10, 10, -10]} intensity={0.5} color="#F0EFEE" />
+                {freeCam4
+                  ? <FreeCam posRef={posSpan4} targetRef={targetSpan4} />
+                  : <Scene4Camera />
+                }
+                <Suspense fallback={null}>
+                  <FactoryInterior2 />
+                  <AMR10Color />
+                  <AMR10TrolleyColor />
+                  <AMR50Color />
+                  <AMR50TrolleyColor />
+                </Suspense>
+              </>,
+              sceneObjs[3],
+              { camera: cameras[3] }
+            )}
+
+            {/* Scene 5 — final scene */}
+            {createPortal(
+              <>
+                <color attach="background" args={["#F5F2ED"]} />
+                <ambientLight intensity={1.0} color="#FFF8F0" />
+                <directionalLight position={[10, 20, 10]} intensity={2.0} color="#FFF5E8"
+                  castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
+                  shadow-bias={-0.0004} />
+                <directionalLight position={[-10, 15, -10]} intensity={0.7} color="#F0EFEE" />
+                <directionalLight position={[0, -5, 5]} intensity={0.3} color="#EEF0F2" />
+                {freeCam5
+                  ? <FreeCam posRef={posSpan5} targetRef={targetSpan5} />
+                  : <Scene5Camera />
+                }
+                <Suspense fallback={null}>
+                  <FinalScene />
+                </Suspense>
+              </>,
+              sceneObjs[4],
+              { camera: cameras[4] }
+            )}
+
+            {/* ── Render manager — writes each scene to its RT ─────────────── */}
+            <RenderManager sceneObjs={sceneObjs} cameras={cameras} rtRefs={rtRefs} wipePRefs={[wipe1PRef, wipe2PRef, wipe3PRef, wipe4PRef]} />
+
+            {/* ── Compositor quads (back → front) ──────────────────────────── */}
+            {/* Scene5: no clip (background layer) */}
+            <WipeQuad rtRef={rtRefs[4]} wipePRef={null}     clipped={false} renderOrder={0} />
+            {/* Scene4: wipe4 */}
+            <WipeQuad rtRef={rtRefs[3]} wipePRef={wipe4PRef} clipped={true}  renderOrder={1} />
+            {/* Scene3: wipe3 */}
+            <WipeQuad rtRef={rtRefs[2]} wipePRef={wipe3PRef} clipped={true}  renderOrder={2} />
+            {/* Scene2: wipe2 */}
+            <WipeQuad rtRef={rtRefs[1]} wipePRef={wipe2PRef} clipped={true}  renderOrder={3} />
+            {/* Scene1: wipe1 (topmost) */}
+            <WipeQuad rtRef={rtRefs[0]} wipePRef={wipe1PRef} clipped={true}  renderOrder={4} />
           </Canvas>
-
-          {/* ── Scene 4 — clipped by wipe4 ────────────────────────────────── */}
-          <div
-            ref={scene4WrapRef}
-            style={{
-              position: "absolute", inset: 0,
-              clipPath: CLIP_FULL,
-              willChange: "clip-path",
-            }}
-          >
-          <Canvas
-            shadows={{ type: THREE.PCFShadowMap }}
-            camera={{ position: [0, 2, 5], fov: 50, near: 0.05 }}
-            dpr={[1, 2]}
-            gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <color attach="background" args={["#1a1a1a"]} />
-            <ambientLight intensity={0.8} color="#FFF8F0" />
-            <directionalLight position={[10, 20, 10]} intensity={1.5} color="#FFF5E8"
-              castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
-              shadow-bias={-0.0004} />
-            <directionalLight position={[-10, 10, -10]} intensity={0.5} color="#F0EFEE" />
-            {freeCam4
-              ? <FreeCam posRef={posSpan4} targetRef={targetSpan4} />
-              : <Scene4Camera />
-            }
-            <Suspense fallback={null}>
-              <FactoryInterior2 />
-              <AMR10Color />
-              <AMR10TrolleyColor />
-              <AMR50Color />
-              <AMR50TrolleyColor />
-            </Suspense>
-          </Canvas>
-          </div>
-
-          {/* ── Scene 3 — clipped by wipe3 ────────────────────────────────── */}
-          <div
-            ref={scene3WrapRef}
-            style={{
-              position: "absolute", inset: 0,
-              clipPath: CLIP_FULL,
-              willChange: "clip-path",
-            }}
-          >
-          <Canvas
-            shadows={{ type: THREE.PCFShadowMap }}
-            camera={{ position: [-0.706, 0.664, -2.571], fov: 35, near: 0.05 }}
-            dpr={[1, 2]}
-            gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <color attach="background" args={["#F5F2ED"]} />
-            <directionalLight position={[60, 90, 40]} intensity={1.8} color="#FFF8F2"
-              castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
-              shadow-camera-near={1} shadow-camera-far={700}
-              shadow-camera-left={-130} shadow-camera-right={130}
-              shadow-camera-top={130} shadow-camera-bottom={-130}
-              shadow-radius={14} shadow-bias={-0.0004} />
-            <directionalLight position={[-50, 60, -35]} intensity={0.6} color="#F2F0EE" />
-            <ambientLight intensity={0.80} color="#FFF4EC" />
-            {freeCam3
-              ? <FreeCam posRef={posSpan3} targetRef={targetSpan3} />
-              : <Scene3Camera />
-            }
-            <Suspense fallback={null}>
-              <GroundPlane />
-              <ExteriorModel />
-              <S3AMR10 />
-              <S3Trolley />
-            </Suspense>
-          </Canvas>
-          </div>
-
-          {/* ── Scene 2 — middle layer, clipped by wipe2 ─────────────────── */}
-          <div
-            ref={scene2WrapRef}
-            style={{
-              position: "absolute", inset: 0,
-              clipPath: CLIP_FULL,
-              willChange: "clip-path",
-            }}
-          >
-          <Canvas
-            shadows={{ type: THREE.PCFShadowMap }}
-            camera={{ position: [4.335, 4.669, 8.974], fov: 35, near: 0.05 }}
-            dpr={[1, 2]}
-            gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <color attach="background" args={["#0d0d0d"]} />
-            <ambientLight intensity={0.6} color="#FFF8F0" />
-            <directionalLight position={[0, 10, 0]} intensity={1.8} color="#FFF5E8"
-              castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
-              shadow-bias={-0.0004} />
-            <directionalLight position={[5, 4, 5]} intensity={0.7} color="#FFFAF5" />
-            <directionalLight position={[-5, 4, -5]} intensity={0.4} color="#F0EFEE" />
-
-            {freeCam
-              ? <FreeCam posRef={posSpan} targetRef={targetSpan} />
-              : <Scene2Camera progressRef={s2ProgressRef} />
-            }
-            <Suspense fallback={null}>
-              <InteriorScene progressRef={s2ProgressRef} trackerRef={amr10TrackerRef} />
-            </Suspense>
-          </Canvas>
-          </div>
-
-          {/* ── Scene 1 — on top, clipped by diagonal wipe ───────────────── */}
-          <div
-            ref={scene1WrapRef}
-            style={{
-              position: "absolute", inset: 0,
-              clipPath: CLIP_FULL,
-              willChange: "clip-path",
-            }}
-          >
-            <Canvas
-              shadows={{ type: THREE.PCFShadowMap }}
-              camera={{ position: [-8.731, 5.480, 4.225], fov: 35, near: 0.05 }}
-              dpr={[1, 2]}
-              gl={{ alpha: false, powerPreference: "high-performance", antialias: true }}
-              style={{ width: "100%", height: "100%" }}
-            >
-              <color attach="background" args={["#F5F2ED"]} />
-              <directionalLight position={[60, 90, 40]} intensity={1.8} color="#FFF8F2"
-                castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
-                shadow-camera-near={1} shadow-camera-far={700}
-                shadow-camera-left={-130} shadow-camera-right={130}
-                shadow-camera-top={130} shadow-camera-bottom={-130}
-                shadow-radius={14} shadow-bias={-0.0004} />
-              <directionalLight position={[-50, 60, -35]} intensity={0.6} color="#F2F0EE" />
-              <ambientLight intensity={0.80} color="#FFF4EC" />
-
-              {freeCam1
-                ? <FreeCam posRef={posSpan1} targetRef={targetSpan1} />
-                : <Scene1Camera progressRef={progressRef} />
-              }
-              <Suspense fallback={null}>
-                <GroundPlane />
-                <ExteriorModel />
-              </Suspense>
-            </Canvas>
-          </div>
         </div>
 
         {/* Free cam toggle + HUD — scene 1 */}
