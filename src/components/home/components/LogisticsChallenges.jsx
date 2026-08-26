@@ -373,11 +373,15 @@ function InteriorScene({ progressRef, trackerRef }) {
       // AMR10 stops at 2.15 units and waits until AMR50 clears (haltState → "after")
       resumeTime.current = 0;
     } else if (haltState.current === "after" && amrResumeSnap.current !== null) {
-      // Scroll-controlled smooth resume: only advance by how much user has scrolled since halt ended
+      // Scale remaining amrT distance to fit the remaining scroll range so the full
+      // 3.97→5.0 movement is user-scroll-controlled, not auto-played.
       resumeTime.current += delta;
-      const scrollAdv   = Math.max(0, scrollTarget - amrResumeSnap.current.scroll);
-      const catchTarget = Math.min(scrollTarget, amrResumeSnap.current.amrT + scrollAdv);
-      const lerpSpeed   = 1.5 + Math.min(resumeTime.current / 1.5, 1) * 2.5;
+      const remainingScroll = Math.max(0.001, 1.0 - amrResumeSnap.current.scroll);
+      const remainingAmrT   = 1.0 - amrResumeSnap.current.amrT;
+      const scale           = remainingAmrT / remainingScroll;
+      const scrollAdv       = Math.max(0, scrollTarget - amrResumeSnap.current.scroll);
+      const catchTarget     = Math.min(1.0, amrResumeSnap.current.amrT + scrollAdv * scale);
+      const lerpSpeed       = 1.5 + Math.min(resumeTime.current / 1.5, 1) * 2.5;
       amrT.current += (catchTarget - amrT.current) * (1 - Math.exp(-delta * lerpSpeed));
     } else {
       amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 4));
@@ -452,7 +456,7 @@ function S3AMR10() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 0.9));
     const { x, z, ry } = getS3PathState(getAMR10EasedDistance(smoothedP.current) + S4_TRUCK_GAP, S3_AMR10_X, S3_AMR10_Z);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
@@ -985,20 +989,20 @@ export default function LogisticsChallenges() {
 
       // Feed raw wipe targets — smoothing happens in tick loop
       wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
-      // wipe2: Scene 2 → Scene 3
-      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.304) / 0.048));
+      // wipe2: Scene 2 → Scene 3 — starts while AMR10 is still mid-animation
+      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.240) / 0.048));
       // Scene 3 animation — clamped to wipe3 start so models freeze when wipe begins
-      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.365) - 0.352) / 0.08));
+      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.301) - 0.288) / 0.08));
       // wipe3: Scene 3 → Scene 4 (starts early, while Scene 3 models are mid-animation)
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.365) / 0.064));
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.301) / 0.064));
       // Scene 4 phase 1 — AMR10 L-path
-      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.429) / 0.16));
+      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.365) / 0.16));
       // Scene 4 phase 2 — AMR50 slides (continues through wipe4)
-      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.589) / 0.16));
+      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.525) / 0.16));
       // wipe4: Scene 4 → Scene 5 — starts while AMR50 is still mid-animation
-      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.680) / 0.06));
+      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.616) / 0.06));
       // Scene 5
-      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.740) / 0.089));
+      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.676) / 0.089));
     });
 
     let stopped = false;
