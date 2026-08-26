@@ -115,6 +115,46 @@ function makeArchMaterial(maxHeight) {
 }
 
 // ── Ground plane ──────────────────────────────────────────────────────────────
+const GRID_VERT = /* glsl */`
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}`;
+
+const GRID_FRAG = /* glsl */`
+varying vec2 vUv;
+uniform float gridRepeat;
+uniform float lineStrength;
+void main() {
+  vec3 base = vec3(0.992, 0.973, 0.961); // #FDF8F5
+  vec3 line = vec3(0.60, 0.55, 0.50);
+  vec2 coord = vUv * gridRepeat;
+  vec2 fw    = fwidth(coord);
+  vec2 grid  = abs(fract(coord - 0.5) - 0.5) / max(fw, 0.0001);
+  float g    = 1.0 - clamp(min(grid.x, grid.y), 0.0, 1.0);
+  gl_FragColor = vec4(mix(base, line, g * lineStrength), 1.0);
+}`;
+
+function GridGroundPlane() {
+  const gridMat = useMemo(() => new THREE.ShaderMaterial({
+    vertexShader: GRID_VERT,
+    fragmentShader: GRID_FRAG,
+    uniforms: {
+      gridRepeat:   { value: 3000.0 },
+      lineStrength: { value: 0.45 },
+    },
+  }), []);
+
+  return (
+    <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]}
+      polygonOffset polygonOffsetFactor={2} polygonOffsetUnits={2}>
+      <planeGeometry args={[4000, 4000]} />
+      <primitive object={gridMat} attach="material" />
+    </mesh>
+  );
+}
+
 function createGroundTexture() {
   if (typeof window === "undefined") return null;
   const sz = 512, cv = document.createElement("canvas");
@@ -1013,6 +1053,10 @@ export default function LogisticsChallenges() {
   const wipe4SmoothRef     = useRef(0);
   const lenisRef           = useRef(null);
   const amr10TrackerRef    = useRef(null);
+  const meterFillRef       = useRef(null);
+  const meterTextRef       = useRef(null);
+  const card1ReadyRef      = useRef(false);
+  const [card1Ready, setCard1Ready] = useState(false);
   const [activeScene, setActiveScene] = useState(1);
   const [freeCam, setFreeCam]   = useState(false);
   const [freeCam1, setFreeCam1] = useState(false);
@@ -1056,10 +1100,10 @@ export default function LogisticsChallenges() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 2.2,
+      duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 0.28,
+      wheelMultiplier: 0.45,
     });
     lenisRef.current = lenis;
 
@@ -1092,6 +1136,24 @@ export default function LogisticsChallenges() {
       wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.616) / 0.06));
       // Scene 5
       s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.676) / 0.089));
+
+      // Card 1 reveal — show only after Scene 1 meter passes 0.125
+      const shouldShowCard1 = raw < 0.200 && (raw / 0.200) >= 0.125;
+      if (shouldShowCard1 !== card1ReadyRef.current) {
+        card1ReadyRef.current = shouldShowCard1;
+        setCard1Ready(shouldShowCard1);
+      }
+
+      // Scene progress meter — 0→1 within whichever scene is currently dominant
+      const meterP = Math.max(0, Math.min(1,
+        raw < 0.200 ? raw / 0.200 :
+        raw < 0.288 ? (raw - 0.200) / 0.088 :
+        raw < 0.365 ? (raw - 0.288) / 0.077 :
+        raw < 0.676 ? (raw - 0.365) / 0.311 :
+                      (raw - 0.676) / 0.324
+      ));
+      if (meterFillRef.current) meterFillRef.current.style.height = `${meterP * 100}%`;
+      if (meterTextRef.current) meterTextRef.current.textContent = meterP.toFixed(2);
     });
 
     let stopped = false;
@@ -1171,7 +1233,7 @@ export default function LogisticsChallenges() {
             {/* Scene 1 — exterior, daylight */}
             {createPortal(
               <>
-                <color attach="background" args={["#F5F2ED"]} />
+                <color attach="background" args={["#FDF8F5"]} />
                 <directionalLight position={[60, 90, 40]} intensity={1.8} color="#FFF8F2"
                   castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
                   shadow-camera-near={1} shadow-camera-far={700}
@@ -1185,7 +1247,7 @@ export default function LogisticsChallenges() {
                   : <Scene1Camera progressRef={progressRef} />
                 }
                 <Suspense fallback={null}>
-                  <GroundPlane />
+                  <GridGroundPlane />
                   <ExteriorModel />
                 </Suspense>
               </>,
@@ -1304,6 +1366,87 @@ export default function LogisticsChallenges() {
             {/* Scene1: wipe1 (topmost) */}
             <WipeQuad rtRef={rtRefs[0]} wipePRef={wipe1PRef} clipped={true}  renderOrder={4} />
           </Canvas>
+        </div>
+
+        {/* ── Scene 1 card + meter ──────────────────────────────────────── */}
+        {activeScene === 1 && card1Ready && (
+          <div className={styles.featureCard} style={{
+            position: "absolute",
+            left: "5%",
+            top: "25%",
+            transform: "translateY(-50%)",
+            zIndex: 20,
+            pointerEvents: "none",
+          }}>
+            <div style={{
+              background: "rgba(10,10,10,0.72)",
+              color: "#ffffff",
+              borderRadius: 6,
+              padding: "28px 32px 32px",
+              width: 380,
+              height: 240,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
+              fontFamily: "system-ui, sans-serif",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}>
+              {/* Label row */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
+                <span style={{ fontSize: 9, letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
+                  The Difference We Deliver
+                </span>
+              </div>
+              {/* Heading */}
+              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.01em", marginBottom: 16 }}>
+                Indoor and<br />Outdoor Operations
+              </div>
+              {/* Body */}
+              <div style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.5)" }}>
+                Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Scene progress meter — always visible ─────────────────────── */}
+        <div style={{
+          position: "absolute",
+          left: "5%",
+          bottom: "10%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 8,
+          zIndex: 20,
+          pointerEvents: "none",
+        }}>
+          <div style={{
+            width: 2,
+            height: 80,
+            background: "rgba(255,255,255,0.15)",
+            borderRadius: 2,
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            <div ref={meterFillRef} style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              height: "0%",
+              background: "#ffffff",
+              borderRadius: 2,
+              transition: "height 0.05s linear",
+            }} />
+          </div>
+          <span ref={meterTextRef} style={{
+            fontSize: 9,
+            letterSpacing: "0.15em",
+            color: "rgba(255,255,255,0.45)",
+            fontFamily: "monospace",
+          }}>0.00</span>
         </div>
 
         {/* Free cam toggle + HUD — scene 1 */}
