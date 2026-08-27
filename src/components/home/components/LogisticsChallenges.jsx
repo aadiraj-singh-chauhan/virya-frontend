@@ -131,7 +131,7 @@ uniform float gridRepeat;
 uniform float lineStrength;
 void main() {
   vec3 base = vec3(0.992, 0.973, 0.961); // #FDF8F5
-  vec3 line = vec3(0.20, 0.18, 0.16);
+  vec3 line = vec3(0.957, 0.235, 0.0);
   vec2 coord = vUv * gridRepeat;
   vec2 fw    = fwidth(coord);
   vec2 grid  = abs(fract(coord - 0.5) - 0.5) / max(fw, 0.0001);
@@ -148,7 +148,7 @@ function GridGroundPlane() {
     vertexShader: GRID_VERT,
     fragmentShader: GRID_FRAG,
     uniforms: {
-      gridRepeat:   { value: 20000.0 },
+      gridRepeat:   { value: 16000.0 },
       lineStrength: { value: 0.45 },
     },
   }), []);
@@ -276,7 +276,7 @@ const S3_TROLLEY_Z     = -2.5;
 const S3_TROLLEY_SCALE = 0.2;
 
 const S3_PATH_STRAIGHT  = 0.48;
-const S3_PATH_STRAIGHT2 = 1.0;
+const S3_PATH_STRAIGHT2 = 2.5;
 const S3_TURN_RADIUS         = 0.12;
 const S3_TROLLEY_TURN_RADIUS  = 0.12;
 const S3_TROLLEY_PATH_STRAIGHT = 0.07;
@@ -287,7 +287,7 @@ const S3_PATH_TOTAL     = S3_PATH_STRAIGHT + S3_ARC_LENGTH + S3_PATH_STRAIGHT2;
 // ── Interior scene — factory floor + forklift + AMR10 + AMR10 Trolley ─────────
 const ANIM_DIST = 3; // units travelled by each model during scroll animation
 
-function InteriorScene({ progressRef, trackerRef }) {
+function InteriorScene({ progressRef, trackerRef, amr50TrackerRef }) {
   const { scene: factScene  } = useGLTF("/assets/factory-interior.glb");
   const { scene: forkScene  } = useGLTF("/assets/forklift.glb");
   const { scene: amrScene   } = useGLTF("/assets/amr10.glb");
@@ -368,7 +368,7 @@ function InteriorScene({ progressRef, trackerRef }) {
     const amrInRevZone = amrDistNow >= 2.5 && amrDistNow <= 3.6;
 
     // ── Forklift: smooth 5 units north ──────────────────────────────
-    const forkSpeed = 4;
+    const forkSpeed = 16;
     let forkTarget  = effectiveTarget;
     // Reverse: if AMR10 is in collision zone (2.5–3.6), freeze AMR50 until AMR10 backs out
     if (goingBack && haltState.current === "halting" && amrInRevZone) {
@@ -378,6 +378,7 @@ function InteriorScene({ progressRef, trackerRef }) {
     const forkEase = animT.current * animT.current * (3 - 2 * animT.current);
     const forkDist = forkEase * 5;
     forklift.position.x = forkBaseX.current + forkDist;
+    if (amr50TrackerRef?.current) amr50TrackerRef.current.textContent = `${forkDist.toFixed(2)} / 5.00`;
 
     // ── Halt state machine — driven by forklift distance ───────────
     if      (haltState.current === "before"  && forkDist >= 2.5) haltState.current = "halting";
@@ -408,7 +409,7 @@ function InteriorScene({ progressRef, trackerRef }) {
         // AMR10 outside 2.5–3.6: freeze it, let AMR50 back through 4.0→2.5
         resumeTime.current = 0;
       } else {
-        amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 4));
+        amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 2));
       }
     } else if ((amrDistNow >= 2.15 && haltState.current !== "after") || collisionHalt.current) {
       // AMR10 stops at 2.15 units and waits until AMR50 clears (haltState → "after")
@@ -425,7 +426,7 @@ function InteriorScene({ progressRef, trackerRef }) {
       const lerpSpeed       = 1.5 + Math.min(resumeTime.current / 1.5, 1) * 2.5;
       amrT.current += (catchTarget - amrT.current) * (1 - Math.exp(-delta * lerpSpeed));
     } else {
-      amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 4));
+      amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 16));
     }
 
     const amrEase = amrT.current * amrT.current * (3 - 2 * amrT.current);
@@ -1060,6 +1061,7 @@ export default function LogisticsChallenges() {
   const wipe4SmoothRef     = useRef(0);
   const lenisRef           = useRef(null);
   const amr10TrackerRef    = useRef(null);
+  const amr50TrackerRef    = useRef(null);
   const meterFillRef       = useRef(null);
   const meterTextRef       = useRef(null);
   const card1ReadyRef      = useRef(false);
@@ -1140,13 +1142,13 @@ export default function LogisticsChallenges() {
       // Feed raw wipe targets — smoothing happens in tick loop
       wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
       // wipe2: Scene 2 → Scene 3 — starts while AMR10 is still mid-animation
-      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.240) / 0.048));
-      // Scene 3 animation — clamped to wipe3 start so models freeze when wipe begins
-      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.301) - 0.288) / 0.08));
-      // wipe3: Scene 3 → Scene 4 (starts early, while Scene 3 models are mid-animation)
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.301) / 0.064));
-      // Scene 4 phase 1 — AMR10 L-path
-      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.365) / 0.16));
+      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.290) / 0.048));
+      // Scene 3 — progress freezes as soon as wipe3 begins (raw capped at 0.346)
+      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.346) - 0.326) / 0.08));
+      // wipe3: Scene 3 → Scene 4
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.346) / 0.064));
+      // Scene 4 phase 1 — starts only after wipe3 reaches 75% (0.346 + 0.75*0.064 = 0.394)
+      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.394) / 0.16));
       // Scene 4 phase 2 — AMR50 slides (continues through wipe4)
       s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.525) / 0.16));
       // wipe4: Scene 4 → Scene 5 — starts while AMR50 is still mid-animation
@@ -1323,7 +1325,7 @@ export default function LogisticsChallenges() {
             {/* Scene 2 — interior, dark */}
             {createPortal(
               <>
-                <color attach="background" args={["#0d0d0d"]} />
+                <color attach="background" args={["#FDF8F5"]} />
                 <ambientLight intensity={0.6} color="#FFF8F0" />
                 <directionalLight position={[0, 10, 0]} intensity={1.8} color="#FFF5E8"
                   castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
@@ -1335,7 +1337,8 @@ export default function LogisticsChallenges() {
                   : <Scene2Camera progressRef={s2ProgressRef} />
                 }
                 <Suspense fallback={null}>
-                  <InteriorScene progressRef={s2ProgressRef} trackerRef={amr10TrackerRef} />
+                  <GridGroundPlane />
+                  <InteriorScene progressRef={s2ProgressRef} trackerRef={amr10TrackerRef} amr50TrackerRef={amr50TrackerRef} />
                 </Suspense>
               </>,
               sceneObjs[1],
@@ -1345,7 +1348,7 @@ export default function LogisticsChallenges() {
             {/* Scene 3 — exterior with AMR pair */}
             {createPortal(
               <>
-                <color attach="background" args={["#F5F2ED"]} />
+                <color attach="background" args={["#FDF8F5"]} />
                 <directionalLight position={[60, 90, 40]} intensity={1.8} color="#FFF8F2"
                   castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
                   shadow-camera-near={1} shadow-camera-far={700}
@@ -1359,7 +1362,7 @@ export default function LogisticsChallenges() {
                   : <Scene3Camera />
                 }
                 <Suspense fallback={null}>
-                  <GroundPlane />
+                  <GridGroundPlane />
                   <ExteriorModel />
                   <S3AMR10 />
                   <S3Trolley />
@@ -1441,18 +1444,15 @@ export default function LogisticsChallenges() {
             <div className={styles.featureCard} style={{
               position: "absolute",
               left: "5%",
-              top: "25%",
-              transform: "translateY(-50%)",
+              bottom: "8%",
             }}>
             <div style={{
               background: "rgba(10,10,10,0.72)",
-              color: "#ffffff",
               borderRadius: 6,
               padding: "28px 32px 32px",
-              width: 380,
-              height: 240,
+              width: 490,
+              height: 301,
               boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
-              fontFamily: "system-ui, sans-serif",
               display: "flex",
               flexDirection: "column",
               gap: 0,
@@ -1460,16 +1460,40 @@ export default function LogisticsChallenges() {
               {/* Label row */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                 <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
-                <span style={{ fontSize: 9, letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
+                <span style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "1.12px",
+                  textTransform: "uppercase",
+                  color: "#FFF",
+                }}>
                   The Difference We Deliver
                 </span>
               </div>
               {/* Heading */}
-              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.01em", marginBottom: 16 }}>
+              <div style={{
+                width: 379,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 30,
+                fontWeight: 400,
+                lineHeight: "110%",
+                textTransform: "uppercase",
+                color: "#FFF",
+                marginBottom: 48,
+              }}>
                 Indoor and<br />Outdoor Operations
               </div>
               {/* Body */}
-              <div style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.5)" }}>
+              <div style={{
+                width: 403,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "#FFF",
+              }}>
                 Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
               </div>
             </div>
@@ -1639,6 +1663,19 @@ export default function LogisticsChallenges() {
                 AMR10 DISTANCE
               </div>
               <span ref={amr10TrackerRef} style={{ color: "#4ab0d9" }}>0.00 / 5.00</span>
+              <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: 4 }}>units</span>
+            </div>
+            <div style={{
+              background: "rgba(0,0,0,0.72)", color: "#e0e0e0",
+              fontFamily: "monospace", fontSize: 11,
+              padding: "10px 14px", borderRadius: 4,
+              border: "1px solid rgba(255,255,255,0.1)",
+              lineHeight: 1.8, minWidth: 270,
+            }}>
+              <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 9, letterSpacing: "0.14em", marginBottom: 4 }}>
+                AMR50 DISTANCE
+              </div>
+              <span ref={amr50TrackerRef} style={{ color: "#f5a442" }}>0.00 / 5.00</span>
               <span style={{ color: "rgba(255,255,255,0.4)", marginLeft: 4 }}>units</span>
             </div>
           </div>
