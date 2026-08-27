@@ -117,23 +117,30 @@ function makeArchMaterial(maxHeight) {
 // ── Ground plane ──────────────────────────────────────────────────────────────
 const GRID_VERT = /* glsl */`
 varying vec2 vUv;
+varying vec3 vWorldPos;
 void main() {
   vUv = uv;
+  vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }`;
 
 const GRID_FRAG = /* glsl */`
 varying vec2 vUv;
+varying vec3 vWorldPos;
 uniform float gridRepeat;
 uniform float lineStrength;
 void main() {
   vec3 base = vec3(0.992, 0.973, 0.961); // #FDF8F5
-  vec3 line = vec3(0.60, 0.55, 0.50);
+  vec3 line = vec3(0.20, 0.18, 0.16);
   vec2 coord = vUv * gridRepeat;
   vec2 fw    = fwidth(coord);
   vec2 grid  = abs(fract(coord - 0.5) - 0.5) / max(fw, 0.0001);
   float g    = 1.0 - clamp(min(grid.x, grid.y), 0.0, 1.0);
-  gl_FragColor = vec4(mix(base, line, g * lineStrength), 1.0);
+  float worldDist = length(vWorldPos.xz - vec2(15.0, -6.0));
+  float nearFade  = smoothstep(2.0, 60.0, worldDist);
+  float farFade   = 1.0 - smoothstep(150.0, 380.0, worldDist);
+  float fade = nearFade * farFade;
+  gl_FragColor = vec4(mix(base, line, g * lineStrength * fade), 1.0);
 }`;
 
 function GridGroundPlane() {
@@ -141,7 +148,7 @@ function GridGroundPlane() {
     vertexShader: GRID_VERT,
     fragmentShader: GRID_FRAG,
     uniforms: {
-      gridRepeat:   { value: 3000.0 },
+      gridRepeat:   { value: 20000.0 },
       lineStrength: { value: 0.45 },
     },
   }), []);
