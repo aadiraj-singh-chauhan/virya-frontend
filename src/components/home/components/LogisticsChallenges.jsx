@@ -64,8 +64,11 @@ const _s3LookTemp = new THREE.Vector3();
 // ── Scene 4 camera waypoint ───────────────────────────────────────────────────
 const S4_POS   = new THREE.Vector3(-2.326, 3.085, 4.359);
 const S4_LOOK  = new THREE.Vector3(1.759, -3.562, -1.897);
-const S4_POS_B = new THREE.Vector3(2.435, 4.336, 4.555);
+const S4_POS_B  = new THREE.Vector3(2.435, 4.336, 4.555);
 const S4_LOOK_B = new THREE.Vector3(-0.973, -2.477, -1.923);
+// Scene 4B camera — fixed after wipe4b (update via FreeCam when ready)
+const S4_POS_C  = new THREE.Vector3(2.435, 4.336, 4.555);
+const S4_LOOK_C = new THREE.Vector3(-0.973, -2.477, -1.923);
 
 // ── Scene 5 camera — cinematic entry → final position during wipe4 ───────────
 const S5_CIN_POS  = new THREE.Vector3(2.591, 3.699, 7.237);
@@ -1071,7 +1074,7 @@ function WipeQuad({ rtRef, wipePRef, clipped, renderOrder }) {
 }
 
 // ── RenderManager — renders each virtual scene into its own RT ────────────────
-function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs }) {
+function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs, wipe4bPRef }) {
   const { gl, size } = useThree();
   useEffect(() => {
     const w = Math.round(size.width  * window.devicePixelRatio);
@@ -1084,19 +1087,22 @@ function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs }) {
       cam.aspect = size.width / size.height;
       cam.updateProjectionMatrix();
     });
+    // Fix cam4B at scene 4B position
+    cameras[5].position.copy(S4_POS_C);
+    cameras[5].lookAt(S4_LOOK_C);
+    cameras[5].updateMatrixWorld();
     return () => rtRefs.forEach(r => r.current?.dispose());
   }, [size.width, size.height]);
 
   useFrame(() => {
     const [w1, w2, w3, w4] = wipePRefs.map(r => r.current);
-    // Only render scenes that are actually contributing to the composite this frame.
-    // At any moment at most 2 scenes are visible (active + the one being transitioned to).
+    const w4b = wipe4bPRef.current;
     const visible = [
-      w1 < 0.999,                    // S1: visible until fully wiped away
-      w1 > 0.001 && w2 < 0.999,      // S2: visible once S1 wipe starts, until S2 wipe ends
-      w2 > 0.001 && w3 < 0.999,      // S3
-      w3 > 0.001 && w4 < 0.999,      // S4
-      w4 > 0.001,                    // S5: bottom layer, shown when wipe4 begins
+      w1 < 0.999,                         // S1
+      w1 > 0.001 && w2 < 0.999,           // S2
+      w2 > 0.001 && w3 < 0.999,           // S3
+      w3 > 0.001 && w4b < 0.999,          // S4A: until internal wipe completes
+      w4 > 0.001,                          // S5
     ];
     const prev = gl.autoClear;
     gl.autoClear = true;
@@ -1104,6 +1110,11 @@ function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs }) {
       if (!rtRefs[i].current || !visible[i]) continue;
       gl.setRenderTarget(rtRefs[i].current);
       gl.render(sceneObjs[i], cameras[i]);
+    }
+    // S4B: same virtual scene, fixed bird's-eye camera
+    if (rtRefs[5].current && w3 > 0.001 && w4b > 0.001 && w4 < 0.999) {
+      gl.setRenderTarget(rtRefs[5].current);
+      gl.render(sceneObjs[3], cameras[5]);
     }
     gl.setRenderTarget(null);
     gl.autoClear = prev;
@@ -1125,6 +1136,8 @@ export default function LogisticsChallenges() {
   const wipe3SmoothRef     = useRef(0);
   const wipe4TargetRef     = useRef(0);
   const wipe4SmoothRef     = useRef(0);
+  const wipe4bTargetRef    = useRef(0);
+  const wipe4bSmoothRef    = useRef(0);
   const lenisRef           = useRef(null);
   const amr10TrackerRef    = useRef(null);
   const amr50TrackerRef    = useRef(null);
@@ -1142,6 +1155,29 @@ export default function LogisticsChallenges() {
   const [card2Exiting, setCard2Exiting] = useState(false);
   const card2TimerRef      = useRef(null);
   const card2WrapperRef    = useRef(null);
+  const card3ReadyRef      = useRef(false);
+  const [card3Ready, setCard3Ready] = useState(false);
+  const [card3Mounted, setCard3Mounted] = useState(false);
+  const [card3Exiting, setCard3Exiting] = useState(false);
+  const card3TimerRef      = useRef(null);
+  const card3WrapperRef    = useRef(null);
+  const card4aReadyRef     = useRef(false);
+  const [card4aReady, setCard4aReady] = useState(false);
+  const [card4aMounted, setCard4aMounted] = useState(false);
+  const [card4aExiting, setCard4aExiting] = useState(false);
+  const card4aTimerRef     = useRef(null);
+  const card4aWrapperRef   = useRef(null);
+  const card4bReadyRef     = useRef(false);
+  const [card4bReady, setCard4bReady] = useState(false);
+  const [card4bMounted, setCard4bMounted] = useState(false);
+  const [card4bExiting, setCard4bExiting] = useState(false);
+  const card4bTimerRef     = useRef(null);
+  const card4bWrapperRef   = useRef(null);
+  const card5ReadyRef      = useRef(false);
+  const [card5Ready, setCard5Ready] = useState(false);
+  const [card5Mounted, setCard5Mounted] = useState(false);
+  const [card5Exiting, setCard5Exiting] = useState(false);
+  const card5TimerRef      = useRef(null);
   const [activeScene, setActiveScene] = useState(1);
   const [freeCam, setFreeCam]   = useState(false);
   const [freeCam1, setFreeCam1] = useState(false);
@@ -1161,10 +1197,11 @@ export default function LogisticsChallenges() {
   const { display, play, reset } = useScramble("Skip this section");
 
   // ── Wipe progress refs (written by tick loop, read by WipeQuad in useFrame) ─
-  const wipe1PRef = useRef(0);
-  const wipe2PRef = useRef(0);
-  const wipe3PRef = useRef(0);
-  const wipe4PRef = useRef(0);
+  const wipe1PRef  = useRef(0);
+  const wipe2PRef  = useRef(0);
+  const wipe3PRef  = useRef(0);
+  const wipe4PRef  = useRef(0);
+  const wipe4bPRef = useRef(0); // internal wipe: scene 4A → scene 4B
 
   // ── Stable scene/camera objects ───────────────────────────────────────────
   const [sceneObjs] = useState(() => Array.from({ length: 5 }, () => new THREE.Scene()));
@@ -1174,9 +1211,10 @@ export default function LogisticsChallenges() {
     Object.assign(new THREE.PerspectiveCamera(35, 1, 0.05, 1000), { name: 'cam3' }),
     Object.assign(new THREE.PerspectiveCamera(50, 1, 0.05, 1000), { name: 'cam4' }),
     Object.assign(new THREE.PerspectiveCamera(45, 1, 0.05, 1000), { name: 'cam5' }),
+    Object.assign(new THREE.PerspectiveCamera(50, 1, 0.05, 1000), { name: 'cam4B' }),
   ]);
-  // Each element of rtRefs is a {current: null} object (mirrors useRef shape)
-  const rtRefs = useRef(Array.from({ length: 5 }, () => ({ current: null }))).current;
+  // Index 5 = scene 4B (same virtual scene as index 3, different fixed camera)
+  const rtRefs = useRef(Array.from({ length: 6 }, () => ({ current: null }))).current;
 
   useEffect(() => {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -1213,14 +1251,16 @@ export default function LogisticsChallenges() {
       s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.346) - 0.326) / 0.08));
       // wipe3: Scene 3 → Scene 4
       wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.346) / 0.064));
-      // Scene 4 phase 1 — starts only after wipe3 reaches 75% (0.346 + 0.75*0.064 = 0.394)
-      s4AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.394) / 0.16));
-      // Scene 4 phase 2 — AMR50 slides (continues through wipe4)
-      s4Anim2State.progress  = Math.min(1, Math.max(0, (raw - 0.525) / 0.16));
-      // wipe4: Scene 4 → Scene 5 — starts while AMR50 is still mid-animation
-      wipe4TargetRef.current = Math.max(0, Math.min(1, (raw - 0.616) / 0.06));
+      // Scene 4A — AMR10 (raw 0.394→0.554)
+      s4AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.394) / 0.16));
+      // wipe4b: internal wipe 4A→4B, starts when AMR10 is ~91% done (raw 0.540)
+      wipe4bTargetRef.current = Math.max(0, Math.min(1, (raw - 0.540) / 0.048));
+      // Scene 4B — AMR50 starts at 75% of wipe4b (0.540 + 0.75*0.048 = 0.576)
+      s4Anim2State.progress   = Math.min(1, Math.max(0, (raw - 0.576) / 0.16));
+      // wipe4: Scene 4B → Scene 5
+      wipe4TargetRef.current  = Math.max(0, Math.min(1, (raw - 0.720) / 0.06));
       // Scene 5
-      s5AnimState.progress   = Math.min(1, Math.max(0, (raw - 0.676) / 0.089));
+      s5AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.780) / 0.25));
 
       // Card 1 reveal — show only after Scene 1 meter passes 0.125
       const shouldShowCard1 = raw >= 0.025 && raw < 0.215;
@@ -1234,6 +1274,34 @@ export default function LogisticsChallenges() {
       if (shouldShowCard2 !== card2ReadyRef.current) {
         card2ReadyRef.current = shouldShowCard2;
         setCard2Ready(shouldShowCard2);
+      }
+
+      // Card 3 reveal — visible during scene 3 (wipe2 mid → wipe3 starts)
+      const shouldShowCard3 = raw >= 0.314 && raw < 0.346;
+      if (shouldShowCard3 !== card3ReadyRef.current) {
+        card3ReadyRef.current = shouldShowCard3;
+        setCard3Ready(shouldShowCard3);
+      }
+
+      // Card 4A — visible during scene 4A (wipe3 done → wipe4b starts)
+      const shouldShowCard4a = raw >= 0.394 && raw < 0.540;
+      if (shouldShowCard4a !== card4aReadyRef.current) {
+        card4aReadyRef.current = shouldShowCard4a;
+        setCard4aReady(shouldShowCard4a);
+      }
+
+      // Card 4B — visible during scene 4B (AMR50 starts → wipe4 starts)
+      const shouldShowCard4b = raw >= 0.576 && raw < 0.720;
+      if (shouldShowCard4b !== card4bReadyRef.current) {
+        card4bReadyRef.current = shouldShowCard4b;
+        setCard4bReady(shouldShowCard4b);
+      }
+
+      // Card 5 — visible once scene 5 starts (wipe4 mid → end)
+      const shouldShowCard5 = raw >= 0.780;
+      if (shouldShowCard5 !== card5ReadyRef.current) {
+        card5ReadyRef.current = shouldShowCard5;
+        setCard5Ready(shouldShowCard5);
       }
 
       // Scene progress meter — 0→1 within whichever scene is currently dominant
@@ -1293,6 +1361,14 @@ export default function LogisticsChallenges() {
         * (1 - Math.exp(-delta * 2.0));
       const t3 = wipe3SmoothRef.current;
       const wipe3P = t3 * t3 * t3 * (t3 * (t3 * 6 - 15) + 10);
+
+      // Clip card3 with the same diagonal as wipe3
+      if (card3WrapperRef.current) {
+        const leftY3  = Math.max(0, Math.min(100, (1.30 - 1.40 * wipe3P) * 100));
+        const rightY3 = Math.max(0, Math.min(100, (1.05 - 1.45 * wipe3P) * 100));
+        card3WrapperRef.current.style.clipPath =
+          `polygon(0% 0%, 100% 0%, 100% ${rightY3.toFixed(1)}%, 0% ${leftY3.toFixed(1)}%)`;
+      }
       wipe3PRef.current = wipe3P;
 
       // wipe4: smooth + smootherstep
@@ -1302,6 +1378,28 @@ export default function LogisticsChallenges() {
       const t4 = wipe4SmoothRef.current;
       const wipe4P = t4 * t4 * t4 * (t4 * (t4 * 6 - 15) + 10);
       wipe4PRef.current = wipe4P;
+
+      wipe4bSmoothRef.current += (wipe4bTargetRef.current - wipe4bSmoothRef.current)
+        * (1 - Math.exp(-delta * 3.5));
+      const t4b = wipe4bSmoothRef.current;
+      const wipe4bP = t4b * t4b * t4b * (t4b * (t4b * 6 - 15) + 10);
+      wipe4bPRef.current = wipe4bP;
+
+      // Clip card4a with wipe4b diagonal
+      if (card4aWrapperRef.current) {
+        const leftY4a  = Math.max(0, Math.min(100, (1.30 - 1.40 * wipe4bP) * 100));
+        const rightY4a = Math.max(0, Math.min(100, (1.05 - 1.45 * wipe4bP) * 100));
+        card4aWrapperRef.current.style.clipPath =
+          `polygon(0% 0%, 100% 0%, 100% ${rightY4a.toFixed(1)}%, 0% ${leftY4a.toFixed(1)}%)`;
+      }
+
+      // Clip card4b with wipe4 diagonal
+      if (card4bWrapperRef.current) {
+        const leftY4b  = Math.max(0, Math.min(100, (1.30 - 1.40 * wipe4P) * 100));
+        const rightY4b = Math.max(0, Math.min(100, (1.05 - 1.45 * wipe4P) * 100));
+        card4bWrapperRef.current.style.clipPath =
+          `polygon(0% 0%, 100% 0%, 100% ${rightY4b.toFixed(1)}%, 0% ${leftY4b.toFixed(1)}%)`;
+      }
 
       const nextScene = wipeP < 0.5 ? 1 : (wipe2P < 0.5 ? 2 : (wipe3P < 0.5 ? 3 : (wipe4P < 0.5 ? 4 : 5)));
       s3AnimState.active = (nextScene === 3);
@@ -1350,6 +1448,62 @@ export default function LogisticsChallenges() {
       }, 1600);
     }
   }, [card2Ready]);
+
+  useEffect(() => {
+    clearTimeout(card3TimerRef.current);
+    if (card3Ready) {
+      setCard3Mounted(true);
+      setCard3Exiting(false);
+    } else {
+      setCard3Exiting(true);
+      card3TimerRef.current = setTimeout(() => {
+        setCard3Mounted(false);
+        setCard3Exiting(false);
+      }, 1600);
+    }
+  }, [card3Ready]);
+
+  useEffect(() => {
+    clearTimeout(card4aTimerRef.current);
+    if (card4aReady) {
+      setCard4aMounted(true);
+      setCard4aExiting(false);
+    } else {
+      setCard4aExiting(true);
+      card4aTimerRef.current = setTimeout(() => {
+        setCard4aMounted(false);
+        setCard4aExiting(false);
+      }, 1600);
+    }
+  }, [card4aReady]);
+
+  useEffect(() => {
+    clearTimeout(card4bTimerRef.current);
+    if (card4bReady) {
+      setCard4bMounted(true);
+      setCard4bExiting(false);
+    } else {
+      setCard4bExiting(true);
+      card4bTimerRef.current = setTimeout(() => {
+        setCard4bMounted(false);
+        setCard4bExiting(false);
+      }, 1600);
+    }
+  }, [card4bReady]);
+
+  useEffect(() => {
+    clearTimeout(card5TimerRef.current);
+    if (card5Ready) {
+      setCard5Mounted(true);
+      setCard5Exiting(false);
+    } else {
+      setCard5Exiting(true);
+      card5TimerRef.current = setTimeout(() => {
+        setCard5Mounted(false);
+        setCard5Exiting(false);
+      }, 1600);
+    }
+  }, [card5Ready]);
 
   return (
     <section ref={sectionRef} className={styles.section}>
@@ -1443,7 +1597,7 @@ export default function LogisticsChallenges() {
             {/* Scene 4 — colored factory interior */}
             {createPortal(
               <>
-                <color attach="background" args={["#1a1a1a"]} />
+                <color attach="background" args={["#FDF8F5"]} />
                 <ambientLight intensity={0.8} color="#FFF8F0" />
                 <directionalLight position={[10, 20, 10]} intensity={1.5} color="#FFF5E8"
                   castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
@@ -1454,6 +1608,7 @@ export default function LogisticsChallenges() {
                   : <Scene4Camera />
                 }
                 <Suspense fallback={null}>
+                  <GridGroundPlane />
                   <FactoryInterior2 />
                   <AMR10Color />
                   <AMR10TrolleyColor />
@@ -1468,7 +1623,7 @@ export default function LogisticsChallenges() {
             {/* Scene 5 — final scene */}
             {createPortal(
               <>
-                <color attach="background" args={["#F5F2ED"]} />
+                <color attach="background" args={["#FDF8F5"]} />
                 <ambientLight intensity={1.0} color="#FFF8F0" />
                 <directionalLight position={[10, 20, 10]} intensity={2.0} color="#FFF5E8"
                   castShadow shadow-mapSize-width={2048} shadow-mapSize-height={2048}
@@ -1480,6 +1635,7 @@ export default function LogisticsChallenges() {
                   : <Scene5Camera />
                 }
                 <Suspense fallback={null}>
+                  <GridGroundPlane />
                   <FinalScene />
                   <S5AMR10Animated />
                   <S5AMR50Animated />
@@ -1491,19 +1647,21 @@ export default function LogisticsChallenges() {
             )}
 
             {/* ── Render manager — writes each scene to its RT ─────────────── */}
-            <RenderManager sceneObjs={sceneObjs} cameras={cameras} rtRefs={rtRefs} wipePRefs={[wipe1PRef, wipe2PRef, wipe3PRef, wipe4PRef]} />
+            <RenderManager sceneObjs={sceneObjs} cameras={cameras} rtRefs={rtRefs} wipePRefs={[wipe1PRef, wipe2PRef, wipe3PRef, wipe4PRef]} wipe4bPRef={wipe4bPRef} />
 
             {/* ── Compositor quads (back → front) ──────────────────────────── */}
-            {/* Scene5: no clip (background layer) */}
-            <WipeQuad rtRef={rtRefs[4]} wipePRef={null}     clipped={false} renderOrder={0} />
-            {/* Scene4: wipe4 */}
-            <WipeQuad rtRef={rtRefs[3]} wipePRef={wipe4PRef} clipped={true}  renderOrder={1} />
+            {/* Scene5: background */}
+            <WipeQuad rtRef={rtRefs[4]} wipePRef={null}      clipped={false} renderOrder={0} />
+            {/* Scene4B: fixed camera, clipped by wipe4 → reveals S5 */}
+            <WipeQuad rtRef={rtRefs[5]} wipePRef={wipe4PRef}  clipped={true}  renderOrder={1} />
+            {/* Scene4A: animating camera, clipped by wipe4b → reveals S4B */}
+            <WipeQuad rtRef={rtRefs[3]} wipePRef={wipe4bPRef} clipped={true}  renderOrder={2} />
             {/* Scene3: wipe3 */}
-            <WipeQuad rtRef={rtRefs[2]} wipePRef={wipe3PRef} clipped={true}  renderOrder={2} />
+            <WipeQuad rtRef={rtRefs[2]} wipePRef={wipe3PRef}  clipped={true}  renderOrder={3} />
             {/* Scene2: wipe2 */}
-            <WipeQuad rtRef={rtRefs[1]} wipePRef={wipe2PRef} clipped={true}  renderOrder={3} />
+            <WipeQuad rtRef={rtRefs[1]} wipePRef={wipe2PRef}  clipped={true}  renderOrder={4} />
             {/* Scene1: wipe1 (topmost) */}
-            <WipeQuad rtRef={rtRefs[0]} wipePRef={wipe1PRef} clipped={true}  renderOrder={4} />
+            <WipeQuad rtRef={rtRefs[0]} wipePRef={wipe1PRef}  clipped={true}  renderOrder={5} />
           </Canvas>
         </div>
 
@@ -1618,6 +1776,254 @@ export default function LogisticsChallenges() {
                 marginBottom: 48,
               }}>
                 Intelligent Indoor<br />Navigation
+              </div>
+              <div style={{
+                width: 403,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "#FFF",
+              }}>
+                Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
+              </div>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Scene 3 card ──────────────────────────────────────────────── */}
+        {card3Mounted && (
+          <div ref={card3WrapperRef} style={{
+            position: "absolute", inset: 0, zIndex: 20, pointerEvents: "none",
+          }}>
+            <div className={card3Exiting ? styles.featureCardExit : styles.featureCard} style={{
+              position: "absolute",
+              left: "5%",
+              bottom: "8%",
+            }}>
+            <div style={{
+              background: "#0A0A0A",
+              borderRadius: 6,
+              padding: "28px 32px 32px",
+              width: 490,
+              height: 301,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
+                <span style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "1.12px",
+                  textTransform: "uppercase",
+                  color: "#FFF",
+                }}>
+                  The Difference We Deliver
+                </span>
+              </div>
+              <div style={{
+                width: 379,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 30,
+                fontWeight: 400,
+                lineHeight: "110%",
+                textTransform: "uppercase",
+                color: "#FFF",
+                marginBottom: 48,
+              }}>
+                Adapts Seamlessly To<br />Dynamic Environments
+              </div>
+              <div style={{
+                width: 403,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "#FFF",
+              }}>
+                Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
+              </div>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Scene 4A card ─────────────────────────────────────────────── */}
+        {card4aMounted && (
+          <div ref={card4aWrapperRef} style={{
+            position: "absolute", inset: 0, zIndex: 20, pointerEvents: "none",
+          }}>
+            <div className={card4aExiting ? styles.featureCardExit : styles.featureCard} style={{
+              position: "absolute",
+              left: "5%",
+              bottom: "8%",
+            }}>
+            <div style={{
+              background: "#0A0A0A",
+              borderRadius: 6,
+              padding: "28px 32px 32px",
+              width: 490,
+              height: 301,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
+                <span style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "1.12px",
+                  textTransform: "uppercase",
+                  color: "#FFF",
+                }}>
+                  The Difference We Deliver
+                </span>
+              </div>
+              <div style={{
+                width: 379,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 30,
+                fontWeight: 400,
+                lineHeight: "110%",
+                textTransform: "uppercase",
+                color: "#FFF",
+                marginBottom: 48,
+              }}>
+                Works Within Existing<br />Infrastructure
+              </div>
+              <div style={{
+                width: 403,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "#FFF",
+              }}>
+                Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
+              </div>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Scene 4B card ─────────────────────────────────────────────── */}
+        {card4bMounted && (
+          <div ref={card4bWrapperRef} style={{
+            position: "absolute", inset: 0, zIndex: 20, pointerEvents: "none",
+          }}>
+            <div className={card4bExiting ? styles.featureCardExit : styles.featureCard} style={{
+              position: "absolute",
+              left: "5%",
+              bottom: "8%",
+            }}>
+            <div style={{
+              background: "#0A0A0A",
+              borderRadius: 6,
+              padding: "28px 32px 32px",
+              width: 490,
+              height: 301,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
+                <span style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "1.12px",
+                  textTransform: "uppercase",
+                  color: "#FFF",
+                }}>
+                  The Difference We Deliver
+                </span>
+              </div>
+              <div style={{
+                width: 379,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 30,
+                fontWeight: 400,
+                lineHeight: "110%",
+                textTransform: "uppercase",
+                color: "#FFF",
+                marginBottom: 48,
+              }}>
+                Simplifies Complex<br />Operational Workflows
+              </div>
+              <div style={{
+                width: 403,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "#FFF",
+              }}>
+                Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
+              </div>
+            </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Scene 5 card ──────────────────────────────────────────────── */}
+        {card5Mounted && (
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 20, pointerEvents: "none",
+          }}>
+            <div className={card5Exiting ? styles.featureCardExit : styles.featureCard} style={{
+              position: "absolute",
+              left: "5%",
+              bottom: "8%",
+            }}>
+            <div style={{
+              background: "#0A0A0A",
+              borderRadius: 6,
+              padding: "28px 32px 32px",
+              width: 490,
+              height: 301,
+              boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
+                <span style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "1.12px",
+                  textTransform: "uppercase",
+                  color: "#FFF",
+                }}>
+                  The Difference We Deliver
+                </span>
+              </div>
+              <div style={{
+                width: 379,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 30,
+                fontWeight: 400,
+                lineHeight: "110%",
+                textTransform: "uppercase",
+                color: "#FFF",
+                marginBottom: 48,
+              }}>
+                Built With Safety<br />At The Core
               </div>
               <div style={{
                 width: 403,
