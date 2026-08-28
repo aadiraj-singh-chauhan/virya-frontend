@@ -898,7 +898,7 @@ function S5AMR10Animated() {
     smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
     const t  = Math.min(1, smoothed.current * 1.6); // finishes at ~62% of scroll
     const tE = t * t * (3 - 2 * t);
-    ref.current.position.set(1.7 + tE * 1.5, 0, 0.3);
+    ref.current.position.set(1.7 + tE * 4.0, 0, 0.3);
   });
   return <group ref={ref}><S5AMR10 /></group>;
 }
@@ -922,7 +922,7 @@ function S5APTAnimated() {
     // amplify progress slightly so APT reaches its target before AMR10/50
     const t  = Math.min(1, smoothed.current * 1.4);
     const tE = t * t * (3 - 2 * t);
-    ref.current.position.set(-0.5 + tE * 1.0, 0, -1.4);
+    ref.current.position.set(-0.5 + tE * 2.0, 0, -1.4);
   });
   return <group ref={ref}><S5APT /></group>;
 }
