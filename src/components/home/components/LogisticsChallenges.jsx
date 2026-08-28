@@ -62,13 +62,16 @@ const S3_CIN_LOOK = new THREE.Vector3(-2.910, -2.804, 4.595);
 const _s3LookTemp = new THREE.Vector3();
 
 // ── Scene 4 camera waypoint ───────────────────────────────────────────────────
-const S4_POS   = new THREE.Vector3(-2.326, 3.085, 4.359);
-const S4_LOOK  = new THREE.Vector3(1.759, -3.562, -1.897);
+const S4_POS   = new THREE.Vector3(-2.533, 3.001, 2.946);
+const S4_LOOK  = new THREE.Vector3(2.014, -1.612, -3.339);
 const S4_POS_B  = new THREE.Vector3(2.435, 4.336, 4.555);
 const S4_LOOK_B = new THREE.Vector3(-0.973, -2.477, -1.923);
 // Scene 4B camera — fixed after wipe4b (update via FreeCam when ready)
 const S4_POS_C  = new THREE.Vector3(2.435, 4.336, 4.555);
 const S4_LOOK_C = new THREE.Vector3(-0.973, -2.477, -1.923);
+
+// scratch vector — reused every frame to avoid allocation in the hot path
+const _lerpTarget = new THREE.Vector3();
 
 // ── Scene 5 camera — cinematic entry → final position during wipe4 ───────────
 const S5_CIN_POS  = new THREE.Vector3(2.591, 3.699, 7.237);
@@ -832,19 +835,10 @@ function AMR50TrolleyColor() {
 // ── Scene 4 static camera ─────────────────────────────────────────────────────
 function Scene4Camera() {
   const { camera } = useThree();
-  const smoothed = useRef(0);
   useEffect(() => {
     camera.position.copy(S4_POS);
     camera.lookAt(S4_LOOK);
   }, [camera]);
-  useFrame((_, delta) => {
-    // Begin shifting to second angle during the last 25% of the AMR10 animation
-    const target = Math.max(0, Math.min(1, (s4AnimState.progress - 0.75) / 0.25));
-    smoothed.current += (target - smoothed.current) * (1 - Math.exp(-delta * 2.5));
-    const t = smoothed.current;
-    camera.position.lerpVectors(S4_POS, S4_POS_B, t);
-    camera.lookAt(new THREE.Vector3().lerpVectors(S4_LOOK, S4_LOOK_B, t));
-  });
   return null;
 }
 
@@ -1087,10 +1081,6 @@ function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs, wipe4bPRef }) {
       cam.aspect = size.width / size.height;
       cam.updateProjectionMatrix();
     });
-    // Fix cam4B at scene 4B position
-    cameras[5].position.copy(S4_POS_C);
-    cameras[5].lookAt(S4_LOOK_C);
-    cameras[5].updateMatrixWorld();
     return () => rtRefs.forEach(r => r.current?.dispose());
   }, [size.width, size.height]);
 
@@ -1111,8 +1101,11 @@ function RenderManager({ sceneObjs, cameras, rtRefs, wipePRefs, wipe4bPRef }) {
       gl.setRenderTarget(rtRefs[i].current);
       gl.render(sceneObjs[i], cameras[i]);
     }
-    // S4B: same virtual scene, fixed bird's-eye camera
+    // S4B: camera sweeps from angle 1 → angle 2 only during the wipe transition
     if (rtRefs[5].current && w3 > 0.001 && w4b > 0.001 && w4 < 0.999) {
+      cameras[5].position.lerpVectors(S4_POS, S4_POS_C, w4b);
+      cameras[5].lookAt(_lerpTarget.lerpVectors(S4_LOOK, S4_LOOK_C, w4b));
+      cameras[5].updateMatrixWorld();
       gl.setRenderTarget(rtRefs[5].current);
       gl.render(sceneObjs[3], cameras[5]);
     }
