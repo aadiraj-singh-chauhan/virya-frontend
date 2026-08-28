@@ -1518,7 +1518,7 @@ export default function LogisticsChallenges() {
               bottom: "8%",
             }}>
             <div style={{
-              background: "rgba(10,10,10,0.72)",
+              background: "#0A0A0A",
               borderRadius: 6,
               padding: "28px 32px 32px",
               width: 490,
@@ -1580,32 +1580,53 @@ export default function LogisticsChallenges() {
             <div className={card2Exiting ? styles.featureCardExit : styles.featureCard} style={{
               position: "absolute",
               left: "5%",
-              top: "25%",
-              transform: "translateY(-50%)",
+              bottom: "8%",
             }}>
             <div style={{
-              background: "rgba(10,10,10,0.72)",
-              color: "#ffffff",
+              background: "#0A0A0A",
               borderRadius: 6,
               padding: "28px 32px 32px",
-              width: 380,
-              height: 240,
+              width: 490,
+              height: 301,
               boxShadow: "0 24px 80px rgba(0,0,0,0.45)",
-              fontFamily: "system-ui, sans-serif",
               display: "flex",
               flexDirection: "column",
               gap: 0,
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                 <span style={{ display: "block", width: 7, height: 7, background: "#E8522A", flexShrink: 0 }} />
-                <span style={{ fontSize: 9, letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", textTransform: "uppercase" }}>
+                <span style={{
+                  fontFamily: "'Chakra Petch', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  lineHeight: "140%",
+                  letterSpacing: "1.12px",
+                  textTransform: "uppercase",
+                  color: "#FFF",
+                }}>
                   AMR10 Operations
                 </span>
               </div>
-              <div style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "0.01em", marginBottom: 16 }}>
+              <div style={{
+                width: 379,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 30,
+                fontWeight: 400,
+                lineHeight: "110%",
+                textTransform: "uppercase",
+                color: "#FFF",
+                marginBottom: 48,
+              }}>
                 Intelligent Indoor<br />Navigation
               </div>
-              <div style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(255,255,255,0.5)" }}>
+              <div style={{
+                width: 403,
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "#FFF",
+              }}>
                 Lorem ipsum dolor sit amet consectetur. Bibendum tristique dictumst feugiat metus,
               </div>
             </div>
