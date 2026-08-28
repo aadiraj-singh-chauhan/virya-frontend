@@ -27,6 +27,8 @@ const s4Anim2State = { progress: 0 };
 
 // ── Scene 5 animation state
 const s5AnimState = { progress: 0 };
+// ── Scene 5 camera cinematic state — wipe4 smooth passed to Scene5Camera ─────
+const s5CamState = { wipe4Smooth: 0 };
 
 // ── Scene 4 L-path: truck moves 1.2 +Z → smooth arc → 0.5 +X ────────────────
 const S4_PATH_STRAIGHT  = 1.2;
@@ -65,11 +67,12 @@ const S4_LOOK  = new THREE.Vector3(1.759, -3.562, -1.897);
 const S4_POS_B = new THREE.Vector3(2.435, 4.336, 4.555);
 const S4_LOOK_B = new THREE.Vector3(-0.973, -2.477, -1.923);
 
-// ── Scene 5 camera waypoints (A → B sweep as scroll progresses) ──────────────
-const S5_POS_A  = new THREE.Vector3(5, 4, 6);
-const S5_LOOK_A = new THREE.Vector3(0, 0.4, 0);
-const S5_POS_B  = new THREE.Vector3(-1, 2.5, 5);
-const S5_LOOK_B = new THREE.Vector3(0, 0.4, 0);
+// ── Scene 5 camera — cinematic entry → final position during wipe4 ───────────
+const S5_CIN_POS  = new THREE.Vector3(2.591, 3.699, 7.237);
+const S5_CIN_LOOK = new THREE.Vector3(-0.830, -0.701, -1.066);
+const S5_END_POS  = new THREE.Vector3(4.836, 4.340, 4.342);
+const S5_END_LOOK = new THREE.Vector3(-0.698, -0.558, -0.838);
+const _s5LookTemp = new THREE.Vector3();
 
 // ── Scene 2 camera waypoints (A → B → C) ─────────────────────────────────────
 const S2_A_POS  = new THREE.Vector3(5.457, 4.542, 8.230);
@@ -842,20 +845,16 @@ function Scene4Camera() {
   return null;
 }
 
-// ── Scene 5 scroll camera — sweeps A → B as s5AnimState.progress goes 0 → 1 ──
+// ── Scene 5 camera — cinematic sweep tied to wipe4 smooth progress ───────────
 function Scene5Camera() {
   const { camera } = useThree();
-  const smoothed = useRef(0);
-  useEffect(() => {
-    camera.position.copy(S5_POS_A);
-    camera.lookAt(S5_LOOK_A);
-  }, [camera]);
-  useFrame((_, delta) => {
-    smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
-    const t = smoothed.current;
-    const ease = t * t * (3 - 2 * t);
-    camera.position.lerpVectors(S5_POS_A, S5_POS_B, ease);
-    camera.lookAt(new THREE.Vector3().lerpVectors(S5_LOOK_A, S5_LOOK_B, ease));
+  useFrame(() => {
+    const t = s5CamState.wipe4Smooth;
+    // smootherstep for buttery feel
+    const tE = t * t * t * (t * (t * 6 - 15) + 10);
+    camera.position.lerpVectors(S5_CIN_POS, S5_END_POS, tE);
+    _s5LookTemp.lerpVectors(S5_CIN_LOOK, S5_END_LOOK, tE);
+    camera.lookAt(_s5LookTemp);
   });
   return null;
 }
@@ -889,6 +888,44 @@ function makeS5Model(path) {
 const S5AMR10 = makeS5Model("/assets/s5-amr10.glb");
 const S5AMR50 = makeS5Model("/assets/s5-amr50.glb");
 const S5APT   = makeS5Model("/assets/s5-apt.glb");
+
+// ── Scene 5 animated model wrappers — scroll-driven via s5AnimState.progress ──
+function S5AMR10Animated() {
+  const ref = useRef();
+  const smoothed = useRef(0);
+  useFrame((_, delta) => {
+    if (!ref.current) return;
+    smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
+    const t  = Math.min(1, smoothed.current * 1.6); // finishes at ~62% of scroll
+    const tE = t * t * (3 - 2 * t);
+    ref.current.position.set(1.7 + tE * 1.5, 0, 0.3);
+  });
+  return <group ref={ref}><S5AMR10 /></group>;
+}
+function S5AMR50Animated() {
+  const ref = useRef();
+  const smoothed = useRef(0);
+  useFrame((_, delta) => {
+    if (!ref.current) return;
+    smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
+    const tE = smoothed.current * smoothed.current * (3 - 2 * smoothed.current);
+    ref.current.position.set(-4.9 + tE * 4.5, 0, 0);
+  });
+  return <group ref={ref}><S5AMR50 /></group>;
+}
+function S5APTAnimated() {
+  const ref = useRef();
+  const smoothed = useRef(0);
+  useFrame((_, delta) => {
+    if (!ref.current) return;
+    smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
+    // amplify progress slightly so APT reaches its target before AMR10/50
+    const t  = Math.min(1, smoothed.current * 1.4);
+    const tE = t * t * (3 - 2 * t);
+    ref.current.position.set(-0.5 + tE * 1.0, 0, -1.4);
+  });
+  return <group ref={ref}><S5APT /></group>;
+}
 
 // ── Scene 1 scroll camera ─────────────────────────────────────────────────────
 function Scene1Camera({ progressRef }) {
@@ -1261,6 +1298,7 @@ export default function LogisticsChallenges() {
       // wipe4: smooth + smootherstep
       wipe4SmoothRef.current += (wipe4TargetRef.current - wipe4SmoothRef.current)
         * (1 - Math.exp(-delta * 2.0));
+      s5CamState.wipe4Smooth = wipe4SmoothRef.current;
       const t4 = wipe4SmoothRef.current;
       const wipe4P = t4 * t4 * t4 * (t4 * (t4 * 6 - 15) + 10);
       wipe4PRef.current = wipe4P;
@@ -1443,9 +1481,9 @@ export default function LogisticsChallenges() {
                 }
                 <Suspense fallback={null}>
                   <FinalScene />
-                  <group position={[1.7, 0, 0.3]}><S5AMR10 /></group>
-                  <group position={[-4.9, 0, 0]}><S5AMR50 /></group>
-                  <group position={[-0.5, 0, -1.4]}><S5APT /></group>
+                  <S5AMR10Animated />
+                  <S5AMR50Animated />
+                  <S5APTAnimated />
                 </Suspense>
               </>,
               sceneObjs[4],
