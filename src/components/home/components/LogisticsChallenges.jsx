@@ -17,6 +17,8 @@ const s2ScrollLock = { locked: false };
 
 // ── Scene 3 animation state — set by tick loop, read by ExteriorAMR ──────────
 const s3AnimState = { active: false, progress: 0 };
+// ── Scene 3 camera cinematic state — wipe2 smooth passed to Scene3Camera ─────
+const s3CamState = { wipe2Smooth: 0 };
 
 // ── Scene 4 animation state — set by scroll handler, read by AMR50Color/Trolley
 const s4AnimState  = { progress: 0 };
@@ -52,6 +54,10 @@ const S1_END_LOOK   = new THREE.Vector3(1.763, 0.305, -1.880);
 // ── Scene 3 camera waypoint ───────────────────────────────────────────────────
 const S3_POS  = new THREE.Vector3(-0.706, 0.664, -2.571);
 const S3_LOOK = new THREE.Vector3(0.746, 0.110, -1.985);
+// Cinematic entry angle (from story cam screenshot)
+const S3_CIN_POS  = new THREE.Vector3(2.017, 1.149, -4.508);
+const S3_CIN_LOOK = new THREE.Vector3(-2.910, -2.804, 4.595);
+const _s3LookTemp = new THREE.Vector3();
 
 // ── Scene 4 camera waypoint ───────────────────────────────────────────────────
 const S4_POS   = new THREE.Vector3(-2.326, 3.085, 4.359);
@@ -448,6 +454,9 @@ function InteriorScene({ progressRef, trackerRef, amr50TrackerRef }) {
 useGLTF.setDecoderPath("/draco/gltf/");
 useGLTF.preload("/assets/amr10-color.glb");
 useGLTF.preload("/assets/amr10-trolley-color.glb");
+useGLTF.preload("/assets/s5-amr10.glb");
+useGLTF.preload("/assets/s5-amr50.glb");
+useGLTF.preload("/assets/s5-apt.glb");
 
 // ── Scene 3 path — straight -X (left) → arc (-X → +Z) → straight +Z ────────────
 // r param lets the trolley use a smaller radius than the truck (real trailer off-tracking)
@@ -851,7 +860,7 @@ function Scene5Camera() {
   return null;
 }
 
-// ── Scene 5 model — final-scene.glb (Draco-compressed) ───────────────────────
+// ── Scene 5 background scene ──────────────────────────────────────────────────
 function FinalScene() {
   const { scene } = useGLTF("/assets/final-scene.glb");
   const cloned = useMemo(() => {
@@ -864,6 +873,22 @@ function FinalScene() {
   }, [scene]);
   return <primitive object={cloned} />;
 }
+
+// ── Scene 5 models ────────────────────────────────────────────────────────────
+function makeS5Model(path) {
+  return function S5Model() {
+    const { scene } = useGLTF(path);
+    const cloned = useMemo(() => {
+      const c = scene.clone(true);
+      c.traverse(n => { if (n.isMesh) { n.castShadow = true; n.receiveShadow = true; } });
+      return c;
+    }, [scene]);
+    return <primitive object={cloned} />;
+  };
+}
+const S5AMR10 = makeS5Model("/assets/s5-amr10.glb");
+const S5AMR50 = makeS5Model("/assets/s5-amr50.glb");
+const S5APT   = makeS5Model("/assets/s5-apt.glb");
 
 // ── Scene 1 scroll camera ─────────────────────────────────────────────────────
 function Scene1Camera({ progressRef }) {
@@ -921,10 +946,14 @@ function Scene2Camera({ progressRef }) {
 // ── Scene 3 static camera ─────────────────────────────────────────────────────
 function Scene3Camera() {
   const { camera } = useThree();
-  useEffect(() => {
-    camera.position.copy(S3_POS);
-    camera.lookAt(S3_LOOK);
-  }, [camera]);
+  useFrame(() => {
+    // t goes 0→1 as wipe2 smooth goes 0→0.75, then stays 1
+    const t = Math.min(1, s3CamState.wipe2Smooth / 0.75);
+    const tE = t * t * (3 - 2 * t); // smoothstep easing
+    camera.position.lerpVectors(S3_CIN_POS, S3_POS, tE);
+    _s3LookTemp.lerpVectors(S3_CIN_LOOK, S3_LOOK, tE);
+    camera.lookAt(_s3LookTemp);
+  });
   return null;
 }
 
@@ -1209,6 +1238,7 @@ export default function LogisticsChallenges() {
       // wipe2: smooth + smootherstep
       wipe2SmoothRef.current += (wipe2TargetRef.current - wipe2SmoothRef.current)
         * (1 - Math.exp(-delta * 5));
+      s3CamState.wipe2Smooth = wipe2SmoothRef.current;
       const t2 = wipe2SmoothRef.current;
       const wipe2P = t2 * t2 * t2 * (t2 * (t2 * 6 - 15) + 10);
       wipe2PRef.current = wipe2P;
@@ -1413,6 +1443,9 @@ export default function LogisticsChallenges() {
                 }
                 <Suspense fallback={null}>
                   <FinalScene />
+                  <group position={[1.7, 0, 0.3]}><S5AMR10 /></group>
+                  <group position={[-4.9, 0, 0]}><S5AMR50 /></group>
+                  <group position={[-0.5, 0, -1.4]}><S5APT /></group>
                 </Suspense>
               </>,
               sceneObjs[4],
