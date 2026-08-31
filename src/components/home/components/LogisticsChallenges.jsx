@@ -17,6 +17,7 @@ const s2ScrollLock = { locked: false };
 
 // ── Scene 3 animation state — set by tick loop, read by ExteriorAMR ──────────
 const s2AMRState  = { progress: 0 }; // snap-gated progress for AMR10 only
+const s2ForkState = { rawCurrent: 0, prevRaw: 0 }; // raw tracked per-frame for forklift direction
 const s3AnimState = { active: false, progress: 0 };
 // ── Scene 3 camera cinematic state — wipe2 smooth passed to Scene3Camera ─────
 const s3CamState = { wipe2Smooth: 0 };
@@ -370,27 +371,25 @@ function InteriorScene({ progressRef, trackerRef, amr50TrackerRef }) {
 
     const prog         = progressRef.current;
     const scrollTarget = prog; // full scene-2 scroll range drives the models
-    const goingBack    = scrollTarget < prevScrollTarget.current - 0.001;
+    const goingBack = scrollTarget < prevScrollTarget.current - 0.001;
     prevScrollTarget.current = scrollTarget;
 
     // Cancel auto-complete + camera auto-move + overlay if user scrolls back
     if (goingBack) { autoComplete.current = false; s2CamState.autoToC = false; amrResumeSnap.current = null; }
-
-    const effectiveTarget = scrollTarget;
 
     // AMR10 current distance — needed for reverse zone logic
     const amrEase0     = amrT.current * amrT.current * (3 - 2 * amrT.current);
     const amrDistNow   = amrEase0 * 5;
     const amrInRevZone = amrDistNow >= 2.5 && amrDistNow <= 3.6;
 
-    // ── Forklift: smooth 5 units north ──────────────────────────────
-    const forkSpeed = 16;
-    let forkTarget  = effectiveTarget;
-    // Reverse: if AMR10 is in collision zone (2.5–3.6), freeze AMR50 until AMR10 backs out
-    if (goingBack && haltState.current === "halting" && amrInRevZone) {
-      forkTarget = animT.current;
+    // ── Forklift: auto-play forward, reverse on backward scroll ─────
+    const forkGoingBack = s2ForkState.rawCurrent < s2ForkState.prevRaw;
+    s2ForkState.prevRaw = s2ForkState.rawCurrent;
+    if (forkGoingBack) {
+      animT.current = Math.max(0, animT.current - delta * 0.20);
+    } else if (s2AMRState.progress > 0) {
+      animT.current = Math.min(1, animT.current + delta * 0.20);
     }
-    animT.current += (forkTarget - animT.current) * (1 - Math.exp(-delta * forkSpeed));
     const forkEase = animT.current * animT.current * (3 - 2 * animT.current);
     const forkDist = forkEase * 5;
     forklift.position.x = forkBaseX.current + forkDist;
@@ -398,8 +397,8 @@ function InteriorScene({ progressRef, trackerRef, amr50TrackerRef }) {
 
     // ── Halt state machine — driven by forklift distance ───────────
     if      (haltState.current === "before"  && forkDist >= 2.5) haltState.current = "halting";
-    else if (haltState.current === "halting" && forkDist >  4.0) haltState.current = "after";
-    else if (haltState.current === "after"   && forkDist <= 4.0) haltState.current = "halting";
+    else if (haltState.current === "halting" && forkDist >  4.5) haltState.current = "after";
+    else if (haltState.current === "after"   && forkDist <= 4.5) haltState.current = "halting";
     else if (haltState.current === "halting" && forkDist <  2.5) haltState.current = "before";
 
     // When halt begins → send camera to S2_C automatically
@@ -426,7 +425,7 @@ function InteriorScene({ progressRef, trackerRef, amr50TrackerRef }) {
       } else {
         amrT.current += (amrTarget - amrT.current) * (1 - Math.exp(-delta * 2));
       }
-    } else if ((amrDistNow >= 2.15 && haltState.current !== "after") || collisionHalt.current) {
+    } else if (haltState.current === "halting" || collisionHalt.current) {
       resumeTime.current = 0;
     } else if (haltState.current === "after" && amrResumeSnap.current !== null) {
       resumeTime.current += delta;
@@ -502,7 +501,8 @@ function S3AMR10() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 0.35));
+    const s3Speed = s3AnimState.progress < smoothedP.current ? 1.2 : 0.35;
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * s3Speed));
     const { x, z, ry } = getS3PathState(getAMR10EasedDistance(smoothedP.current) + S4_TRUCK_GAP, S3_AMR10_X, S3_AMR10_Z);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
@@ -532,7 +532,8 @@ function S3Trolley() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 0.35));
+    const s3Speed = s3AnimState.progress < smoothedP.current ? 1.2 : 0.35;
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * s3Speed));
     const d = Math.min(getAMR10EasedDistance(smoothedP.current), S4_TROLLEY_DROP);
     const { x, z, ry } = getS3PathState(d, S3_TROLLEY_X, S3_TROLLEY_Z, S3_TROLLEY_TURN_RADIUS, S3_TROLLEY_PATH_STRAIGHT);
     groupRef.current.position.set(x, 0, z);
@@ -1294,6 +1295,7 @@ export default function LogisticsChallenges() {
       const scrollable = sectionRef.current.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
       const raw = Math.max(0, Math.min(1, -rect.top / scrollable));
+      s2ForkState.rawCurrent = raw;
 
       // Both refs always update; each clamps naturally at its boundary
       // Note: all raw thresholds scaled by 0.8 vs original (section is 3000vh vs 2400vh — same absolute vh travel)
@@ -1332,35 +1334,35 @@ export default function LogisticsChallenges() {
       s5AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.736) / 0.25));
 
       // Card 1 reveal — show only after Scene 1 meter passes 0.125
-      const shouldShowCard1 = raw >= 0 && raw < 0.215;
+      const shouldShowCard1 = raw >= 0.030 && raw < 0.215;
       if (shouldShowCard1 !== card1ReadyRef.current) {
         card1ReadyRef.current = shouldShowCard1;
         setCard1Ready(shouldShowCard1);
       }
 
       // Card 2 reveal — as soon as AMR10 reaches 2.15 units (snapStart ≈ raw 0.114)
-      const shouldShowCard2 = raw >= 0.114 && raw < 0.2555;
+      const shouldShowCard2 = raw >= 0.114 && raw < 0.30;
       if (shouldShowCard2 !== card2ReadyRef.current) {
         card2ReadyRef.current = shouldShowCard2;
         setCard2Ready(shouldShowCard2);
       }
 
       // Card 3 reveal — visible during scene 3
-      const shouldShowCard3 = raw >= 0.186 && raw < 0.302;
+      const shouldShowCard3 = raw >= 0.280 && raw < 0.40;
       if (shouldShowCard3 !== card3ReadyRef.current) {
         card3ReadyRef.current = shouldShowCard3;
         setCard3Ready(shouldShowCard3);
       }
 
       // Card 4A — visible during scene 4A
-      const shouldShowCard4a = raw >= 0.350 && raw < 0.496;
+      const shouldShowCard4a = raw >= 0.380 && raw < 0.58;
       if (shouldShowCard4a !== card4aReadyRef.current) {
         card4aReadyRef.current = shouldShowCard4a;
         setCard4aReady(shouldShowCard4a);
       }
 
       // Card 4B — visible during scene 4B
-      const shouldShowCard4b = raw >= 0.532 && raw < 0.676;
+      const shouldShowCard4b = raw >= 0.560 && raw < 0.76;
       if (shouldShowCard4b !== card4bReadyRef.current) {
         card4bReadyRef.current = shouldShowCard4b;
         setCard4bReady(shouldShowCard4b);
@@ -1505,72 +1507,52 @@ export default function LogisticsChallenges() {
   }, [card1Ready]);
 
   useEffect(() => {
-    clearTimeout(card2TimerRef.current);
     if (card2Ready) {
       setCard2Mounted(true);
       setCard2Exiting(false);
     } else {
-      setCard2Exiting(true);
-      card2TimerRef.current = setTimeout(() => {
-        setCard2Mounted(false);
-        setCard2Exiting(false);
-      }, 1600);
+      setCard2Mounted(false);
+      setCard2Exiting(false);
     }
   }, [card2Ready]);
 
   useEffect(() => {
-    clearTimeout(card3TimerRef.current);
     if (card3Ready) {
       setCard3Mounted(true);
       setCard3Exiting(false);
     } else {
-      setCard3Exiting(true);
-      card3TimerRef.current = setTimeout(() => {
-        setCard3Mounted(false);
-        setCard3Exiting(false);
-      }, 1600);
+      setCard3Mounted(false);
+      setCard3Exiting(false);
     }
   }, [card3Ready]);
 
   useEffect(() => {
-    clearTimeout(card4aTimerRef.current);
     if (card4aReady) {
       setCard4aMounted(true);
       setCard4aExiting(false);
     } else {
-      setCard4aExiting(true);
-      card4aTimerRef.current = setTimeout(() => {
-        setCard4aMounted(false);
-        setCard4aExiting(false);
-      }, 1600);
+      setCard4aMounted(false);
+      setCard4aExiting(false);
     }
   }, [card4aReady]);
 
   useEffect(() => {
-    clearTimeout(card4bTimerRef.current);
     if (card4bReady) {
       setCard4bMounted(true);
       setCard4bExiting(false);
     } else {
-      setCard4bExiting(true);
-      card4bTimerRef.current = setTimeout(() => {
-        setCard4bMounted(false);
-        setCard4bExiting(false);
-      }, 1600);
+      setCard4bMounted(false);
+      setCard4bExiting(false);
     }
   }, [card4bReady]);
 
   useEffect(() => {
-    clearTimeout(card5TimerRef.current);
     if (card5Ready) {
       setCard5Mounted(true);
       setCard5Exiting(false);
     } else {
-      setCard5Exiting(true);
-      card5TimerRef.current = setTimeout(() => {
-        setCard5Mounted(false);
-        setCard5Exiting(false);
-      }, 1600);
+      setCard5Mounted(false);
+      setCard5Exiting(false);
     }
   }, [card5Ready]);
 
