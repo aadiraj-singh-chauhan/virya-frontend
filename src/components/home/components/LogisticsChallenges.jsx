@@ -1318,8 +1318,8 @@ export default function LogisticsChallenges() {
       wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
       // wipe2: starts just before AMR10 done (~88% post-snap, raw≈0.186 with 0.12 denom)
       wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.186) / 0.08));
-      // Scene 3 — total window 0.18 raw (≈4-5 viewport scrolls); models start at wipe2 end (0.266)
-      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.366) - 0.266) / 0.10));
+      // Scene 3 — models start slightly after wipe2 end (0.266), delayed to 0.285
+      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.366) - 0.285) / 0.10));
       // wipe3: Scene 3 → Scene 4
       wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.302) / 0.064));
       // Scene 4A — AMR10
