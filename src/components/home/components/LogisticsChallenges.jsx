@@ -16,6 +16,7 @@ const s2CamState = { autoToC: false };
 const s2ScrollLock = { locked: false };
 
 // ── Scene 3 animation state — set by tick loop, read by ExteriorAMR ──────────
+const s2AMRState  = { progress: 0 }; // snap-gated progress for AMR10 only
 const s3AnimState = { active: false, progress: 0 };
 // ── Scene 3 camera cinematic state — wipe2 smooth passed to Scene3Camera ─────
 const s3CamState = { wipe2Smooth: 0 };
@@ -417,31 +418,27 @@ function InteriorScene({ progressRef, trackerRef, amr50TrackerRef }) {
     if (!collisionHalt.current && proximity < 1.5) collisionHalt.current = true;
     else if (collisionHalt.current && proximity > 2.0) collisionHalt.current = false;
 
-    // ── AMR10 + trolley ───────────────────────────────────────────────
-    // Keep the scroll position as the destination, but do not let the AMR
+    // ── AMR10 + trolley — uses snap-gated progress ───────────────────
+    const amrTarget = s2AMRState.progress;
     if (goingBack) {
       if (haltState.current === "halting" && !amrInRevZone) {
-        // AMR10 outside 2.5–3.6: freeze it, let AMR50 back through 4.0→2.5
         resumeTime.current = 0;
       } else {
-        amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 2));
+        amrT.current += (amrTarget - amrT.current) * (1 - Math.exp(-delta * 2));
       }
     } else if ((amrDistNow >= 2.15 && haltState.current !== "after") || collisionHalt.current) {
-      // AMR10 stops at 2.15 units and waits until AMR50 clears (haltState → "after")
       resumeTime.current = 0;
     } else if (haltState.current === "after" && amrResumeSnap.current !== null) {
-      // Scale remaining amrT distance to fit the remaining scroll range so the full
-      // 3.97→5.0 movement is user-scroll-controlled, not auto-played.
       resumeTime.current += delta;
       const remainingScroll = Math.max(0.001, 1.0 - amrResumeSnap.current.scroll);
       const remainingAmrT   = 1.0 - amrResumeSnap.current.amrT;
       const scale           = remainingAmrT / remainingScroll;
-      const scrollAdv       = Math.max(0, scrollTarget - amrResumeSnap.current.scroll);
+      const scrollAdv       = Math.max(0, amrTarget - amrResumeSnap.current.scroll);
       const catchTarget     = Math.min(1.0, amrResumeSnap.current.amrT + scrollAdv * scale);
       const lerpSpeed       = 1.5 + Math.min(resumeTime.current / 1.5, 1) * 2.5;
       amrT.current += (catchTarget - amrT.current) * (1 - Math.exp(-delta * lerpSpeed));
     } else {
-      amrT.current += (scrollTarget - amrT.current) * (1 - Math.exp(-delta * 16));
+      amrT.current += (amrTarget - amrT.current) * (1 - Math.exp(-delta * 16));
     }
 
     const amrEase = amrT.current * amrT.current * (3 - 2 * amrT.current);
@@ -505,7 +502,7 @@ function S3AMR10() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 0.35));
     const { x, z, ry } = getS3PathState(getAMR10EasedDistance(smoothedP.current) + S4_TRUCK_GAP, S3_AMR10_X, S3_AMR10_Z);
     groupRef.current.position.set(x, 0, z);
     groupRef.current.rotation.y = ry;
@@ -535,7 +532,7 @@ function S3Trolley() {
   }, [scene]);
   useFrame((_, delta) => {
     if (!groupRef.current) return;
-    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 1.8));
+    smoothedP.current += (s3AnimState.progress - smoothedP.current) * (1 - Math.exp(-delta * 0.35));
     const d = Math.min(getAMR10EasedDistance(smoothedP.current), S4_TROLLEY_DROP);
     const { x, z, ry } = getS3PathState(d, S3_TROLLEY_X, S3_TROLLEY_Z, S3_TROLLEY_TURN_RADIUS, S3_TROLLEY_PATH_STRAIGHT);
     groupRef.current.position.set(x, 0, z);
@@ -910,16 +907,84 @@ function S5AMR50Animated() {
   });
   return <group ref={ref}><S5AMR50 /></group>;
 }
+// ── Scene 5 APT path constants ────────────────────────────────────────────────
+const S5_APT_START_X  = -0.5;
+const S5_APT_START_Z  = -1.4;
+const S5_APT_STRAIGHT = 1.0;
+const S5_APT_ARC_R    = 0.4;
+const S5_APT_ARC_LEN  = S5_APT_ARC_R * (Math.PI / 2);
+const S5_APT_FORWARD  = 0.3;
+const S5_APT_BACK     = 1.8;
+const S5_APT_TOTAL    = S5_APT_STRAIGHT + S5_APT_ARC_LEN + S5_APT_FORWARD + S5_APT_BACK;
+
+// Easing: slows at the arc entry and at the forward→reverse peak
+function getS5APTEasedDistance(p) {
+  const TOTAL  = S5_APT_TOTAL;
+  const TURN   = S5_APT_STRAIGHT + S5_APT_ARC_LEN;
+  const PEAK   = TURN + S5_APT_FORWARD;
+  const D_SLOW = 0.25;
+  const SLOW_W = 0.10;
+  const V_NORMAL = (TOTAL - 2 * D_SLOW) / (1 - 2 * SLOW_W);
+  const V_MIN    = (3 * D_SLOW / SLOW_W - V_NORMAL) / 2;
+  const slowDist = (t) => SLOW_W * (V_MIN * t + (V_NORMAL - V_MIN) * ((2 * t - 1) ** 3 + 1) / 6);
+  const d1s = TURN - D_SLOW / 2;  const P1 = d1s / V_NORMAL;           const P1e = P1 + SLOW_W;
+  const d2s = PEAK - D_SLOW / 2;  const P2 = P1e + (d2s - (d1s + D_SLOW)) / V_NORMAL; const P2e = P2 + SLOW_W;
+  if (p <= P1)  return p * V_NORMAL;
+  if (p <= P1e) return d1s + slowDist((p - P1) / SLOW_W);
+  if (p <= P2)  return (d1s + D_SLOW) + (p - P1e) * V_NORMAL;
+  if (p <= P2e) return d2s + slowDist((p - P2) / SLOW_W);
+  return (d2s + D_SLOW) + (p - P2e) * V_NORMAL;
+}
+
+// Path: straight +X → arc right (+X → +Z) → short +Z → reverse -Z
+function getS5APTPathState(d) {
+  const sx = S5_APT_START_X, sz = S5_APT_START_Z;
+  if (d <= 0) return { x: sx, z: sz, ry: 0 };
+
+  // Phase 1: straight +X
+  if (d <= S5_APT_STRAIGHT) {
+    return { x: sx + d, z: sz, ry: 0 };
+  }
+
+  // Phase 2: quarter-circle arc right (+X → +Z)
+  const r    = S5_APT_ARC_R;
+  const arcX = sx + S5_APT_STRAIGHT;
+  const arcZ = sz;
+  const dA   = d - S5_APT_STRAIGHT;
+  if (dA <= S5_APT_ARC_LEN) {
+    const a = dA / r;
+    return {
+      x:  arcX + r * Math.sin(a),
+      z:  arcZ + r * (1 - Math.cos(a)),
+      ry: -a,
+    };
+  }
+
+  const endX = arcX + r;
+  const endZ = arcZ + r;
+
+  // Phase 3: straight +Z
+  const dF = d - S5_APT_STRAIGHT - S5_APT_ARC_LEN;
+  if (dF <= S5_APT_FORWARD) {
+    return { x: endX, z: endZ + dF, ry: -Math.PI / 2 };
+  }
+
+  // Phase 4: reverse -Z
+  const peakZ = endZ + S5_APT_FORWARD;
+  const dB    = d - S5_APT_STRAIGHT - S5_APT_ARC_LEN - S5_APT_FORWARD;
+  return { x: endX, z: peakZ - dB, ry: -Math.PI / 2 };
+}
+
 function S5APTAnimated() {
   const ref = useRef();
   const smoothed = useRef(0);
   useFrame((_, delta) => {
     if (!ref.current) return;
     smoothed.current += (s5AnimState.progress - smoothed.current) * (1 - Math.exp(-delta * 3));
-    // amplify progress slightly so APT reaches its target before AMR10/50
-    const t  = Math.min(1, smoothed.current * 1.4);
-    const tE = t * t * (3 - 2 * t);
-    ref.current.position.set(-0.5 + tE * 2.0, 0, -1.4);
+    const t = Math.min(1, smoothed.current * 1.4);
+    const { x, z, ry } = getS5APTPathState(getS5APTEasedDistance(t));
+    ref.current.position.set(x, 0, z);
+    ref.current.rotation.y = ry;
   });
   return <group ref={ref}><S5APT /></group>;
 }
@@ -1233,27 +1298,38 @@ export default function LogisticsChallenges() {
       // Both refs always update; each clamps naturally at its boundary
       // Note: all raw thresholds scaled by 0.8 vs original (section is 3000vh vs 2400vh — same absolute vh travel)
       progressRef.current   = Math.min(raw / 0.096, 1);
-      // Interior animation completes by raw=0.304 (before wipe2 starts)
+      // Forklift: unsnapped, advances freely through the full range
       s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.024) / 0.28));
+      // AMR10: scroll snap holds at 2.15 units for a dedicated scroll window
+      {
+        const S2_P      = 0.454;
+        const S2_SNAP   = 0.05;
+        const snapStart = 0.024 + S2_P * 0.28;  // raw ≈ 0.151
+        const snapEnd   = snapStart + S2_SNAP;   // raw ≈ 0.201
+        s2AMRState.progress =
+          raw <= snapStart ? Math.max(0, (raw - 0.024) / 0.28) :
+          raw <= snapEnd   ? S2_P :
+          Math.min(1, S2_P + (raw - snapEnd) / 0.28);
+      }
 
       // Feed raw wipe targets — smoothing happens in tick loop
       wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
-      // wipe2: Scene 2 → Scene 3 — starts while AMR10 is still mid-animation
-      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.290) / 0.048));
-      // Scene 3 — progress freezes as soon as wipe3 begins (raw capped at 0.346)
-      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.346) - 0.326) / 0.08));
-      // wipe3: Scene 3 → Scene 4
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.346) / 0.064));
-      // Scene 4A — AMR10 (raw 0.394→0.554)
-      s4AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.394) / 0.16));
-      // wipe4b: internal wipe 4A→4B, starts when AMR10 is ~91% done (raw 0.540)
-      wipe4bTargetRef.current = Math.max(0, Math.min(1, (raw - 0.540) / 0.048));
-      // Scene 4B — AMR50 starts at 75% of wipe4b (0.540 + 0.75*0.048 = 0.576)
-      s4Anim2State.progress   = Math.min(1, Math.max(0, (raw - 0.576) / 0.16));
+      // wipe2: fires only once AMR10 finishes (s2AMRState.progress=1 at raw≈0.354)
+      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.354) / 0.08));
+      // Scene 3 — models move only after wipe2 completes (raw 0.434); full travel by wipe3 end (0.504)
+      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.504) - 0.434) / 0.07));
+      // wipe3: Scene 3 → Scene 4 (starts after wipe2 done + small gap)
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.440) / 0.064));
+      // Scene 4A — AMR10
+      s4AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.488) / 0.16));
+      // wipe4b: internal wipe 4A→4B
+      wipe4bTargetRef.current = Math.max(0, Math.min(1, (raw - 0.634) / 0.048));
+      // Scene 4B — AMR50
+      s4Anim2State.progress   = Math.min(1, Math.max(0, (raw - 0.670) / 0.16));
       // wipe4: Scene 4B → Scene 5
-      wipe4TargetRef.current  = Math.max(0, Math.min(1, (raw - 0.720) / 0.06));
+      wipe4TargetRef.current  = Math.max(0, Math.min(1, (raw - 0.814) / 0.06));
       // Scene 5
-      s5AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.780) / 0.25));
+      s5AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.874) / 0.25));
 
       // Card 1 reveal — show only after Scene 1 meter passes 0.125
       const shouldShowCard1 = raw >= 0.025 && raw < 0.215;
@@ -1269,29 +1345,29 @@ export default function LogisticsChallenges() {
         setCard2Ready(shouldShowCard2);
       }
 
-      // Card 3 reveal — visible during scene 3 (wipe2 mid → wipe3 starts)
-      const shouldShowCard3 = raw >= 0.314 && raw < 0.346;
+      // Card 3 reveal — visible during scene 3
+      const shouldShowCard3 = raw >= 0.354 && raw < 0.440;
       if (shouldShowCard3 !== card3ReadyRef.current) {
         card3ReadyRef.current = shouldShowCard3;
         setCard3Ready(shouldShowCard3);
       }
 
-      // Card 4A — visible during scene 4A (wipe3 done → wipe4b starts)
-      const shouldShowCard4a = raw >= 0.394 && raw < 0.540;
+      // Card 4A — visible during scene 4A
+      const shouldShowCard4a = raw >= 0.488 && raw < 0.634;
       if (shouldShowCard4a !== card4aReadyRef.current) {
         card4aReadyRef.current = shouldShowCard4a;
         setCard4aReady(shouldShowCard4a);
       }
 
-      // Card 4B — visible during scene 4B (AMR50 starts → wipe4 starts)
-      const shouldShowCard4b = raw >= 0.576 && raw < 0.720;
+      // Card 4B — visible during scene 4B
+      const shouldShowCard4b = raw >= 0.670 && raw < 0.814;
       if (shouldShowCard4b !== card4bReadyRef.current) {
         card4bReadyRef.current = shouldShowCard4b;
         setCard4bReady(shouldShowCard4b);
       }
 
-      // Card 5 — visible once scene 5 starts (wipe4 mid → end)
-      const shouldShowCard5 = raw >= 0.780;
+      // Card 5 — visible once scene 5 starts
+      const shouldShowCard5 = raw >= 0.874;
       if (shouldShowCard5 !== card5ReadyRef.current) {
         card5ReadyRef.current = shouldShowCard5;
         setCard5Ready(shouldShowCard5);
@@ -1335,7 +1411,7 @@ export default function LogisticsChallenges() {
 
       // wipe2: smooth + smootherstep
       wipe2SmoothRef.current += (wipe2TargetRef.current - wipe2SmoothRef.current)
-        * (1 - Math.exp(-delta * 5));
+        * (1 - Math.exp(-delta * 1.0));
       s3CamState.wipe2Smooth = wipe2SmoothRef.current;
       const t2 = wipe2SmoothRef.current;
       const wipe2P = t2 * t2 * t2 * (t2 * (t2 * 6 - 15) + 10);
@@ -1351,7 +1427,7 @@ export default function LogisticsChallenges() {
 
       // wipe3: smooth + smootherstep
       wipe3SmoothRef.current += (wipe3TargetRef.current - wipe3SmoothRef.current)
-        * (1 - Math.exp(-delta * 2.0));
+        * (1 - Math.exp(-delta * 0.45));
       const t3 = wipe3SmoothRef.current;
       const wipe3P = t3 * t3 * t3 * (t3 * (t3 * 6 - 15) + 10);
 

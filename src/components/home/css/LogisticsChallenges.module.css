@@ -20,7 +20,7 @@
   position: relative;
   width: 100%;
   /* 2400vh = 100vh visible + 2300vh of scroll travel */
-  height: 2400vh;
+  height: 2800vh;
   background: #F5F2ED;
   margin: 80px 0;
 }
