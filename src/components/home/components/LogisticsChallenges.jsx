@@ -1298,76 +1298,76 @@ export default function LogisticsChallenges() {
       // Both refs always update; each clamps naturally at its boundary
       // Note: all raw thresholds scaled by 0.8 vs original (section is 3000vh vs 2400vh — same absolute vh travel)
       progressRef.current   = Math.min(raw / 0.096, 1);
-      // Forklift: unsnapped, advances freely through the full range
-      s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.024) / 0.28));
-      // AMR10: scroll snap holds at 2.15 units for a dedicated scroll window
+      // Forklift: unsnapped — faster scene 2 (denominator 0.12)
+      s2ProgressRef.current = Math.min(1, Math.max(0, (raw - 0.060) / 0.12));
+      // AMR10: scroll snap holds at 2.15 units; all thresholds use same 0.12 denominator
       {
         const S2_P      = 0.454;
         const S2_SNAP   = 0.05;
-        const snapStart = 0.024 + S2_P * 0.28;  // raw ≈ 0.151
-        const snapEnd   = snapStart + S2_SNAP;   // raw ≈ 0.201
+        const snapStart = 0.060 + S2_P * 0.12;  // raw ≈ 0.114
+        const snapEnd   = snapStart + S2_SNAP;   // raw ≈ 0.164
         s2AMRState.progress =
-          raw <= snapStart ? Math.max(0, (raw - 0.024) / 0.28) :
+          raw <= snapStart ? Math.max(0, (raw - 0.060) / 0.12) :
           raw <= snapEnd   ? S2_P :
-          Math.min(1, S2_P + (raw - snapEnd) / 0.28);
+          Math.min(1, S2_P + (raw - snapEnd) / 0.12);
       }
 
       // Feed raw wipe targets — smoothing happens in tick loop
       wipeTargetRef.current  = Math.max(0, Math.min(1, raw / 0.20));
-      // wipe2: fires only once AMR10 finishes (s2AMRState.progress=1 at raw≈0.354)
-      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.354) / 0.08));
-      // Scene 3 — models move only after wipe2 completes (raw 0.434); full travel by wipe3 end (0.504)
-      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.504) - 0.434) / 0.07));
-      // wipe3: Scene 3 → Scene 4 (starts after wipe2 done + small gap)
-      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.440) / 0.064));
+      // wipe2: starts just before AMR10 done (~88% post-snap, raw≈0.186 with 0.12 denom)
+      wipe2TargetRef.current = Math.max(0, Math.min(1, (raw - 0.186) / 0.08));
+      // Scene 3 — total window 0.18 raw (≈4-5 viewport scrolls); models start at wipe2 end (0.266)
+      s3AnimState.progress   = Math.min(1, Math.max(0, (Math.min(raw, 0.366) - 0.266) / 0.10));
+      // wipe3: Scene 3 → Scene 4
+      wipe3TargetRef.current = Math.max(0, Math.min(1, (raw - 0.302) / 0.064));
       // Scene 4A — AMR10
-      s4AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.488) / 0.16));
+      s4AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.350) / 0.16));
       // wipe4b: internal wipe 4A→4B
-      wipe4bTargetRef.current = Math.max(0, Math.min(1, (raw - 0.634) / 0.048));
+      wipe4bTargetRef.current = Math.max(0, Math.min(1, (raw - 0.496) / 0.048));
       // Scene 4B — AMR50
-      s4Anim2State.progress   = Math.min(1, Math.max(0, (raw - 0.670) / 0.16));
+      s4Anim2State.progress   = Math.min(1, Math.max(0, (raw - 0.532) / 0.16));
       // wipe4: Scene 4B → Scene 5
-      wipe4TargetRef.current  = Math.max(0, Math.min(1, (raw - 0.814) / 0.06));
+      wipe4TargetRef.current  = Math.max(0, Math.min(1, (raw - 0.676) / 0.06));
       // Scene 5
-      s5AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.874) / 0.25));
+      s5AnimState.progress    = Math.min(1, Math.max(0, (raw - 0.736) / 0.25));
 
       // Card 1 reveal — show only after Scene 1 meter passes 0.125
-      const shouldShowCard1 = raw >= 0.025 && raw < 0.215;
+      const shouldShowCard1 = raw >= 0 && raw < 0.215;
       if (shouldShowCard1 !== card1ReadyRef.current) {
         card1ReadyRef.current = shouldShowCard1;
         setCard1Ready(shouldShowCard1);
       }
 
-      // Card 2 reveal — from Scene 1 meter 0.70 (raw 0.140) to Scene 2 meter 0.63 (raw 0.2555)
-      const shouldShowCard2 = raw >= 0.140 && raw < 0.2555;
+      // Card 2 reveal — as soon as AMR10 reaches 2.15 units (snapStart ≈ raw 0.114)
+      const shouldShowCard2 = raw >= 0.114 && raw < 0.2555;
       if (shouldShowCard2 !== card2ReadyRef.current) {
         card2ReadyRef.current = shouldShowCard2;
         setCard2Ready(shouldShowCard2);
       }
 
       // Card 3 reveal — visible during scene 3
-      const shouldShowCard3 = raw >= 0.354 && raw < 0.440;
+      const shouldShowCard3 = raw >= 0.186 && raw < 0.302;
       if (shouldShowCard3 !== card3ReadyRef.current) {
         card3ReadyRef.current = shouldShowCard3;
         setCard3Ready(shouldShowCard3);
       }
 
       // Card 4A — visible during scene 4A
-      const shouldShowCard4a = raw >= 0.488 && raw < 0.634;
+      const shouldShowCard4a = raw >= 0.350 && raw < 0.496;
       if (shouldShowCard4a !== card4aReadyRef.current) {
         card4aReadyRef.current = shouldShowCard4a;
         setCard4aReady(shouldShowCard4a);
       }
 
       // Card 4B — visible during scene 4B
-      const shouldShowCard4b = raw >= 0.670 && raw < 0.814;
+      const shouldShowCard4b = raw >= 0.532 && raw < 0.676;
       if (shouldShowCard4b !== card4bReadyRef.current) {
         card4bReadyRef.current = shouldShowCard4b;
         setCard4bReady(shouldShowCard4b);
       }
 
       // Card 5 — visible once scene 5 starts
-      const shouldShowCard5 = raw >= 0.874;
+      const shouldShowCard5 = raw >= 0.736;
       if (shouldShowCard5 !== card5ReadyRef.current) {
         card5ReadyRef.current = shouldShowCard5;
         setCard5Ready(shouldShowCard5);
